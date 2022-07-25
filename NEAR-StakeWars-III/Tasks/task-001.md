@@ -104,7 +104,7 @@ Di bagian ini, Anda terlebih dahulu menginstal `NEAR-CLI` untuk menjalankan vali
 
 ## Setelah selesai memasang NEAR-CLI, anda dapat lanjut ke challenge 002
 
-[Menjalankan Validator, dan Setup Wallet]()
+[Menjalankan Validator, dan Setup Wallet](https://github.com/cbjohnson90/Testnet-Guides/blob/main/NEAR-StakeWars-III/Tasks/task-002.md)
 
 ## Explorers
 Wallet: https://wallet.shardnet.near.org/
