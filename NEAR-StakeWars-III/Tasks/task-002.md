@@ -355,4 +355,4 @@ Cek running status dari validator node. Jika `Validator` sudah muncul, maka pool
 
 ## Lanjutkan ke Challenge 003 untuk melakukan Mount Staking Pool
 
-[Mounting Staking Pool](https://github.com/yantodotid/testnet/blob/main/stakewars/task/003.md)
+[Mount Staking Pool]()
