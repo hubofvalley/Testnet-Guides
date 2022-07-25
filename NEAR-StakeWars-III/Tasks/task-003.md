@@ -3,7 +3,7 @@
 1. Membuat Staking Pool Contract
 
     ```bash
-    near call factory.shardnet.near create_staking_pool '{"staking_pool_id": "nama_wallet", "owner_id": "xx.shardnet.near", "stake_public_key": "public_key_kamu", "reward_fee_fraction": {"numerator": 5, "denominator": 100}, "code_hash":"DD428g9eqLL8fWUxv8QSpVFzyHi1Qd16P8ephYCTmMSZ"}' --accountId="<nama wallet kalian>.shardnet.near" --amount=30 --gas=300000000000000
+    near call factory.shardnet.near create_staking_pool '{"staking_pool_id": "nama_wallet", "owner_id": "xx.shardnet.near", "stake_public_key": "public_key_kamu", "reward_fee_fraction": {"numerator": 5, "denominator": 100}, "code_hash":"DD428g9eqLL8fWUxv8QSpVFzyHi1Qd16P8ephYCTmMSZ"}' --accountId="<nama wallet anda>.shardnet.near" --amount=30 --gas=300000000000000
     ```
  
     `public_key_kamu` ganti dengan `public_key` wallet kalian menggunakan command dibawah ini.
@@ -12,7 +12,7 @@
     cat ~/.near/validator_key.json | jq .public_key
     ```
     
-    `--amount=30` kalian bisa ubah jumlah stake NEAR kalian dari 30 ke berapapun yang kalian mau (karena 30 adalah minimum stakenya), 1 wallet memiliki 500 NEAR tapi lebih baik kalian sisakan NEAR (lebih banyak lebih baik) untuk membayar gas fee nantinya. Namun untuk memastikan berapa NEAR yang dibutuhkan, kalian bisa cek seat price [disini](https://explorer.shardnet.near.org/nodes/validators).
+    `--amount=30` kalian dapat bebas untuk merubah jumlah stake (30 merupakan angka minimum stake pada validator). Sangat dianjurkan untuk menyisakan banyak NEAR untuk keperluan gas. Namun untuk memastikan berapa NEAR yang dibutuhkan, kalian bisa cek seat price di link berikut https://explorer.shardnet.near.org/nodes/validators .
 
 
 2. Jika sudah selesai, Maka hasilnya seperti Berikut ini
