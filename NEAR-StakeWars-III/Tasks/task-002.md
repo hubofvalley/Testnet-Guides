@@ -32,7 +32,7 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
     sudo apt install python3-pip
     ```
     
-    ![Screenshot_9](https://user-images.githubusercontent.com/35837931/180378558-467b3b50-7970-43bc-b2bd-e047b8e7786b.png)
+    (gambar)
 
 
 4. Sesuaikan Konfigurasi
