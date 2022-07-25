@@ -26,7 +26,7 @@ Challenges yang terdapat pada event StakeWars-Episode-III ini memiliki tingkat k
 
 | Nomor Challenge                                                          | Deskripsi                                                                         | Poin Maksimum    | Deadline        | Link Tutorial  |
 | ------------------------------------------------------------------------ | --------------------------------------------------------------------------------- | ---------------- | --------------- | -------------- |
-| 001                                                                      | Memasang NEAR CLI.                                                                | \-               | 11 Agustus 2022 | [link tutor]() |
+| 001                                                                      | Memasang NEAR CLI                                                                 | \-               | 11 Agustus 2022 | [link tutor]() |
 | 002                                                                      | Menjalankan Validator, dan Setup Wallet                                           | 30 UNP           | 11 Agustus 2022 | [link tutor]() |
 | 003                                                                      | Mount Staking Pool                                                                | 10 UNP           | 11 Agustus 2022 | [link tutor]() |
 | 004                                                                      | Menjalankan Monitoring Status pada node                                           | 15 UNP           | 11 Agustus 2022 | [link tutor]() |
