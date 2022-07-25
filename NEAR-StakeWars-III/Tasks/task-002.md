@@ -339,7 +339,7 @@ Anda perlu memasukkan shardnet wallet kalian untuk menjalankan validatornya deng
         nano ~/.near/validator_key.json
         ```
         
-#### Syarat untuk menjadi Validator
+#### PENTING!!! Syarat untuk menjadi Validator
 Terdapat kriteria keberhasilan untuk menjadi Validator yang aktif. Untuk melihat kriteria keberhasilan menjadi validator secara kesuluruhan, anda dapat membuka official link NEAR 
 
 * Node harus sudah dalam full sinkron.
