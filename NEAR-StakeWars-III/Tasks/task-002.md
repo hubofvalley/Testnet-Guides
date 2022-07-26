@@ -10,7 +10,7 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
     || echo "Not supported"
     ```
     
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180930082-8c30d579-dd2c-4c57-9f15-aaee6d267cd2.png)
 
     
     apabila responnya "Supported" maka VPS anda dapat menjalankan untuk validator StakeWars-III, namun apabila responnya "Not supported" maka VPS anda tidak layak digunakan untuk menjalankan validator StakeWars-III
@@ -23,7 +23,7 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
     sudo apt install -y git binutils-dev libcurl4-openssl-dev zlib1g-dev libdw-dev libiberty-dev cmake gcc g++ python docker.io protobuf-compiler libssl-dev pkg-config clang llvm cargo
     ```
     
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180930160-b96a3198-9c65-400b-991c-3b6d8e462e38.png)
 
     
 3. Install Python pip
@@ -32,7 +32,7 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
     sudo apt install python3-pip
     ```
     
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180930221-6d3ab673-3013-4ff5-a629-33cd165f69dc.png)
 
 
 4. Sesuaikan Konfigurasi
@@ -42,7 +42,7 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
     export PATH="$USER_BASE_BIN:$PATH"
     ```
     
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180930273-e181f84f-2b6f-43b6-97ba-f0507458cad2.png)
 
 
 5. Install Building Environment
@@ -51,7 +51,7 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
     sudo apt install clang build-essential make
     ```
     
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180930314-3f54ff8b-8b26-46bf-bb00-c1ac6500cb8e.png)
 
     
 
@@ -61,11 +61,11 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     ```
     
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180930374-c3af5ef6-7afe-4a86-bdee-620b501e7be7.png)
     
     pencet y lalu enter
     
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180930437-9f98b79e-b8be-40e7-8660-86c35aca10b4.png)
     
     masukkan angka 1 lalu enter
 
@@ -75,7 +75,7 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
     source $HOME/.cargo/env
     ```
     
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180930580-76ecb3a0-d023-4646-990f-2f3cb2f0f185.png)
 
 
 ## Klon `nearcore` Project
@@ -88,6 +88,8 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
     git fetch
     ```
     
+    ![image](https://user-images.githubusercontent.com/100946299/180930690-389b1691-6c1d-428c-b460-21650b837a61.png)
+
     
 2. Checkout Commit
 
@@ -95,7 +97,7 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
     git checkout 0f81dca95a55f975b6e54fe6f311a71792e21698
     ```
     
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180930757-a0665329-ce4c-4d58-aa6c-ceef33cca8e9.png)
     
     
 3. Compile `nearcore` Binary
@@ -106,9 +108,11 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
     cargo build -p neard --release --features shardnet
     ```
     
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180930961-8e5f1e15-b899-4229-8e4d-d8c21f482397.png)
+    ![image](https://user-images.githubusercontent.com/100946299/180932520-3d20cc33-f13d-4fa7-b8e3-7de56da88c94.png)
 
-    Di langkah "Compile `nearcore` Binary" ini akan memakan waktu yang lumayan banyak (estimasi saya adalah 30-35 menit). Namun hal tersebut tergantung dengan spesifikasi VPS yang anda gunakan 
+
+    Di langkah "Compile `nearcore` Binary" ini akan memakan waktu yang lumayan banyak (estimasi saya adalah 20 menitan). Namun hal tersebut tergantung dengan spesifikasi VPS yang anda gunakan 
     
 4. Initialize Working Directory
     
@@ -124,7 +128,7 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
         ./target/release/neard --home ~/.near init --chain-id shardnet --download-genesis
         ```
         
-        (gambar)
+        ![image](https://user-images.githubusercontent.com/100946299/180932668-2a7b76ff-b483-4f2c-9e85-49ad44ffef3f.png)
         
     - Memasang Snapshot `(Optional)`
         
@@ -134,12 +138,16 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
         sudo apt-get install awscli -y
         ```
         
+        ![image](https://user-images.githubusercontent.com/100946299/180932717-deb9a4a0-f709-4fab-8dc5-22ea1205dc29.png)
+
+        
         Hapus `genesis.json` sebelumnya lalu download ulang file `genesis.json`
         
         ```bash
         rm ~/.near/genesis.json
         wget -O ~/.near/genesis.json https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/shardnet/genesis.json
         ```
+        ![image](https://user-images.githubusercontent.com/100946299/180932817-1c247943-a0de-4d08-9ca4-7bc460218cfd.png)
 
     
 5. Replace `config.json`
@@ -150,7 +158,7 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
     
     ```
     
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180932877-8d1b743d-fb51-46f4-a6d1-6829483f17ad.png)
 
     
 6. Jalankan Node
@@ -162,10 +170,14 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
     ./target/release/neard --home ~/.near run
     ```
     
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180932970-7369c437-30ba-4b7c-8244-f7f566ced740.png)
+    ![image](https://user-images.githubusercontent.com/100946299/180933662-26416b60-3cbd-4105-a4ea-384c8af2241f.png)
+    ![image](https://user-images.githubusercontent.com/100946299/180943388-23d044c7-ac32-4c02-b0b3-c72119fbae95.png)
+    ![image](https://user-images.githubusercontent.com/100946299/180943434-423b5123-7e3d-412e-82a4-6e196d40ab4a.png)
+
 
     
-    Saat proses download header sudah 100% ( `EpochId(`11111111111111111111111111111111`)` berubah menjadi tulisan yang berbeda ), matikan node menggunakan `CTRL+C` supaya tidak terjadi konflik/masalah pada saat pembuatan service nanti.
+    Saat proses download header sudah 100% ( `EpochId(`11111111111111111111111111111111`)` berubah menjadi tulisan yang berbeda ), matikan node menggunakan `CTRL+C` supaya tidak terjadi konflik/masalah pada saat pembuatan service nanti. Agak lama prosesnya jadi sabar ya.
     
 7. Membuat Service
    
@@ -258,52 +270,48 @@ Anda perlu memasukkan shardnet wallet kalian untuk menjalankan validatornya deng
     ```
 2. Copy Link Autorisasi Wallet ke Browser anda
 
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180943925-0dae8509-a5b0-499b-b6a2-1e3d27f14ea8.png)
 
 
 3. Create wallet (Buat wallet)
 
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180944382-0712110c-11a0-433b-86e4-f6e66ef9d5ca.png)
 
 
 
-4. Enter wallet name (masukkan nama wallet)
+4. Enter wallet name (masukkan nama kalian)
 
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180944498-4ee4bdd4-607b-443b-8feb-5a573955eea8.png)
 
 
 5. Simpan Phrase dan Verify Phrase
 
-    (gambar)
-
-
 6. Lalu masukkan Phrase yang sudah disimpan tadi
-
 
 7. Klik Next dan Beri akses ke `NEAR-CLI` dengan klik `connect`
 
 
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180947037-6a249515-2a19-482d-861a-a61c7e786203.png)
     
     
 8. Masukkan `Account ID` anda lalu pencet confirm (contoh : <nama wallet anda>.shardnet.near).
 
 
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180947136-5ab91193-3b07-404d-bff1-10ad1bc468e3.png)
 
 
 
 9. Setelah Memberi Akses, Kalian akan melihat gambar berikut.
 
 
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180947260-278943c5-dcb9-465c-9724-f517acfb58a5.png)
 
 
     Apabila sudah terlihat seperti di gambar di atas, maka anda sudah berhasil memberi akses wallet anda ke NEAR-CLI
     
 10. Masukkan `Account ID` yang telah anda buat ke dalam VPS lalu tekan enter
 
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180947842-e42f090d-b5d7-471f-a4a6-8a7542d19868.png)
 
 
 11. Generate Key untuk `validator_key.json`
