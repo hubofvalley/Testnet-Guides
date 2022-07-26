@@ -26,4 +26,4 @@
 
 ## Lanjutkan ke Challenge 004 untuk melakukan monitoring status pada node
 
-[Menjalankan Monitoring Status pada node](https://github.com/cbjohnson90/Testnet-Guides/blob/main/NEAR-StakeWars-III/Tasks/task-004.md)
+[Menjalankan Monitoring Status pada node](https://github.com/cbjohnson90/Testnet-Guides/blob/main/NEAR-StakeWars-III/Tasks/task-004.md)  `(Challenge 004)`
