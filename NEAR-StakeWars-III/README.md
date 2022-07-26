@@ -30,8 +30,4 @@ Challenges yang terdapat pada event StakeWars-Episode-III ini memiliki tingkat k
 | 002                                                                      | Menjalankan Validator, dan Setup Wallet                                           | 30 UNP           | 11 Agustus 2022 | [link tutor]() |
 | 003                                                                      | Mount Staking Pool                                                                | 10 UNP           | 11 Agustus 2022 | [link tutor]() |
 | 004                                                                      | Menjalankan Monitoring Status pada node                                           | 15 UNP           | 11 Agustus 2022 | [link tutor]() |
-| 005                                                                      | Membuat Guide/Tutorial untuk berpartisipasi di StakeWars Episode III              | 10 DNP           | 11 Agustus 2022 | [link tutor]() |
-| 006                                                                      | Cron task for ping                                                                | 5 UNP            | 11 Agustus 2022 | [link tutor]() |
-| 007                                                                      | Membuat Data Science terhadap staking di event StakeWars Episode III              | 20 DNP           | 11 Agustus 2022 | [link tutor]() |
-| 008                                                                      | Split revenue for staking rewards                                                 | 30 DNP<br>50 UNP | 11 Agustus 2022 | [link tutor]() |
-| 009                                                                      | Staking Farm 2.0                                                                  | 30 DNP<br>50 UNP | 9 September 2022 | [link tutor]()|
+          | 11 Agustus 2022 | [link tutor]() |
