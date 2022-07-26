@@ -361,6 +361,6 @@ Terdapat kriteria keberhasilan untuk menjadi Validator yang aktif. Untuk melihat
 
 Cek running status dari validator node. Jika `Validator` sudah muncul, maka pool sudah terpilih didalam validators list saat ini.
 
-## Lanjutkan ke Challenge 003 untuk melakukan Mount Staking Pool
+## Lanjutkan ke Challenge 003 untuk melakukan Mount Staking Pool `(Challenge 003)`
 
 [Mount Staking Pool](https://github.com/cbjohnson90/Testnet-Guides/blob/main/NEAR-StakeWars-III/Tasks/task-003.md)
