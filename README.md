@@ -3,5 +3,3 @@
 
 # Testnet-Guides
 containing the nodes that i run, and here are the guides for you. hope you enjoy!
-
-![image](https://user-images.githubusercontent.com/100946299/180989431-42463803-58e9-41f4-b85f-d59119d354e6.png)
