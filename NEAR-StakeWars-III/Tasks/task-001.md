@@ -93,7 +93,7 @@ Di bagian ini, Anda terlebih dahulu menginstal `NEAR-CLI` untuk menjalankan vali
     - Cek daftar validators secara spesifik
 
         ```bash
-        near validators current | grep xx.factory.shardnet.near
+        near validators current | grep <nama wallet anda>.factory.shardnet.near
         ```
 - Cek Daftar Validators Next atau  Validators yang Proposalnya sudah diterima dan akan aktif di epoch selanjutnya
     
@@ -106,7 +106,7 @@ Di bagian ini, Anda terlebih dahulu menginstal `NEAR-CLI` untuk menjalankan vali
     - Cek daftar validators next secara spesifik
 
         ```bash
-        near validators next | grep xx.factory.shardnet.near
+        near validators next | grep <nama wallet anda>.factory.shardnet.near
         ```
 
 
