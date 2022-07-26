@@ -8,6 +8,9 @@ Di bagian ini, Anda terlebih dahulu menginstal `NEAR-CLI` untuk menjalankan vali
     sudo apt update && sudo apt upgrade -y
     ```
 
+    ![image](https://user-images.githubusercontent.com/100946299/180929617-adde64f6-1781-4db7-bdfd-1be32829496d.png)
+
+
 2. Install Developer Tools, Nodejs dan NPM
 
     ```bash
@@ -18,7 +21,8 @@ Di bagian ini, Anda terlebih dahulu menginstal `NEAR-CLI` untuk menjalankan vali
     PATH="$PATH"
     ```
     
-   
+    ![image](https://user-images.githubusercontent.com/100946299/180929753-38797e51-b239-4590-b9e6-3eb5bf1c1a23.png)
+
 
     
 3. Cek versi Nodejs dan NPM
@@ -42,6 +46,9 @@ Di bagian ini, Anda terlebih dahulu menginstal `NEAR-CLI` untuk menjalankan vali
     sudo npm install -g near-cli
     ```
     
+    ![image](https://user-images.githubusercontent.com/100946299/180929815-f4fdb3bd-10ac-44f6-a0ae-2f613a50e472.png)
+
+    
 5. Sesuaikan Shardnet sebagai NEAR Environment 
 
     ```bash
@@ -53,7 +60,8 @@ Di bagian ini, Anda terlebih dahulu menginstal `NEAR-CLI` untuk menjalankan vali
     echo 'export NEAR_ENV=shardnet' >> ~/.bashrc
     ```
     
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180929925-6910e207-5531-4e65-a842-e428b565aff6.png)
+
 
     
 ## Controlling Command
