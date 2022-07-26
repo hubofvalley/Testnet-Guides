@@ -50,3 +50,5 @@ Disini kalian akan menjalankan ping otomatis tiap 2 jam sekali
     ```bash
     cat $HOME/nearcore/logs/all.log
     ```
+    
+ submit form : https://docs.google.com/forms/d/e/1FAIpQLScp9JEtpk1Fe2P9XMaS9Gl6kl9gcGVEp3A5vPdEgxkHx3ABjg/viewform
