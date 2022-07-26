@@ -17,7 +17,7 @@
 
 2. Jika sudah selesai, Maka hasilnya seperti Berikut ini
 
-    (gambar)
+    ![image](https://user-images.githubusercontent.com/100946299/180949409-35e30857-976c-43f1-b32a-3c349fad14ac.png)
 
 3. Cek validators kalian di explorer 
     
@@ -26,4 +26,4 @@
 
 ## Lanjutkan ke Challenge 004 untuk melakukan monitoring status pada node
 
-[Menjalankan Monitoring Status pada node]()
+[Menjalankan Monitoring Status pada node](https://github.com/cbjohnson90/Testnet-Guides/blob/main/NEAR-StakeWars-III/Tasks/task-004.md)
