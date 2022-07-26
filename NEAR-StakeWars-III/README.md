@@ -14,7 +14,7 @@ Pertama-tama, sebelum kita mempersiapkan node, kita harus memenuhi spesifikasi m
 | Storage        | 500GB SSD         |
 
 ## Setup VPS
-Sebelum menjalankan tugas node StakeWars-III, kalian dapat membuat VPS sesuai dengan persyaratan di [DigitalOcean](https://www.digitalocean.com/?refcode=3e669f831302&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge). Buat pengguna baru biasanya belum bisa pake droplet/vps yang besar, jadi harus request dulu.
+Sebelum menjalankan tugas node StakeWars-III, kalian dapat membuat VPS sesuai dengan persyaratan di [DigitalOcean](https://www.digitalocean.com/?refcode=3e669f831302&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge). Buat pengguna baru biasanya belum bisa pake droplet/vps yang besar, jadi harus request dulu. Pilih VPS di region dengan spek yang sesuai (contoh : Storage Optimized, ram 32GB/4CPUs ,600GB NVMe SSDs, 6TB Transfer, $262/month , $0,390/hour)
 
 ## Challenges
 
