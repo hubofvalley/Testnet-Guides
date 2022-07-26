@@ -39,3 +39,8 @@
     ```
     curl -s http://127.0.0.1:3030/status | jq .sync_info
     ```
+    
+ 
+ ## Anda dapat lanjut ke challenge 006 (challenge 005 diminta buat tutorial di Medium atau Github)
+
+[Menjalankan Ping Secara Otomatis Per 2 Jam Sekali](https://github.com/cbjohnson90/Testnet-Guides/blob/main/NEAR-StakeWars-III/Tasks/task-006.md) `(Challenge 006)`
