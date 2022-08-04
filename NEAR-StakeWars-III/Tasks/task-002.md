@@ -9,22 +9,13 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
     && echo "Supported" \
     || echo "Not supported"
     ```
-    
-    ![image](https://user-images.githubusercontent.com/100946299/180930082-8c30d579-dd2c-4c57-9f15-aaee6d267cd2.png)
-
-    
-    apabila responnya "Supported" maka VPS anda dapat menjalankan untuk validator StakeWars-III, namun apabila responnya "Not supported" maka VPS anda tidak layak digunakan untuk menjalankan validator StakeWars-III
+    ` apabila responnya "Supported" maka VPS anda dapat menjalankan untuk validator StakeWars-III, namun apabila responnya "Not supported" maka VPS anda tidak layak digunakan untuk menjalankan validator StakeWars-III `
     
 2. Install Developer Tools
-
-    Developer Tools diperlukan untuk menjalankan perintah-perintah yang diperlukan dalam menjalankan validator.
 
     ```bash
     sudo apt install -y git binutils-dev libcurl4-openssl-dev zlib1g-dev libdw-dev libiberty-dev cmake gcc g++ python docker.io protobuf-compiler libssl-dev pkg-config clang llvm cargo
     ```
-    
-    ![image](https://user-images.githubusercontent.com/100946299/180930160-b96a3198-9c65-400b-991c-3b6d8e462e38.png)
-
     
 3. Install Python pip
 
@@ -32,28 +23,18 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
     sudo apt install python3-pip
     ```
     
-    ![image](https://user-images.githubusercontent.com/100946299/180930221-6d3ab673-3013-4ff5-a629-33cd165f69dc.png)
-
-
 4. Sesuaikan Konfigurasi
     
     ```bash
     USER_BASE_BIN=$(python3 -m site --user-base)/bin
     export PATH="$USER_BASE_BIN:$PATH"
     ```
-    
-    ![image](https://user-images.githubusercontent.com/100946299/180930273-e181f84f-2b6f-43b6-97ba-f0507458cad2.png)
-
 
 5. Install Building Environment
 
     ```bash
     sudo apt install clang build-essential make
     ```
-    
-    ![image](https://user-images.githubusercontent.com/100946299/180930314-3f54ff8b-8b26-46bf-bb00-c1ac6500cb8e.png)
-
-    
 
 6. Install Rust dan Cargo
 
@@ -114,7 +95,7 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
 
     Di langkah "Compile `nearcore` Binary" ini akan memakan waktu yang lumayan banyak (estimasi saya adalah 20 menitan). Namun hal tersebut tergantung dengan spesifikasi VPS yang anda gunakan 
     
-4. Inisialisasi Working Directory
+4. Inisiasi Working Directory
    
     - Download `genesis.json`
     
