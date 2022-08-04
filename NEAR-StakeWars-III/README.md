@@ -1,6 +1,3 @@
-<p align="left">Daftar disini supaya dapat $100 Credits untuk 60 hari Digital Ocean.</p>
-<p align="left"><a href="https://www.digitalocean.com/?refcode=3e669f831302&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge"><img src="https://web-platforms.sfo2.digitaloceanspaces.com/WWW/Badge%202.svg" alt="DigitalOcean Referral Badge" /></a></p>
-
 # Node Setup NEAR Setup Stake Wars: Episode III A New Validator Complete Guide in Bahasa Indonesia
 
 ![image](https://user-images.githubusercontent.com/100946299/180820007-7114510b-0c25-40cf-bc52-9d1534901156.png)
