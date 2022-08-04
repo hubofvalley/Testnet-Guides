@@ -94,7 +94,7 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
 2. Checkout Commit
 
     ```bash
-    git checkout c1b047b8187accbf6bd16539feb7bb60185bdc38
+    git checkout 78ef2f55857d6118047efccf070ae0f7ddb232ea
     ```
     
     ![image](https://user-images.githubusercontent.com/100946299/180930757-a0665329-ce4c-4d58-aa6c-ceef33cca8e9.png)
@@ -114,25 +114,32 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
 
     Di langkah "Compile `nearcore` Binary" ini akan memakan waktu yang lumayan banyak (estimasi saya adalah 20 menitan). Namun hal tersebut tergantung dengan spesifikasi VPS yang anda gunakan 
     
-4. Initialize Working Directory
-    
-    - Delete old `genesis.json` (apabila sebelumnya sudah pernah menjalankan node StakeWars)
-
-        ```bash
-        rm ~/.near/genesis.json
-        ```
-        
-    - Download new `genesis.json`
+4. Inisialisasi Working Directory
+   
+    - Download `genesis.json`
     
         ```bash
         ./target/release/neard --home ~/.near init --chain-id shardnet --download-genesis
         ```
         
+        
         ![image](https://user-images.githubusercontent.com/100946299/180932668-2a7b76ff-b483-4f2c-9e85-49ad44ffef3f.png)
         
-    - Memasang Snapshot `(Optional)`
+    - Replace `config.json`
+
+    ```bash
+    rm ~/.near/config.json
+    wget -O ~/.near/config.json https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/shardnet/config.json
+    
+    ```
+   
+    ![image](https://user-images.githubusercontent.com/100946299/180932877-8d1b743d-fb51-46f4-a6d1-6829483f17ad.png)
+    
+    
         
-        Install `AWS-CLI`
+5. Memasang Snapshot `(Optional)`
+        
+      - Install `AWS-CLI`
         
         ```bash
         sudo apt-get install awscli -y
@@ -145,20 +152,16 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
         
         ```bash
         rm ~/.near/genesis.json
-        wget -O ~/.near/genesis.json https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/shardnet/genesis.json
+        wget https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/shardnet/genesis.json
         ```
         ![image](https://user-images.githubusercontent.com/100946299/180932817-1c247943-a0de-4d08-9ca4-7bc460218cfd.png)
+        
+        Apabila proses diatas gagal, mungkin karna versi AWS CLI yang ketinggalan. Masukkan command ini
+        
+        ```
+        pip3 install awscli --upgrade
+        ```
 
-    
-5. Replace `config.json`
-
-    ```bash
-    rm ~/.near/config.json
-    wget -O ~/.near/config.json https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/shardnet/config.json
-    
-    ```
-    
-    ![image](https://user-images.githubusercontent.com/100946299/180932877-8d1b743d-fb51-46f4-a6d1-6829483f17ad.png)
 
     
 6. Jalankan Node
@@ -176,39 +179,11 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
     ![image](https://user-images.githubusercontent.com/100946299/180943434-423b5123-7e3d-412e-82a4-6e196d40ab4a.png)
 
 
-    
+
     Saat proses download header sudah 100% ( `EpochId(`11111111111111111111111111111111`)` berubah menjadi tulisan yang berbeda ), matikan node menggunakan `CTRL+C` supaya tidak terjadi konflik/masalah pada saat pembuatan service nanti. Agak lama prosesnya jadi sabar ya.
     
 7. Membuat Service
-   
-    - Menggunakan command `vi` :
-
-       ```bash
-       sudo vi /etc/systemd/system/neard.service
-       ```
-       Lalu masukkan kode berikut ini :
-       
-        ```bash
-        [Unit] 
-        Description=NEARd Daemon Service 
-        [Service] 
-        Type=simple 
-        User=$USER
-        #Group=near 
-        WorkingDirectory=$HOME/.near
-        ExecStart=$HOME/nearcore/target/release/neard run 
-        Restart=on-failure 
-        RestartSec=30 
-        KillSignal=SIGINT 
-        TimeoutStopSec=45 
-        KillMode=mixed 
-        [Install] 
-        WantedBy=multi-user.target
-        ```
-        Kemudian tekan `ESC` dan ketik `:wq` `enter`.
-
-    **Atau**
-
+  
     - Menggunakan command `tee` :
 
         ```bash
