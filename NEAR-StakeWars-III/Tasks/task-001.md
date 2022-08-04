@@ -1,15 +1,10 @@
-# Memasang NEAR-CLI `(Challenge 001)`
-
-Di bagian ini, Anda terlebih dahulu menginstal `NEAR-CLI` untuk menjalankan validator nanti, karena memerlukan dompet shardnet yang harus digunakan untuk melakukan transaksi.
+# Challenge 001 - Memasang NEAR-CLI
 
 1. Update dan Upgrade Software
 
     ```bash
     sudo apt update && sudo apt upgrade -y
     ```
-
-    ![image](https://user-images.githubusercontent.com/100946299/180929617-adde64f6-1781-4db7-bdfd-1be32829496d.png)
-
 
 2. Install Developer Tools, Nodejs dan NPM
 
@@ -20,9 +15,6 @@ Di bagian ini, Anda terlebih dahulu menginstal `NEAR-CLI` untuk menjalankan vali
 
     PATH="$PATH"
     ```
-    
-    ![image](https://user-images.githubusercontent.com/100946299/180929753-38797e51-b239-4590-b9e6-3eb5bf1c1a23.png)
-
 
     
 3. Cek versi Nodejs dan NPM
@@ -32,12 +24,12 @@ Di bagian ini, Anda terlebih dahulu menginstal `NEAR-CLI` untuk menjalankan vali
     ```bash
     node -v
     ```
-     > hasil : v18.6.0
+    ` hasil : v18.6.0 `
 
     ```bash
     npm -v
     ```
-     > hasil : 8.13.2
+    ` hasil : 8.13.2 `
 
     
 4. Install NEAR-CLI
@@ -61,54 +53,6 @@ Di bagian ini, Anda terlebih dahulu menginstal `NEAR-CLI` untuk menjalankan vali
     ```
     
     ![image](https://user-images.githubusercontent.com/100946299/180929925-6910e207-5531-4e65-a842-e428b565aff6.png)
-
-
-    
-## Controlling Command
-
-- Cek Daftar Proposals
-    
-    Di bagian ini Anda akan melihat daftar proposal yang diterima atau ditolak (Anda dapat memeriksanya nanti setelah membuat validator).
-    
-    - Cek daftar seluruh proposals
-    
-        ```bash
-        near proposals
-        ```
-        
-    - Cek daftar proposals secara spesifik
-
-        ```bash
-        near proposals | grep <nama wallet anda>.factory.shardnet.near
-        ```
-        
-- Cek Daftar Validators Yang Aktif
-    
-    - Cek daftar seluruh validators aktif
-    
-        ```bash
-        near validators current
-        ```
-        
-    - Cek daftar validators secara spesifik
-
-        ```bash
-        near validators current | grep <nama wallet anda>.factory.shardnet.near
-        ```
-- Cek Daftar Validators Next atau  Validators yang Proposalnya sudah diterima dan akan aktif di epoch selanjutnya
-    
-    - Cek daftar seluruh validators next
-    
-        ```bash
-        near validators next
-        ```
-        
-    - Cek daftar validators next secara spesifik
-
-        ```bash
-        near validators next | grep <nama wallet anda>.factory.shardnet.near
-        ```
-
 
 ## Setelah selesai memasang NEAR-CLI, anda dapat lanjut ke challenge 002
 
