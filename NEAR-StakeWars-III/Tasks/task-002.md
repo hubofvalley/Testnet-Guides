@@ -75,7 +75,7 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
 2. Checkout Commit
 
     ```bash
-    git checkout 78ef2f55857d6118047efccf070ae0f7ddb232ea
+    git checkout 68bfa84ed1455f891032434d37ccad696e91e4f5
     ```
     
     ![image](https://user-images.githubusercontent.com/100946299/180930757-a0665329-ce4c-4d58-aa6c-ceef33cca8e9.png)
