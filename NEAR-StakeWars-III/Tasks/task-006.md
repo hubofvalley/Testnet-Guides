@@ -30,28 +30,33 @@ Disini kalian akan menjalankan ping otomatis tiap 2 jam sekali
     near validators next | grep $POOLID >> $LOGS/all.log
     ```
     `setelah selesai edit PoolId dan AccountId, save filenya dengan cara pencet CTRL+O lalu CTRL+X`
+ 3. Ganti execute permission file ping.sh 
     
- 3. Buka Crontab
+    ```bash
+    chmod +x $HOME/scripts/ping.sh
+    ```
+    
+ 4. Buka Crontab
     
     ```bash
     crontab -e
     ```
     
- 4. Masukkan angka 1
- 5. Set skala waktu ping per 2 jam
+ 5. Masukkan angka 1
+ 6. Set skala waktu ping per 2 jam
       
     ```bash
     0 */2 * * * sh $HOME/nearcore/scripts/ping.sh
     ```
     `setelah selesai Set skala waktu ping per 2 jam, save filenya dengan cara pencet CTRL+O lalu CTRL+X`
    
- 6. Cek log
+ 7. Cek log
     
     ```bash
     cat $HOME/nearcore/logs/all.log
     ```
   
- 7. Cek crontab
+ 8. Cek crontab
     
     ```bash
     crontab -l
