@@ -55,6 +55,12 @@
     
     rasio : `1 NEAR = 1000000000000000000000000 yoctoNEAR`
     
+    Anda juga bisa melakukan unstake pada seluruh staked token anda :
+    
+    ```bash
+    near call <nama wallet anda>.factory.shardnet.near unstake_all --accountId <nama wallet anda>.shardnet.near --gas=30000000000000 --node_url http://127.0.0.1:3030/
+    ```
+    
     
 4.  Withdraw
 
