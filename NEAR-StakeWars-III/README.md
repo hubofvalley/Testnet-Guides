@@ -28,3 +28,8 @@ Challenges yang terdapat pada event StakeWars-Episode-III ini memiliki tingkat k
 | 007                                                                      | Membuat output berupa data science dari data staking                              | 20 DNP           | 9 September 2022|  |
 | 008                                                                      | Pembagian hasil staking                                                           | 30 DNP , 50 UNP  | 11 Agustus 2022 |  |
 | 009                                                                      | Staking Farm 2.0                                                                  | 15 UNP           | 11 Agustus 2022 |  |
+
+```
+1 UNP (UNLOCKED NEAR POINTS) = 1 NEAR
+1 DNP (DELEGATED NEAR POINTS) = 500 NEAR DELEGATED YOUR MAINNET VALIDATOR
+```
