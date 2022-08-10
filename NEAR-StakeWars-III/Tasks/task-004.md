@@ -12,7 +12,8 @@
     curl -s http://127.0.0.1:3030/status | jq .version
     ```
     
-    ![image](https://user-images.githubusercontent.com/100946299/180950257-feb053ec-74d9-45ab-af7c-524bc73fee9b.png)
+    ![image](https://user-images.githubusercontent.com/100946299/183800267-9a0350c0-cab4-409a-978c-ce05aa8f2426.png)    
+
     
     - Cek Delegators dan Stake
 
