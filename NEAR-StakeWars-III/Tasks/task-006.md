@@ -48,7 +48,7 @@ Disini kalian akan menjalankan ping otomatis tiap 2 jam sekali
     ```bash
     0 */2 * * * sh $HOME/nearcore/scripts/ping.sh
     ```
-    `setelah selesai Set skala waktu ping per 2 jam, save filenya dengan cara pencet CTRL+O lalu CTRL+X`
+    `setelah selesai Set skala waktu ping per 2 jam, save filenya dengan cara pencet CTRL+X lalu "y" lalu "enter"
    
  7. Cek log
     
