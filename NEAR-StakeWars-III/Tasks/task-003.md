@@ -3,7 +3,7 @@
 1. Membuat Staking Pool Contract
 
     ```bash
-    near call factory.shardnet.near create_staking_pool '{"staking_pool_id": "<nama wallet anda>", "owner_id": "<nama wallet anda>.shardnet.near", "stake_public_key": "<public key anda>", "reward_fee_fraction": {"numerator": 5, "denominator": 100}, "code_hash":"DD428g9eqLL8fWUxv8QSpVFzyHi1Qd16P8ephYCTmMSZ"}' --accountId="<nama wallet anda>.shardnet.near" --amount=30 --gas=30000000000000
+    near call factory.shardnet.near create_staking_pool '{"staking_pool_id": "<nama wallet anda>", "owner_id": "<nama wallet anda>.shardnet.near", "stake_public_key": "<public key anda>", "reward_fee_fraction": {"numerator": 5, "denominator": 100}, "code_hash":"DD428g9eqLL8fWUxv8QSpVFzyHi1Qd16P8ephYCTmMSZ"}' --accountId="<nama wallet anda>.shardnet.near" --amount=30 --gas=30000000000000 --node_url http://127.0.0.1:3030/
     ```
  
     Ganti ` <public key anda> ` dengan public key anda. Public key dapat dilihat menggunakan command di bawah ini :
@@ -32,14 +32,14 @@
     Anda dapat merubah commission rate pada validator anda dengan menggunakan command di bawah ini :
     
     ```bash
-    near call <nama wallet anda>.factory.shardnet.near update_reward_fee_fraction '{"reward_fee_fraction": {"numerator": <angka commision rate>, "denominator": 100}}' --accountId <nama wallet anda>.shardnet.near --gas=30000000000000
+    near call <nama wallet anda>.factory.shardnet.near update_reward_fee_fraction '{"reward_fee_fraction": {"numerator": <angka commision rate>, "denominator": 100}}' --accountId <nama wallet anda>.shardnet.near --gas=30000000000000 --node_url http://127.0.0.1:3030/
     ```
     
     
 2.  Deposit dan Stake NEAR
     
     ```bash
-    near call <nama wallet anda>.factory.shardnet.near deposit_and_stake --amount <jumlah NEAR yang akan kalian stake> --accountId <nama wallet anda>.shardnet.near --gas=30000000000000
+    near call <nama wallet anda>.factory.shardnet.near deposit_and_stake --amount <jumlah NEAR yang akan kalian stake> --accountId <nama wallet anda>.shardnet.near --gas=30000000000000 --node_url http://127.0.0.1:3030/
     ```
     
     
@@ -48,7 +48,7 @@
     Akan memakan waktu 2-3 epoch untuk menyelesaikan proses unstaking. Anda dapat melakukan unstake pada validator dengan menggunakan command dibawah ini :
     
     ```bash
-    near call <nama wallet anda>.factory.shardnet.near unstake '{"amount": "<jumlah yoctoNEAR yang akan kalian stake>"}' --accountId <nama wallet anda>.shardnet.near --gas=30000000000000
+    near call <nama wallet anda>.factory.shardnet.near unstake '{"amount": "<jumlah yoctoNEAR yang akan kalian stake>"}' --accountId <nama wallet anda>.shardnet.near --gas=30000000000000 --node_url http://127.0.0.1:3030/
     ```
     
     sesuaikan jumlah yoctoNEAR yang anda ingin stake di bagian  `<jumlah yoctoNEAR yang akan kalian stake>`
@@ -61,7 +61,7 @@
     Witdrawal baru bisa dilakukan apabila proses unstake sudah selesai. Anda dapat melakukan withdraw pada validator dengan menggunakan command dibawah ini :
     
     ```bash
-    near call <nama wallet anda>.factory.shardnet.near withdraw '{"amount": "<jumlah yoctoNEAR yang akan kalian withdraw>"}' --accountId <nama wallet anda>.shardnet.near --gas=30000000000000
+    near call <nama wallet anda>.factory.shardnet.near withdraw '{"amount": "<jumlah yoctoNEAR yang akan kalian withdraw>"}' --accountId <nama wallet anda>.shardnet.near --gas=30000000000000 --node_url http://127.0.0.1:3030/
     ```
     sesuaikan jumlah yoctoNEAR yang anda ingin stake di bagian  `<jumlah yoctoNEAR yang akan kalian withdraw>`
     
@@ -70,7 +70,7 @@
     berikut adalah command untuk withdraw seluruh unstaked NEAR di validator : 
     
     ```bash
-    near call <nama wallet anda>.factory.shardnet.near withdraw_all --accountId <nama wallet anda>.shardnet.near --gas=30000000000000
+    near call <nama wallet anda>.factory.shardnet.near withdraw_all --accountId <nama wallet anda>.shardnet.near --gas=30000000000000 --node_url http://127.0.0.1:3030/
     ```
     
 5.  Ping
@@ -79,7 +79,7 @@
     Anda dapat melakukan ping pada validator dengan menggunakaan command dibawah ini : 
     
     ```bash
-    near call <nama wallet anda>.factory.shardnet.near ping '{}' --accountId <nama wallet anda>.shardnet.near --gas=30000000000000
+    near call <nama wallet anda>.factory.shardnet.near ping '{}' --accountId <nama wallet anda>.shardnet.near --gas=30000000000000 --node_url http://127.0.0.1:3030/
     ```
     
     Balances Total Balance Command :
