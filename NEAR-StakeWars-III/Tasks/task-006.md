@@ -24,7 +24,7 @@ Disini kalian akan menjalankan ping otomatis tiap 2 jam sekali
 
     echo "---" >> $LOGS/all.log
     date >> $LOGS/all.log
-    near call $POOLID.factory.shardnet.near ping '{}' --accountId $ACCOUNTID.shardnet.near --gas=300000000000000 >> $LOGS/all.log
+    near call $POOLID.factory.shardnet.near ping '{}' --accountId $ACCOUNTID.shardnet.near --gas=30000000000000 >> $LOGS/all.log
     near proposals | grep $POOLID >> $LOGS/all.log
     near validators current | grep $POOLID >> $LOGS/all.log
     near validators next | grep $POOLID >> $LOGS/all.log
