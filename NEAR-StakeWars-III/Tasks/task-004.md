@@ -18,7 +18,7 @@
     - Cek Delegators dan Stake
 
         ```bash
-        near view xx.factory.shardnet.near get_accounts '{"from_index": 0, "limit": 10}' --accountId <nama wallet anda>.shardnet.near
+        near view <nama wallet anda>.factory.shardnet.near get_accounts '{"from_index": 0, "limit": 10}' --accountId <nama wallet anda>.shardnet.near
 
         ```
     - Cek Block Produced
