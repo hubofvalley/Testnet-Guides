@@ -118,7 +118,7 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
     
     
         
-5. Memasang Snapshot `(Optional)`
+5. Memasang Snapshot `(Optional)` [SNAPSHOT SUDAH TIDAK BISA DILAKUKAN SETELAH HARDFORK SHARDNET PADA TANGGAL 2022-07-18]
         
       - Install `AWS-CLI`
         
@@ -129,7 +129,7 @@ Pastikan server/device/VPS yang anda gunakan untuk menjalankan validator sudah m
         ![image](https://user-images.githubusercontent.com/100946299/180932717-deb9a4a0-f709-4fab-8dc5-22ea1205dc29.png)
 
         
-        Hapus `genesis.json` sebelumnya lalu download ulang file `genesis.json`
+        Hapus `genesis.json` sebelumnya lalu download ulang file `genesis.json` [DOWNLOAD SNAPSHOT]
         
         ```bash
         rm ~/.near/genesis.json
@@ -288,7 +288,7 @@ Anda perlu memasukkan shardnet wallet kalian untuk menjalankan validatornya deng
     nano ~/.near/validator_key.json
     ```
     
-    Lalu tekan `CTRL + O` dan `CTRL + X`
+    Lalu tekan `CTRL + X` , lalu tekan `y` , lalu tekan tombol `Enter`
     
 14. Simpan file `node_key.json` dan `validator_key.json` bertujuan untuk membackup node yang sudah anda deploy. Mencegah apabila di kemudian hari VPS anda mati, jadi anda dapat menjalankan node nya di VPS yang berbeda
     - Simpan atau copy isi file `node_key.json`
