@@ -50,5 +50,14 @@ Disini kalian akan menjalankan ping otomatis tiap 2 jam sekali
     ```bash
     cat $HOME/nearcore/logs/all.log
     ```
+  
+ 7. Cek crontab
+    
+    ```bash
+    crontab -l
+    ```
+    ![image](https://user-images.githubusercontent.com/100946299/183812181-bd9b7f33-3033-4f93-ae43-e5f5ef3363c8.png)
+
+    
     
  submit form : https://docs.google.com/forms/d/e/1FAIpQLScp9JEtpk1Fe2P9XMaS9Gl6kl9gcGVEp3A5vPdEgxkHx3ABjg/viewform
