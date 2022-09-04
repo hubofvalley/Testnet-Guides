@@ -39,7 +39,7 @@ Challenges yang terdapat pada event StakeWars-Episode-III ini memiliki tingkat k
 10 DNP                | 11 Agustus 2022 |
 | 014                                                                      | Menjalankan Auto-backup script                                                    | 15 DNP                | 7 September 2022 |
 | 015                                                                      | Menjalankan Kuutamo Service                                                        | 10 DNP                | 7 September 2022 |
-| 016                                                                      |                                                                          | -                | 7 September 2022 |
+| 016                                                                      | -                                                                         | -                | 7 September 2022 |
 | 017                                                                      | Menjalankan Validator di jaringan akash                                    | (Testnet Bounty)
 + 100 USD in $LiNEAR untuk 3 submission terbaik                | 7 September 2022 |
 | 018                                                                      | Membuat video tutorial mengenai StakeWars III                                                                   | 50 UNP
