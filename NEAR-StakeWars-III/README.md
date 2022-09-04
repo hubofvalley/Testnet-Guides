@@ -25,9 +25,25 @@ Challenges yang terdapat pada event StakeWars-Episode-III ini memiliki tingkat k
 | 004                                                                      | Menjalankan Monitoring Status pada node                                           | 15 UNP           | 11 Agustus 2022 | [task-004](https://github.com/cbjohnson90/Testnet-Guides/blob/main/NEAR-StakeWars-III/Tasks/task-004.md) |
 | 005                                                                      | Membuat guide / tutorial Stakewars III                                            | 5 UNP            | 11 Agustus 2022 |  |
 | 006                                                                      | Menjalankan Ping Secara Otomatis Per 2 Jam Sekali                                 | 5 UNP            | 11 Agustus 2022 | [task-006](https://github.com/cbjohnson90/Testnet-Guides/blob/main/NEAR-StakeWars-III/Tasks/task-006.md) |
-| 007                                                                      | Membuat output berupa data science dari data staking                              | 20 DNP           | 9 September 2022|  |
+| 007                                                                      | Membuat output berupa data science dari data staking                              | 30 DNP
+50 UNP
+200 USD in $LiNEAR untuk submission terbaik           | 9 September 2022|  |
 | 008                                                                      | Pembagian hasil staking                                                           | 30 DNP , 50 UNP  | 11 Agustus 2022 |  |
-| 009                                                                      | Staking Farm 2.0                                                                  | 15 UNP           | 11 Agustus 2022 |  |
+| 009                                                                      | Memonitor Uptime di shardnet scoreboard                                           | 15 UNP           | 11 Agustus 2022 |  |
+| 010                                                                      | Delegasi token dari dev untuk uptime >= 60%                                       | 15 UNP           | 11 Agustus 2022 |  |
+| 011                                                                      | Staking Farm 2.0                                                                  | 30 DNP
+50 UNP
+200 USD in $LiNEAR untuk submission terbaik           | 11 Agustus 2022 |  |
+| 012                                                                      | -                                                                                 | -                | 11 Agustus 2022 |  |
+| 013                                                                      | Menjalankan backup node                                                           | 25 UNP
+10 DNP                | 11 Agustus 2022 |
+| 014                                                                      | Menjalankan Auto-backup script                                                    | 15 DNP                | 11 Agustus 2022 |
+| 015                                                                      | Menjalankan Kuutamo Service                                                        | 10 DNP                | 11 Agustus 2022 |
+| 016                                                                      |                                                                          | -                | 11 Agustus 2022 |
+| 017                                                                      | Menjalankan Validator di jaringan akash                                    | (Testnet Bounty)
++ 100 USD in $LiNEAR untuk 3 submission terbaik                | 11 Agustus 2022 |
+| 018                                                                      | Membuat video tutorial mengenai StakeWars III                                                                   | 50 UNP
+200 USD in $LiNEAR untuk submission terbaik                | 11 Agustus 2022 |
 
 ```
 1 UNP (UNLOCKED NEAR POINTS) = 1 NEAR
