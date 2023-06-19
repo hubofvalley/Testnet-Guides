@@ -14,4 +14,4 @@ Sebelum menjalankan node , kalian dapat membuat VPS sesuai dengan persyaratan di
 | RAM	| 8 GB |
 | Storage	| 500+ GB SSD (SATA or NVMe) |
 
-## JUMP TO THE [IBC-TASKS](https://github.com/hubofvalley/EmpowerChain/blob/main/Empower%20IBC%20task.md)
+## JUMP TO THE [IBC-TASKS](https://github.com/hubofvalley/Testnet-Guides/blob/main/EmpowerChain-Incentivised-Testnet-Guides%20/README.md)
