@@ -162,7 +162,7 @@ empowerd tx ibc-transfer transfer transfer channel-0 $OSMOSIS_WALLET_ADDRESS 100
 osmosisd tx ibc-transfer transfer transfer channel-155 <empower-wallet-address> 50000ibc/E0FDA81C892EEA14C2398519260AA706A068B36AE5BE8AE9FAD8EB1540A6E02E --from=$OSMOSIS_WALLET --fees 5000uosmo --chain-id osmo-test-5 --keyring-backend test --node https://rpc.osmotest5.osmosis.zone:443
 ```
 
-### Osmosis —> Empower transfer ($aUSDC) (before to do this task, you must swap your $OSMO to $axUSDC in https://testnet.osmosis.zone/?from=OSMO&to=aUSDC)
+### Osmosis —> Empower transfer ($aUSDC) (before to do this task, you must swap your $OSMO to $aUSDC in https://testnet.osmosis.zone/?from=OSMO&to=aUSDC)
 ```
 osmosisd tx ibc-transfer transfer transfer channel-155 <empower-wallet-address> 100000ibc/6F34E1BD664C36CE49ACC28E60D62559A5F96C4F9A6CCE4FC5A67B2852E24CFE --from=$OSMOSIS_WALLET --fees 5000uosmo --chain-id osmo-test-5 --keyring-backend test --node https://rpc.osmotest5.osmosis.zone:443
 ```
