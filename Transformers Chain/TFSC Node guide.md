@@ -28,7 +28,4 @@
 
 #Commands for tmux:
       ctrl+b and then d - close session 
-      tmux attach - attach to a session
-    ``
-
-#cheers! 
+      tmux attach - attach to a session. cheers! 
