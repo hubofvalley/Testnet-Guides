@@ -16,18 +16,17 @@
 
 # 5. Add ip address to confog.json
     
-   nano $HOME/.transformers/config.json
+    nano $HOME/.transformers/config.json
    
   #if u're using mobaxterm, u can simply open it through the UI. Next, make a backup of the key file, it is called <address>.private and is located in the .transformers/cert/ folder.
 
 # 6. Create tmux session for running the node
     tmux new-session -s tfsc
-    
-  `` In the opened session, run the node with -m flag:
+# In the opened session, run the node with -m flag 
     $HOME/.transformers/ttfs_v0.8.0_76a6414_devnet -m
-```
-```
-Commands for tmux:
+
+
+#Commands for tmux:
       ctrl+b and then d - close session 
       tmux attach - attach to a session
     ``
