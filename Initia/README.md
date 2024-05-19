@@ -87,7 +87,7 @@ With Public Testnet, Initia’s docs and code become public. Check them out belo
    ```
 
 ### 8. set custom ports in app.toml
-```bash
+   ```bash
    sed -i.bak -e "s%:1317%:${INITIA_PORT}317%g;
    s%:8080%:${INITIA_PORT}080%g;
    s%:9090%:${INITIA_PORT}090%g;
@@ -95,93 +95,93 @@ With Public Testnet, Initia’s docs and code become public. Check them out belo
    s%:8545%:${INITIA_PORT}545%g;
    s%:8546%:${INITIA_PORT}546%g;
    s%:6065%:${INITIA_PORT}065%g" $HOME/.initia/config/app.toml
-```
+   ```
 
 ### 9. set custom ports in config.toml file
-```bash
-    sed -i.bak -e "s%:26658%:${INITIA_PORT}658%g;
-    s%:26657%:${INITIA_PORT}657%g;
-    s%:6060%:${INITIA_PORT}060%g;
-    s%:26656%:${INITIA_PORT}656%g;
-    s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${INITIA_PORT}656\"%;
-    s%:26660%:${INITIA_PORT}660%g" $HOME/.initia/config/config.toml
-```
+   ```bash
+   sed -i.bak -e "s%:26658%:${INITIA_PORT}658%g;
+   s%:26657%:${INITIA_PORT}657%g;
+   s%:6060%:${INITIA_PORT}060%g;
+   s%:26656%:${INITIA_PORT}656%g;
+   s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${INITIA_PORT}656\"%;
+   s%:26660%:${INITIA_PORT}660%g" $HOME/.initia/config/config.toml
+   ```
 
 ### 10. config pruning to save storage (optional)
-    ```bash
-    sed -i \
-    -e "s/^pruning *=.*/pruning = \"custom\"/" \
-    -e "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"100\"/" \
-    -e "s/^pruning-interval *=.*/pruning-interval = \"10\"/" \
-    "$HOME/.initia/config/app.toml"
-    ```
+   ```bash
+   sed -i \
+   -e "s/^pruning *=.*/pruning = \"custom\"/" \
+   -e "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"100\"/" \
+   -e "s/^pruning-interval *=.*/pruning-interval = \"10\"/" \
+   "$HOME/.initia/config/app.toml"
+   ```
 
 ### 11. set minimum gas price, enable prometheus and disable indexing
-```bash
-    sed -i 's|minimum-gas-prices =.*|minimum-gas-prices = "0.15uinit,0.01uusdc"|g' $HOME/.initia/config/app.toml
-    sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.initia/config/config.toml
-    sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.initia/config/config.toml
-```
+   ```bash
+   sed -i 's|minimum-gas-prices =.*|minimum-gas-prices = "0.15uinit,0.01uusdc"|g' $HOME/.initia/config/app.toml
+   sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.initia/config/config.toml
+   sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.initia/config/config.toml
+   ```
 
 ### 12. create service file
-```bash
-    sudo tee /etc/systemd/system/initiad.service > /dev/null <<EOF
-    [Unit]
-    Description=Initia Node
-    After=network.target
+   ```bash
+   sudo tee /etc/systemd/system/initiad.service > /dev/null <<EOF
+   [Unit]
+   Description=Initia Node
+   After=network.target
 
-    [Service]
-    User=$USER
-    Type=simple
-    ExecStart=$(which initiad) start --home $HOME/.initia
-    Restart=on-failure
-    LimitNOFILE=65535
+   [Service]
+   User=$USER
+   Type=simple
+   ExecStart=$(which initiad) start --home $HOME/.initia
+   Restart=on-failure
+   LimitNOFILE=65535
 
-    [Install]
-    WantedBy=multi-user.target
-    EOF
-```
+   [Install]
+   WantedBy=multi-user.target
+   EOF
+   ```
 
 ### 13. start the node
-    ```bash
-    sudo systemctl daemon-reload && \
-    sudo systemctl enable initiad && \
-    sudo systemctl restart initiad && sudo journalctl -u initiad -fn 100 -o cat
-    ```
+   ```bash
+   sudo systemctl daemon-reload && \
+   sudo systemctl enable initiad && \
+   sudo systemctl restart initiad && sudo journalctl -u initiad -fn 100 -o cat
+   ```
 
 ### 14. create wallet
-```bash
-    initiad keys add $WALLET
-```
+   ```bash
+   initiad keys add $WALLET
+   ```
 
 ### 15. import wallet by using seed phrase
-```bash
-    initiad keys add $WALLET --recover
-```
+   ```bash
+   initiad keys add $WALLET --recover
+   ```
 
 ### 16. save wallet and validator address
-```bash
-    WALLET_ADDRESS=$(initiad keys show $WALLET -a)
-    VALOPER_ADDRESS=$(initiad keys show $WALLET --bech val -a)
-    echo "export WALLET_ADDRESS="$WALLET_ADDRESS >> $HOME/.bash_profile
-    echo "export VALOPER_ADDRESS="$VALOPER_ADDRESS >> $HOME/.bash_profile
-    source $HOME/.bash_profile
-```
+   ```bash
+   WALLET_ADDRESS=$(initiad keys show $WALLET -a)
+   VALOPER_ADDRESS=$(initiad keys show $WALLET --bech val -a)
+   echo "export WALLET_ADDRESS="$WALLET_ADDRESS >> $HOME/.bash_profile
+   echo "export VALOPER_ADDRESS="$VALOPER_ADDRESS >> $HOME/.bash_profile
+   source $HOME/.bash_profile
+   ```
 
 ### 17. get the testnet token (INIT) from faucet (**YOU NEED TO VERIFY BY USING YOUR DISCORD ACCOUNT, GET THE FAUCET ROLE ON INITIA'S DISCORD CHANNEL**) [[**FAUCET**](https://faucet.testnet.initia.xyz/)]
 
 ### 18. check sync status
-```bash
-    curl http://127.0.0.1:26657/status | jq
-```
+   ```bash
+   curl http://127.0.0.1:26657/status | jq
+   ```
 
 ### 19. check wallet's balance (**MAKE SURE YOUR NODE IS FULLY SYNCED, OTHERWISE IT WON'T WORK**)
-```bash
-    initiad query bank balances $WALLET_ADDRESS
-```
+   ```bash
+   initiad query bank balances $WALLET_ADDRESS
+   ```
 
 ### 20. create validator
-```bash
+   ```bash
     initiad tx mstaking create-validator \
     --amount 20000000uinit \
     --from $WALLET \
@@ -195,7 +195,7 @@ With Public Testnet, Initia’s docs and code become public. Check them out belo
     --chain-id initiation-1 \
     --gas auto --fees 80000uinit \
     -y
-```
+   ```
 
 ## download fresh addrbook.json and persistent peers (**thank you to TRUSTEDLABS**)
 ### 1. fresh addrbook.json
