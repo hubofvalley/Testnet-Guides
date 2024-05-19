@@ -216,6 +216,11 @@ With Public Testnet, Initia’s docs and code become public. Check them out belo
    fi
    ```
 
+### 3. restart the node
+   ```bash
+   sudo systemctl restart initiad && sudo journalctl -u initiad -fn 100 -o cat
+   ```
+
 ## stake commands
 ### 1. delegate to your validator
    ```bash
