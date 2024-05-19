@@ -200,9 +200,9 @@ With Public Testnet, Initia’s docs and code become public. Check them out belo
 
 ## download fresh addrbook.json and persistent peers (**thank you to TRUSTEDLABS**)
 ### 1. fresh addrbook.json
-```bash
-    wget -O $HOME/.initia/config/addrbook.json https://rpc-initia-testnet.trusted-point.com/addrbook.json
-```
+   ```bash
+   wget -O $HOME/.initia/config/addrbook.json https://rpc-initia-testnet.trusted-point.com/addrbook.json
+   ```
 
 ### 2. fresh persistent peers
    ```bash
