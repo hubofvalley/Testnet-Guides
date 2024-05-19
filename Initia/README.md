@@ -8,8 +8,6 @@ Initia is a platform designed for creating secure, scalable modular blockchains 
 - **THE INITIATION**
 is an 8-week Incentivized Public Testnet adventure by Initia. This is the first chance to explore Initia's new multi-chain world developed over the past year. Join the Initia Militia, provide feedback, explore Minitias, and enjoy the experience.
 
-![alt text](image.png)
-
 - **JOIN AND STUDY INITIA**
 With Public Testnet, Initia’s docs and code become public. Check them out below!
     - [Initia Website](https://initia.xyz/)
