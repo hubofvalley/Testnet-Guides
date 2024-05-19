@@ -2,13 +2,14 @@
 ```will always update```
 
 ## Initia
+![alt text](initia.png)
 - **WHAT IS INITIA?** 
 Initia is a platform designed for creating secure, scalable modular blockchains using Celestia's DA infrastructure. It aims to streamline the multichain experience by vertically integrating the entire tech stack. Initia connects Layer 1 with Layer 2 application chains ("Minitias") using its rollup framework and supports inter-minitia communication through a dedicated messaging layer.
 
 - **THE INITIATION**
 is an 8-week Incentivized Public Testnet adventure by Initia. This is the first chance to explore Initia's new multi-chain world developed over the past year. Join the Initia Militia, provide feedback, explore Minitias, and enjoy the experience.
 
-![alt text](image.png)
+![alt text](apps.png)
 
 - **JOIN AND STUDY INITIA**
 With Public Testnet, Initia’s docs and code become public. Check them out below!
