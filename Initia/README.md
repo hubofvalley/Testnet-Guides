@@ -44,7 +44,7 @@ With Public Testnet, Initia’s docs and code become public. Check them out belo
    echo "export IDENTITY="<insert your identity>"" >> $HOME/.bash_profile
    echo "export DETAILS="<insert your details>"" $HOME/.bash_profile
    echo "export INITIA_CHAIN_ID="initiation-1"" >> $HOME/.bash_profile
-   echo "export INITIA_PORT="51"" >> $HOME/.bash_profile
+   echo "export INITIA_PORT="26"" >> $HOME/.bash_profile
    source $HOME/.bash_profile
    ```
 
