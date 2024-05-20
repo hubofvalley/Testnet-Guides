@@ -31,15 +31,10 @@ With Public Testnet, Initia’s docs and code become public. Check them out belo
 
 ### 2. install go
    ```bash
-   cd $HOME
-   VER="1.22.2"
-   wget "https://golang.org/dl/go$VER.linux-amd64.tar.gz"sudo rm -rf /usr/local/go
-   sudo tar -C /usr/local -xzf "go$VER.linux-amd64.tar.gz"
-   rm "go$VER.linux-amd64.tar.gz"
-   [ ! -f ~/.bash_profile ] && touch ~/.bash_profile
-   echo "export PATH=$PATH:/usr/local/go/bin:~/go/bin" >> ~/.bash_profile
-   source $HOME/.bash_profile
-   [ ! -d ~/go/bin ] && mkdir -p ~/go/bin
+   sudo rm -rf /usr/local/go
+   curl -L https://go.dev/dl/go1.21.6.linux-amd64.tar.gz | sudo tar -xzf - -C /usr/local
+   echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bash_profile
+   source .bash_profile
    ```
 
 ### 3. set vars
