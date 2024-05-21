@@ -200,8 +200,21 @@ With Public Testnet, Initia’s docs and code become public. Check them out belo
    ```
 
 ### 2. fresh persistent peers
+   #### HETZNER PEERS
    ```bash
-   PEERS=$(curl -s --max-time 3 --retry 2 --retry-connrefused "https://rpc-initia-testnet.trusted-point.com/peers.txt")
+   PEERS=$(curl -s --max-time 3 --retry 2 --retry-connrefused "https://rpc-initia-testnet.trusted-point.com/hetzner_peers.txt")
+   if [ -z "$PEERS" ]; then
+   echo "No peers were retrieved from the URL."
+   else
+   echo -e "\nPEERS: "$PEERS""
+   sed -i "s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" "$HOME/.initia/config/config.toml"
+   echo -e "\nConfiguration file updated successfully.\n"
+   fi
+   ```
+
+#### NON-CONTABO PEERS
+   ```bash
+   PEERS=$(curl -s --max-time 3 --retry 2 --retry-connrefused "https://rpc-initia-testnet.trusted-point.com/non_contabo_peers.txt")
    if [ -z "$PEERS" ]; then
    echo "No peers were retrieved from the URL."
    else
@@ -255,6 +268,25 @@ With Public Testnet, Initia’s docs and code become public. Check them out belo
 ### 7. undelegate from your validator
    ```bash
    initiad tx mstaking unbond $(initiad keys show $WALLET --bech val -a) 1000000uinit --from $WALLET --chain-id initiation-1 --gas auto --fees 80000uinit -y
+   ```
+
+## SNAPSHOT
+### THANKS TO CROUTON DIGITAL
+   ```bash
+   sudo systemctl stop initiad
+
+   cp $HOME/.initia/data/priv_validator_state.json $HOME/.initia/priv_validator_state.json.backup
+
+   initiad tendermint unsafe-reset-all --home $HOME/.initia --keep-addr-book
+
+   curl https://storage.crouton.digital/testnet/initia/snapshots/initia_latest.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.initia
+
+   mv $HOME/.initia/priv_validator_state.json.backup $HOME/.initia/data/priv_validator_state.json
+
+   wget -O $HOME/.initia/config/addrbook.json https://rpc-initia-testnet.trusted-point.com/addrbook.json
+
+   sudo systemctl restart initiad
+   sudo journalctl -u initiad -f --no-hostname -o cat
    ```
 
 
