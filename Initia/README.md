@@ -286,7 +286,7 @@ With Public Testnet, Initia’s docs and code become public. Check them out belo
    wget -O $HOME/.initia/config/addrbook.json https://rpc-initia-testnet.trusted-point.com/addrbook.json
 
    sudo systemctl restart initiad
-   sudo journalctl -u initiad -f --no-hostname -o cat
+   sudo journalctl -u initiad -fn 100 -o cat
    ```
 
 
