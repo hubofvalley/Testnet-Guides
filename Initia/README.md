@@ -283,8 +283,6 @@ With Public Testnet, Initia’s docs and code become public. Check them out belo
 
    mv $HOME/.initia/priv_validator_state.json.backup $HOME/.initia/data/priv_validator_state.json
 
-   wget -O $HOME/.initia/config/addrbook.json https://rpc-initia-testnet.trusted-point.com/addrbook.json
-
    sudo systemctl restart initiad
    sudo journalctl -u initiad -fn 100 -o cat
    ```
