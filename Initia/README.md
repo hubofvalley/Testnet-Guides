@@ -54,7 +54,7 @@ With Public Testnet, Initia’s docs and code become public. Check them out belo
    rm -rf initia
    git clone https://github.com/initia-labs/initia.git
    cd initia
-   git checkout v0.2.14
+   git checkout v0.2.15
    make install
    ```
 
