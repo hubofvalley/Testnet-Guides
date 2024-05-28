@@ -69,89 +69,101 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
    [ ! -d ~/go/bin ] && mkdir -p ~/go/bin
    ```
 
-### 3. install rustup
-    ```
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    ```
-
-### 4. set vars
-   ```bash
-    echo 'export ZGS_CONFIG_FILE="$HOME/0g-storage-node/run/config.toml"' >> ~/.bash_profile
-    echo 'export ZGS_LOG_DIR="$HOME/0g-storage-node/run/log"' >> ~/.bash_profile
-    echo 'export ZGS_LOG_CONFIG_FILE="$HOME/0g-storage-node/run/log_config"' >> ~/.bash_profile
-
-    source ~/.bash_profile
+### 3. set vars
+   ```
+   echo 'export MONIKER="<your-moniker>"' >> ~/.bash_profile
+   echo 'export CHAIN_ID="zgtendermint_16600-1"' >> ~/.bash_profile
+   echo 'export WALLET_NAME="wallet"' >> ~/.bash_profile
+   echo "export 0G_PORT="26"" >> $HOME/.bash_profile
+   source $HOME/.bash_profile
    ```
 
 ### 4. download binary
    ```bash
-    cd $HOME
-    git clone https://github.com/0glabs/0g-storage-node.git
-    cd 0g-storage-node
-    git checkout tags/v0.2.0
-    git submodule update --init
-    cargo build --release
-    sudo mv $HOME/0g-storage-node/target/release/zgs_node /usr/local/bin
+   git clone -b v0.1.0 https://github.com/0glabs/0g-chain.git
+   cd 0g-chain
+   make install
+   0gchaind version
    ```
 
-### 5. wallet setup
-obtain yout wallet's private key by using this command :
-
+### 5. config and init app
    ```bash
-    0gchaind keys unsafe-export-eth-key $WALLET_NAME
+   cd $HOME
+   0gchaind init $MONIKER --chain-id $CHAIN_ID
+   0gchaind config chain-id $CHAIN_ID
+   0gchaind config node tcp://localhost:${0G_PORT}657
+   0gchaind config keyring-backend os
    ```
 
-store your private key in variable:
-
+### 6. download genesis.json
    ```bash
-   read -sp "Enter your private key: " PRIVATE_KEY && echo
+   wget https://github.com/0glabs/0g-chain/releases/download/v0.1.0/genesis.json -O $HOME/.0gchain/config/genesis.json
    ```
 
-### 6. update node configuration
+### 7. Add seeds and peers to the config.toml
    ```bash
-    if grep -q '# miner_id' $ZGS_CONFIG_FILE; then
-        MINER_ID=$(openssl rand -hex 32)
-        sed -i "/# miner_id/c\miner_id = \"$MINER_ID\"" $ZGS_CONFIG_FILE
-    fi
-
-    if grep -q '# miner_key' $ZGS_CONFIG_FILE; then
-        sed -i "/# miner_key/c\miner_key = \"$PRIVATE_KEY\"" $ZGS_CONFIG_FILE
-    fi
-
-    sed -i "s|^log_config_file =.*$|log_config_file = \"$ZGS_LOG_CONFIG_FILE\"|" $ZGS_CONFIG_FILE
-
-    if ! grep -q "^log_directory =" "$ZGS_CONFIG_FILE"; then
-        echo "log_directory = \"$ZGS_LOG_DIR\"" >> "$ZGS_CONFIG_FILE"
-    fi
+   SEEDS="c4d619f6088cb0b24b4ab43a0510bf9251ab5d7f@54.241.167.190:26656,44d11d4ba92a01b520923f51632d2450984d5886@54.176.175.48:26656,f2693dd86766b5bf8fd6ab87e2e970d564d20aff@54.193.250.204:26656,f878d40c538c8c23653a5b70f615f8dccec6fb9f@54.215.187.94:26656" && \
+   sed -i.bak -e "s/^seeds *=.*/seeds = \"${SEEDS}\"/" $HOME/.0gchain/config/config.toml
    ```
 
-### 7. create service
+### 8. set custom ports in app.toml
    ```bash
-   sudo tee /etc/systemd/system/zgs.service > /dev/null <<EOF
-[Unit]
-Description=0G Storage Node
-After=network.target
-
-[Service]
-User=$USER
-Type=simple
-ExecStart=zgs_node --config $ZGS_CONFIG_FILE
-Restart=on-failure
-LimitNOFILE=65535
-
-[Install]
-WantedBy=multi-user.target
-EOF
-   ```
-### 8. start the node
-   ```bash
-    sudo systemctl daemon-reload && \
-    sudo systemctl enable zgs && \
-    sudo systemctl restart zgs && \
-    sudo systemctl status zgs
+   sed -i.bak -e "s%:26658%:${0G_PORT}658%g;
+   s%:26657%:${0G_PORT}657%g;
+   s%:6060%:${0G_PORT}060%g;
+   s%:26656%:${0G_PORT}656%g;
+   s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${0G_PORT}656\"%;
+   s%:26660%:${0G_PORT}660%g" $HOME/.0G/config/config.toml
    ```
 
-### 9. show logs by date
+### 9. set custom ports in config.toml file
    ```bash
-   ls -lt $ZGS_LOG_DIR
+   sed -i.bak -e "s%:26658%:${0G_PORT}658%g;
+   s%:26657%:${0G_PORT}657%g;
+   s%:6060%:${0G_PORT}060%g;
+   s%:26656%:${0G_PORT}656%g;
+   s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${0G_PORT}656\"%;
+   s%:26660%:${0G_PORT}660%g" $HOME/.initia/config/config.toml
+   ```
+
+### 10. config pruning to save storage (optional)
+   ```bash
+   sed -i \
+      -e "s/^pruning *=.*/pruning = \"custom\"/" \
+      -e "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"100\"/" \
+      -e "s/^pruning-interval *=.*/pruning-interval = \"10\"/" \
+      "$HOME/.0gchain/config/app.toml"
+   ```
+
+### 11. set minimum gas price, enable prometheus and disable indexing
+   ```bash
+   sed -i 's|minimum-gas-prices =.*|minimum-gas-prices = "0.15uinit,0.01uusdc"|g' $HOME/.0gchain/config/app.toml
+   sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.0gchain/config/config.toml
+   sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.0gchain/config/config.toml
+   ```
+
+### 12. create service file
+   ```bash
+   sudo tee /etc/systemd/system/0ghcaind.service > /dev/null <<EOF
+   [Unit]
+   Description=0G Node
+   After=network.target
+
+   [Service]
+   User=$USER
+   Type=simple
+   ExecStart=$(which 0gchaind) start --home $HOME/.0gchain
+   Restart=on-failure
+   LimitNOFILE=65535
+
+   [Install]
+   WantedBy=multi-user.target
+   EOF
+   ```
+
+### 13. start the node
+   ```bash
+   sudo systemctl daemon-reload && \
+   sudo systemctl enable initiad && \
+   sudo systemctl restart 0gchaind && sudo journalctl -u initiad -fn 100 -o cat
    ```
