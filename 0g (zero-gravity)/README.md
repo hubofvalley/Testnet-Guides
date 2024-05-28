@@ -88,7 +88,7 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
     cd $HOME
     git clone https://github.com/0glabs/0g-storage-node.git
     cd 0g-storage-node
-    git checkout tags/v1.0.0-testnet
+    git checkout tags/v0.2.0
     git submodule update --init
     cargo build --release
     sudo mv $HOME/0g-storage-node/target/release/zgs_node /usr/local/bin
