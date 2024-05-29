@@ -19,7 +19,8 @@ In the sections below, we will delve deeper into this architecture and explore t
 
 0G DA (Data Availability) Layer is built on 0G Storage and uses a quorum-based architecture for data availability confirmation. The system relies on an honest majority of nodes, with quorum selection randomized by VRF and GPUs enhancing the erasure coding process for data storage.
 
-![alt text](image.png)
+![let’s build Og together (8)](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/fe912128-d39d-4e9b-9b19-2ad9efed5e57)
+
 
 - **0G solving target**
 The increasing need for greater Layer 2 (L2) scalability has coincided with the rise of Data Availability Layers (DALs), which are essential for addressing Ethereum's scaling challenges. L2s handle transactions off-chain and settle on Ethereum for security, requiring transaction data to be posted somewhere for validation. By publishing data directly on Ethereum, high fees are distributed among L2 users, enhancing scalability.
