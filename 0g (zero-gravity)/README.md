@@ -19,7 +19,7 @@ In the sections below, we will delve deeper into this architecture and explore t
 
 0G DA (Data Availability) Layer is built on 0G Storage and uses a quorum-based architecture for data availability confirmation. The system relies on an honest majority of nodes, with quorum selection randomized by VRF and GPUs enhancing the erasure coding process for data storage.
 
-![let’s build Og together (8)](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/fe912128-d39d-4e9b-9b19-2ad9efed5e57)
+![let’s build Og together (8)](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/fe912128-d39d-4e9b-9b19-2ad9efed5e57)<align=center>
 
 
 - **0G solving target**
