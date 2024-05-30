@@ -114,7 +114,7 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
    s%:6060%:${OG_PORT}060%g;
    s%:26656%:${OG_PORT}656%g;
    s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${OG_PORT}656\"%;
-   s%:26660%:${OG_PORT}660%g" $HOME/.0G/config/config.toml
+   s%:26660%:${OG_PORT}660%g" $HOME/.0gchain/config/config.toml
    ```
 
 ### 9. set custom ports in config.toml file
@@ -124,7 +124,7 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
    s%:6060%:${OG_PORT}060%g;
    s%:26656%:${OG_PORT}656%g;
    s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${OG_PORT}656\"%;
-   s%:26660%:${OG_PORT}660%g" $HOME/.initia/config/config.toml
+   s%:26660%:${OG_PORT}660%g" $HOME/.0gchain/config/config.toml
    ```
 
 ### 10. config pruning to save storage (optional)
@@ -145,7 +145,7 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
 
 ### 12. create service file
    ```bash
-   sudo tee /etc/systemd/system/0ghcaind.service > /dev/null <<EOF
+   sudo tee /etc/systemd/system/0gchaind.service > /dev/null <<EOF
    [Unit]
    Description=0G Node
    After=network.target
