@@ -92,7 +92,7 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
    cd $HOME
    0gchaind init $MONIKER --chain-id $CHAIN_ID
    0gchaind config chain-id $CHAIN_ID
-   0gchaind config node tcp://localhost:${0G_PORT}657
+   0gchaind config node tcp://localhost:${OG_PORT}657
    0gchaind config keyring-backend os
    ```
 
@@ -109,22 +109,22 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
 
 ### 8. set custom ports in app.toml
    ```bash
-   sed -i.bak -e "s%:26658%:${0G_PORT}658%g;
-   s%:26657%:${0G_PORT}657%g;
-   s%:6060%:${0G_PORT}060%g;
-   s%:26656%:${0G_PORT}656%g;
-   s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${0G_PORT}656\"%;
-   s%:26660%:${0G_PORT}660%g" $HOME/.0G/config/config.toml
+   sed -i.bak -e "s%:26658%:${OG_PORT}658%g;
+   s%:26657%:${OG_PORT}657%g;
+   s%:6060%:${OG_PORT}060%g;
+   s%:26656%:${OG_PORT}656%g;
+   s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${OG_PORT}656\"%;
+   s%:26660%:${OG_PORT}660%g" $HOME/.0G/config/config.toml
    ```
 
 ### 9. set custom ports in config.toml file
    ```bash
-   sed -i.bak -e "s%:26658%:${0G_PORT}658%g;
-   s%:26657%:${0G_PORT}657%g;
-   s%:6060%:${0G_PORT}060%g;
-   s%:26656%:${0G_PORT}656%g;
-   s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${0G_PORT}656\"%;
-   s%:26660%:${0G_PORT}660%g" $HOME/.initia/config/config.toml
+   sed -i.bak -e "s%:26658%:${OG_PORT}658%g;
+   s%:26657%:${OG_PORT}657%g;
+   s%:6060%:${OG_PORT}060%g;
+   s%:26656%:${OG_PORT}656%g;
+   s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${OG_PORT}656\"%;
+   s%:26660%:${OG_PORT}660%g" $HOME/.initia/config/config.toml
    ```
 
 ### 10. config pruning to save storage (optional)
