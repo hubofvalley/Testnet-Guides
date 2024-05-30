@@ -168,3 +168,13 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
    sudo systemctl enable 0gchaind && \
    sudo systemctl restart 0gchaind && sudo journalctl -u 0gchaind -fn 100 -o cat
    ```
+
+##  Dekete node
+  ```bash
+  sudo systemctl stop 0gchaind
+  sudo systemctl disable 0gchaind
+  sudo rm -rf /etc/systemd/system/0gchaind.service
+  sudo rm $(which 0gchaind)
+  sudo rm -rf $HOME/.0gchain
+  sed -i "/OG_/d" $HOME/.bash_profile
+  ```
