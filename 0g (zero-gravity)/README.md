@@ -75,7 +75,7 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
    echo 'export MONIKER="<your-moniker>"' >> ~/.bash_profile
    echo 'export CHAIN_ID="zgtendermint_16600-1"' >> ~/.bash_profile
    echo 'export WALLET_NAME="wallet"' >> ~/.bash_profile
-   echo "export 0G_PORT="26"" >> $HOME/.bash_profile
+   echo 'export 0G_PORT="26"' >> $HOME/.bash_profile
    source $HOME/.bash_profile
    ```
 
