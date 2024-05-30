@@ -166,5 +166,5 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
    ```bash
    sudo systemctl daemon-reload && \
    sudo systemctl enable initiad && \
-   sudo systemctl restart 0gchaind && sudo journalctl -u initiad -fn 100 -o cat
+   sudo systemctl restart 0gchaind && sudo journalctl -u 0gchaind -fn 100 -o cat
    ```
