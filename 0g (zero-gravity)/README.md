@@ -47,7 +47,7 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
     - [0gchainDiscord](https://discord.com/invite/0glabs)
     - [0gchainDocs](https://docs.0g.ai/0g-doc)
     - [0gchainGithub](https://github.com/0glabs)
-    - [0gchainExplorer - 0gchaintion-1](https://testnet.blockhub.id/0gchain)
+    - [0gchainExplorer](https://testnet.blockhub.id/0gchain)
 
 ## 0gchain Node Deployment Guide
 
