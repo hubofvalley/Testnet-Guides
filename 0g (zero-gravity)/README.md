@@ -107,7 +107,13 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
    sed -i.bak -e "s/^seeds *=.*/seeds = \"${SEEDS}\"/" $HOME/.0gchain/config/config.toml
    ```
 
-### 8. set custom ports in app.toml
+### 8. Add peers to the config.toml (i reccommend you to use seeds only, but it's up to you to add peers)
+   ```bash
+peers="4193c89124bd9be8527ad3129206cab88fcdd00e@31.220.75.83:12656,1f52e81478c64c6b1b440afeeb383e485c37de6d@62.171.139.61:12656,39dc4c1f8599f03e351c6fc3948fd948e77c3120@161.97.119.65:12656,0d098bff25931d74a602b00c2231de37740b93d2@109.199.103.108:12656,e3fa866c27a6cb19f0b25dcea79d45df977d640d@161.97.98.214:12656"
+sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchain/config/config.toml
+   ```
+
+### 9. set custom ports in app.toml
    ```bash
    sed -i.bak -e "s%:26658%:${OG_PORT}658%g;
    s%:26657%:${OG_PORT}657%g;
@@ -117,7 +123,7 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
    s%:26660%:${OG_PORT}660%g" $HOME/.0gchain/config/config.toml
    ```
 
-### 9. set custom ports in config.toml file
+### 10. set custom ports in config.toml file
    ```bash
    sed -i.bak -e "s%:26658%:${OG_PORT}658%g;
    s%:26657%:${OG_PORT}657%g;
@@ -127,7 +133,7 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
    s%:26660%:${OG_PORT}660%g" $HOME/.0gchain/config/config.toml
    ```
 
-### 10. config pruning to save storage (optional)
+### 11. config pruning to save storage (optional)
    ```bash
    sed -i \
       -e "s/^pruning *=.*/pruning = \"custom\"/" \
@@ -136,14 +142,14 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
       "$HOME/.0gchain/config/app.toml"
    ```
 
-### 11. set minimum gas price, enable prometheus and disable indexing
+### 12. set minimum gas price, enable prometheus and disable indexing
    ```bash
    sed -i 's|minimum-gas-prices =.*|minimum-gas-prices = "0.15uinit,0.01uusdc"|g' $HOME/.0gchain/config/app.toml
    sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.0gchain/config/config.toml
    sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.0gchain/config/config.toml
    ```
 
-### 12. create service file
+### 13. create service file
    ```bash
    sudo tee /etc/systemd/system/0gchaind.service > /dev/null <<EOF
    [Unit]
@@ -162,7 +168,7 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
    EOF
    ```
 
-### 13. start the node
+### 14. start the node
    ```bash
    sudo systemctl daemon-reload && \
    sudo systemctl enable 0gchaind && \
