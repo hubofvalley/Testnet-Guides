@@ -4,7 +4,13 @@
   <img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/fe21ef6a-0979-4ac1-8d92-6d1bcf76c7cc" alt="let’s build 0G together" width="600" height="300">
 </p>
 
-## 0gchain
+<p align="center">
+  <img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/b1a15f39-8e6a-428f-846b-4c430eac872b" width="400" height="200">
+</p>
+
+
+## 0gchain <a href="https://0g.ai/"><img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/916ed2ba-bf46-48ea-b4f9-6d48c1eac3ed" width="50" height="50">
+
 
 - **WHAT IS 0gchain?** 
 ZeroGravity (0G) is the first infinitely scalable, decentralized data availability layer featuring a built-in general-purpose storage system. This enables 0G to offer a highly scalable on-chain database suitable for various Web2 and Web3 data needs, including on-chain AI. Additionally, as a data availability layer, 0G ensures seamless verification of accurate data storage.
