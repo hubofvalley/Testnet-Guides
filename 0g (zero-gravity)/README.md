@@ -180,7 +180,9 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
   ```bash
   0gchaind keys add $WALLET
   ```
-  query the 0x address
+  ![SAVE YOUR SEEDS PHRASE!](https://img.shields.io/badge/SAVE%20YOUR%20SEEDS%20PHRASE!-red)
+   
+   query the 0x address
   ```bash
   echo "0x$(0gchaind debug addr $(0gchaind keys show $WALLET_NAME -a) | grep hex | awk '{print $3}')"
   ```
@@ -218,7 +220,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
   ```
   ```1uaogi = (10)^(-6)AOGI = 0.000001AOGI```
 
-## 5. <img src="https://img.shields.io/badge/BACKUP%20YOUR%20VALIDATOR!-IMPORTANT-red" alt="Important" width="400">
+## 5. BACKUP YOUR VALIDATOR <img src="https://img.shields.io/badge/IMPORTANT-red" alt="Important" width="100">
   ```bash
   nano /$HOME/.0gchain/config/priv_validator_key.json
   ```
