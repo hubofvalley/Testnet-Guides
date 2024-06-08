@@ -103,11 +103,11 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
 
 ### 7. Add seeds to the config.toml
    ```bash
-   SEEDS="c4d619f6088cb0b24b4ab43a0510bf9251ab5d7f@54.241.167.190:26656,44d11d4ba92a01b520923f51632d2450984d5886@54.176.175.48:26656,f2693dd86766b5bf8fd6ab87e2e970d564d20aff@54.193.250.204:26656,f878d40c538c8c23653a5b70f615f8dccec6fb9f@54.215.187.94:26656,ac2a36a8a0d3bf08f10190400c5c8c3a11170de2@0g-testnet-rpc.tienthuattoan.com:32656" && \
+SEEDS="c4d619f6088cb0b24b4ab43a0510bf9251ab5d7f@54.241.167.190:26656,44d11d4ba92a01b520923f51632d2450984d5886@54.176.175.48:26656,f2693dd86766b5bf8fd6ab87e2e970d564d20aff@54.193.250.204:26656,f878d40c538c8c23653a5b70f615f8dccec6fb9f@54.215.187.94:26656,ac2a36a8a0d3bf08f10190400c5c8c3a11170de2@0g-testnet-rpc.tienthuattoan.com:32656" && \
    sed -i.bak -e "s/^seeds *=.*/seeds = \"${SEEDS}\"/" $HOME/.0gchain/config/config.toml
    ```
 
-### 8. Add peers to the config.toml (i reccommend you to use seeds only, but it's up to you to add peers)
+### 8. Add peers to the config.toml (i recommend using seeds only, but it's up to you whether to add peers)
    ```bash
 peers="4193c89124bd9be8527ad3129206cab88fcdd00e@31.220.75.83:12656,1f52e81478c64c6b1b440afeeb383e485c37de6d@62.171.139.61:12656,39dc4c1f8599f03e351c6fc3948fd948e77c3120@161.97.119.65:12656,0d098bff25931d74a602b00c2231de37740b93d2@109.199.103.108:12656,e3fa866c27a6cb19f0b25dcea79d45df977d640d@161.97.98.214:12656"
 sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchain/config/config.toml
@@ -175,7 +175,69 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
    sudo systemctl restart 0gchaind && sudo journalctl -u 0gchaind -fn 100 -o cat
    ```
 
-##  Dekete node
+#   Keys commands
+## 1. create wallet
+  ```bash
+  0gchaind keys add $WALLET
+  ```
+  query the 0x address
+  ```bash
+  echo "0x$(0gchaind debug addr $(0gchaind keys show $WALLET_NAME -a) | grep hex | awk '{print $3}')"
+  ```
+  THEN U MUST REQUEST THE TEST TOKEN FROM THE [FAUCET](https://faucet.0g.ai/) BY ENTERING YOUR 0X ADDRESS
+
+## 2. check node synchronization
+  ```bash
+  0gchaind status | jq .sync_info
+  ```
+  make sure your node block height has been synced with the latest block height. or you can check the ```catching_up``` value must be ```false```
+
+## 3. check your balance
+  ```bash
+  0gchaind q bank balances $(0gchaind keys show $WALLET_NAME -a)
+  ```
+
+## 4. create validator
+  ```bash
+  0gchaind tx staking create-validator \
+  --amount=1000000ua0gi \
+  --pubkey=$(0gchaind tendermint show-validator) \
+  --moniker=$MONIKER \
+  --chain-id=$OG_CHAIN_ID \
+  --commission-rate=0.10 \
+  --commission-max-rate=0.20 \
+  --commission-max-change-rate=0.01 \
+  --min-self-delegation=1 \
+  --from=$WALLET \
+  --identity=<your-identity> \
+  --website=<your-website-url> \
+  --security-contact=<your-mail> \
+  --details=<your-details> \
+  --gas=auto --gas-adjustment=1.4 \
+  -y
+  ```
+  ```1uaogi = (10)^(-6)AOGI = 0.000001AOGI```
+
+## 5. <img src="https://img.shields.io/badge/BACKUP%20YOUR%20VALIDATOR!-IMPORTANT-red" alt="Important" width="400">
+  ```bash
+  nano /$HOME/.0gchain/config/priv_validator_key.json
+  ```
+  ```bash
+  nano /$HOME/.0gchain/data/priv_validator_state.json
+  ```
+  copy all of the contents of the ![priv_validator_key.json](https://img.shields.io/badge/priv__validator__key.json-red) !and ![priv_validator_key.json](https://img.shields.io/badge/priv__validator__state.json-red) files and save them in a safe place. This is a vital step in case you need to migrate your validator node
+
+## 6. delegate token to validator
+  ### self delegate
+  ```bash
+  0gchaind tx staking delegate $(0gchaind keys show $WALLET_NAME --bech val -a) 1000000ua0gi --from $WALLET --chain-id zgtendermint_16600-1 --gas=auto --gas-adjustment=1.4 --fees=800ua0gi -y
+  ```
+  ### delegate to another validator ```delegate to Grand Valley```
+  ```bash
+  0gchaind tx staking delegate 0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4 1000000ua0gi --from $WALLET --chain-id zgtendermint_16600-1 --gas=auto --gas-adjustment=1.4 --fees=800ua0gi -y
+  ```
+
+#  delete node
   ```bash
   sudo systemctl stop 0gchaind
   sudo systemctl disable 0gchaind
