@@ -256,3 +256,16 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
   sudo rm -rf $HOME/.0gchain
   sed -i "/OG_/d" $HOME/.bash_profile
   ```
+
+#  upgrade the node
+  ```bash
+  cd $HOME
+  rm -rf $HOME/0g-chain
+  git clone -b <0G node version> https://github.com/0glabs/0g-chain.git
+  ./0g-chain/networks/testnet/install.sh
+  source .profile
+  0gchaind version
+  # Restart the node
+  sudo systemctl restart 0gchaind && sudo journalctl -u 0gchaind -fn 100 -o cat
+  ```
+  please check the latest node version!
