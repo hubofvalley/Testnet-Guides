@@ -1,4 +1,4 @@
-## 0gchain Node Deployment Guide
+## 0gchain Storage Node Deployment Guide
 
 ### 1. Install dependencies for building from source
    ```bash
