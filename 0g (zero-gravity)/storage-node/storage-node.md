@@ -32,8 +32,8 @@
 
 ### 4. download binary
    ```bash
-    cd $HOME
-    git clone https://github.com/0glabs/0g-storage-node.git
+   cd $HOME
+   git clone https://github.com/0glabs/0g-storage-node.git
    cd $HOME/0g-storage-node
    git fetch
    git checkout tags/v0.2.0
@@ -46,7 +46,7 @@
 obtain yout wallet's private key by using this command :
 
    ```bash
-    0gchaind keys unsafe-export-eth-key $WALLET_NAME
+   0gchaind keys unsafe-export-eth-key $WALLET_NAME
    ```
 
 store your private key in variable:
@@ -94,10 +94,10 @@ store your private key in variable:
    ```
 ### 8. start the node
    ```bash
-    sudo systemctl daemon-reload && \
-    sudo systemctl enable zgs && \
-    sudo systemctl restart zgs && \
-    sudo systemctl status zgs
+   sudo systemctl daemon-reload && \
+   sudo systemctl enable zgs && \
+   sudo systemctl restart zgs && \
+   sudo systemctl status zgs
    ```
 
 ### 9. show logs by date
