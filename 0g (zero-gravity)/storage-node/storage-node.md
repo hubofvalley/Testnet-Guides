@@ -21,6 +21,8 @@
 ### 4. set vars
    PLEASE INPUT YOUR OWN JSON-RPC ENDPOINT (VALIDATOR_NODE_IP:8545)
    ```bash
+   ENR_ADDRESS=$(wget -qO- eth0.me)
+   echo "export ENR_ADDRESS=${ENR_ADDRESS}" >> ~/.bash_profile
    echo 'export ZGS_LOG_DIR="$HOME/0g-storage-node/run/log"' >> ~/.bash_profile
    echo 'export ZGS_LOG_CONFIG_FILE="$HOME/0g-storage-node/run/log_config"' >> ~/.bash_profile
    echo 'export ZGS_LOG_SYNC_BLOCK="334797"' >> ~/.bash_profile
@@ -90,7 +92,7 @@ store your private key in variable:
    After=network.target
    
    [Service]
-   User=root
+   User=$USER
    WorkingDirectory=$HOME/0g-storage-node/run
    ExecStart=$HOME/0g-storage-node/target/release/zgs_node --config $HOME/0g-storage-node/run/config.toml
    Restart=on-failure
@@ -105,7 +107,7 @@ store your private key in variable:
    ```bash
    sudo systemctl daemon-reload && \
    sudo systemctl enable zgs && \
-   sudo systemctl restart zgs && \
+   sudo systemctl start zgs && \
    sudo systemctl status zgs
    ```
 
