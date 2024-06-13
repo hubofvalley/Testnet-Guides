@@ -59,7 +59,7 @@ store your private key in variable:
    read -sp "Enter your private key: " PRIVATE_KEY && echo
    ```
 
-### 6. update node configuration (use your own JSON RPC endpoint)
+### 6. update node configuration
 
    ```bash
    sed -i '
