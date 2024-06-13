@@ -43,7 +43,7 @@
    ```
 
 ### 5. wallet setup
-obtain yout wallet's private key by using this command :
+obtain yout wallet's private key by using this command in your validator node :
 
    ```bash
    0gchaind keys unsafe-export-eth-key $WALLET_NAME
