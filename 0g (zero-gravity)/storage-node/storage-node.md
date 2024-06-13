@@ -21,6 +21,7 @@
 ### 4. set vars
    PLEASE INPUT YOUR OWN JSON-RPC ENDPOINT (VALIDATOR_NODE_IP:8545)
    ```bash
+   ENR_ADDRESS=$(wget -qO- eth0.me)
    echo 'export ZGS_LOG_DIR="$HOME/0g-storage-node/run/log"' >> ~/.bash_profile
    echo 'export ZGS_LOG_CONFIG_FILE="$HOME/0g-storage-node/run/log_config"' >> ~/.bash_profile
    echo 'export ZGS_LOG_SYNC_BLOCK="334797"' >> ~/.bash_profile
