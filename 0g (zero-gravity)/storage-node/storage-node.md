@@ -23,6 +23,7 @@
    ```bash
    echo 'export ZGS_LOG_DIR="$HOME/0g-storage-node/run/log"' >> ~/.bash_profile
    echo 'export ZGS_LOG_CONFIG_FILE="$HOME/0g-storage-node/run/log_config"' >> ~/.bash_profile
+   echo 'export ZGS_LOG_SYNC_BLOCK="334797"' >> ~/.bash_profile
    echo 'export LOG_CONTRACT_ADDRESS="0xb8F03061969da6Ad38f0a4a9f8a86bE71dA3c8E7"' >> ~/.bash_profile
    echo 'export MINE_CONTRACT="0x96D90AAcb2D5Ab5C69c1c351B0a0F105aae490bE"' >> ~/.bash_profile
    echo 'export BLOCKCHAIN_RPC_ENDPOINT="your json rpc endpoint"' >> ~/.bash_profile
