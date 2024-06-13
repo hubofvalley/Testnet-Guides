@@ -61,9 +61,6 @@ store your private key in variable:
 ### 6. update node configuration (use your own JSON RPC endpoint)
 
    ```bash
-   sed -i 's|miner_key = ""|miner_key = "'"$PRIVATE_KEY"'"|' $HOME/0g-storage-node/run/config.toml
-   ```
-   ```bash
    sed -i '
    s|^\s*#\?\s*network_dir\s*=.*|network_dir = "network"|
    s|^\s*#\?\s*network_enr_address\s*=.*|network_enr_address = "'"$ENR_ADDRESS"'"|
