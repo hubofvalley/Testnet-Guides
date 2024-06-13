@@ -24,7 +24,6 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    PLEASE INPUT YOUR STORAGE NODE URL (STORAGE_NODE_IP:5678)
    ```bash
    echo 'export ZGS_LOG_SYNC_BLOCK="334797"' >> ~/.bash_profile
-   echo 'export ZGSKV_LOG_DIR="$HOME/0g-storage-kv/run/log"' >> ~/.bash_profile
    echo 'export ZGS_NODE="<your storage node url>"' >> ~/.bash_profile
    echo 'export LOG_CONTRACT_ADDRESS="0xb8F03061969da6Ad38f0a4a9f8a86bE71dA3c8E7"' >> ~/.bash_profile
    echo 'export MINE_CONTRACT="0x96D90AAcb2D5Ab5C69c1c351B0a0F105aae490bE"' >> ~/.bash_profile
@@ -54,7 +53,6 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    s|^\s*#\?\s*db_dir\s*=.*|db_dir = "db"|
    s|^\s*#\?\s*kv_db_dir\s*=.*|kv_db_dir = "kv.DB"|
    s|^\s*#\?\s*log_config_file\s*=.*|log_config_file = "log_config"|
-   s|^\s*#\?\s*log_directory\s*=.*|log_directory = "log"|
    s|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = "'"$LOG_CONTRACT_ADDRESS"'"|
    s|^\s*#\?\s*zgs_node_urls\s*=.*|zgs_node_urls = "'"$ZGS_NODE"'"|
    s|^\s*#\?\s*mine_contract_address\s*=.*|mine_contract_address = "'"$MINE_CONTRACT"'"|
@@ -88,9 +86,4 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    sudo systemctl enable zgskv && \
    sudo systemctl start zgskv && \
    sudo systemctl status zgskv
-   ```
-
-### 9. show logs by date
-   ```bash
-   ls -lt $ZGSKV_LOG_DIR
    ```
