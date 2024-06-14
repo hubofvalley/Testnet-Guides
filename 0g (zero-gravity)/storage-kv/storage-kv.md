@@ -49,7 +49,7 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    ```bash
    sed -i '
    s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
-   s|^\s*#\?\s*rpc_listen_address\s*=.*|rpc_listen_address = 0.0.0.0:6789|
+   s|^\s*#\?\s*rpc_listen_address\s*=.*|rpc_listen_address = "0.0.0.0:6789"|
    s|^\s*#\?\s*db_dir\s*=.*|db_dir = "db"|
    s|^\s*#\?\s*kv_db_dir\s*=.*|kv_db_dir = "kv.DB"|
    s|^\s*#\?\s*log_config_file\s*=.*|log_config_file = "log_config"|
