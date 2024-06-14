@@ -80,10 +80,16 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    WantedBy=multi-user.target
    EOF
    ```
+
 ### 8. start the node
    ```bash
    sudo systemctl daemon-reload && \
    sudo systemctl enable zgskv && \
    sudo systemctl start zgskv && \
    sudo systemctl status zgskv
+   ```
+
+### 9. check the logs
+   ```bash
+   sudo journalctl -u zgskv -fn 100 -o cat
    ```
