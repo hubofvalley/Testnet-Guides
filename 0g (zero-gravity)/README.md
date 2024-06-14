@@ -206,6 +206,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
   ```
 
 ## 4. create validator
+  EDIT YOUR IDENTITY, WEBSITE URL, YOUR MAIL AND YOUR DETAILS. BUT THOSE ARE OPTIONAL
   ```bash
   0gchaind tx staking create-validator \
   --amount=1000000ua0gi \
