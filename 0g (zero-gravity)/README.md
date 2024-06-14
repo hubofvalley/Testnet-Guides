@@ -77,6 +77,7 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
    ```
 
 ### 3. set vars
+  EDIT YOUR MONIKER
    ```
   echo "export WALLET="wallet"" >> $HOME/.bash_profile
   echo "export MONIKER="<your-moniker>"" >> $HOME/.bash_profile
