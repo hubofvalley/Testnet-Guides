@@ -102,6 +102,7 @@ store your private key in variable:
    WantedBy=multi-user.target
    EOF
    ```
+
 ### 8. start the node
    ```bash
    sudo systemctl daemon-reload && \
@@ -113,6 +114,18 @@ store your private key in variable:
 ### 9. show logs by date
    ```bash
    ls -lt $ZGS_LOG_DIR
+   ```
+   change <mm> and <dd> value to the actual logs file
+   ```bash
+   tail -f ~/0g-storage-node/run/log/zgs.log.2024-<mm>-<dd>
+   ```
+   tx_seq logs command
+   ```bash
+   tail -f ~/0g-storage-node/run/log/zgs.log.2024-<mm>-<dd> | grep tx_seq
+   ```
+   show peers connected command
+   ```bash
+   tail -f ~/0g-storage-node/run/log/zgs.log.2024-<mm>-<dd> | grep "new peer discovery query connected"
    ```
 
 ### delete storage node
