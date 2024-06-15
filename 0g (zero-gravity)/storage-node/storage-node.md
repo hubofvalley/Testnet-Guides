@@ -40,7 +40,7 @@
    git clone https://github.com/0glabs/0g-storage-node.git
    cd $HOME/0g-storage-node
    git fetch
-   git checkout tags/v0.3.0
+   git checkout tags/v0.3.1
    git submodule update --init
    sudo apt install cargo
    cargo build --release
