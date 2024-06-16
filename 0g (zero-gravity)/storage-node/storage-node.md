@@ -19,7 +19,7 @@
    ```
 
 ### 4. set vars
-   PLEASE INPUT YOUR OWN JSON-RPC ENDPOINT (VALIDATOR_NODE_IP:8545)
+   PLEASE INPUT YOUR OWN JSON-RPC ENDPOINT (VALIDATOR_NODE_IP:8545) OR YOU CAN OUR ENDPOINTS PLEASE CHECK [README](https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/README.md)
    ```bash
    ENR_ADDRESS=$(wget -qO- eth0.me)
    echo "export ENR_ADDRESS=${ENR_ADDRESS}" >> ~/.bash_profile
@@ -46,21 +46,18 @@
    cargo build --release
    ```
 
-### 5. wallet setup
+### 5. wallet private key check
 obtain yout wallet's private key by using this command in your validator node :
-
    ```bash
    0gchaind keys unsafe-export-eth-key $WALLET_NAME
    ```
 
 store your private key in variable:
-
    ```bash
    read -sp "Enter your private key: " PRIVATE_KEY && echo
    ```
 
 ### 6. update node configuration
-
    ```bash
    sed -i '
    s|^miner_key = ""|miner_key = "'"$PRIVATE_KEY"'"|
