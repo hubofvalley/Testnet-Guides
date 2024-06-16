@@ -44,6 +44,11 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    cargo build --release
    ```
 
+### 5. crate a config.toml file
+   ```bash
+   mkdir $HOME/0g-storage-kv/run/config.toml
+   ```
+
 ### 5. update storage kv configuration
 
    ```bash
