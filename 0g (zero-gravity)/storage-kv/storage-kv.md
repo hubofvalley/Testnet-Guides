@@ -44,13 +44,12 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    cargo build --release
    ```
 
-### 5. crate a config.toml file
+### 5. copy a config_example.toml file
    ```bash
-   mkdir $HOME/0g-storage-kv/run/config.toml
+   cp /$HOME/0g-storage-kv/run/config_example.toml /$HOME/0g-storage-kv/run/config.toml
    ```
 
 ### 5. update storage kv configuration
-
    ```bash
    sed -i '
    s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
