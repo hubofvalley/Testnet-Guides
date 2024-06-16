@@ -152,6 +152,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
       -e "s/^pruning-interval *=.*/pruning-interval = \"10\"/" \
       "$HOME/.0gchain/config/app.toml"
    ```
+
 ### 12. open json-rpc endpoints (required for running the storage node and storage kv)
    ```bash
    sed -i \
@@ -160,14 +161,14 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
     $HOME/.0gchain/config/app.toml
    ```
 
-### 12. set minimum gas price, enable prometheus and disable indexing
+### 13. set minimum gas price, enable prometheus and disable indexing
    ```bash
    sed -i 's|minimum-gas-prices =.*|minimum-gas-prices = "0.15uinit,0.01uusdc"|g' $HOME/.0gchain/config/app.toml
    sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.0gchain/config/config.toml
    sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.0gchain/config/config.toml
    ```
 
-### 13. create service file
+### 14. create service file
    ```bash
    sudo tee /etc/systemd/system/0gchaind.service > /dev/null <<EOF
    [Unit]
@@ -186,7 +187,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
    EOF
    ```
 
-### 14. start the node
+### 15. start the node
    ```bash
    sudo systemctl daemon-reload && \
    sudo systemctl enable 0gchaind && \
