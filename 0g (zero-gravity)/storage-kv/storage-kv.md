@@ -21,7 +21,7 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    ```
 
 ### 4. set vars
-   PLEASE INPUT YOUR STORAGE NODE URL (http://STORAGE_NODE_IP:5678) , YOUR JSON RPC ENDPOINT (VALIDATOR_NODE_IP:8545)
+   PLEASE INPUT YOUR STORAGE NODE URL (http://STORAGE_NODE_IP:5678) , YOUR JSON RPC ENDPOINT (VALIDATOR_NODE_IP:8545) OR YOU CAN OUR ENDPOINTS PLEASE CHECK [README](https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/README.md)
    ```bash
    echo 'export ZGS_LOG_SYNC_BLOCK="334797"' >> ~/.bash_profile
    echo 'export ZGS_NODE="<your storage node url>"' >> ~/.bash_profile
