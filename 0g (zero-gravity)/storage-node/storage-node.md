@@ -112,7 +112,7 @@ store your private key in variable:
    ```bash
    ls -lt $ZGS_LOG_DIR
    ```
-   change <mm> and <dd> value to the actual logs file
+   change <mm> and <dd> value to the actual date logs file
    ```bash
    tail -f ~/0g-storage-node/run/log/zgs.log.2024-<mm>-<dd>
    ```
