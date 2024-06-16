@@ -54,6 +54,10 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
     - [0gchainDocs](https://docs.0g.ai/0g-doc)
     - [0gchainGithub](https://github.com/0glabs)
     - [0gchainExplorer](https://testnet.0g.explorers.guru)
+    
+Grand Valley's 0G public endpoints:
+- rpc : http://lightnode-0g.grandvalleys.com:26657
+- json-rpc : http://lightnode-0g.grandvalleys.com:8545
 
 ## 0gchain Node Deployment Guide
 
