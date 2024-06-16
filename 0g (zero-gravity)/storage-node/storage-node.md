@@ -132,7 +132,7 @@ store your private key in variable:
    rm -rf $HOME/0g-storage-node
    ```
 
-### upgrade the storage node
+### upgrade the storage node (IF UR STORAGE NODE STILL IN v0.3.0 VERSION)
 
 1. backup your db directory
    ```bash
