@@ -34,7 +34,7 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    echo -e "\n\033[31mCHECK YOUR STORAGE KV VARIABLES\033[0m\n\nZGS_NODE: $ZGS_NODE\nLOG_CONTRACT_ADDRESS: $LOG_CONTRACT_ADDRESS\nMINE_CONTRACT: $MINE_CONTRACT\nZGS_LOG_SYNC_BLOCK: $ZGS_LOG_SYNC_BLOCK\nBLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT\n\n"
    ```
 
-### 4. download binary
+### 5. download binary
    ```bash
    cd $HOME
    git clone https://github.com/0glabs/0g-storage-kv.git
@@ -44,12 +44,12 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    cargo build --release
    ```
 
-### 5. copy a config_example.toml file
+### 6. copy a config_example.toml file
    ```bash
    cp /$HOME/0g-storage-kv/run/config_example.toml /$HOME/0g-storage-kv/run/config.toml
    ```
 
-### 5. update storage kv configuration
+### 7. update storage kv configuration
    ```bash
    sed -i '
    s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
@@ -65,7 +65,7 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    ' $HOME/0g-storage-kv/run/config.toml
    ```
 
-### 7. create service
+### 8. create service
    ```bash
    sudo tee /etc/systemd/system/zgskv.service > /dev/null <<EOF
    [Unit]
@@ -85,7 +85,7 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    EOF
    ```
 
-### 8. start the node
+### 9. start the node
    ```bash
    sudo systemctl daemon-reload && \
    sudo systemctl enable zgskv && \
@@ -93,7 +93,7 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    sudo systemctl status zgskv
    ```
 
-### 9. check the logs
+### 10. check the logs
    ```bash
    sudo journalctl -u zgskv -fn 100 -o cat
    ```
