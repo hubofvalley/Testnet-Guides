@@ -97,8 +97,8 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
 ### 5. config and init app
    ```bash
    cd $HOME
-   0gchaind init $MONIKER --chain-id $CHAIN_ID
-   0gchaind config chain-id $CHAIN_ID
+   0gchaind init $MONIKER --chain-id $OG_CHAIN_ID
+   0gchaind config chain-id $OG_CHAIN_ID
    0gchaind config node tcp://localhost:${OG_PORT}657
    0gchaind config keyring-backend os
    ```
