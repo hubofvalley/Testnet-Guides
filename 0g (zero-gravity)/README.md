@@ -152,6 +152,13 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
       -e "s/^pruning-interval *=.*/pruning-interval = \"10\"/" \
       "$HOME/.0gchain/config/app.toml"
    ```
+### 12. open json-rpc endpoints (required for running the storage node and storage kv)
+   ```bash
+   sed -i \
+    -e 's/address = "127.0.0.1:8545"/address = "0.0.0.0:8545"/' \
+    -e 's|^api = ".*"|api = "eth,txpool,personal,net,debug,web3"|' \
+    $HOME/.0gchain/config/app.toml
+   ```
 
 ### 12. set minimum gas price, enable prometheus and disable indexing
    ```bash
