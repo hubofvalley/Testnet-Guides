@@ -159,4 +159,11 @@ store your private key in variable:
    sudo apt install cargo
    cargo build --release
    ```
+
+4. move db directory to binaries
+   ```bash
+   cd $HOME
+   mv /$HOME/db /$HOME/0g-storage-node/run/
+   ```
+
 THEN REPEAT STEP 5 TO 8
