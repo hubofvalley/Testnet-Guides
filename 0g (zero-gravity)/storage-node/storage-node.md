@@ -132,3 +132,31 @@ store your private key in variable:
    sudo rm /etc/systemd/system/zgs.service
    rm -rf $HOME/0g-storage-node
    ```
+
+### upgrade the storage node
+
+1. backup your db directory
+   ```bash
+   cp /$HOME/0g-storage-node/run/db /$HOME/
+   ```
+
+2. delete the node
+   ```bash
+   sudo systemctl stop zgs
+   sudo systemctl disable zgs
+   sudo rm /etc/systemd/system/zgs.service
+   rm -rf $HOME/0g-storage-node
+   ```
+
+3. download latest binary
+   ```bash
+   cd $HOME
+   git clone https://github.com/0glabs/0g-storage-node.git
+   cd $HOME/0g-storage-node
+   git fetch
+   git checkout tags/v0.3.1
+   git submodule update --init
+   sudo apt install cargo
+   cargo build --release
+   ```
+THEN REPEAT STEP 5 TO 8
