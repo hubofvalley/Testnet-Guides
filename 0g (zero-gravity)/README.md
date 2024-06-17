@@ -60,6 +60,7 @@ Grand Valley's 0G public endpoints:
 - json-rpc : http://lightnode-rpc-0g.grandvalleys.com:8545
 
 ## 0gchain Node Deployment Guide
+guide's current binary version: ``v0.1.0``
 
 ### 1. Install dependencies for building from source
    ```bash
