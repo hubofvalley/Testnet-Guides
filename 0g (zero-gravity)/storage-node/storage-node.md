@@ -68,6 +68,7 @@ store your private key in variable:
    s|^\s*#\?\s*network_enr_udp_port\s*=.*|network_enr_udp_port = 1234|
    s|^\s*#\?\s*network_libp2p_port\s*=.*|network_libp2p_port = 1234|
    s|^\s*#\?\s*network_discovery_port\s*=.*|network_discovery_port = 1234|
+   s|^\s*#\s*rpc_listen_address_admin\s*=.*|rpc_listen_address_admin = "0.0.0.0:5679"|"|
    s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
    s|^\s*#\?\s*db_dir\s*=.*|db_dir = "db"|
    s|^\s*#\?\s*log_config_file\s*=.*|log_config_file = "log_config"|
