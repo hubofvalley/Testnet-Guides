@@ -50,7 +50,7 @@ guide's current binaries version: ``v0.3.1``
 ### 5. wallet private key check
 obtain yout wallet's private key by using this command in your validator node :
    ```bash
-   0gchaind keys unsafe-export-eth-key $WALLET_NAME
+   0gchaind keys unsafe-export-eth-key $WALLET
    ```
 
 store your private key in variable:
