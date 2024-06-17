@@ -108,16 +108,17 @@ store your private key in variable:
    ```
 
 ### 9. show logs by date
+   - check the logs file
    ```bash
    ls -lt $ZGS_LOG_DIR
    ```
-   change <mm> and <dd> value to the actual date logs file
+   - logs command
    ```bash
-   tail -f ~/0g-storage-node/run/log/zgs.log.2024-<mm>-<dd>
+   tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d)
    ```
-   tx_seq logs command
+   - tx_seq logs command
    ```bash
-   tail -f ~/0g-storage-node/run/log/zgs.log.2024-<mm>-<dd> | grep tx_seq
+   tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d) | grep tx_seq
    ```
    MAKE SURE YOUR LOGS HAS THE INCREASING TX_SEQ VALUE
    ![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/ad8980bc-fd05-4321-b6bb-aa711503d415)
@@ -126,9 +127,9 @@ store your private key in variable:
    ![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/1f531de9-a183-43bb-8ef0-016cffaf93af)
 
 
-   show peers connected command
+   - show peers connected command
    ```bash
-   tail -f ~/0g-storage-node/run/log/zgs.log.2024-<mm>-<dd> | grep "new peer discovery query connected"
+   tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d) | grep "new peer discovery query connected"
    ```
 
 
