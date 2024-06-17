@@ -1,4 +1,4 @@
-![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/6a0a37d1-d8ea-4086-a664-b668093dd6bb)## 0gchain Storage Node Deployment Guide
+## 0gchain Storage Node Deployment Guide
 
 ### 1. Install dependencies for building from source
    ```bash
