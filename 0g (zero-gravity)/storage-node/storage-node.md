@@ -1,4 +1,4 @@
-## 0gchain Storage Node Deployment Guide
+![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/6a0a37d1-d8ea-4086-a664-b668093dd6bb)## 0gchain Storage Node Deployment Guide
 
 ### 1. Install dependencies for building from source
    ```bash
@@ -119,10 +119,19 @@ store your private key in variable:
    ```bash
    tail -f ~/0g-storage-node/run/log/zgs.log.2024-<mm>-<dd> | grep tx_seq
    ```
+   MAKE SURE YOUR LOGS HAS THE INCREASING TX_SEQ VALUE
+   ![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/ad8980bc-fd05-4321-b6bb-aa711503d415)
+
+   WAIT UNTIL IT SYNCED TO THE LATEST TX_SEQ NUMBER ON THE [OG STORAGE SCAN](https://storagescan-newton.0g.ai/)
+   ![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/1f531de9-a183-43bb-8ef0-016cffaf93af)
+
+
    show peers connected command
    ```bash
    tail -f ~/0g-storage-node/run/log/zgs.log.2024-<mm>-<dd> | grep "new peer discovery query connected"
    ```
+
+
 
 ### delete storage node
    ```bash
