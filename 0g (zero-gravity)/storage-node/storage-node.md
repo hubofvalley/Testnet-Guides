@@ -120,7 +120,7 @@ store your private key in variable:
    ```
    - tx_seq logs command
    ```bash
-   tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d) | grep tx_seq
+   tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d) | grep tx_seq:
    ```
    MAKE SURE YOUR LOGS HAS THE INCREASING TX_SEQ VALUE
    ![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/ad8980bc-fd05-4321-b6bb-aa711503d415)
