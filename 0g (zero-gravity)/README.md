@@ -277,7 +277,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
   cd $HOME
   rm -rf $HOME/0g-chain
   git clone -b <0G node version> https://github.com/0glabs/0g-chain.git
-  ./0g-chain/networks/testnet/install.sh
+  make install
   source .profile
   0gchaind version
   # Restart the node
