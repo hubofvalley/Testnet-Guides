@@ -284,15 +284,3 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
   sudo systemctl restart 0gchaind && sudo journalctl -u 0gchaind -fn 100 -o cat
   ```
   please check the latest node version!
-
-# HARDFORK
-  ```bash
-  cd $HOME
-  rm -rf $HOME/0g-chain
-  git clone -b v0 https://github.com/0glabs/0g-chain.git
-  make install
-  source .profile
-  0gchaind version
-  # Restart the node
-  sudo systemctl restart 0gchaind && sudo journalctl -u 0gchaind -fn 100 -o cat
-  ```
