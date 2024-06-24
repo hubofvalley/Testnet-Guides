@@ -100,3 +100,11 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    MAKE SURE YOUR LOGS HAS THE SYNCED TX_SEQ(tx sequence) VALUE, CHECK [STORAGE SCAN](https://storagescan-newton.0g.ai/)
    ![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/ce2d8707-190d-4931-8ed1-44c1447fe360)
 
+## delete the node
+   ```bash
+   sudo systemctl stop zgskv
+   sudo systemctl disable zgskv
+   sudo rm -rf /etc/systemd/system/zgskv.service
+   sudo rm -rf 0g-storage-kv
+   ```
+
