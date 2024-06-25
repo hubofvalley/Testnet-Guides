@@ -93,7 +93,7 @@ guide's current binaries version: ``v0.1.0``
 
 ### 4. download binary
    ```bash
-   git clone -b v0.1.0 https://github.com/0glabs/0g-chain.git
+   git clone -b v0.2.3 https://github.com/0glabs/0g-chain.git
    cd 0g-chain
    make install
    0gchaind version
