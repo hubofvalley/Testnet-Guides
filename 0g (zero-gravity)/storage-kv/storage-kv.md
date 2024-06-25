@@ -10,9 +10,15 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
 
 ### 2. install go
    ```bash
-   wget https://go.dev/dl/go1.22.0.linux-amd64.tar.gz
-   sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.22.0.linux-amd64.tar.gz
-   export PATH=$PATH:/usr/local/go/bin
+   cd $HOME && \
+   ver="1.22.0" && \
+   wget "https://golang.org/dl/go$ver.linux-amd64.tar.gz" && \
+   sudo rm -rf /usr/local/go && \
+   sudo tar -C /usr/local -xzf "go$ver.linux-amd64.tar.gz" && \
+   rm "go$ver.linux-amd64.tar.gz" && \
+   echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> ~/.bash_profile && \
+   source ~/.bash_profile && \
+   go version
    ```
 
 ### 3. install rustup
@@ -25,8 +31,8 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    ```bash
    echo 'export ZGS_LOG_SYNC_BLOCK="0"' >> ~/.bash_profile
    echo 'export ZGS_NODE="<your storage node url>"' >> ~/.bash_profile
-   echo 'export LOG_CONTRACT_ADDRESS="0xb8F03061969da6Ad38f0a4a9f8a86bE71dA3c8E7"' >> ~/.bash_profile
-   echo 'export MINE_CONTRACT="0x96D90AAcb2D5Ab5C69c1c351B0a0F105aae490bE"' >> ~/.bash_profile
+   echo 'export LOG_CONTRACT_ADDRESS="0x8873cc79c5b3b5666535C825205C9a128B1D75F1"' >> ~/.bash_profile
+   echo 'export MINE_CONTRACT="0x85F6722319538A805ED5733c5F4882d96F1C7384"' >> ~/.bash_profile
    echo 'export BLOCKCHAIN_RPC_ENDPOINT="<your json rpc endpoint>"' >> ~/.bash_profile
    
    source ~/.bash_profile
