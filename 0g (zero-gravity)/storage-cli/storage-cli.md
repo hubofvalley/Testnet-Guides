@@ -28,6 +28,7 @@
     source ~/.bash_profile
 
     echo -e "\n\033[31mCHECK YOUR STORAGE CLI VARIABLES\033[0m\n\nZGS_NODE: $ZGS_NODE\nLOG_CONTRACT_ADDRESS: $LOG_CONTRACT_ADDRESS\nBLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT\n\n"
+echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
  ```
 
 ## Upload file transaction
