@@ -244,7 +244,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
   --identity=<your-identity> \
   --website=<your-website-url> \
   --security-contact=<your-mail> \
-  --details=<your-details> \
+  --details="let's buidl 0g together" \
   --gas=auto --gas-adjustment=1.4 \
   -y
   ```
