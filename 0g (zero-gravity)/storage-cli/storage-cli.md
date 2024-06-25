@@ -13,18 +13,17 @@
  ```
 
 ## Preparation
-### 1. Input your private key
+### 1. Input your private key, json-rpc and storage node url
+-   PLEASE INPUT YOUR STORAGE NODE URL (http://STORAGE_NODE_IP:5678) YOUR JSON RPC ENDPOINT (http://VALIDATOR_NODE_IP:8545) OR YOU CAN OUR ENDPOINTS PLEASE CHECK [README](https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/README.md)
  ```bash
-    read -sp "Enter your private key: " PRIVATE_KEY && echo
+    read -sp "Enter private key: " PRIVATE_KEY && echo && read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT && echo "Current json-rpc: $BLOCKCHAIN_RPC_ENDPOINT" && read -p "Enter storage node url: " ZGS_NODE && echo "Current storage node url: $ZGS_NODE"
  ```
 
 ### 2. Set variables
-PLEASE INPUT YOUR STORAGE NODE URL (http://STORAGE_NODE_IP:5678) YOUR JSON RPC ENDPOINT (VALIDATOR_NODE_IP:8545) OR YOU CAN OUR ENDPOINTS PLEASE CHECK [README](https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/README.md)
-
  ```bash
-    echo 'export BLOCKCHAIN_RPC_ENDPOINT="<your json rpc endpoint>"' >> ~/.bash_profile
+    echo 'export BLOCKCHAIN_RPC_ENDPOINT="$BLOCKCHAIN_RPC_ENDPOINT"' >> ~/.bash_profile
     echo 'export LOG_CONTRACT_ADDRESS="0x8873cc79c5b3b5666535C825205C9a128B1D75F1"' >> ~/.bash_profile
-    echo 'export ZGS_NODE="<your storage node url>"' >> ~/.bash_profile
+    echo 'export ZGS_NODE="$ZGS_NODE"' >> ~/.bash_profile
 
     source ~/.bash_profile
 
