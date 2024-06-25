@@ -1,7 +1,18 @@
 # Make storage transaction using 0g storage-cli
 
-## Preparation
+## 0g storage-cli installation
+### 1. Download binary
+ ```bash
+    git clone https://github.com/0glabs/0g-storage-client.git
+ ```
 
+### 2. Build the binary
+ ```bash
+    cd 0g-storage-client
+    go build
+ ```
+
+## Preparation
 ### 1. Input your private key
  ```bash
     read -sp "Enter your private key: " PRIVATE_KEY && echo
@@ -21,21 +32,41 @@ PLEASE INPUT YOUR STORAGE NODE URL (http://STORAGE_NODE_IP:5678) YOUR JSON RPC E
  ```
 
 ## Upload file transaction
-INPUT DESTINATION PATH OF THE FILE YOU WANT TO UPLOAD
+-   THESE COMMANDS CAN WORK IF THE FILE PATH IS INSIDE THE 0g-storage-client DIRECTORY.
+-   THIS MEANS YOU MUST CREATE OR CHOOSE THE FILE INSIDE THE 0g-storage-client DIRECTORY.
+### 1. input the input path of the file you want to upload
+ ```bash
+    read -p "Enter your input file path: " INPUT_FILE_PATH && echo "Current input file path: $INPUT_FILE_PATH"
+ ```
+
+### 2. execute the transaction
  ```bash
     ./0g-storage-client upload \
     --url $BLOCKCHAIN_RPC_ENDPOINT \
     --contract $LOG_CONTRACT_ADDRESS \
     --key $PRIVATE_KEY \
     --node $ZGS_NODE \
-    --file <input_file_path>
+    --file $INPUT_FILE_PATH
  ```
 
+ ###  SUCCESSFUL RESULT: ![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/421cb81a-3f2b-41d5-b798-e7f1897f2802)
+
 ## Download file transaction
-YOU MUST UPLOAD YOUR FILE FIRST BEFORE YOU CAN DOWNLOAD IT. INPUT THE ROOT HASH VALUE FROM THE UPLOAD TRANSACTION LOGS. SET THE OUTPUT FILE PATH
+-   THESE COMMANDS CAN WORK IF THE FILE PATH IS INSIDE THE 0g-storage-client DIRECTORY.
+-   THIS MEANS YOU MUST CREATE OR CHOOSE THE FILE INSIDE THE 0g-storage-client DIRECTORY.
+-   YOU MUST UPLOAD YOUR FILE FIRST BEFORE YOU CAN DOWNLOAD IT. INPUT THE ROOT HASH VALUE FROM THE UPLOAD TRANSACTION LOGS.
+
+### 1. input the output path and the root hash of the file you want to download
+ ```bash
+    read -p "Enter your output file path: " OUTPUT_FILE_PATH && echo "Current output file path: $OUTPUT_FILE_PATH" && read -p "Enter the file root hash: " ROOT_HASH && echo "Current file root hash: $ROOT_HASH"
+ ```
+
+### 2.  execute the transaction
  ```bash
     ./0g-storage-client download \
-    --node $BLOCKCHAIN_RPC_ENDPOINT \
-    --root <file_root_hash> \
-    --file <output_file_path>
+    --node $ZGS_NODE \
+    --root $ROOT_HASH\
+    --file $OUTPUT_FILE_PATH
  ```
+
+### SUCCESSFUL RESULT: ![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/ea095625-ae68-427e-a626-d742dcb575a7)
