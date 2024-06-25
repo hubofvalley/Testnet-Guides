@@ -119,9 +119,9 @@ SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de286
    sed -i.bak -e "s/^seeds *=.*/seeds = \"${SEEDS}\"/" $HOME/.0gchain/config/config.toml
    ```
 
-### 8. Add peers to the config.toml (i recommend using seeds only, but it's up to you whether to add peers)
+### 8. Add peers to the config.toml (i recommend using seeds only, but it's up to you whether to add peers) (currently no peers)
    ```bash
-peers="4193c89124bd9be8527ad3129206cab88fcdd00e@31.220.75.83:12656,1f52e81478c64c6b1b440afeeb383e485c37de6d@62.171.139.61:12656,39dc4c1f8599f03e351c6fc3948fd948e77c3120@161.97.119.65:12656,0d098bff25931d74a602b00c2231de37740b93d2@109.199.103.108:12656,e3fa866c27a6cb19f0b25dcea79d45df977d640d@161.97.98.214:12656"
+peers=""
 sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchain/config/config.toml
    ```
 
@@ -145,7 +145,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
    s%:26660%:${OG_PORT}660%g" $HOME/.0gchain/config/config.toml
    ```
 
-### 11. config pruning to save storage (optional)
+### 11. config pruning to save storage (optional) (if u want to run a full node, skip this task)
    ```bash
    sed -i \
       -e "s/^pruning *=.*/pruning = \"custom\"/" \
@@ -162,10 +162,14 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
     $HOME/.0gchain/config/app.toml
    ```
 
-### 13. set minimum gas price, enable prometheus and disable indexing
+### 13. set minimum gas price and enable prometheus and disable indexing 
    ```bash
    sed -i "s/^minimum-gas-prices *=.*/minimum-gas-prices = \"0ua0gi\"/" $HOME/.0gchain/config/app.toml
    sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.0gchain/config/config.toml
+   ```
+
+### 14. disable indexer (optional) (if u want to run a full node, skip this task)
+   ```bash
    sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.0gchain/config/config.toml
    ```
 
