@@ -86,7 +86,7 @@ guide's current binaries version: ``v0.1.0``
    ```
   echo "export WALLET="wallet"" >> $HOME/.bash_profile
   echo "export MONIKER="<your-moniker>"" >> $HOME/.bash_profile
-  echo "export OG_CHAIN_ID="zgtendermint_16600-1"" >> $HOME/.bash_profile
+  echo "export OG_CHAIN_ID="zgtendermint_16600-2"" >> $HOME/.bash_profile
   echo "export OG_PORT="26"" >> $HOME/.bash_profile
   source $HOME/.bash_profile
    ```
