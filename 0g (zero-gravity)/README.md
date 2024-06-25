@@ -208,6 +208,11 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
   ```
   THEN U MUST REQUEST THE TEST TOKEN FROM THE [FAUCET](https://faucet.0g.ai/) BY ENTERING YOUR 0X ADDRESS
 
+  OR YOU CAN IMPORT YOUR EXISTING WALLET
+  ```bash
+  0gchaind keys add $WALLET --recover --keyring-backend os --eth
+  ```
+
 ## 2. check node synchronization
   ```bash
   0gchaind status | jq .sync_info
