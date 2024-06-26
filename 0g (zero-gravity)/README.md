@@ -202,7 +202,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
 #   Keys commands
 ## 1. create wallet
   ```bash
-  0gchaind keys add $WALLET
+  0gchaind keys add $WALLET --eth
   ```
   ![SAVE YOUR SEEDS PHRASE!](https://img.shields.io/badge/SAVE%20YOUR%20SEEDS%20PHRASE!-red)
    
