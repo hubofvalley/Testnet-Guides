@@ -31,7 +31,7 @@ guide's current binaries version: ``v0.3.1``
    ENR_ADDRESS=$(wget -qO- eth0.me)
    echo "export ENR_ADDRESS=${ENR_ADDRESS}" >> ~/.bash_profile
    echo 'export ZGS_LOG_DIR="$HOME/0g-storage-node/run/log"' >> ~/.bash_profile
-   echo 'export ZGS_LOG_SYNC_BLOCK="1039"' >> ~/.bash_profile
+   echo 'export ZGS_LOG_SYNC_BLOCK="802"' >> ~/.bash_profile
    echo 'export LOG_CONTRACT_ADDRESS="0x8873cc79c5b3b5666535C825205C9a128B1D75F1"' >> ~/.bash_profile
    echo 'export MINE_CONTRACT="0x85F6722319538A805ED5733c5F4882d96F1C7384"' >> ~/.bash_profile
    echo 'export BLOCKCHAIN_RPC_ENDPOINT="<your json rpc endpoint>"' >> ~/.bash_profile
