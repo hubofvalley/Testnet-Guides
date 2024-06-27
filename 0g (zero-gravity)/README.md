@@ -127,12 +127,13 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
 
 ### 9. set custom ports in app.toml
    ```bash
-   sed -i.bak -e "s%:26658%:${OG_PORT}658%g;
-   s%:26657%:${OG_PORT}657%g;
-   s%:6060%:${OG_PORT}060%g;
-   s%:26656%:${OG_PORT}656%g;
-   s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${OG_PORT}656\"%;
-   s%:26660%:${OG_PORT}660%g" $HOME/.0gchain/config/config.toml
+  sed -i.bak -e "s%:1317%:${OG_PORT}317%g;
+  s%:8080%:${OG_PORT}080%g;
+  s%:9090%:${OG_PORT}090%g;
+  s%:9091%:${OG_PORT}091%g;
+  s%:8545%:${OG_PORT}545%g;
+  s%:8546%:${OG_PORT}546%g;
+  s%:6065%:${OG_PORT}065%g" $HOME/.0gchain/config/app.toml
    ```
 
 ### 10. set custom ports in config.toml file
