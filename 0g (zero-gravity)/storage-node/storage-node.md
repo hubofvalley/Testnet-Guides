@@ -52,7 +52,7 @@ guide's current binaries version: ``v0.3.1``
    git clone https://github.com/0glabs/0g-storage-node.git
    cd $HOME/0g-storage-node
    git fetch
-   git checkout tags/v0.3.1
+   git checkout tags/v0.3.2
    git submodule update --init
    sudo apt install cargo
    cargo build --release
