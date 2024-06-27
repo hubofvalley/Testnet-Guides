@@ -152,7 +152,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
     $HOME/.0gchain/config/app.toml
    ```
 
-### 12. set minimum gas price and enable prometheus and disable indexing 
+### 12. set minimum gas price and enable prometheus
    ```bash
    sed -i "s/^minimum-gas-prices *=.*/minimum-gas-prices = \"0ua0gi\"/" $HOME/.0gchain/config/app.toml
    sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.0gchain/config/config.toml
