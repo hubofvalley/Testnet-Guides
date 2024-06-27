@@ -261,6 +261,12 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
   0gchaind tx staking delegate 0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4 1000000ua0gi --from $WALLET --chain-id zgtendermint_16600-1 --gas=auto --gas-adjustment=1.4 --fees=800ua0gi -y
   ```
 
+#  IF U HAVE SYNC PROBLEM, u can try to add fresh addrbook.json
+  ```bash
+  sudo systemctl stop 0gchaind && \
+  wget -O $HOME/.0gchain/config/addrbook.json https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/misc/addrbook.json
+  ```
+
 #  delete the node
   ```bash
   sudo systemctl stop 0gchaind
