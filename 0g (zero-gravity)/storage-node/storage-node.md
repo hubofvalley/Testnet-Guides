@@ -80,6 +80,7 @@ store your private key in variable:
    s|^\s*#\s*watch_loop_wait_time_ms\s*=.*|watch_loop_wait_time_ms = 1000|
    s|^\s*#\?\s*network_libp2p_port\s*=.*|network_libp2p_port = 1234|
    s|^\s*#\?\s*network_discovery_port\s*=.*|network_discovery_port = 1234|
+   s|^\s*#\s*rpc_listen_address\s*=.*|rpc_listen_address = "0.0.0.0:5678"|
    s|^\s*#\s*rpc_listen_address_admin\s*=.*|rpc_listen_address_admin = "0.0.0.0:5679"|
    s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
    s|^\s*#\?\s*db_dir\s*=.*|db_dir = "db"|
