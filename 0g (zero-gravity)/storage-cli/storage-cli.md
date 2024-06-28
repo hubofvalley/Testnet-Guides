@@ -13,15 +13,15 @@
  ```
 
 ## Preparation
-### 1. Input your private key (DO THIS EVERY NEW SESSION OF YOUR INSTANCE TO EXECUTE THE STORAGE-CLI TX)
- ```bash
-    read -sp "Enter private key: " PRIVATE_KEY && echo
- ```
-
-### 2. Input your json-rpc and storage node url
+### 1. Input your json-rpc and storage node url
 -   PLEASE INPUT YOUR STORAGE NODE URL (http://STORAGE_NODE_IP:5678) YOUR JSON RPC ENDPOINT (http://VALIDATOR_NODE_IP:8545) OR YOU CAN OUR ENDPOINTS PLEASE CHECK [README](https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/README.md)
  ```bash
     read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT && echo "Current json-rpc: $BLOCKCHAIN_RPC_ENDPOINT" && read -p "Enter storage node url: " ZGS_NODE && echo "Current storage node url: $ZGS_NODE"
+ ```
+
+### 2. Input your private key (DO THIS EVERY NEW SESSION OF YOUR INSTANCE TO EXECUTE THE STORAGE-CLI TX)
+ ```bash
+    read -sp "Enter private key: " PRIVATE_KEY && echo
  ```
 
 ### 3. Set variables
