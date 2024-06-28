@@ -19,12 +19,7 @@
     read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT && echo "Current json-rpc: $BLOCKCHAIN_RPC_ENDPOINT" && read -p "Enter storage node url: " ZGS_NODE && echo "Current storage node url: $ZGS_NODE"
  ```
 
-### 2. Input your private key (DO THIS EVERY NEW SESSION OF YOUR INSTANCE TO EXECUTE THE STORAGE-CLI TX)
- ```bash
-    read -sp "Enter private key: " PRIVATE_KEY && echo
- ```
-
-### 3. Set variables
+### 2. Set variables
  ```bash
     echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
     echo "export LOG_CONTRACT_ADDRESS=\"0x8873cc79c5b3b5666535C825205C9a128B1D75F1\"" >> ~/.bash_profile
@@ -34,6 +29,11 @@
 
     echo -e "\n\033[31mCHECK YOUR STORAGE CLI VARIABLES\033[0m\n\nZGS_NODE: $ZGS_NODE\nLOG_CONTRACT_ADDRESS: $LOG_CONTRACT_ADDRESS\nBLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT\n\n"
 echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
+ ```
+
+### 2. Input your private key (DO THIS EVERY NEW SESSION OF YOUR INSTANCE TO EXECUTE THE STORAGE-CLI TX)
+ ```bash
+    read -sp "Enter private key: " PRIVATE_KEY && echo
  ```
 
 ## Upload file transaction
