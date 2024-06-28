@@ -31,7 +31,7 @@
 echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
  ```
 
-### 2. Input your private key (DO THIS EVERY NEW SESSION OF YOUR INSTANCE TO EXECUTE THE STORAGE-CLI TX)
+### 3. Input your private key (DO THIS EVERY NEW SESSION OF YOUR INSTANCE TO EXECUTE THE STORAGE-CLI TX)
  ```bash
     read -sp "Enter private key: " PRIVATE_KEY && echo
  ```
