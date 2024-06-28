@@ -72,6 +72,7 @@ echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
     --node $ZGS_NODE \
     --root $ROOT_HASH\
     --file $OUTPUT_FILE_PATH
+    --proof
  ```
 
 ### SUCCESSFUL RESULT: ![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/ea095625-ae68-427e-a626-d742dcb575a7)
