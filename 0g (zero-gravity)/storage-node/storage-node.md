@@ -142,9 +142,9 @@ store your private key in variable:
    ![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/1f531de9-a183-43bb-8ef0-016cffaf93af)
 
 
-   - INFO logs command(including the number of connected peers)
+   - minimized logs command
    ```bash
-   tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d) | grep INFO
+   tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d) | grep -v "discv5\|network\|onnect\|16U\|nounce"
    ```
 
 
