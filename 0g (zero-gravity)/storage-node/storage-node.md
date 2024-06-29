@@ -147,7 +147,10 @@ store your private key in variable:
    tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d) | grep -v "discv5\|network\|onnect\|16U\|nounce"
    ```
 
-
+   - check your storage node rpc
+   ```bash
+   curl -X POST http://localhost:5678 -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"zgs_getStatus","params":[],"id":1}'  | jq
+   ```
 
 ### delete storage node
    ```bash
