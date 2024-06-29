@@ -144,7 +144,7 @@ store your private key in variable:
 
    - minimized logs command
    ```bash
-   tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d) | grep -v "discv5\|network\|onnect\|16U\|nounce"
+   tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d) | grep -v "discv5\|network\|connect\|16U\|nounce"
    ```
 
    - check your storage node rpc
