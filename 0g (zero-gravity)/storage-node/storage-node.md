@@ -127,11 +127,11 @@ store your private key in variable:
    ```bash
    ls -lt $ZGS_LOG_DIR
    ```
-   - logs command
+   - full logs command
    ```bash
    tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d)
    ```
-   - tx_seq logs command
+   - tx_seq-only logs command
    ```bash
    tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d) | grep tx_seq:
    ```
@@ -142,12 +142,12 @@ store your private key in variable:
    ![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/1f531de9-a183-43bb-8ef0-016cffaf93af)
 
 
-   - minimized logs command
+   - minimized-logs command
    ```bash
    tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d) | grep -v "discv5\|network\|connect\|16U\|nounce"
    ```
 
-   - check your storage node rpc
+   - check your storage node through rpc
    ```bash
    curl -X POST http://localhost:5678 -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"zgs_getStatus","params":[],"id":1}'  | jq
    ```
