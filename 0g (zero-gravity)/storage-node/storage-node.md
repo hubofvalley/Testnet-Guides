@@ -164,7 +164,7 @@ store your private key in variable:
    rm -rf $HOME/0g-storage-node
    ```
 
-### upgrade the storage node
+## upgrade the storage node
 ### 1. delete the node
    ```bash
    sudo systemctl stop zgs
