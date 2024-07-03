@@ -39,7 +39,7 @@ echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
 ## Upload file transaction
 -   THESE COMMANDS CAN WORK IF THE FILE PATH IS INSIDE THE 0g-storage-client DIRECTORY.
 -   THIS MEANS YOU MUST CREATE OR CHOOSE THE FILE INSIDE THE 0g-storage-client DIRECTORY.
-### 1. create new file the input size and path of the file you want to create and upload
+### 1. input size and path of the file you want to create then upload
  ```bash
     read -p "Enter file size (byte): " FILE_SIZE && echo "file size (byte): $FILE_SIZE" && read -p "Enter file name: " INPUT_FILE_PATH && echo "Current file name: $INPUT_FILE_PATH" && ./0g-storage-client gen --size $FILE_SIZE --file $INPUT_FILE_PATH
  ```
