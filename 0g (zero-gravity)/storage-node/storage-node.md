@@ -172,4 +172,4 @@ store your private key in variable:
    sudo rm /etc/systemd/system/zgs.service
    rm -rf $HOME/0g-storage-node
    ```
-### TTHEN START OVER FROM [STEP 4](https://github.com/hubofvalley/Testnet-Guides/edit/main/0g%20(zero-gravity)/storage-node/storage-node.md#4-set-vars)
+### THEN START OVER FROM [STEP 4](https://github.com/hubofvalley/Testnet-Guides/edit/main/0g%20(zero-gravity)/storage-node/storage-node.md#4-set-vars)
