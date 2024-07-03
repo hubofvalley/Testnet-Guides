@@ -51,7 +51,8 @@ echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
     --contract $LOG_CONTRACT_ADDRESS \
     --key $PRIVATE_KEY \
     --node $ZGS_NODE \
-    --file $INPUT_FILE_PATH
+    --file $INPUT_FILE_PATH &&
+    echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
  ```
 
  ###  SUCCESSFUL RESULT: ![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/421cb81a-3f2b-41d5-b798-e7f1897f2802)
@@ -72,7 +73,8 @@ echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
     --node $ZGS_NODE \
     --root $ROOT_HASH \
     --file $OUTPUT_FILE_PATH \
-    --proof
+    --proof &&
+    echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
  ```
 
 ### SUCCESSFUL RESULT: ![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/ea095625-ae68-427e-a626-d742dcb575a7)
