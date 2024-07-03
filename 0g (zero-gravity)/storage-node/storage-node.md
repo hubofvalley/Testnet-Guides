@@ -164,37 +164,12 @@ store your private key in variable:
    rm -rf $HOME/0g-storage-node
    ```
 
-### upgrade the storage node (IF UR STORAGE NODE STILL IN v0.3.0 VERSION)
-
-1. backup your db directory
-   ```bash
-   cp /$HOME/0g-storage-node/run/db /$HOME/
-   ```
-
-2. delete the node
+### upgrade the storage node
+### 1. delete the node
    ```bash
    sudo systemctl stop zgs
    sudo systemctl disable zgs
    sudo rm /etc/systemd/system/zgs.service
    rm -rf $HOME/0g-storage-node
    ```
-
-3. download latest binary
-   ```bash
-   cd $HOME
-   git clone https://github.com/0glabs/0g-storage-node.git
-   cd $HOME/0g-storage-node
-   git fetch
-   git checkout tags/v0.3.1
-   git submodule update --init
-   sudo apt install cargo
-   cargo build --release
-   ```
-
-4. move db directory to binaries
-   ```bash
-   cd $HOME
-   mv /$HOME/db /$HOME/0g-storage-node/run/
-   ```
-
-THEN REPEAT STEP 5 TO 8
+### TTHEN START OVER FROM [STEP 4](https://github.com/hubofvalley/Testnet-Guides/edit/main/0g%20(zero-gravity)/storage-node/storage-node.md#4-set-vars)
