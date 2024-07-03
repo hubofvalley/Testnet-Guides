@@ -1,5 +1,5 @@
 ## 0gchain Storage Node Deployment Guide
-guide's current binaries version: ``v0.3.2``
+guide's current binaries version: ``v0.3.3``
 
 ### 1. Install dependencies for building from source
    ```bash
