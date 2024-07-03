@@ -49,6 +49,9 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    git checkout tags/v1.1.0-testnet
    git submodule update --init
    sudo apt install cargo
+   ```
+   then build it
+   ```bash
    cargo build --release
    ```
 
