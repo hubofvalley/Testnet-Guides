@@ -47,7 +47,7 @@ guide's current binaries version: ``v0.3.3``
    curl -s -X POST $BLOCKCHAIN_RPC_ENDPOINT -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n"
    ```
 
-### 4. download binary
+### 5. download binary
    ```bash
    cd $HOME
    git clone https://github.com/0glabs/0g-storage-node.git
@@ -62,7 +62,7 @@ guide's current binaries version: ``v0.3.3``
    cargo build --release
    ```
 
-### 5. wallet private key check
+### 6. wallet private key check
 obtain yout wallet's private key by using this command in your validator node :
    ```bash
    0gchaind keys unsafe-export-eth-key $WALLET
@@ -73,7 +73,7 @@ store your private key in variable:
    read -sp "Enter your private key: " PRIVATE_KEY && echo
    ```
 
-### 6. update node configuration
+### 7. update node configuration
    ```bash
    sed -i '
    s|^miner_key = ""|miner_key = "'"$PRIVATE_KEY"'"|
@@ -98,7 +98,7 @@ store your private key in variable:
    ' $HOME/0g-storage-node/run/config.toml
    ```
 
-### 7. create service
+### 8. create service
    ```bash
    sudo tee /etc/systemd/system/zgs.service > /dev/null <<EOF
    [Unit]
@@ -118,7 +118,7 @@ store your private key in variable:
    EOF
    ```
 
-### 8. start the node
+### 9. start the node
    ```bash
    sudo systemctl daemon-reload && \
    sudo systemctl enable zgs && \
@@ -126,7 +126,7 @@ store your private key in variable:
    sudo systemctl status zgs
    ```
 
-### 9. show logs by date
+### 10. show logs by date
    - check the logs file
    ```bash
    ls -lt $ZGS_LOG_DIR
