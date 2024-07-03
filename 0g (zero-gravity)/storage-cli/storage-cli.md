@@ -19,7 +19,7 @@
     read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT && echo "Current json-rpc: $BLOCKCHAIN_RPC_ENDPOINT" && read -p "Enter storage node url: " ZGS_NODE && echo "Current storage node url: $ZGS_NODE"
  ```
 
-### 2. Set variables
+### 2. Set cli variables
  ```bash
     echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
     echo "export LOG_CONTRACT_ADDRESS=\"0x8873cc79c5b3b5666535C825205C9a128B1D75F1\"" >> ~/.bash_profile
@@ -39,9 +39,9 @@ echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
 ## Upload file transaction
 -   THESE COMMANDS CAN WORK IF THE FILE PATH IS INSIDE THE 0g-storage-client DIRECTORY.
 -   THIS MEANS YOU MUST CREATE OR CHOOSE THE FILE INSIDE THE 0g-storage-client DIRECTORY.
-### 1. input the input path of the file you want to upload
+### 1. create new file the input size and path of the file you want to create and upload
  ```bash
-    read -p "Enter your input file path: " INPUT_FILE_PATH && echo "Current input file path: $INPUT_FILE_PATH"
+    read -p "Enter file size (byte): " FILE_SIZE && echo "file size (byte): $FILE_SIZE" && read -p "Enter file name: " INPUT_FILE_PATH && echo "Current file name: $INPUT_FILE_PATH" && ./0g-storage-client gen --size $FILE_SIZE --file $INPUT_FILE_PATH
  ```
 
 ### 2. execute the transaction
