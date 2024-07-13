@@ -51,7 +51,8 @@ echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
     --contract $LOG_CONTRACT_ADDRESS \
     --key $PRIVATE_KEY \
     --node $ZGS_NODE \
-    --file $INPUT_FILE_PATH &&
+    --file $INPUT_FILE_PATH
+    --gas-limit 25000000 &&
     echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
  ```
 
