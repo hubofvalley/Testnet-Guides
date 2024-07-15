@@ -61,6 +61,7 @@ Grand Valley's 0G public endpoints:
 
 ## 0gchain Node Deployment Guide
 guide's current binaries version: ``v0.2.3``
+current chain : ``zgtendermint_16600-2``
 
 ### 1. Install dependencies for building from source
    ```bash
