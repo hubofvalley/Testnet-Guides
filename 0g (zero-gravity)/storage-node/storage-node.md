@@ -58,7 +58,6 @@ guide's current binaries version: ``v0.3.3``
    git stash
    git tag -d v0.3.3
    git fetch --all --tags
-   git checkout 2a2688d2c34a1e9480239e17b626912370662dcc
    git submodule update --init
    sudo apt install cargo
    ```
