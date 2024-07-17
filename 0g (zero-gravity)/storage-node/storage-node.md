@@ -1,5 +1,5 @@
 ## 0gchain Storage Node Deployment Guide
-guide's current binaries version: ``v0.3.3``
+guide's current binaries version: ``v0.3.4``
 
 ### 1. Install dependencies for building from source
    ```bash
@@ -56,8 +56,9 @@ guide's current binaries version: ``v0.3.3``
    git clone https://github.com/0glabs/0g-storage-node.git
    cd $HOME/0g-storage-node
    git stash
-   git tag -d v0.3.3
    git fetch --all --tags
+   git tag -d v0.3.4
+   git checkout 5b6a4c716174b4af1635bfe903cd4f82894e0533
    git submodule update --init
    sudo apt install cargo
    ```
