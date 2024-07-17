@@ -98,7 +98,7 @@ store your private key in variable:
    s|^\s*#\?\s*mine_contract_address\s*=.*|mine_contract_address = "'"$MINE_CONTRACT"'"|
    s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = '"$ZGS_LOG_SYNC_BLOCK"'|
    s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = "'"$BLOCKCHAIN_RPC_ENDPOINT"'"|
-   ' $HOME/0g-storage-node/run/config.toml
+   ' $HOME/0g-storage-node/run/config-testnet.toml
    ```
 
 ### 8. create service
@@ -111,7 +111,7 @@ store your private key in variable:
    [Service]
    User=$USER
    WorkingDirectory=$HOME/0g-storage-node/run
-   ExecStart=$HOME/0g-storage-node/target/release/zgs_node --config $HOME/0g-storage-node/run/config.toml
+   ExecStart=$HOME/0g-storage-node/target/release/zgs_node --config $HOME/0g-storage-node/run/config-testnet.toml
    Restart=on-failure
    RestartSec=10
    LimitNOFILE=65535
