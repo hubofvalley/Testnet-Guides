@@ -52,7 +52,8 @@ echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
     --key $PRIVATE_KEY \
     --node $ZGS_NODE \
     --file $INPUT_FILE_PATH \
-    --gas-limit 25000000 &&
+    --gas-limit 25000000
+
     echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
  ```
 
@@ -74,7 +75,8 @@ echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
     --node $ZGS_NODE \
     --root $ROOT_HASH \
     --file $OUTPUT_FILE_PATH \
-    --proof &&
+    --proof
+
     echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
  ```
 
