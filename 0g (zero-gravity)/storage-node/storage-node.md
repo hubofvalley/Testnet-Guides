@@ -164,7 +164,7 @@ store your private key in variable:
    sudo systemctl stop zgs
    sudo systemctl disable zgs
    sudo rm /etc/systemd/system/zgs.service
-   rm -rf $HOME/0g-storage-node
+   sudo rm -rf $HOME/0g-storage-node
    ```
 
 ## upgrade the storage node
