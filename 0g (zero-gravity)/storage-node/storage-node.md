@@ -81,7 +81,7 @@ store your private key in variable:
 ### 7. update node configuration
    ```bash
    sed -i '
-   s|^miner_key = ""|miner_key = "'"$PRIVATE_KEY"'"|
+   s|^#\?miner_key = ""|miner_key = "'"$PRIVATE_KEY"'"|
    s|^\s*#\?\s*network_dir\s*=.*|network_dir = "network"|
    s|^\s*#\?\s*network_enr_address\s*=.*|network_enr_address = "'"$ENR_ADDRESS"'"|
    s|^\s*#\?\s*network_enr_tcp_port\s*=.*|network_enr_tcp_port = 1234|
