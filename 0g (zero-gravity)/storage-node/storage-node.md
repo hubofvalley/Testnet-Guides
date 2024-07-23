@@ -83,7 +83,7 @@ store your private key in variable:
    sed -i '
    s|^\s*#\s*miner_key\s*=.*|miner_key = "'"$PRIVATE_KEY"'"|
    s|^\s*#\?\s*network_dir\s*=.*|network_dir = "network"|
-   s|^\s*#\?\s*network_enr_address\s*=.*|network_enr_address = "'"$ENR_ADDRESS"'"|
+   s|^\s*#\s*network_enr_address\s*=.*|network_enr_address = "'"$ENR_ADDRESS"'"|
    s|^\s*#\?\s*network_enr_tcp_port\s*=.*|network_enr_tcp_port = 1234|
    s|^\s*#\?\s*network_enr_udp_port\s*=.*|network_enr_udp_port = 1234|
    s|^\s*#\?\s*network_libp2p_port\s*=.*|network_libp2p_port = 1234|
