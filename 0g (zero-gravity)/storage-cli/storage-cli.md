@@ -54,6 +54,14 @@ echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
     --file $INPUT_FILE_PATH \
     --gas-limit 25000000
 
+    # Check if the upload was successful and then delete the file
+    if [ $? -eq 0 ]; then
+    rm $INPUT_FILE_PATH
+    echo "File $INPUT_FILE_PATH has been deleted after upload."
+    else
+    echo "Upload failed, file $INPUT_FILE_PATH was not deleted."
+    fi
+
     echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
  ```
 
