@@ -5,6 +5,7 @@ guide's current binaries version: ``v0.3.4``
    ```bash
    sudo apt-get update
    sudo apt-get install clang cmake build-essential
+   apt install git
    sudo apt install libssl-dev
    sudo apt install pkg-config
    sudo apt-get install protobuf-compiler
