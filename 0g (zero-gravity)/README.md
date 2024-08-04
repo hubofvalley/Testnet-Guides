@@ -94,7 +94,7 @@ current chain : ``zgtendermint_16600-2``
 
 ### 4. download binary
    ```bash
-   git clone -b v0.2.3 https://github.com/0glabs/0g-chain.git
+   git clone -b v0.2.5 https://github.com/0glabs/0g-chain.git
    cd 0g-chain
    make install
    0gchaind version
@@ -277,7 +277,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
   ```bash
   cd $HOME
   rm -rf $HOME/0g-chain
-  git clone -b <0G node version> https://github.com/0glabs/0g-chain.git
+  git clone -b v0.2.5 https://github.com/0glabs/0g-chain.git
   make install
   source .profile
   0gchaind version
