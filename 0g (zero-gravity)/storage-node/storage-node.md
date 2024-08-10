@@ -65,7 +65,6 @@ guide's current binaries version: ``v0.3.4``
    git fetch --all --tags
    git checkout 302aa88
    git submodule update --init
-   cargo build --release
    ```
    then build it
    ```bash
