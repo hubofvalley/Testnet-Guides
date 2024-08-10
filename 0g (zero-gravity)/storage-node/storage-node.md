@@ -60,7 +60,7 @@ guide's current binaries version: ``v0.3.4``
 ### 5. download binary
    ```bash
    cd $HOME
-   git clone https://github.com/0glabs/0g-storage-node.git
+   git clone -b v0.4.1 https://github.com/0glabs/0g-storage-node.git
    cd $HOME/0g-storage-node
    git fetch --all --tags
    git checkout 302aa88
