@@ -99,7 +99,7 @@ store your private key in variable:
    s|^\s*#\?\s*reward_contract_address\s*=.*|reward_contract_address = "'"$REWARD_CONTRACT"'"|
    s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = '"$ZGS_LOG_SYNC_BLOCK"'|
    s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = "'"$BLOCKCHAIN_RPC_ENDPOINT"'"|
-   s|^\s*#\?\s*confirmation_block_count\s*=.*|confirmation_block_count = "6"|
+   s|^\s*#\?\s*confirmation_block_count\s*=.*|confirmation_block_count = 6|
    ' $HOME/0g-storage-node/run/config-testnet.toml
 
    # modify log_config set preventing huge size of log files produced
