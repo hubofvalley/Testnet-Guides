@@ -24,7 +24,7 @@
 ### 2. Set cli variables
  ```bash
  echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
- echo "export LOG_CONTRACT_ADDRESS=\"0xB7e39604f47c0e4a6Ad092a281c1A8429c2440d3\"" >> ~/.bash_profile
+ echo "export LOG_CONTRACT_ADDRESS=\"0xbD2C3F0E65eDF5582141C35969d66e34629cC768\"" >> ~/.bash_profile
  echo "export ZGS_NODE=\"$ZGS_NODE\"" >> ~/.bash_profile
  echo "export PRIVATE_KEY=\"$PRIVATE_KEY\"" >> ~/.bash_profile
 
