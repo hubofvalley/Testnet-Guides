@@ -41,9 +41,10 @@ guide's current binaries version: ``v0.3.4``
    ENR_ADDRESS=$(wget -qO- eth0.me)
    echo "export ENR_ADDRESS=${ENR_ADDRESS}" >> ~/.bash_profile
    echo 'export ZGS_LOG_DIR="$HOME/0g-storage-node/run/log"' >> ~/.bash_profile
-   echo 'export ZGS_LOG_SYNC_BLOCK="401178"' >> ~/.bash_profile
-   echo 'export LOG_CONTRACT_ADDRESS="0xB7e39604f47c0e4a6Ad092a281c1A8429c2440d3"' >> ~/.bash_profile
-   echo 'export MINE_CONTRACT="0x6176AA095C47A7F79deE2ea473B77ebf50035421"' >> ~/.bash_profile
+   echo 'export ZGS_LOG_SYNC_BLOCK="595059"' >> ~/.bash_profile
+   echo 'export LOG_CONTRACT_ADDRESS="0xbD2C3F0E65eDF5582141C35969d66e34629cC768"' >> ~/.bash_profile
+   echo 'export MINE_CONTRACT="0x6815F41019255e00D6F34aAB8397a6Af5b6D806f"' >> ~/.bash_profile
+   echo 'export REWARD_CONTRACT="0x51998C4d486F406a788B766d93510980ae1f9360"' >> ~/.bash_profile
    echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
    
    source ~/.bash_profile
@@ -61,12 +62,10 @@ guide's current binaries version: ``v0.3.4``
    cd $HOME
    git clone https://github.com/0glabs/0g-storage-node.git
    cd $HOME/0g-storage-node
-   git stash
    git fetch --all --tags
-   git tag -d v0.3.4
-   git checkout f0c3f2c
+   git checkout 302aa88
    git submodule update --init
-   sudo apt install cargo
+   cargo build --release
    ```
    then build it
    ```bash
@@ -86,6 +85,10 @@ store your private key in variable:
 
 ### 7. update node configuration
    ```bash
+   cp $HOME/0g-storage-node/run/config-testnet-turbo.toml $HOME/0g-storage-node/run/config-testnet.toml
+   ```
+
+   ```bash
    sed -i '
    s|^\s*#\s*miner_key\s*=.*|miner_key = "'"$PRIVATE_KEY"'"|
    s|^\s*#\?\s*network_dir\s*=.*|network_dir = "network"|
@@ -99,15 +102,17 @@ store your private key in variable:
    s|^\s*#\?\s*db_dir\s*=.*|db_dir = "db"|
    s|^\s*#\?\s*log_config_file\s*=.*|log_config_file = "log_config"|
    s|^\s*#\?\s*log_directory\s*=.*|log_directory = "log"|
-   s|^\s*#\?\s*network_boot_nodes\s*=.*|network_boot_nodes = \["/ip4/54.219.26.22/udp/1234/p2p/16Uiu2HAmTVDGNhkHD98zDnJxQWu3i1FL1aFYeh9wiQTNu4pDCgps","/ip4/52.52.127.117/udp/1234/p2p/16Uiu2HAkzRjxK2gorngB1Xq84qDrT4hSVznYDHj6BkbaE4SGx9oS","/ip4/18.167.69.68/udp/1234/p2p/16Uiu2HAm2k6ua2mGgvZ8rTMV8GhpW71aVzkQWy7D37TTDuLCpgmX"]|
+   s|^\s*#\?\s*network_boot_nodes\s*=.*|network_boot_nodes = \["/ip4/54.219.26.22/udp/1234/p2p/16Uiu2HAmTVDGNhkHD98zDnJxQWu3i1FL1aFYeh9wiQTNu4pDCgps","/ip4/52.52.127.117/udp/1234/p2p/16Uiu2HAkzRjxK2gorngB1Xq84qDrT4hSVznYDHj6BkbaE4SGx9oS","/ip4/18.162.65.205/udp/1234/p2p/16Uiu2HAm2k6ua2mGgvZ8rTMV8GhpW71aVzkQWy7D37TTDuLCpgmX"]|
    s|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = "'"$LOG_CONTRACT_ADDRESS"'"|
    s|^\s*#\?\s*mine_contract_address\s*=.*|mine_contract_address = "'"$MINE_CONTRACT"'"|
+   s|^\s*#\?\s*reward_contract_address\s*=.*|reward_contract_address = "'"$REWARD_CONTRACT"'"|
    s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = '"$ZGS_LOG_SYNC_BLOCK"'|
    s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = "'"$BLOCKCHAIN_RPC_ENDPOINT"'"|
+   s|^\s*#\?\s*confirmation_block_count\s*=.*|confirmation_block_count = "6"|
    ' $HOME/0g-storage-node/run/config-testnet.toml
 
    # modify log_config set preventing huge size of log files produced
-   echo "info,hyper=warn,h2=warn" > $HOME/0g-storage-node/run/log_config
+   echo "info,hyper=info,h2=info" > $HOME/0g-storage-node/run/log_config
    ```
 
 ### 8. create service
