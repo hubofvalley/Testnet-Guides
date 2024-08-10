@@ -60,7 +60,7 @@ Grand Valley's 0G public endpoints:
 - json-rpc : not available
 
 ## 0gchain Node Deployment Guide
-guide's current binaries version: ``v0.2.3``
+guide's current binaries version: ``v0.3.0``
 current chain : ``zgtendermint_16600-2``
 
 ### 1. Install dependencies for building from source
@@ -94,7 +94,7 @@ current chain : ``zgtendermint_16600-2``
 
 ### 4. download binary
    ```bash
-   git clone -b v0.2.5 https://github.com/0glabs/0g-chain.git
+   git clone -b v0.3.0 https://github.com/0glabs/0g-chain.git
    cd 0g-chain
    make install
    0gchaind version
