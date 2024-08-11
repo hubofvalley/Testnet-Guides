@@ -53,7 +53,7 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
     - [0gchainDiscord](https://discord.com/invite/0glabs)
     - [0gchainDocs](https://docs.0g.ai/0g-doc)
     - [0gchainGithub](https://github.com/0glabs)
-    - [0gchainExplorer](https://testnet.0g.explorers.guru)
+    - [0gchainExplorer](https://explorer.grandvalleys.com/0g-chain%20testnet)
     
 Grand Valley's 0G public endpoints:
 - rpc : not available
