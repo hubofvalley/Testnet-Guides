@@ -59,7 +59,7 @@ Grand Valley's 0G public endpoints:
 - rpc : not available
 - json-rpc : not available
 
-## 0gchain Node Deployment Guide
+## 0gchain Node Deployment Guide With Cosmovisor
 guide's current binaries version: ``v0.2.5 will automatically update to the latest version``
 current chain : ``zgtendermint_16600-2``
 
@@ -233,6 +233,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
    sudo systemctl enable 0gchaind && \
    sudo systemctl restart 0gchaind && sudo journalctl -u 0gchaind -fn 100 -o cat
    ```
+## you can use any snapshot and no need to manually update the binary version
 
 #   Keys commands
 ## 1. create wallet
