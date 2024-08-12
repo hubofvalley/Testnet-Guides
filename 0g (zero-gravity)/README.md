@@ -199,7 +199,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
 
 ### 14. create service file
 #### edit the ``<input 1>`` with the value of ``input 1``
-#### dit the ``<input 2>`` with the result of ``input 2``
+#### edit the ``<input 2>`` with the result of ``input 2``
 #### edit the ``<input 3>`` with the result of ``input 3``
    ```bash
    sudo tee /etc/systemd/system/0gchaind.service > /dev/null <<EOF
