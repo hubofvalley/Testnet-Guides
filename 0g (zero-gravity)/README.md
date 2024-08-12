@@ -232,7 +232,12 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
    ```bash
    sudo systemctl daemon-reload && \
    sudo systemctl enable 0gchaind && \
-   sudo systemctl restart 0gchaind && sudo journalctl -u 0gchaind -fn 100 -o cat
+   sudo systemctl restart 0gchaind && sudo systemctl status 0gchaind
+   ```
+
+### 16. check the logs
+   ```bash
+   tail -f $HOME/.0gchain/log/chain.log
    ```
 ## you can use any snapshot and no need to manually update the binary version
 
