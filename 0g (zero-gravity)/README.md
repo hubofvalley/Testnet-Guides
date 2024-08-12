@@ -127,7 +127,7 @@ current chain : ``zgtendermint_16600-2``
    ```bash
    sudo rm $HOME/.0gchain/config/genesis.json &&
    wget https://github.com/0glabs/0g-chain/releases/download/v0.2.3/genesis.json -O $HOME/.0gchain/config/genesis.json &&
-   wget "https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/addrbook.json -O $HOME/.0gchain/config/addrbook.json"
+   wget "https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/addrbook.json" -O $HOME/.0gchain/config/addrbook.json
    ```
 
 ### 8. Add seeds to the config.toml
