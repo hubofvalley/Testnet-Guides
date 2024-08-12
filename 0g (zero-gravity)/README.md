@@ -186,12 +186,12 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
    ```
 ### 16. define the path of cosmovisor
    ```bash
-  input1=$(which cosmovisor)
-  input2=$(find $HOME -type d -name ".0gchain")
-  input3=$(find $HOME/.0gchain/cosmovisor -type d -name "backup")
-  echo "input1. $input1"
-  echo "input2. $input2"
-  echo "input3. $input3"
+   input1=$(which cosmovisor)
+   input2=$(find $HOME -type d -name ".0gchain")
+   input3=$(find $HOME/.0gchain/cosmovisor -type d -name "backup")
+   echo "input1. $input1"
+   echo "input2. $input2"
+   echo "input3. $input3"
    ```
    #### save the results, they'll be used in the next step
    #### this is an example of the result
