@@ -68,14 +68,14 @@ current chain : ``zgtendermint_16600-2``
    ```bash
     sudo apt update && \
     sudo apt install curl git jq build-essential gcc unzip wget lz4 openssl -y
-    sudo apt-get update
-    sudo apt-get install clang cmake build-essential
-    sudo apt install git
-    sudo apt install libssl-dev
-    sudo apt install pkg-config
-    sudo apt-get install protobuf-compiler
-    sudo apt-get install clang
-    sudo apt-get install llvm llvm-dev
+    sudo apt-get update -y
+    sudo apt-get install clang cmake build-essential -y
+    sudo apt install git -y
+    sudo apt install libssl-dev -y
+    sudo apt install pkg-config -y
+    sudo apt-get install protobuf-compiler -y
+    sudo apt-get install clang -y
+    sudo apt-get install llvm llvm-dev -y
    ```
 
 ### 2. install go
