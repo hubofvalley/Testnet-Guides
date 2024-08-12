@@ -202,7 +202,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
    #### this is an example of the result
    ![image](https://github.com/user-attachments/assets/af974b3d-f195-406f-9f97-c5b7c30cc88f)
 
-### 14. create service file
+### 17. create service file
 #### edit the ``<input 1>`` with the value of ``input 1``
 #### edit the ``<input 2>`` with the result of ``input 2``
 #### edit the ``<input 3>`` with the result of ``input 3``
@@ -232,19 +232,19 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
 #### this is an example of the edited service file 
    ![image](https://github.com/user-attachments/assets/c502e089-bb81-498c-a0bb-7e7c1cd9f25a)
 
-### 15. start the node
+### 18. start the node
    ```bash
    sudo systemctl daemon-reload && \
    sudo systemctl enable 0gchaind && \
    sudo systemctl restart 0gchaind && sudo systemctl status 0gchaind
    ```
 
-### 16. check the logs
+### 19. check the logs
    ```bash
    tail -f $HOME/.0gchain/log/chain.log
    ```
 
-### 17. check node version
+### 20. check node version
    ```bash
    cosmovisor run version
    ```
