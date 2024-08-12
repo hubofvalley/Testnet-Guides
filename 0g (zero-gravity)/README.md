@@ -238,6 +238,8 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
    sudo systemctl enable 0gchaind && \
    sudo systemctl restart 0gchaind && sudo systemctl status 0gchaind
    ```
+#### this is an example of the node running properly
+   ![image](https://github.com/user-attachments/assets/129dd95d-de3e-437f-a6af-0c807044e230)
 
 ### 19. check the logs
    ```bash
