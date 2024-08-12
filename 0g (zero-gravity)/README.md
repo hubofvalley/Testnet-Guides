@@ -181,9 +181,9 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
 
 ### 15. configure cosmovisor folder
    ```bash
-   mkdir -p ~/.0gchaind/cosmovisor/genesis/bin
-   mkdir -p ~/.0gchaind/cosmovisor/upgrades
-   mkdir -p ~/.0gchaind/cosmovisor/backup
+   mkdir -p ~/.0gchain/cosmovisor/genesis/bin
+   mkdir -p ~/.0gchain/cosmovisor/upgrades
+   mkdir -p ~/.0gchain/cosmovisor/backup
    ```
 ### 16. define the path of cosmovisor
    ```bash
