@@ -61,6 +61,7 @@ Grand Valley's 0G public endpoints:
 
 ## 0gchain Node Deployment Guide With Cosmovisor
 guide's current binaries version: ``v0.2.5 will automatically update to the latest version``
+service file name: ``0gchaind.service``
 current chain : ``zgtendermint_16600-2``
 
 ### 1. Install dependencies for building from source
