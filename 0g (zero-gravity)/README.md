@@ -243,6 +243,11 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
    ```bash
    tail -f $HOME/.0gchain/log/chain.log
    ```
+
+### 17. check node version
+   ```bash
+   cosmovisor run version
+   ```
 ## you can use any snapshot and no need to manually update the binary version
 
 #   Keys commands
