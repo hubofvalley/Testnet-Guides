@@ -60,13 +60,21 @@ Grand Valley's 0G public endpoints:
 - json-rpc : not available
 
 ## 0gchain Node Deployment Guide
-guide's current binaries version: ``v0.3.0``
+guide's current binaries version: ``v0.2.5 will automatically update to the latest version``
 current chain : ``zgtendermint_16600-2``
 
 ### 1. Install dependencies for building from source
    ```bash
     sudo apt update && \
     sudo apt install curl git jq build-essential gcc unzip wget lz4 openssl -y
+    sudo apt-get update
+    sudo apt-get install clang cmake build-essential
+    sudo apt install git
+    sudo apt install libssl-dev
+    sudo apt install pkg-config
+    sudo apt-get install protobuf-compiler
+    sudo apt-get install clang
+    sudo apt-get install llvm llvm-dev
    ```
 
 ### 2. install go
@@ -82,7 +90,12 @@ current chain : ``zgtendermint_16600-2``
   go version
    ```
 
-### 3. set vars
+### 3. install cosmovisor
+   ```bash
+   go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
+   ```
+
+### 4. set vars
   EDIT YOUR MONIKER
    ```
   echo "export WALLET="wallet"" >> $HOME/.bash_profile
@@ -92,15 +105,15 @@ current chain : ``zgtendermint_16600-2``
   source $HOME/.bash_profile
    ```
 
-### 4. download binary
+### 5. download binary
    ```bash
-   git clone -b v0.3.0 https://github.com/0glabs/0g-chain.git
+   git clone -b v0.2.5 https://github.com/0glabs/0g-chain.git
    cd 0g-chain
    make install
    0gchaind version
    ```
 
-### 5. config and init app
+### 6. config and init app
    ```bash
    cd $HOME
    0gchaind init $MONIKER --chain-id $OG_CHAIN_ID
@@ -109,25 +122,25 @@ current chain : ``zgtendermint_16600-2``
    0gchaind config keyring-backend os
    ```
 
-### 6. download genesis.json
+### 7. download genesis.json
    ```bash
    sudo rm $HOME/.0gchain/config/genesis.json &&
    wget https://github.com/0glabs/0g-chain/releases/download/v0.2.3/genesis.json -O $HOME/.0gchain/config/genesis.json
    ```
 
-### 7. Add seeds to the config.toml
+### 8. Add seeds to the config.toml
    ```bash
 SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de28667725a4fef26cdc7f9452cc34b16d@54.176.175.48:26656,e9b4bc203197b62cc7e6a80a64742e752f4210d5@54.193.250.204:26656,68b9145889e7576b652ca68d985826abd46ad660@18.166.164.232:26656" && \
    sed -i.bak -e "s/^seeds *=.*/seeds = \"${SEEDS}\"/" $HOME/.0gchain/config/config.toml
    ```
 
-### 8. Add peers to the config.toml (i recommend using seeds only, but it's up to you whether to add peers) (currently no peers)
+### 9. Add peers to the config.toml (i recommend using seeds only, but it's up to you whether to add peers) (currently no peers)
    ```bash
 peers=""
 sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchain/config/config.toml
    ```
 
-### 9. set custom ports in config.toml file
+### 10. set custom ports in config.toml file
    ```bash
    sed -i.bak -e "s%:26658%:${OG_PORT}658%g;
    s%:26657%:${OG_PORT}657%g;
@@ -137,7 +150,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
    s%:26660%:${OG_PORT}660%g" $HOME/.0gchain/config/config.toml
    ```
 
-### 10. config pruning to save storage (optional) (if u want to run a full node, skip this task)
+### 11. config pruning to save storage (optional) (if u want to run a full node, skip this task)
    ```bash
    sed -i \
       -e "s/^pruning *=.*/pruning = \"custom\"/" \
@@ -146,7 +159,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
       "$HOME/.0gchain/config/app.toml"
    ```
 
-### 11. open json-rpc endpoints (required for running the storage node and storage kv)
+### 12. open json-rpc endpoints (required for running the storage node and storage kv)
    ```bash
    sed -i \
     -e 's/address = "127.0.0.1:8545"/address = "0.0.0.0:8545"/' \
@@ -154,35 +167,65 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
     $HOME/.0gchain/config/app.toml
    ```
 
-### 12. set minimum gas price and enable prometheus
+### 13. set minimum gas price and enable prometheus
    ```bash
    sed -i "s/^minimum-gas-prices *=.*/minimum-gas-prices = \"0ua0gi\"/" $HOME/.0gchain/config/app.toml
    sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.0gchain/config/config.toml
    ```
 
-### 13. disable indexer (optional) (if u want to run a full node, skip this task)
+### 14. disable indexer (optional) (if u want to run a full node, skip this task)
    ```bash
    sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.0gchain/config/config.toml
    ```
 
+### 15. configure cosmovisor folder
+   ```bash
+   mkdir -p ~/.0gchaind/cosmovisor/genesis/bin
+   mkdir -p ~/.0gchaind/cosmovisor/upgrades
+   mkdir -p ~/.0gchaind/cosmovisor/backup
+   ```
+### 16. define the path of cosmovisor
+   ```bash
+  input1=$(which cosmovisor)
+  input2=$(find $HOME -type d -name ".0gchain")
+  input3=$(find $HOME/.0gchain/cosmovisor -type d -name "backup")
+  echo "input1. $input1"
+  echo "input2. $input2"
+  echo "input3. $input3"
+   ```
+   #### save the results, they'll be used in the next step
+   #### this is an example of the result
+   ![image](https://github.com/user-attachments/assets/af974b3d-f195-406f-9f97-c5b7c30cc88f)
+
 ### 14. create service file
+#### edit the ``<input 1>`` with the value of ``input 1``
+#### dit the ``<input 2>`` with the result of ``input 2``
+#### edit the ``<input 3>`` with the result of ``input 3``
    ```bash
    sudo tee /etc/systemd/system/0gchaind.service > /dev/null <<EOF
    [Unit]
-   Description=0G Node
+   Description=Cosmovisor 0G Node
    After=network.target
-
+  
    [Service]
    User=$USER
    Type=simple
-   ExecStart=$(which 0gchaind) start --home $HOME/.0gchain
+   ExecStart=<input 1> run start --log_output_console
    Restart=on-failure
    LimitNOFILE=65535
-
+   Environment="DAEMON_NAME=0gchaind"
+   Environment="DAEMON_HOME=<input 2>"
+   Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=true"
+   Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
+   Environment="DAEMON_DATA_BACKUP_DIR=<input 3>"
+   Environment="UNSAFE_SKIP_BACKUP=true"
+  
    [Install]
    WantedBy=multi-user.target
    EOF
    ```
+#### this is an example of the edited service file 
+   ![image](https://github.com/user-attachments/assets/c502e089-bb81-498c-a0bb-7e7c1cd9f25a)
 
 ### 15. start the node
    ```bash
