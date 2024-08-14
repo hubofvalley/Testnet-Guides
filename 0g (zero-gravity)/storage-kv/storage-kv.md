@@ -4,8 +4,8 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
 
 ### 1. Install dependencies for building from source
    ```bash
-   sudo apt-get update
-   sudo apt-get install clang cmake build-essential
+   sudo apt-get update -y
+   sudo apt-get install clang cmake build-essential -y
    ```
 
 ### 2. install go
