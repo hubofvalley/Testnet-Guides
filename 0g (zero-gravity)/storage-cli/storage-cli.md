@@ -35,8 +35,8 @@ echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
  ```
 
 ## Upload file transaction
--   THESE COMMANDS CAN WORK IF THE FILE PATH IS INSIDE THE 0g-storage-client DIRECTORY.
--   THIS MEANS YOU MUST CREATE OR CHOOSE THE FILE INSIDE THE 0g-storage-client DIRECTORY.
+-   **THESE COMMANDS CAN WORK IF THE FILE PATH IS INSIDE THE 0g-storage-client DIRECTORY.**
+-   **THIS MEANS YOU MUST CREATE OR CHOOSE THE FILE INSIDE THE 0g-storage-client DIRECTORY**.
 ### 1. input size and path of the file you want to create then upload
  ```bash
  read -p "Enter file size (byte): " FILE_SIZE && echo "file size (byte): $FILE_SIZE" && read -p "Enter file name: " INPUT_FILE_PATH && echo "Current file name: $INPUT_FILE_PATH" && ./0g-storage-client gen --size $FILE_SIZE --file $INPUT_FILE_PATH
@@ -67,9 +67,9 @@ echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
  ###  SUCCESSFUL RESULT: ![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/421cb81a-3f2b-41d5-b798-e7f1897f2802)
 
 ## Download file transaction
--   THESE COMMANDS CAN WORK IF THE FILE PATH IS INSIDE THE 0g-storage-client DIRECTORY.
--   THIS MEANS YOU MUST CREATE OR CHOOSE THE FILE INSIDE THE 0g-storage-client DIRECTORY.
--   YOU MUST UPLOAD YOUR FILE FIRST BEFORE YOU CAN DOWNLOAD IT. INPUT THE ROOT HASH VALUE FROM THE UPLOAD TRANSACTION LOGS.
+-   **THESE COMMANDS CAN ONLY WORK IF THE FILE PATH IS INSIDE THE 0g-storage-client DIRECTORY**.
+-   **THIS MEANS YOU MUST CREATE OR CHOOSE THE FILE INSIDE THE 0g-storage-client DIRECTORY**.
+-   **YOU MUST UPLOAD YOUR FILE FIRST BEFORE YOU CAN DOWNLOAD IT. INPUT THE ROOT HASH VALUE FROM THE UPLOAD TRANSACTION LOGS**.
 
 ### 1. input the output path and the root hash of the file you want to download
  ```bash
