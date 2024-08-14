@@ -35,7 +35,7 @@ echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
  ```
 
 ## Upload file transaction
--   **THESE COMMANDS CAN WORK IF THE FILE PATH IS INSIDE THE 0g-storage-client DIRECTORY.**
+-   **THESE COMMANDS CAN ONLY WORK IF THE FILE PATH IS INSIDE THE 0g-storage-client DIRECTORY.**
 -   **THIS MEANS YOU MUST CREATE OR CHOOSE THE FILE INSIDE THE 0g-storage-client DIRECTORY**.
 ### 1. input size and path of the file you want to create then upload
  ```bash
