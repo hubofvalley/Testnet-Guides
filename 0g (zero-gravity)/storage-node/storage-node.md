@@ -60,10 +60,10 @@ guide's current binaries version: ``v0.4.1``
 ### 5. download binary
    ```bash
    cd $HOME
-   git clone -b v0.4.1 https://github.com/0glabs/0g-storage-node.git
+   git clone -b v0.4.3 https://github.com/0glabs/0g-storage-node.git
    cd $HOME/0g-storage-node
    git fetch --all --tags
-   git checkout 302aa88
+   git checkout 2e8348492878c13295005e7d360b8572b13f996c
    git submodule update --init
    ```
    then build it
