@@ -156,7 +156,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
    sed -i \
       -e "s/^pruning *=.*/pruning = \"custom\"/" \
       -e "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"100\"/" \
-      -e "s/^pruning-interval *=.*/pruning-interval = \"10\"/" \
+      -e "s/^pruning-interval *=.*/pruning-interval = \"50\"/" \
       "$HOME/.0gchain/config/app.toml"
    ```
 
