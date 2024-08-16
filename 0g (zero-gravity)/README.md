@@ -254,9 +254,9 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
 
  ### 21. enable direct ``0gchaind`` command **(OPTIONAL)** **(RUN THIS WHEN THE NODE HAS PASSED THE 616000th BLOCK HEIGHT)**
    ```bash
-   wget https://github.com/0glabs/0g-chain/releases/download/v0.3.1.alpha.0/0gchaind-linux-v0.3.1.alpha.0
-   sudo chmod +x ./0gchaind-linux-v0.3.1.alpha.0
-   sudo mv ./0gchaind-linux-v0.3.1.alpha.0 $(which 0gchaind)
+   wget https://github.com/0glabs/0g-chain/releases/download/v0.3.1.alpha.1/0gchaind-linux-v0.3.1.alpha.1
+   sudo chmod +x ./0gchaind-linux-v0.3.1.alpha.1
+   sudo mv ./0gchaind-linux-v0.3.1.alpha.1 $(which 0gchaind)
    0gchaind version
    ```
 
