@@ -181,3 +181,5 @@ store your private key in variable:
    rm -rf $HOME/0g-storage-node
    ```
 ### THEN START OVER FROM [STEP 4](https://github.com/hubofvalley/Testnet-Guides/edit/main/0g%20(zero-gravity)/storage-node/storage-node.md#4-set-vars)
+
+# [CONTINUE TO STORAGE KV](https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/storage-kv/storage-kv.md)
