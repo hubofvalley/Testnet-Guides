@@ -147,7 +147,6 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
    s%:26657%:${OG_PORT}657%g;
    s%:6060%:${OG_PORT}060%g;
    s%:26656%:${OG_PORT}656%g;
-   s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${OG_PORT}656\"%;
    s%:26660%:${OG_PORT}660%g" $HOME/.0gchain/config/config.toml
    ```
 
