@@ -90,7 +90,6 @@ store your private key in variable:
    ```bash
    sed -i '
    s|^\s*#\s*miner_key\s*=.*|miner_key = "'"$PRIVATE_KEY"'"|
-   s|^\s*#\s*network_enr_address\s*=.*|network_enr_address = "'"$ENR_ADDRESS"'"|
    s|^\s*#\s*rpc_listen_address\s*=.*|rpc_listen_address = "0.0.0.0:5678"|
    s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
    s|^\s*#\?\s*network_boot_nodes\s*=.*|network_boot_nodes = \["/ip4/54.219.26.22/udp/1234/p2p/16Uiu2HAmTVDGNhkHD98zDnJxQWu3i1FL1aFYeh9wiQTNu4pDCgps","/ip4/52.52.127.117/udp/1234/p2p/16Uiu2HAkzRjxK2gorngB1Xq84qDrT4hSVznYDHj6BkbaE4SGx9oS","/ip4/18.162.65.205/udp/1234/p2p/16Uiu2HAm2k6ua2mGgvZ8rTMV8GhpW71aVzkQWy7D37TTDuLCpgmX"]|
