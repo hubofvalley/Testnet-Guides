@@ -137,7 +137,8 @@ SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de286
 
 ### 9. Add peers to the config.toml **thanks to emberstake for publishing his peers**
    ```bash
-peers="bf8f850598d3d52ee176296f07c10212e0d334ca@testnet-v2-0g-rpc.emberstake.xyz:34140"
+peers=$(curl -sS https://lightnode-0g.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
+echo $peers
 sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchain/config/config.toml
    ```
 
