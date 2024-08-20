@@ -62,6 +62,7 @@ guide's current binaries version: ``v0.4.1``
    cd $HOME
    git clone -b v0.4.4 https://github.com/0glabs/0g-storage-node.git
    cd $HOME/0g-storage-node
+   git stash
    git fetch --all --tags
    git checkout b5cb0e0d589dfd08177102d013fb25cbb3829797
    git submodule update --init
