@@ -183,7 +183,7 @@ store your private key in variable:
    cd $HOME/0g-storage-node
    git stash
    git fetch --all --tags
-   git checkout b5cb0e0 
+   git checkout b5cb0e0d589dfd08177102d013fb25cbb3829797 
    git submodule update --init
    ```
 
