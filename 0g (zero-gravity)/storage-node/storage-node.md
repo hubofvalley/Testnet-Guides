@@ -73,7 +73,7 @@ guide's current binaries version: ``v0.4.1``
    ```
 ### 6. check the storage node version
    ```bash
-   "$HOME/0g-storage-node/target/release/zgs_node --version
+   "$HOME/0g-storage-node/target/release/zgs_node" --version
    ```
 
 ### 6. wallet private key check
