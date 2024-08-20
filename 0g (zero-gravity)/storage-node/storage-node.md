@@ -172,14 +172,33 @@ store your private key in variable:
    sudo rm -rf $HOME/0g-storage-node
    ```
 
-## upgrade the storage node
-### 1. delete the node
+## update the storage node to v04.4.4
+### 1. stop storage node
    ```bash
    sudo systemctl stop zgs
-   sudo systemctl disable zgs
-   sudo rm /etc/systemd/system/zgs.service
-   rm -rf $HOME/0g-storage-node
    ```
+
+### 2. update node
+   ```bash
+   cd $HOME/0g-storage-node
+   git stash
+   git fetch --all --tags
+   git checkout b5cb0e0 
+   git submodule update --init
+   ```
+
+### 3. build the latest binary
+   ```
+   cargo build --release
+   ```
+### 4. restart the node
+   ```
+   sudo systemctl daemon-reload && \
+   sudo systemctl enable zgs && \
+   sudo systemctl start zgs && \
+   sudo systemctl status zgs
+   ```
+
 ### THEN START OVER FROM [STEP 4](https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/storage-node/storage-node.md#4-set-vars)
 
 # [CONTINUE TO STORAGE KV](https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/storage-kv/storage-kv.md)
