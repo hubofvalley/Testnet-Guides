@@ -134,7 +134,7 @@ store your private key in variable:
    ```bash
    sudo systemctl daemon-reload && \
    sudo systemctl enable zgs && \
-   sudo systemctl start zgs && \
+   sudo systemctl restart zgs && \
    sudo systemctl status zgs
    ```
 
