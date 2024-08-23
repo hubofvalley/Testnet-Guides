@@ -163,7 +163,7 @@ SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de286
 ### 12. open rpc endpoints
    ```bash
    sed -i \
-       -e 's/laddr = "tcp:\/\/127.0.0.1:26657"/laddr = "tcp:\/\/0.0.0.0:26657"/' \
+       -e 's/laddr = "tcp:\/\/127.0.0.1:${OG_PORT}657"/laddr = "tcp:\/\/0.0.0.0:${OG_PORT}657"/' \
        $HOME/.0gchain/config/config.toml
    ```
 
