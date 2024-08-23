@@ -48,10 +48,11 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
 ### 5. download binary
    ```bash
    cd $HOME
-   git clone https://github.com/0glabs/0g-storage-kv.git
+   git clone -b v1.1.0-testnet https://github.com/0glabs/0g-storage-kv.git
    cd $HOME/0g-storage-kv
-   git fetch
-   git checkout tags/v1.1.0-testnet
+   git stash
+   git fetch --all --tags
+   git checkout 3191acefc19bd7b8a3fc7589c95aa1cd622a64e5
    git submodule update --init
    sudo apt install cargo
    ```
