@@ -151,7 +151,7 @@ SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de286
    s%:26660%:${OG_PORT}660%g" $HOME/.0gchain/config/config.toml
    ```
 
-### 11. configure pruning to save storage (optional) (if u want to run a full node, skip this task)
+### 11. configure pruning to save storage (optional) (if u want to run a full node, skip this step)
    ```bash
    sed -i \
       -e "s/^pruning *=.*/pruning = \"custom\"/" \
@@ -181,7 +181,7 @@ SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de286
    sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.0gchain/config/config.toml
    ```
 
-### 14. disable indexer (optional) (if u want to run a full node, skip this task)
+### 14. disable indexer (optional) (if u want to run a full node, skip this step)
    ```bash
    sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.0gchain/config/config.toml
    ```
