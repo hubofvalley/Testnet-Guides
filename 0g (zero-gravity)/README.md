@@ -244,6 +244,10 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
 
 ### 19. check the logs
    ```bash
+   sudo journalctl -u 0gchaind -fn 100 -o cat
+   ```
+   or
+   ```bash
    tail -f $HOME/.0gchain/log/chain.log
    ```
 
