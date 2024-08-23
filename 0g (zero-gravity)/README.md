@@ -151,13 +151,20 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
    s%:26660%:${OG_PORT}660%g" $HOME/.0gchain/config/config.toml
    ```
 
-### 11. config pruning to save storage (optional) (if u want to run a full node, skip this task)
+### 11. configure pruning to save storage (optional) (if u want to run a full node, skip this task)
    ```bash
    sed -i \
       -e "s/^pruning *=.*/pruning = \"custom\"/" \
       -e "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"100\"/" \
       -e "s/^pruning-interval *=.*/pruning-interval = \"50\"/" \
       "$HOME/.0gchain/config/app.toml"
+   ```
+
+### 12. open rpc endpoints
+   ```bash
+   sed -i \
+    -e 's/address = "127.0.0.1:8545"/address = "0.0.0.0:8545"/' \
+    $HOME/.0gchain/config/config.toml
    ```
 
 ### 12. open json-rpc endpoints (required for running the storage node and storage kv)
