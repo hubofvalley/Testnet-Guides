@@ -263,7 +263,7 @@ SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de286
    cosmovisor run version
    ```
 
-## you can use any snapshot and no need to manually update the binary version
+## you can use any snapshots and no need to manually update the binary version
 
 #   Keys commands
 ## 1. create wallet
