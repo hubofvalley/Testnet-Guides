@@ -137,9 +137,9 @@ SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de286
 
 ### 9. Add peers to the config.toml
    ```bash
-peers=$(curl -sS https://lightnode-0g.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
-echo $peers
-sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchain/config/config.toml
+   peers=$(curl -sS https://lightnode-0g.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
+   echo $peers
+   sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchain/config/config.toml
    ```
 
 ### 10. set custom ports in config.toml file
@@ -163,16 +163,16 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gcha
 ### 12. open rpc endpoints
    ```bash
    sed -i \
-    -e 's/address = "127.0.0.1:8545"/address = "0.0.0.0:8545"/' \
-    $HOME/.0gchain/config/config.toml
+       -e 's/laddr = "tcp:\/\/127.0.0.1:26657"/laddr = "tcp:\/\/0.0.0.0:26657"/' \
+       $HOME/.0gchain/config/config.toml
    ```
 
 ### 12. open json-rpc endpoints (required for running the storage node and storage kv)
    ```bash
    sed -i \
-    -e 's/address = "127.0.0.1:8545"/address = "0.0.0.0:8545"/' \
-    -e 's|^api = ".*"|api = "eth,txpool,personal,net,debug,web3"|' \
-    $HOME/.0gchain/config/app.toml
+       -e 's/address = "127.0.0.1:8545"/address = "0.0.0.0:8545"/' \
+       -e 's|^api = ".*"|api = "eth,txpool,personal,net,debug,web3"|' \
+       $HOME/.0gchain/config/app.toml
    ```
 
 ### 13. set minimum gas price and enable prometheus
