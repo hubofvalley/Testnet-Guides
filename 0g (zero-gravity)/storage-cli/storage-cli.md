@@ -1,5 +1,5 @@
 # Make storage transaction using 0g storage-cli
-guide's current binaries version: ``v0.5.1``
+guide's current binary version: ``v0.5.1``
 
 ## 0g storage-cli installation
 ### 1. Download binary
