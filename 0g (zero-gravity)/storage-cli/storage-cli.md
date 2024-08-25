@@ -9,7 +9,7 @@
 ### 2. Build the binary
  ```bash
  cd 0g-storage-client
- git tag -d v0.4.1
+ git tag -d v0.5.1
  git fetch --all --tags
  go build
  ```
