@@ -105,9 +105,6 @@ store your private key in variable:
    s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = "'"$BLOCKCHAIN_RPC_ENDPOINT"'"|
    s|^\s*#\?\s*confirmation_block_count\s*=.*|confirmation_block_count = 6|
    ' $HOME/0g-storage-node/run/config-testnet.toml
-
-   # modify log_config set preventing huge size of log files produced
-   echo "info,hyper=info,h2=info" > $HOME/0g-storage-node/run/log_config
    ```
 
 ### 8. create service
