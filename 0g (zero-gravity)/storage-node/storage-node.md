@@ -200,5 +200,6 @@ store your private key in variable:
    sudo systemctl start zgs && \
    sudo systemctl status zgs
    ```
+## THEN GO BACK TO STEP 4 AND CONTINUE UNTIL STEP 10!
 
 # [CONTINUE TO STORAGE KV](https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/storage-kv/storage-kv.md)
