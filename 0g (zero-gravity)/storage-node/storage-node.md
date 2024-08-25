@@ -174,7 +174,7 @@ store your private key in variable:
    sudo rm -rf $HOME/0g-storage-node
    ```
 
-## update the storage node to v0.4.5 (JUST IN CASE YOUR'RE STILL IN THE v0.4.0 - v0.4.4)
+## update the storage node to v0.4.5 (JUST IN CASE YOU'RE STILL IN THE v0.4.0 - v0.4.4)
 ### 1. stop storage node
    ```bash
    sudo systemctl stop zgs
