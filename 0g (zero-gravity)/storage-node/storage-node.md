@@ -1,5 +1,5 @@
 ## 0gchain Storage Node Deployment Guide
-guide's current binaries version: ``v0.4.1``
+guide's current binaries version: ``v0.4.5``
 
 ### 1. Install dependencies for building from source
    ```bash
@@ -60,11 +60,11 @@ guide's current binaries version: ``v0.4.1``
 ### 5. download binary
    ```bash
    cd $HOME
-   git clone -b v0.4.4 https://github.com/0glabs/0g-storage-node.git
+   git clone -b v0.4.5 https://github.com/0glabs/0g-storage-node.git
    cd $HOME/0g-storage-node
    git stash
    git fetch --all --tags
-   git checkout b5cb0e0d589dfd08177102d013fb25cbb3829797
+   git checkout 6cf05d2d50e7e84a631c858cf38d97430030c830
    git submodule update --init
    ```
    then build it
@@ -176,7 +176,7 @@ store your private key in variable:
    sudo rm -rf $HOME/0g-storage-node
    ```
 
-## update the storage node to v0.4.4
+## update the storage node to v0.4.5
 ### 1. stop storage node
    ```bash
    sudo systemctl stop zgs
@@ -187,7 +187,7 @@ store your private key in variable:
    cd $HOME/0g-storage-node
    git stash
    git fetch --all --tags
-   git checkout b5cb0e0d589dfd08177102d013fb25cbb3829797 
+   git checkout 6cf05d2d50e7e84a631c858cf38d97430030c830 
    git submodule update --init
    ```
 
