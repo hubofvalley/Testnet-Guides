@@ -71,12 +71,13 @@ guide's current binaries version: ``v0.4.5``
    ```bash
    cargo build --release
    ```
+
 ### 6. check the storage node version
    ```bash
    "$HOME/0g-storage-node/target/release/zgs_node" --version
    ```
 
-### 6. wallet private key check
+### 7. wallet private key check
 obtain yout wallet's private key by using this command in your validator node :
    ```bash
    0gchaind keys unsafe-export-eth-key $WALLET
@@ -84,12 +85,12 @@ obtain yout wallet's private key by using this command in your validator node :
 
 store your private key in variable:
    ```bash
-   read -sp "Enter your private key: " PRIVATE_KEY && echo "private key: $PRIVATE_KEY"
+   read -p "Enter your private key: " PRIVATE_KEY && echo "private key: $PRIVATE_KEY"
    ```
 
-### 7. update node configuration
+### 8. update node configuration
    ```bash
-   cp $HOME/0g-storage-node/run/config-testnet-turbo.toml $HOME/0g-storage-node/run/config-testnet.toml
+   rm -rf $HOME/0g-storage-node/run/config-testnet.toml && cp $HOME/0g-storage-node/run/config-testnet-turbo.toml $HOME/0g-storage-node/run/config-testnet.toml
    ```
 
    ```bash
@@ -106,8 +107,9 @@ store your private key in variable:
    s|^\s*#\?\s*confirmation_block_count\s*=.*|confirmation_block_count = 6|
    " $HOME/0g-storage-node/run/config-testnet.toml
    ```
+   
 
-### 8. create service
+### 9. create service
    ```bash
    sudo tee /etc/systemd/system/zgs.service > /dev/null <<EOF
    [Unit]
@@ -127,7 +129,7 @@ store your private key in variable:
    EOF
    ```
 
-### 9. start the node
+### 10. start the node
    ```bash
    sudo systemctl daemon-reload && \
    sudo systemctl enable zgs && \
@@ -135,7 +137,7 @@ store your private key in variable:
    sudo systemctl status zgs
    ```
 
-### 10. show logs by date
+### 11. show logs by date
    - check the logs file
    ```bash
    ls -lt $ZGS_LOG_DIR
