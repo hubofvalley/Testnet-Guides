@@ -84,7 +84,7 @@ obtain yout wallet's private key by using this command in your validator node :
 
 store your private key in variable:
    ```bash
-   read -sp "Enter your private key: " PRIVATE_KEY && echo
+   read -sp "Enter your private key: " PRIVATE_KEY && echo "private key: $PRIVATE_KEY"
    ```
 
 ### 7. update node configuration
