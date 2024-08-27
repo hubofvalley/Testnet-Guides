@@ -27,7 +27,7 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    ```
 
 ### 4. set vars
-   PLEASE INPUT YOUR STORAGE NODE URL (http://STORAGE_NODE_IP:5678,http://STORAGE_NODE_IP:5679) , YOUR JSON RPC ENDPOINT (VALIDATOR_NODE_IP:8545) OR YOU CAN OUR ENDPOINTS PLEASE CHECK [README](https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/README.md)
+   PLEASE INPUT YOUR STORAGE NODE URL (http://STORAGE_NODE_IP:5678) , YOUR JSON RPC ENDPOINT (VALIDATOR_NODE_IP:8545) OR YOU CAN OUR ENDPOINTS PLEASE CHECK [README](https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/README.md) CURRNTLY USING STANDARD LOG CONTRACT ADDRESS
    ```bash
    read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT && echo "Current json-rpc: $BLOCKCHAIN_RPC_ENDPOINT" &&
    read -p "Enter storage node urls: " ZGS_NODE && echo "Current storage node urls: $ZGS_NODE"
@@ -36,7 +36,7 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    ```bash
    echo 'export ZGS_LOG_SYNC_BLOCK="595059"' >> ~/.bash_profile
    echo "export ZGS_NODE=\"$ZGS_NODE\"" >> ~/.bash_profile
-   echo 'export LOG_CONTRACT_ADDRESS="0xbD2C3F0E65eDF5582141C35969d66e34629cC768"' >> ~/.bash_profile
+   echo 'export LOG_CONTRACT_ADDRESS="0x0460aA47b41a66694c0a73f667a1b795A5ED3556"' >> ~/.bash_profile
    echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
    
    source ~/.bash_profile
@@ -51,7 +51,7 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
    cd $HOME/0g-storage-kv
    git stash
    git fetch --all --tags
-   git checkout 3191acefc19bd7b8a3fc7589c95aa1cd622a64e5
+   git checkout 02d568bcc84e68995a65dac48825756d2a213694
    git submodule update --init
    sudo apt install cargo
    ```
