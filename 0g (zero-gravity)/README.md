@@ -162,7 +162,7 @@ SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de286
 
 ### 12. open rpc endpoints
    ```bash
-  sed -i \
+   sed -i \
       -e "s/laddr = \"tcp:\/\/127.0.0.1:${OG_PORT}657\"/laddr = \"tcp:\/\/0.0.0.0:${OG_PORT}657\"/" \
       $HOME/.0gchain/config/config.toml
    ```
@@ -170,9 +170,11 @@ SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de286
 ### 12. open json-rpc endpoints (required for running the storage node and storage kv)
    ```bash
    sed -i \
-       -e 's/address = "127.0.0.1:8545"/address = "0.0.0.0:8545"/' \
-       -e 's|^api = ".*"|api = "eth,txpool,personal,net,debug,web3"|' \
-       $HOME/.0gchain/config/app.toml
+      -e 's/address = "127.0.0.1:8545"/address = "0.0.0.0:8545"/' \
+      -e 's|^api = ".*"|api = "eth,txpool,personal,net,debug,web3"|' \
+      -e 's/logs-cap = 10000/logs-cap = 20000/' \
+      -e 's/block-range-cap = 10000/block-range-cap = 20000/' \
+      $HOME/.0gchain/config/app.toml
    ```
 
 ### 13. set minimum gas price and enable prometheus
