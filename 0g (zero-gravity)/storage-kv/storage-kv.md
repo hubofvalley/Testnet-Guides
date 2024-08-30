@@ -52,7 +52,7 @@ guide's current binary version: ``v1.2.0``
    cd $HOME/0g-storage-kv
    git stash
    git fetch --all --tags
-   git checkout 5d95f17bb33760d013f63398b2cd3db1e524c4ac
+   git checkout 97ba360a6a8dd8fb80c0092a005834061d787e23
    git submodule update --init
    sudo apt install cargo
    ```
