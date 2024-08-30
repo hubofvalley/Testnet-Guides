@@ -64,7 +64,7 @@ guide's current binary version: ``v0.4.5``
    cd $HOME/0g-storage-node
    git stash
    git fetch --all --tags
-   git checkout 6cf05d2d50e7e84a631c858cf38d97430030c830
+   git checkout 508e787bd002b365be2e5ce45696c4f7a217a3d4
    git submodule update --init
    ```
    then build it
@@ -185,7 +185,7 @@ store your private key in variable:
    cd $HOME/0g-storage-node
    git stash
    git fetch --all --tags
-   git checkout 6cf05d2d50e7e84a631c858cf38d97430030c830 
+   git checkout 508e787bd002b365be2e5ce45696c4f7a217a3d4 
    git submodule update --init
    ```
 
