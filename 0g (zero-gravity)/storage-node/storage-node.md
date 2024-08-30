@@ -60,11 +60,11 @@ guide's current binary version: ``v0.4.5``
 ### 5. download binary
    ```bash
    cd $HOME
-   git clone -b v0.4.5 https://github.com/0glabs/0g-storage-node.git
+   git clone -b v0.4.6 https://github.com/0glabs/0g-storage-node.git
    cd $HOME/0g-storage-node
    git stash
    git fetch --all --tags
-   git checkout 508e787bd002b365be2e5ce45696c4f7a217a3d4
+   git checkout e3c199d3616632c1483372314da94502cd7feda1
    git submodule update --init
    ```
    then build it
@@ -98,7 +98,6 @@ store your private key in variable:
    s|^\s*#\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|
    s|^\s*#\s*rpc_listen_address\s*=.*|rpc_listen_address = \"0.0.0.0:5678\"|
    s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
-   s|^\s*#\?\s*network_boot_nodes\s*=.*|network_boot_nodes = \[\"/ip4/54.219.26.22/udp/1234/p2p/16Uiu2HAmTVDGNhkHD98zDnJxQWu3i1FL1aFYeh9wiQTNu4pDCgps\",\"/ip4/52.52.127.117/udp/1234/p2p/16Uiu2HAkzRjxK2gorngB1Xq84qDrT4hSVznYDHj6BkbaE4SGx9oS\",\"/ip4/18.162.65.205/udp/1234/p2p/16Uiu2HAm2k6ua2mGgvZ8rTMV8GhpW71aVzkQWy7D37TTDuLCpgmX\"]|
    s|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = \"$LOG_CONTRACT_ADDRESS\"|
    s|^\s*#\?\s*mine_contract_address\s*=.*|mine_contract_address = \"$MINE_CONTRACT\"|
    s|^\s*#\?\s*reward_contract_address\s*=.*|reward_contract_address = \"$REWARD_CONTRACT\"|
@@ -185,7 +184,7 @@ store your private key in variable:
    cd $HOME/0g-storage-node
    git stash
    git fetch --all --tags
-   git checkout 508e787bd002b365be2e5ce45696c4f7a217a3d4 
+   git checkout e3c199d3616632c1483372314da94502cd7feda1 
    git submodule update --init
    ```
 
