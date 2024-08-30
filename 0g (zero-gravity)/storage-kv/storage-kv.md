@@ -48,7 +48,7 @@ guide's current binary version: ``v1.2.0``
 ### 5. download binary
    ```bash
    cd $HOME
-   git clone -b v1.2.0-testnet https://github.com/0glabs/0g-storage-kv.git
+   git clone -b v1.2.0 https://github.com/0glabs/0g-storage-kv.git
    cd $HOME/0g-storage-kv
    git stash
    git fetch --all --tags
