@@ -1,7 +1,7 @@
 BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE](https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/storage-node/storage-node.md)
 
 ## 0gchain Storage KV Deployment Guide
-guide's current binary version: ``v1.2.0``
+guide's current binary version: ``v1.2.1``
 
 ### 1. Install dependencies for building from source
    ```bash
@@ -48,7 +48,7 @@ guide's current binary version: ``v1.2.0``
 ### 5. download binary
    ```bash
    cd $HOME
-   git clone -b v1.2.0 https://github.com/0glabs/0g-storage-kv.git
+   git clone -b v1.2.1 https://github.com/0glabs/0g-storage-kv.git
    cd $HOME/0g-storage-kv
    git stash
    git fetch --all --tags
