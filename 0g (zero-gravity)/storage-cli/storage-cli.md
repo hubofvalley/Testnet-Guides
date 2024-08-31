@@ -80,7 +80,7 @@ echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
 
 ### 2.  execute the transaction
  ```bash
-    cd $HOME/0g-storage-client \
+    cd $HOME/0g-storage-client &&
     ./0g-storage-client download \
     --node $ZGS_NODE \
     --root $ROOT_HASH \
