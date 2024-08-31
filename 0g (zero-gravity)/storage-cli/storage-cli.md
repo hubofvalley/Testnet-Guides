@@ -52,7 +52,8 @@ echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
     --key $PRIVATE_KEY \
     --node $ZGS_NODE \
     --file $INPUT_FILE_PATH \
-    --gas-limit 25000000
+    --gas-limit 25000000 \
+    --finality-required true
 
     # Check if the upload was successful and then delete the file
     if [ $? -eq 0 ]; then
