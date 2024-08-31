@@ -40,7 +40,7 @@ echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
 -   **THIS MEANS YOU MUST CREATE OR CHOOSE THE FILE INSIDE THE 0g-storage-client DIRECTORY**.
 ### 1. input size and path of the file you want to create then upload
  ```bash
- read -p "Enter file size (byte): " FILE_SIZE && echo "file size (byte): $FILE_SIZE" && read -p "Enter file name: " INPUT_FILE_PATH && echo "Current file name: $INPUT_FILE_PATH" && ./0g-storage-client gen --size $FILE_SIZE --file $INPUT_FILE_PATH
+ cd $HOME/0g-storage-client && read -p "Enter file size (byte): " FILE_SIZE && echo "file size (byte): $FILE_SIZE" && read -p "Enter file name: " INPUT_FILE_PATH && echo "Current file name: $INPUT_FILE_PATH" && ./0g-storage-client gen --size $FILE_SIZE --file $INPUT_FILE_PATH
  ```
 
 ### 2. execute the transaction
@@ -75,7 +75,7 @@ echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
 
 ### 1. input the output path and the root hash of the file you want to download
  ```bash
-    read -p "Enter your output file path: " OUTPUT_FILE_PATH && echo "Current output file path: $OUTPUT_FILE_PATH" && read -p "Enter the file root hash: " ROOT_HASH && echo "Current file root hash: $ROOT_HASH"
+    cd $HOME/0g-storage-client && read -p "Enter your output file path: " OUTPUT_FILE_PATH && echo "Current output file path: $OUTPUT_FILE_PATH" && read -p "Enter the file root hash: " ROOT_HASH && echo "Current file root hash: $ROOT_HASH"
  ```
 
 ### 2.  execute the transaction
