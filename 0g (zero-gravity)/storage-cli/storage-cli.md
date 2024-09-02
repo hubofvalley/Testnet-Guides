@@ -12,6 +12,8 @@ guide's current binary version: ``v0.5.1``
  cd 0g-storage-client
  git tag -d v0.5.1
  git fetch --all --tags
+ git checkout e283cdbfef2f3e5c94f97ef4c1815b464851f399
+ git submodule update --init
  go build
  ```
 
