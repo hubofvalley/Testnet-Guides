@@ -64,7 +64,7 @@ guide's current binary version: ``v0.4.6``
    cd $HOME/0g-storage-node
    git stash
    git fetch --all --tags
-   git checkout e3c199d3616632c1483372314da94502cd7feda1
+   git checkout 27979c290db3dccd55833322029ffe28166c46db
    git submodule update --init
    ```
    then build it
