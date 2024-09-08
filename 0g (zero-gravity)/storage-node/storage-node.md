@@ -173,7 +173,7 @@ store your private key in variable:
    sudo rm -rf $HOME/0g-storage-node
    ```
 
-## update the storage node to v0.4.6 (JUST IN CASE YOU'RE STILL IN THE v0.4.0 - v0.4.5)
+## update the storage node to v0.5.0
 ### 1. stop storage node
    ```bash
    sudo systemctl stop zgs
@@ -184,7 +184,7 @@ store your private key in variable:
    cd $HOME/0g-storage-node
    git stash
    git fetch --all --tags
-   git checkout e3c199d3616632c1483372314da94502cd7feda1 
+   git checkout 052d2d781b7fb181f1f92b051d8541a05b399b28 
    git submodule update --init
    ```
 
