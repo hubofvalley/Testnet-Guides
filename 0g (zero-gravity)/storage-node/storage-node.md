@@ -1,5 +1,5 @@
 ## 0gchain Storage Node Deployment Guide
-guide's current binary version: ``v0.4.6``
+guide's current binary version: ``v0.5.0``
 
 ### 1. Install dependencies for building from source
    ```bash
@@ -60,11 +60,11 @@ guide's current binary version: ``v0.4.6``
 ### 5. download binary
    ```bash
    cd $HOME
-   git clone -b v0.4.6 https://github.com/0glabs/0g-storage-node.git
+   git clone -b v0.5.0 https://github.com/0glabs/0g-storage-node.git
    cd $HOME/0g-storage-node
    git stash
    git fetch --all --tags
-   git checkout 27979c290db3dccd55833322029ffe28166c46db
+   git checkout 052d2d781b7fb181f1f92b051d8541a05b399b28
    git submodule update --init
    ```
    then build it
