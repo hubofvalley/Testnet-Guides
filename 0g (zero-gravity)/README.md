@@ -225,6 +225,7 @@ SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de286
    [Service]
    User=$USER
    Type=simple
+   WorkingDirectory=$HOME/.0gchain
    ExecStart=<input 1> run start --log_output_console
    Restart=on-failure
    LimitNOFILE=65535
