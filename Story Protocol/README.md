@@ -78,9 +78,9 @@ current chain : ``iliad-0``
    s%:26660%:${STORY_PORT}660%g" $HOME/.story/story/config/config.toml
    ```
 
-### 14. disable indexer (optional) (if u want to run a full node, skip this step)
+### 14. enable indexer (optional) (if u want to run a full node follow this step)
    ```bash
-   sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.story/story/config/config.toml
+   sed -i -e "s/^indexer *=null*/indexer = \"kv\"/" $HOME/.story/story/config/config.toml
    ```
 
 ### 15. configure cosmovisor folder
