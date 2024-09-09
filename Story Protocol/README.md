@@ -177,14 +177,14 @@ current chain : ``iliad-0``
    #### this is an example of the node running properly
    ![image](https://github.com/user-attachments/assets/129dd95d-de3e-437f-a6af-0c807044e230)
 
-### 19. check the consensus client logs
+### 19. check the geth logs
+   ```bash
+   sudo journalctl -u story-geth -fn 100 -o cat
+   ``` 
+
+### 20. check the consensus client logs
    ```bash
    sudo journalctl -u story -fn 100 -o cat
-   ```
-
-### 20. check node version
-   ```bash
-   cosmovisor run version
    ```
 
 ## you can use any snapshots and no need to manually update the binary version
