@@ -60,7 +60,7 @@ current chain : ``iliad-0``
 
 ### 6. init app
    ```bash
-   story init --network $STORY_CHAIN_ID --init $MONIKER
+   story init --network $STORY_CHAIN_ID --moniker $MONIKER
    ```
 
 ### 9. Add peers to the config.toml
