@@ -94,7 +94,7 @@ current chain : ``iliad-0``
 ### 16. define the path of cosmovisor for being used in the consensus client
    ```bash
    input1=$(which cosmovisor)
-   input2=$(find $HOME -type d -name ".story/story")
+   input2=$(find $HOME -type d -name "story")
    input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
    echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
    echo "export DAEMON_HOME=$(find $HOME -type d -name ".story/story")" >> $HOME/.bash_profile
