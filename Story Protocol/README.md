@@ -106,7 +106,7 @@ current chain : ``iliad-0``
    ```
    #### save the results, they'll be used in the next step
    #### this is an example of the result
-   ![image](https://github.com/user-attachments/assets/af974b3d-f195-406f-9f97-c5b7c30cc88f)
+   ![image](https://github.com/user-attachments/assets/21ef09d9-2595-46b6-b014-e30d5ff09cc1)
 
 ### 17. create service files
 #### edit the ``<input 1>`` with the value of ``input 1``
@@ -138,7 +138,7 @@ current chain : ``iliad-0``
    EOF
    ```
    #### this is an example of the edited consensus client service file 
-   ![image](https://github.com/user-attachments/assets/c502e089-bb81-498c-a0bb-7e7c1cd9f25a)
+   ![image](https://github.com/user-attachments/assets/80bcf6ea-42d7-4eda-8303-a44808d125e6)
 
    ##### geth service file
    ```bash
