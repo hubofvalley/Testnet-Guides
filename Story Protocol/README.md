@@ -236,6 +236,5 @@ current chain : ``iliad-0``
   sudo systemctl disable story-geth story
   sudo rm -rf /etc/systemd/system/story-geth.service /etc/systemd/system/story.service
   sudo rm -r .story
-  sudo rm -rf $HOME/.story/story
   sed -i "/STORY_/d" $HOME/.bash_profile
   ```
