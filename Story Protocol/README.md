@@ -38,7 +38,7 @@ current chain : ``iliad-0``
   EDIT YOUR MONIKER & YOUR PREFERRED PORT NUMBER
    ```
   echo "export MONIKER="<your-moniker>"" >> $HOME/.bash_profile
-  echo "export STORY_CHAIN_ID="iliad-0"" >> $HOME/.bash_profile
+  echo "export STORY_CHAIN_ID="iliad"" >> $HOME/.bash_profile
   echo "export STORY_PORT="26"" >> $HOME/.bash_profile
   source $HOME/.bash_profile
    ```
