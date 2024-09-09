@@ -55,7 +55,7 @@ current chain : ``iliad-0``
    # consensus client binary
    wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.9.11-2a25df1.tar.gz
    tar -xvf story-linux-amd64-0.9.11-2a25df1.tar.gz
-   sudo mv $HOME/bin/story-linux-amd64-0.9.11-2a25df1/story $HOME/go/bin/
+   sudo mv $HOME/story-linux-amd64-0.9.11-2a25df1/story $HOME/go/bin/
    ```
 
 ### 6. init app
