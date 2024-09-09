@@ -97,7 +97,7 @@ current chain : ``iliad-0``
    input2=$(find $HOME -type d -name "story")
    input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
    echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
-   echo "export DAEMON_HOME=$(find $HOME -type d -name ".story/story")" >> $HOME/.bash_profile
+   echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
    echo "export DAEMON_DATA_BACKUP_DIR=$(find $HOME/.story/story/cosmovisor -type d -name "backup")" >> $HOME/.bash_profile
    source $HOME/.bash_profile
    echo "input1. $input1"
