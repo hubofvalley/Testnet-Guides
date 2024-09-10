@@ -1,6 +1,10 @@
 # Story Protocol Testnet Guide
 ```will always update```
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/2ac53a77-8eec-48be-9106-eb832ae5fee3" alt="let’s build Story together" width="600" height="300">
+</p>
+
 ## Story Node Deployment Guide With Cosmovisor
 service file name: ``story.service`` ``story-geth.service``
 current chain : ``iliad-0``
