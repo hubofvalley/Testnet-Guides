@@ -1,3 +1,6 @@
+# Story Protocol Testnet Guide
+```will always update```
+
 ## Story Node Deployment Guide With Cosmovisor
 service file name: ``story.service`` ``story-geth.service``
 current chain : ``iliad-0``
