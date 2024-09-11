@@ -75,7 +75,7 @@ Grand Valley's 0G public endpoints:
 ## Story Node Deployment Guide With Cosmovisor
 service file name: ``story.service`` ``story-geth.service``
 current chain: ``iliad-0``
-current version: ``v0.9.11``
+current version: ``v0.9.12``
 ### 1. Install dependencies for building from source
    ```bash
     sudo apt update && \
