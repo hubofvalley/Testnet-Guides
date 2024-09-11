@@ -334,7 +334,7 @@ $$$ 22. chech the node version
   mkdir -p $HOME/.story/story/cosmovisor/upgrades/v0.9.12/bin
   story_folder_name=$(tar -tf story-linux-amd64-0.9.12-9ae4a63.tar.gz | head -n 1 | cut -f1 -d"/")
   tar -xzf story-linux-amd64-0.9.12-9ae4a63.tar.gz
-  sudo cp "$folder_name/story" $HOME/.story/story/cosmovisor/upgrades/v0.9.12/bin/
+  sudo cp "$story_folder_name/story" $HOME/.story/story/cosmovisor/upgrades/v0.9.12/bin/
   ```
 
 ## 3. stop the geth and the consensus client services
