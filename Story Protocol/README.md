@@ -395,9 +395,8 @@ current version: ``v0.9.11``
   wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.9.12-9ae4a63.tar.gz
   ```
 
-### 3. create the new version dir, extract the node binary and copy It to the cosmovisor upgrades directory
+### 3. extract the new node binary
   ```bash
-  mkdir -p $HOME/.story/story/cosmovisor/upgrades/v0.9.12/bin
   story_folder_name=$(tar -tf story-linux-amd64-0.9.12-9ae4a63.tar.gz | head -n 1 | cut -f1 -d"/")
   tar -xzf story-linux-amd64-0.9.12-9ae4a63.tar.gz
   ```
