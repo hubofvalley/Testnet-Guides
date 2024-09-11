@@ -267,6 +267,10 @@ current version: ``v0.9.12``
   ```bash
   curl http://127.0.0.1:${STORY_PORT}657/status | jq
   ```
+  if u use default port (26):
+  ```bash
+  curl http://127.0.0.1:26657/status | jq
+  ```
 
 ### 22. chech the node version
    ```bash
