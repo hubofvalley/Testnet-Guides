@@ -402,7 +402,7 @@ current version: ``v0.9.11``
   ```
 
 ### 4. execute the cosmovisor ``add-upgrade`` command
-  **please enter the specified block height for the upgrade **
+  **please enter the specified block height for the upgrade**
   ```bash
   cosmovisor add-upgrade v.0.9.12 $HOME/$story_folder_name/story --upgrade-height <upgrade block height number>
   ```
