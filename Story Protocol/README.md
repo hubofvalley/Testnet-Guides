@@ -269,7 +269,7 @@ current version: ``v0.9.11``
   curl http://127.0.0.1:${STORY_PORT}657/status | jq
   ```
 
-$$$ 22. chech the node version
+### 22. chech the node version
    ```bash
    cosmovisor run version
    ```
