@@ -56,8 +56,9 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
     - [0gchainExplorer](https://explorer.grandvalleys.com/0g-chain%20testnet)
     
 Grand Valley's 0G public endpoints:
-- json-rpc : https://lightnode-rpc-0g.grandvalleys.com
-- api : https://lightnode-api-0g.grandvalleys.com
+- rpc: https://lightnode-rpc-0g.grandvalleys.com
+- json-rpc: https://lightnode-rpc-0g.grandvalleys.com
+- api: https://lightnode-api-0g.grandvalleys.com
 
 ## 0gchain Node Deployment Guide With Cosmovisor
 guide's current binaries version: ``v0.2.5 will automatically update to the latest version``
