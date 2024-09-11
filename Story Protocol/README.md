@@ -76,7 +76,6 @@ Grand Valley's 0G public endpoints:
 service file name: ``story.service`` ``story-geth.service``
 current chain: ``iliad-0``
 current version: ``v0.9.11``
-
 ### 1. Install dependencies for building from source
    ```bash
     sudo apt update && \
@@ -276,23 +275,23 @@ current version: ``v0.9.11``
 
 ## you can use any snapshots and no need to manually update the binary version
 
-#   Validator and key Commands
-## 1. export evm public key and private key
+##   Validator and key Commands
+### 1. export evm public key and private key
   ```bash
   story validator export --export-evm-key && cat $HOME/.story/story/config/private_key.txt
   ```
 
   make sure your node block height has been synced with the latest block height. or you can check the ```catching_up``` value must be ```false```
 
-## 2. claim faucet
+### 2. claim faucet
    https://faucet.story.foundation/
 
-## 3. create validator
+### 3. create validator
   ```bash
    story validator create --stake 1000000000000000000 --private-key <your private key>
   ```
 
-## 4. BACKUP YOUR VALIDATOR <img src="https://img.shields.io/badge/IMPORTANT-red" alt="Important" width="100">
+### 4. BACKUP YOUR VALIDATOR <img src="https://img.shields.io/badge/IMPORTANT-red" alt="Important" width="100">
   ```bash
   nano /$HOME/.story/story/config/priv_validator_key.json
   ```
@@ -301,19 +300,19 @@ current version: ``v0.9.11``
   ```
   copy all of the contents of the ![priv_validator_key.json](https://img.shields.io/badge/priv__validator__key.json-red) !and ![priv_validator_key.json](https://img.shields.io/badge/priv__validator__state.json-red) files and save them in a safe place. This is a vital step in case you need to migrate your validator node
 
-## 5. delegate token to validator
+### 5. delegate token to validator
   ### self delegate
   ```bash
   story validator stake --private-key <your private key> --stake 1024000000000000000000 --validator-pubkey <your validator public key>
   ```
-  ### delegate to <a href="https://testnet.storyscan.app/validators/storyvaloper1cvsdp0tsz25fhedd7cjvntq42347astvar06v8"><img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/e8704cc4-2319-4a21-9138-0264e75e3a82" alt="GRAND VALLEY" width="50" height="50">
+  #### delegate to <a href="https://testnet.storyscan.app/validators/storyvaloper1cvsdp0tsz25fhedd7cjvntq42347astvar06v8"><img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/e8704cc4-2319-4a21-9138-0264e75e3a82" alt="GRAND VALLEY" width="50" height="50">
 </a>
 
   ```bash
   story validator stake --private-key <your private key> --stake 1024000000000000000000 --validator-pubkey A2p1z6hM9IXltKaET6ny/wP0EPfIwBSPTkyeU135yroi
   ```
 
-##  delete the node
+###  delete the node
   ```bash
   sudo systemctl stop story-geth story
   sudo systemctl disable story-geth story
@@ -322,32 +321,33 @@ current version: ``v0.9.11``
   sed -i "/STORY_/d" $HOME/.bash_profile
   ```
 
-#  consensus client version update v0.9.11 to v0.9.12 (just in case you're still using v0.9.11 or older version of story node)
-
-## 1. download the node binary
+##  consensus client version update v0.9.11 to v0.9.12 (just in case you're still using v0.9.11 or older version of story node)
+## method 1: put the new binary directly
+### 1. download the node binary
   ```bash
+  cd $HOME && \
   wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.9.12-9ae4a63.tar.gz
   ```
 
-## 2. create the new version dir, extract the node binary and copy It to the cosmovisor upgrades directory
+### 2. create the new version dir, extract the node binary and copy It to the cosmovisor upgrades directory
   ```bash
   mkdir -p $HOME/.story/story/cosmovisor/upgrades/v0.9.12/bin
   story_folder_name=$(tar -tf story-linux-amd64-0.9.12-9ae4a63.tar.gz | head -n 1 | cut -f1 -d"/")
   tar -xzf story-linux-amd64-0.9.12-9ae4a63.tar.gz
-  sudo cp "$story_folder_name/story" $HOME/.story/story/cosmovisor/upgrades/v0.9.12/bin/
+  sudo cp $HOME/$story_folder_name/story $HOME/.story/story/cosmovisor/upgrades/v0.9.12/bin/
   ```
 
-## 3. stop the geth and the consensus client services
+### 3. stop the geth and the consensus client services
   ```bash
   sudo systemctl stop story-geth story
   ```
 
-## 4. copy the current node binary to the cosmovisor genesis directory
+### 4. copy the current node binary to the cosmovisor genesis directory
   ```bash
   sudo cp "$story_folder_name/story" $HOME/.story/story/cosmovisor/genesis/bin
   ```
 
-## 5. restart geth and consensus client services
+### 5. restart geth and consensus client services
   ```bash
   sudo systemctl daemon-reload && \
   sudo systemctl start story-geth && \
@@ -355,7 +355,42 @@ current version: ``v0.9.11``
   sudo systemctl start story
   ```
 
-## 6. check the node version
+### 6. check the node version
   ```bash
   cosmovisor run version
+  ```
+
+## method 2: let cosmovisor do put the binary itself (semi-automated)
+
+### 1. define the path of cosmovisor for being used in the consensus client
+   ```bash
+   input1=$(which cosmovisor)
+   input2=$(find $HOME -type d -name "story")
+   input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
+   echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
+   echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
+   echo "export DAEMON_DATA_BACKUP_DIR=$(find $HOME/.story/story/cosmovisor -type d -name "backup")" >> $HOME/.bash_profile
+   source $HOME/.bash_profile
+   echo "input1. $input1"
+   echo "input2. $input2"
+   echo "input3. $input3"
+   ```
+
+### 2. download the node binary
+  ```bash
+  cd $HOME && \
+  wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.9.12-9ae4a63.tar.gz
+  ```
+
+### 3. create the new version dir, extract the node binary and copy It to the cosmovisor upgrades directory
+  ```bash
+  mkdir -p $HOME/.story/story/cosmovisor/upgrades/v0.9.12/bin
+  story_folder_name=$(tar -tf story-linux-amd64-0.9.12-9ae4a63.tar.gz | head -n 1 | cut -f1 -d"/")
+  tar -xzf story-linux-amd64-0.9.12-9ae4a63.tar.gz
+  ```
+
+### 4. execute the cosmovisor ``add-upgrade`` command
+  **please enter the specified block height for the upgrade **
+  ```bash
+  cosmovisor add-upgrade v.0.9.12 $HOME/$story_folder_name/story --upgrade-height <upgrade block height number>
   ```
