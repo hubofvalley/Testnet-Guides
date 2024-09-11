@@ -11,6 +11,9 @@
 
 Story is an innovative initiative designed to revolutionize the management of creative Intellectual Property (IP) by leveraging blockchain technology. By making IP "programmable," Story aims to streamline the processes of protection, licensing, and monetization of creative works. The core of this endeavor is the Story Network, a specialized layer 1 blockchain built to support efficient and scalable IP management.
 
+![image](https://github.com/user-attachments/assets/2ceec88b-8c84-4b48-a31d-e2c888c6b80d)
+
+
 In the sections below, we will delve deeper into this architecture and explore the key use cases it unlocks.
 
 ## Story’s Architecture
