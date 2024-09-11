@@ -323,13 +323,27 @@ current version: ``v0.9.11``
 
 ##  consensus client version update v0.9.11 to v0.9.12 (just in case you're still using v0.9.11 or older version of story node)
 ## method 1: put the new binary directly
-### 1. download the node binary
+### 1. define the path of cosmovisor for being used in the consensus client
+   ```bash
+   input1=$(which cosmovisor)
+   input2=$(find $HOME -type d -name "story")
+   input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
+   echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
+   echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
+   echo "export DAEMON_DATA_BACKUP_DIR=$(find $HOME/.story/story/cosmovisor -type d -name "backup")" >> $HOME/.bash_profile
+   source $HOME/.bash_profile
+   echo "input1. $input1"
+   echo "input2. $input2"
+   echo "input3. $input3"
+   ```
+
+### 2. download the node binary
   ```bash
   cd $HOME && \
   wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.9.12-9ae4a63.tar.gz
   ```
 
-### 2. create the new version dir, extract the node binary and copy It to the cosmovisor upgrades directory
+### 3. create the new version dir, extract the node binary and copy It to the cosmovisor upgrades directory
   ```bash
   mkdir -p $HOME/.story/story/cosmovisor/upgrades/v0.9.12/bin
   story_folder_name=$(tar -tf story-linux-amd64-0.9.12-9ae4a63.tar.gz | head -n 1 | cut -f1 -d"/")
@@ -337,17 +351,17 @@ current version: ``v0.9.11``
   sudo cp $HOME/$story_folder_name/story $HOME/.story/story/cosmovisor/upgrades/v0.9.12/bin/
   ```
 
-### 3. stop the geth and the consensus client services
+### 4. stop the geth and the consensus client services
   ```bash
   sudo systemctl stop story-geth story
   ```
 
-### 4. copy the current node binary to the cosmovisor genesis directory
+### 5. copy the current node binary to the cosmovisor genesis directory
   ```bash
   sudo cp "$story_folder_name/story" $HOME/.story/story/cosmovisor/genesis/bin
   ```
 
-### 5. restart geth and consensus client services
+### 6. restart geth and consensus client services
   ```bash
   sudo systemctl daemon-reload && \
   sudo systemctl start story-geth && \
@@ -355,13 +369,12 @@ current version: ``v0.9.11``
   sudo systemctl start story
   ```
 
-### 6. check the node version
+### 7. check the node version
   ```bash
   cosmovisor run version
   ```
 
 ## method 2: let cosmovisor do put the binary itself (semi-automated)
-
 ### 1. define the path of cosmovisor for being used in the consensus client
    ```bash
    input1=$(which cosmovisor)
