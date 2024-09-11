@@ -124,13 +124,15 @@ current version: ``v0.9.11``
 
    # geth binary
    wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/geth-public/geth-linux-amd64-0.9.2-ea9f0d2.tar.gz
+   geth_folder_name=$(tar -tf geth-linux-amd64-0.9.2-ea9f0d2.tar.gz | head -n 1 | cut -f1 -d"/")
    tar -xvf geth-linux-amd64-0.9.2-ea9f0d2.tar.gz
-   sudo mv $HOME/geth-linux-amd64-0.9.2-ea9f0d2/geth $HOME/go/bin/
+   sudo mv $HOME/$geth_folder_name/geth $HOME/go/bin/
 
    # consensus client binary
-   wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.9.11-2a25df1.tar.gz
-   tar -xvf story-linux-amd64-0.9.11-2a25df1.tar.gz
-   sudo mv $HOME/story-linux-amd64-0.9.11-2a25df1/story $HOME/go/bin/
+   wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.9.12-9ae4a63.tar.gz
+   story_folder_name=$(tar -tf story-linux-amd64-0.9.12-9ae4a63.tar.gz | head -n 1 | cut -f1 -d"/")
+   tar -xzf story-linux-amd64-0.9.12-9ae4a63.tar.gz
+   sudo mv $HOME/$story_folder_name/story $HOME/go/bin/
    ```
 
 ### 6. init app
@@ -163,7 +165,7 @@ current version: ``v0.9.11``
    mkdir -p $HOME/.story/story/cosmovisor/genesis/bin
    mkdir -p $HOME/.story/story/cosmovisor/upgrades
    mkdir -p $HOME/.story/story/cosmovisor/backup
-   cp $HOME/go/bin/story $HOME/.story/story/cosmovisor/genesis/bin
+   sudo cp $HOME/go/bin/story $HOME/.story/story/cosmovisor/genesis/bin
    ```
 
 ### 16. define the path of cosmovisor for being used in the consensus client
@@ -262,6 +264,11 @@ current version: ``v0.9.11``
    sudo journalctl -u story -fn 100 -o cat
    ```
 
+$$$ 21. chech the node version
+   ```bash
+   cosmovisor run version
+   ```
+
 ## you can use any snapshots and no need to manually update the binary version
 
 #   Validator and key Commands
@@ -305,11 +312,49 @@ current version: ``v0.9.11``
   story validator stake --private-key <your private key> --stake 1024000000000000000000 --validator-pubkey A2p1z6hM9IXltKaET6ny/wP0EPfIwBSPTkyeU135yroi
   ```
 
-#  delete the node
+##  delete the node
   ```bash
   sudo systemctl stop story-geth story
   sudo systemctl disable story-geth story
   sudo rm -rf /etc/systemd/system/story-geth.service /etc/systemd/system/story.service
   sudo rm -r .story
   sed -i "/STORY_/d" $HOME/.bash_profile
+  ```
+
+#  consensus client version update v0.9.11 to v0.9.12 (just in case you're still using v0.9.11 or older version of story node)
+
+## 1. download the node binary
+  ```bash
+  wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.9.12-9ae4a63.tar.gz
+  ```
+
+## 2. create the new version dir, extract the node binary and copy It to the cosmovisor upgrades directory
+  ```bash
+  mkdir -p $HOME/.story/story/cosmovisor/upgrades/v0.9.12/bin
+  story_folder_name=$(tar -tf story-linux-amd64-0.9.12-9ae4a63.tar.gz | head -n 1 | cut -f1 -d"/")
+  tar -xzf story-linux-amd64-0.9.12-9ae4a63.tar.gz
+  sudo cp "$folder_name/story" $HOME/.story/story/cosmovisor/upgrades/v0.9.12/bin/
+  ```
+
+## 3. stop the geth and the consensus client services
+  ```bash
+  sudo systemctl stop story-geth story
+  ```
+
+## 4. copy the current node binary to the cosmovisor genesis directory
+  ```bash
+  sudo cp "$story_folder_name/story" $HOME/.story/story/cosmovisor/genesis/bin
+  ```
+
+## 5. restart geth and consensus client services
+  ```bash
+  sudo systemctl daemon-reload && \
+  sudo systemctl start story-geth && \
+  sleep 15 && \
+  sudo systemctl start story
+  ```
+
+## 6. check the node version
+  ```bash
+  cosmovisor run version
   ```
