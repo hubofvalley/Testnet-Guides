@@ -68,9 +68,9 @@ With Public Testnet, Story's docs and code become public. Check them out below!
 - [Story Explorer](https://testnet.storyscan.app/)
 
 Grand Valley's 0G public endpoints:
-- cosmos rpc: https://rpc-story.grandvalleys.com
-- json-rpc: https://json-rpc-story.grandvalleys.com
-- cosmos rest-api: https://api-story.grandvalleys.com
+- cosmos rpc: https://lightnode-rpc-story.grandvalleys.com
+- json-rpc: https://lightnode-json-rpc-story.grandvalleys.com
+- cosmos rest-api: https://lightnode-api-story.grandvalleys.com
 
 ## Story Node Deployment Guide With Cosmovisor
 service file name: ``story.service`` ``story-geth.service``
@@ -141,7 +141,7 @@ current version: ``v0.9.12``
 
 ### 9. Add peers to the config.toml
    ```bash
-   peers=$(curl -sS https://rpc-story.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
+   peers=$(curl -sS https://lightnode--rpc-story.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
    echo $peers
    sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.story/story/config/config.toml
    ```
