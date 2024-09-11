@@ -321,8 +321,8 @@ current version: ``v0.9.11``
   sed -i "/STORY_/d" $HOME/.bash_profile
   ```
 
-##  consensus client version update v0.9.11 to v0.9.12 (just in case you're still using v0.9.11 or older version of story node)
-## method 1: put the new binary directly
+##  Consensus client version update from v0.9.11 to v0.9.12 (in case you're still using v0.9.11 or an older version of the Story node)
+## method 1: Place the new binary directly
 ### 1. define the path of cosmovisor for being used in the consensus client
    ```bash
    input1=$(which cosmovisor)
@@ -374,7 +374,7 @@ current version: ``v0.9.11``
   cosmovisor run version
   ```
 
-## method 2: let cosmovisor do put the binary itself (semi-automated)
+## method 2: Let Cosmovisor handle placing the binary itself (semi-automated)
 ### 1. define the path of cosmovisor for being used in the consensus client
    ```bash
    input1=$(which cosmovisor)
