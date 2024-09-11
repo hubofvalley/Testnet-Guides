@@ -125,7 +125,7 @@ current chain : ``zgtendermint_16600-2``
 
 ### 7. download genesis.json
    ```bash
-   sudo rm $HOME/.0gchain/config/genesis.json &&
+   sudo rm $HOME/.0gchain/config/genesis.json && \
    wget https://github.com/0glabs/0g-chain/releases/download/v0.2.3/genesis.json -O $HOME/.0gchain/config/genesis.json
    ```
 
