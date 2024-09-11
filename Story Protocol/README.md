@@ -264,7 +264,12 @@ current version: ``v0.9.11``
    sudo journalctl -u story -fn 100 -o cat
    ```
 
-$$$ 21. chech the node version
+### 21. check node synchronization
+  ```bash
+  curl http://127.0.0.1:${STORY_PORT}657/status | jq
+  ```
+
+$$$ 22. chech the node version
    ```bash
    cosmovisor run version
    ```
@@ -277,21 +282,17 @@ $$$ 21. chech the node version
   story validator export --export-evm-key && cat $HOME/.story/story/config/private_key.txt
   ```
 
-## 2. check node synchronization
-  ```bash
-  curl http://127.0.0.1:${STORY_PORT}657/status | jq
-  ```
   make sure your node block height has been synced with the latest block height. or you can check the ```catching_up``` value must be ```false```
 
-## 3. claim faucet
+## 2. claim faucet
    https://faucet.story.foundation/
 
-## 4. create validator
+## 3. create validator
   ```bash
    story validator create --stake 1000000000000000000 --private-key <your private key>
   ```
 
-## 5. BACKUP YOUR VALIDATOR <img src="https://img.shields.io/badge/IMPORTANT-red" alt="Important" width="100">
+## 4. BACKUP YOUR VALIDATOR <img src="https://img.shields.io/badge/IMPORTANT-red" alt="Important" width="100">
   ```bash
   nano /$HOME/.story/story/config/priv_validator_key.json
   ```
@@ -300,7 +301,7 @@ $$$ 21. chech the node version
   ```
   copy all of the contents of the ![priv_validator_key.json](https://img.shields.io/badge/priv__validator__key.json-red) !and ![priv_validator_key.json](https://img.shields.io/badge/priv__validator__state.json-red) files and save them in a safe place. This is a vital step in case you need to migrate your validator node
 
-## 6. delegate token to validator
+## 5. delegate token to validator
   ### self delegate
   ```bash
   story validator stake --private-key <your private key> --stake 1024000000000000000000 --validator-pubkey <your validator public key>
