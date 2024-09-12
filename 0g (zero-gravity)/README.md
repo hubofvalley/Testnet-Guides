@@ -1,5 +1,6 @@
 # 0gchain Testnet Guide
 ```will always update```
+
 <p align="center">
   <img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/fe21ef6a-0979-4ac1-8d92-6d1bcf76c7cc" alt="let’s build 0G together" width="600" height="300">
 </p>
@@ -9,7 +10,7 @@
 </p>
 
 
-## 0gchain <a href="https://0g.ai/"><img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/916ed2ba-bf46-48ea-b4f9-6d48c1eac3ed" width="50" height="50">
+## 0gchain <a><img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/916ed2ba-bf46-48ea-b4f9-6d48c1eac3ed" width="50" height="50">
 
 
 - **WHAT IS 0gchain?** 

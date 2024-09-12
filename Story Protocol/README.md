@@ -5,7 +5,7 @@
   <img src="https://github.com/user-attachments/assets/2ac53a77-8eec-48be-9106-eb832ae5fee3" alt="let’s build Story together" width="600" height="300">
 </p>
 
-# Story Protocol <a href="https://Story.ai/"><img src="https://github.com/user-attachments/assets/79083de3-697b-4771-ad0e-41445c2b066b" width="50" height="50">
+# Story Protocol <a><img src="https://github.com/user-attachments/assets/79083de3-697b-4771-ad0e-41445c2b066b" width="50" height="50">
 
 ## What Is Story?
 
