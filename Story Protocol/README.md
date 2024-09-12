@@ -430,9 +430,7 @@ sudo cp "$story_folder_name/story" $HOME/.story/story/cosmovisor/genesis/bin
 
 ```bash
 sudo systemctl daemon-reload && \
-sudo systemctl start story-geth && \
-sleep 15 && \
-sudo systemctl start story
+sudo systemctl restart story
 ```
 
 ### 7. check the node version
