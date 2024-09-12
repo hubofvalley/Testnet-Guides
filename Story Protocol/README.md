@@ -413,3 +413,5 @@ current version: ``v0.9.12``
   ```bash
   cosmovisor add-upgrade v0.9.12 $HOME/$story_folder_name/story --upgrade-height <upgrade block height number>
   ```
+
+# let's buidl together
