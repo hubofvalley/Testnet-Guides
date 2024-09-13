@@ -475,7 +475,7 @@ tar -xzf story-linux-amd64-0.10.0-9603826.tar.gz
 **v0.10.0 block height upgrade is 626575**
 
 ```bash
-cosmovisor add-upgrade v0.10.0 $HOME/$story_folder_name/story --upgrade-height 626575
+cosmovisor add-upgrade v0.10.0 $HOME/$story_folder_name/story --upgrade-height 626575 --force
 ```
 
 # let's buidl together
