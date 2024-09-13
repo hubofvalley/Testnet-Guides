@@ -379,7 +379,7 @@ sudo rm -r .story
 sed -i "/STORY_/d" $HOME/.bash_profile
 ```
 
-## Consensus client version update from v0.9.11 to v0.9.12 (in case you're still using v0.9.11 or an older version of the Story node)
+## Consensus client version update to v0.10.0
 
 ## Method 1: Place the new binary directly
 
@@ -402,7 +402,7 @@ echo "input3. $input3"
 
 ```bash
 cd $HOME && \
-wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.9.12-9ae4a63.tar.gz
+wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
 ### 3. create the new version dir, extract the node binary and copy It to the cosmovisor upgrades directory
@@ -460,22 +460,22 @@ echo "input3. $input3"
 
 ```bash
 cd $HOME && \
-wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.9.12-9ae4a63.tar.gz
+wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
 ### 3. extract the new node binary
 
 ```bash
-story_folder_name=$(tar -tf story-linux-amd64-0.9.12-9ae4a63.tar.gz | head -n 1 | cut -f1 -d"/")
-tar -xzf story-linux-amd64-0.9.12-9ae4a63.tar.gz
+story_folder_name=$(tar -tf story-linux-amd64-0.10.0-9603826.tar.gz | head -n 1 | cut -f1 -d"/")
+tar -xzf story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
 ### 4. execute the cosmovisor `add-upgrade` command
 
-**please enter the specified block height for the upgrade**
+**v0.10.0 block height upgrade is 626575**
 
 ```bash
-cosmovisor add-upgrade v0.9.12 $HOME/$story_folder_name/story --upgrade-height <upgrade block height number>
+cosmovisor add-upgrade v0.9.12 $HOME/$story_folder_name/story --upgrade-height 626575
 ```
 
 # let's buidl together
