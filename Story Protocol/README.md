@@ -195,7 +195,6 @@ sed -i -e 's/^indexer = "null"/indexer = "kv"/' $HOME/.story/story/config/config
 cosmovisor $HOME/go/bin/story
 mkdir -p $HOME/.story/story/cosmovisor/upgrades
 mkdir -p $HOME/.story/story/cosmovisor/backup
-sudo cp $HOME/go/bin/story $HOME/.story/story/cosmovisor/genesis/bin
 ```
 
 ### 16. define the path of cosmovisor for being used in the consensus client
