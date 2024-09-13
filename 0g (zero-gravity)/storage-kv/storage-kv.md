@@ -2,6 +2,14 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
 
 ## 0gchain Storage KV Deployment Guide
 
+### **System Requirements**
+
+| Category | Requirements                                |
+| -------- | ------------------------------------------- |
+| CPU      | 2 cores                                     |
+| RAM      | 4 GB                                        |
+| Storage  | Matches the size of kv streams it maintains |
+
 guide's current binary version: `v1.2.1`
 
 ### 1. Install dependencies for building from source

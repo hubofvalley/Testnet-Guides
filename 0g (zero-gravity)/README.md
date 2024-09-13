@@ -57,6 +57,15 @@ Grand Valley's 0G public endpoints:
 
 ## 0gchain Node Deployment Guide With Cosmovisor
 
+### **System Requirements**
+
+| Category  | Requirements                   |
+| --------- | ------------------------------ |
+| CPU       | 8 cores                        |
+| RAM       | 64 GB                          |
+| Storage   | 1 TB NVMe SSD                  |
+| Bandwidth | 100 MBps for Download / Upload |
+
 guide's current binaries version: `v0.2.5 will automatically update to the latest version`
 service file name: `0gchaind.service`
 current chain : `zgtendermint_16600-2`

@@ -1,5 +1,14 @@
 ## 0gchain Storage Node Deployment Guide
 
+### **System Requirements**
+
+| Category  | Requirements                   |
+| --------- | ------------------------------ |
+| CPU       | 4 cores                        |
+| RAM       | 16 GB                          |
+| Storage   | 500GB / 1TB NVMe SSD           |
+| Bandwidth | 500 MBps for Download / Upload |
+
 guide's current binary version: `v0.5.0`
 
 ### 1. Install dependencies for building from source
