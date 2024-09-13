@@ -62,8 +62,8 @@ Grand Valley's 0G public endpoints:
 | Category  | Requirements                   |
 | --------- | ------------------------------ |
 | CPU       | 8 cores                        |
-| RAM       | 64 GB                          |
-| Storage   | 1 TB NVMe SSD                  |
+| RAM       | 64+ GB                         |
+| Storage   | 1+ TB NVMe SSD                 |
 | Bandwidth | 100 MBps for Download / Upload |
 
 guide's current binaries version: `v0.2.5 will automatically update to the latest version`

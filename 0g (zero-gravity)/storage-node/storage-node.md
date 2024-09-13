@@ -4,8 +4,8 @@
 
 | Category  | Requirements                   |
 | --------- | ------------------------------ |
-| CPU       | 4 cores                        |
-| RAM       | 16 GB                          |
+| CPU       | 4+ cores                       |
+| RAM       | 16+ GB                         |
 | Storage   | 500GB / 1TB NVMe SSD           |
 | Bandwidth | 500 MBps for Download / Upload |
 

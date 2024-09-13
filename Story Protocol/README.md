@@ -87,9 +87,9 @@ Grand Valley's Story public endpoints:
 
 | Category  | Requirements |
 | --------- | ------------ |
-| CPU       | 4 cores      |
-| RAM       | 8 GB         |
-| Storage   | 200GB        |
+| CPU       | 8+ cores     |
+| RAM       | 32+ GB       |
+| Storage   | 500+ GB      |
 | Bandwidth | 10MBit/s     |
 
 service file name: `story.service` `story-geth.service`
