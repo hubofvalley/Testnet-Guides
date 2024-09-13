@@ -81,14 +81,14 @@ Grand Valley's Story public endpoints:
 
 ## Story Node Deployment Guide With Cosmovisor
 
-### System Requirements
+### **System Requirements**
 
-| Category | Requirements |
-| ------------ | ------------ |
-| CPU | 4+ cores |
-| RAM | 8+ GB |
-| Storage | 200GB |
-| Bandwidth | 10MBit/s |
+| Category  | Requirements |
+| --------- | ------------ |
+| CPU       | 4+ cores     |
+| RAM       | 8+ GB        |
+| Storage   | 200GB        |
+| Bandwidth | 10MBit/s     |
 
 service file name: `story.service` `story-geth.service`
 current chain: `iliad-0`
