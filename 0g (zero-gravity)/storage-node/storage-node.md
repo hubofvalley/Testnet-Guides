@@ -77,11 +77,11 @@ curl -s -X POST $BLOCKCHAIN_RPC_ENDPOINT -H "Content-Type: application/json" -d 
 
 ```bash
 cd $HOME
-git clone -b v0.5.0 https://github.com/0glabs/0g-storage-node.git
+git clone -b v0.5.1 https://github.com/0glabs/0g-storage-node.git
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 702680f3a4de047d016533d1d16dacbf04bf4401
+git checkout 59d24b073d93c1146666295e48609825f761abea
 git submodule update --init
 ```
 
@@ -221,7 +221,7 @@ sudo systemctl stop zgs
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 702680f3a4de047d016533d1d16dacbf04bf4401
+git checkout 59d24b073d93c1146666295e48609825f761abea
 git submodule update --init
 ```
 
