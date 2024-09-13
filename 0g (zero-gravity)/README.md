@@ -258,7 +258,7 @@ After=network.target
 User=$USER
 Type=simple
 WorkingDirectory=$HOME/.0gchain
-ExecStart=<input 1> run start --log_output_console
+ExecStart=<input 1> run start --home <input 2> --log_output_console
 Restart=on-failure
 LimitNOFILE=65535
 Environment="DAEMON_NAME=0gchaind"

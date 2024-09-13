@@ -192,7 +192,7 @@ sed -i -e 's/^indexer = "null"/indexer = "kv"/' $HOME/.story/story/config/config
 ### 15. configure cosmovisor folder
 
 ```bash
-mkdir -p $HOME/.story/story/cosmovisor/genesis/bin
+cosmovisor $HOME/go/bin/story
 mkdir -p $HOME/.story/story/cosmovisor/upgrades
 mkdir -p $HOME/.story/story/cosmovisor/backup
 sudo cp $HOME/go/bin/story $HOME/.story/story/cosmovisor/genesis/bin
@@ -239,7 +239,7 @@ After=network.target
 User=$USER
 Type=simple
 WorkingDirectory=$HOME/.story/story
-ExecStart=<input 1> run run
+ExecStart=<input 1> run run --home <input 2>
 Restart=on-failure
 LimitNOFILE=65535
 Environment="DAEMON_NAME=story"
