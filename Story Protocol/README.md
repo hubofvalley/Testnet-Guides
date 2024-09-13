@@ -417,16 +417,16 @@ wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-l
 ### 3. create the new version dir, extract the node binary and copy It to the cosmovisor upgrades directory
 
 ```bash
-mkdir -p $HOME/.story/story/cosmovisor/upgrades/v0.9.12/bin
-story_folder_name=$(tar -tf story-linux-amd64-0.9.12-9ae4a63.tar.gz | head -n 1 | cut -f1 -d"/")
-tar -xzf story-linux-amd64-0.9.12-9ae4a63.tar.gz
-sudo cp $HOME/$story_folder_name/story $HOME/.story/story/cosmovisor/upgrades/v0.9.12/bin/
+mkdir -p $HOME/.story/story/cosmovisor/upgrades/v0.10.0/bin
+story_folder_name=$(tar -tf story-linux-amd64-0.10.0-9603826.tar.gz | head -n 1 | cut -f1 -d"/")
+tar -xzf story-linux-amd64-0.10.0-9603826.tar.gz
+sudo cp $HOME/$story_folder_name/story $HOME/.story/story/cosmovisor/upgrades/v0.10.0/bin/
 ```
 
 ### 4. stop the geth and the consensus client services
 
 ```bash
-sudo systemctl stop story-geth story
+sudo systemctl stop story
 ```
 
 ### 5. copy the current node binary to the cosmovisor genesis directory
@@ -435,7 +435,7 @@ sudo systemctl stop story-geth story
 sudo cp "$story_folder_name/story" $HOME/.story/story/cosmovisor/genesis/bin
 ```
 
-### 6. restart geth and consensus client services
+### 6. restart consensus client services
 
 ```bash
 sudo systemctl daemon-reload && \
