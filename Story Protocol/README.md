@@ -423,7 +423,7 @@ tar -xzf story-linux-amd64-0.10.0-9603826.tar.gz
 sudo cp $HOME/$story_folder_name/story $HOME/.story/story/cosmovisor/upgrades/v0.10.0/bin/
 ```
 
-### 4. stop the geth and the consensus client services
+### 4. stop the consensus client services
 
 ```bash
 sudo systemctl stop story
