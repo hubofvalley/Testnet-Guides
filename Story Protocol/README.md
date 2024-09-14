@@ -417,7 +417,7 @@ wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-l
 mkdir -p $HOME/.story/story/cosmovisor/upgrades/v0.10.0/bin
 story_folder_name=$(tar -tf story-linux-amd64-0.10.0-9603826.tar.gz | head -n 1 | cut -f1 -d"/")
 tar -xzf story-linux-amd64-0.10.0-9603826.tar.gz
-sudo cp $HOME/$story_folder_name/story $HOME/.story/story/cosmovisor/upgrades/v0.10.0/bin/
+cp $HOME/$story_folder_name/story $HOME/.story/story/cosmovisor/upgrades/v0.10.0/bin/
 ```
 
 ### 4. stop the consensus client services
@@ -429,7 +429,7 @@ sudo systemctl stop story
 ### 5. copy the current node binary to the cosmovisor genesis directory
 
 ```bash
-sudo cp $HOME/$story_folder_name/story $HOME/.story/story/cosmovisor/genesis/bin
+cp $HOME/$story_folder_name/story $HOME/.story/story/cosmovisor/genesis/bin
 ```
 
 ### 5. set access and delete the existing upgrade file in data dir
