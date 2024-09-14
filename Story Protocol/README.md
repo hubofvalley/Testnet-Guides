@@ -345,6 +345,7 @@ make sure your node block height has been synced with the latest block height. o
 
 https://faucet.story.foundation/
 
+
 ### 3. create validator
 
 ```bash

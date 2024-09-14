@@ -81,7 +81,7 @@ git clone -b v0.5.1 https://github.com/0glabs/0g-storage-node.git
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 59d24b073d93c1146666295e48609825f761abea
+git checkout f878a4849c1d45a9bef0527ea752c2710502334e
 git submodule update --init
 ```
 
@@ -221,7 +221,7 @@ sudo systemctl stop zgs
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 59d24b073d93c1146666295e48609825f761abea
+git checkout f878a4849c1d45a9bef0527ea752c2710502334e
 git submodule update --init
 ```
 
