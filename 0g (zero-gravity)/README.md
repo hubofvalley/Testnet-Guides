@@ -50,7 +50,7 @@ DALs offer a more efficient method for publishing and maintaining off-chain data
 
 For more detailed information, visit the [0G DA documentation](https://docs.0g.ai/0g-doc/docs/0g-da)
 
-With Public Testnet, 0gchain’s docs and code become public. Check them out below! -
+With Public Testnet, 0G’s docs and code become public. Check them out below! -
 
 - [0gchain Website](https://0g.ai/)
 - [0gchain X](https://x.com/0G_labs)
