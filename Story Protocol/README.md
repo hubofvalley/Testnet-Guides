@@ -194,7 +194,7 @@ sed -i -e 's/^indexer = "null"/indexer = "kv"/' $HOME/.story/story/config/config
 ### 15. configure cosmovisor folder
 
 ```bash
-cosmovisor $HOME/go/bin/story
+cosmovisor init $HOME/go/bin/story
 mkdir -p $HOME/.story/story/cosmovisor/upgrades
 mkdir -p $HOME/.story/story/cosmovisor/backup
 ```
@@ -347,7 +347,6 @@ make sure your node block height has been synced with the latest block height. o
 
 https://faucet.story.foundation/
 
-
 ### 3. create validator
 
 ```bash
@@ -425,7 +424,6 @@ mkdir -p $HOME/.story/story/cosmovisor/upgrades/v0.10.0/bin
 story_folder_name=$(tar -tf story-linux-amd64-0.10.0-9603826.tar.gz | head -n 1 | cut -f1 -d"/")
 tar -xzf story-linux-amd64-0.10.0-9603826.tar.gz
 sudo cp $HOME/$story_folder_name/story $HOME/.story/story/cosmovisor/upgrades/v0.10.0/bin/
-sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
 ### 4. stop the consensus client services
@@ -437,7 +435,7 @@ sudo systemctl stop story
 ### 5. copy the current node binary to the cosmovisor genesis directory
 
 ```bash
-sudo cp "$story_folder_name/story" $HOME/.story/story/cosmovisor/genesis/bin
+sudo cp $HOME/$story_folder_name/story $HOME/.story/story/cosmovisor/genesis/bin
 ```
 
 ### 6. restart consensus client services
@@ -451,6 +449,12 @@ sudo systemctl restart story
 
 ```bash
 cosmovisor run version
+```
+
+### 8. after the instructions are succesfully completed, u can delete the tar file and folder
+
+```bash
+sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
 ## Method 2: Let Cosmovisor handle placing the binary itself (semi-automated)
@@ -482,7 +486,6 @@ wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-l
 ```bash
 story_folder_name=$(tar -tf story-linux-amd64-0.10.0-9603826.tar.gz | head -n 1 | cut -f1 -d"/")
 tar -xzf story-linux-amd64-0.10.0-9603826.tar.gz
-sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
 ### 4. execute the cosmovisor `add-upgrade` command
@@ -491,6 +494,12 @@ sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.
 
 ```bash
 cosmovisor add-upgrade v0.10.0 $HOME/$story_folder_name/story --upgrade-height 626575 --force
+```
+
+### 5. after the instructions are succesfully completed, u can delete the tar file and folder
+
+```bash
+sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
 # let's buidl together

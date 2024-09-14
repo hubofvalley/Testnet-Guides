@@ -213,7 +213,7 @@ sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.0gchain/config/config.tom
 ### 15. configure cosmovisor folder
 
 ```bash
-cosmovisor $HOME/go/bin/0gchaind
+cosmovisor init $HOME/go/bin/0gchaind
 mkdir -p $HOME/.0gchain/cosmovisor/upgrades
 mkdir -p $HOME/.0gchain/cosmovisor/backup
 ```
@@ -394,10 +394,10 @@ copy all of the contents of the ![priv_validator_key.json](https://img.shields.i
 ### delegate to <a href="https://explorer.grandvalleys.com/0g-chain%20testnet/staking/0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4"><img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/e8704cc4-2319-4a21-9138-0264e75e3a82" alt="GRAND VALLEY" width="50" height="50">
 
 </a>
-  
-  ```bash
-  0gchaind tx staking delegate 0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4 1000000ua0gi --from $WALLET --chain-id zgtendermint_16600-2 --gas=auto --gas-adjustment=1.4 --fees=800ua0gi -y
-  ```
+
+```bash
+0gchaind tx staking delegate 0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4 1000000ua0gi --from $WALLET --chain-id zgtendermint_16600-2 --gas=auto --gas-adjustment=1.4 --fees=800ua0gi -y
+```
 
 # delete the node
 
