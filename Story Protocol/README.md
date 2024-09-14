@@ -97,7 +97,7 @@ service file name: `story.service` `story-geth.service`
 current chain: `iliad-0`
 current version: `v0.9.13`
 
-### 1. Install dependencies for building from source
+### 1. install dependencies for building from source
 
 ```bash
 sudo apt update && \
@@ -169,7 +169,7 @@ sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.9.12-9ae4a63.tar.
 story init --network $STORY_CHAIN_ID --moniker $MONIKER
 ```
 
-### 9. Add peers to the config.toml
+### 9. add peers to the config.toml
 
 ```bash
 peers=$(curl -sS https://lightnode-rpc-story.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
@@ -320,7 +320,7 @@ if u use default port (26):
 curl http://127.0.0.1:26657/status | jq
 ```
 
-### 22. chech the node version
+### 22. checK the node version
 
 ```bash
 cosmovisor run version
