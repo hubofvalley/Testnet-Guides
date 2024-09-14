@@ -152,12 +152,14 @@ wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/geth-public/geth-lin
 geth_folder_name=$(tar -tf geth-linux-amd64-0.9.2-ea9f0d2.tar.gz | head -n 1 | cut -f1 -d"/")
 tar -xvf geth-linux-amd64-0.9.2-ea9f0d2.tar.gz
 sudo mv $HOME/$geth_folder_name/geth $HOME/go/bin/
+sudo rm -rf $HOME/$geth_folder_name $HOME/geth-linux-amd64-0.9.2-ea9f0d2.tar.gz
 
 # consensus client binary
 wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.9.12-9ae4a63.tar.gz
 story_folder_name=$(tar -tf story-linux-amd64-0.9.12-9ae4a63.tar.gz | head -n 1 | cut -f1 -d"/")
 tar -xzf story-linux-amd64-0.9.12-9ae4a63.tar.gz
 sudo mv $HOME/$story_folder_name/story $HOME/go/bin/
+sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.9.12-9ae4a63.tar.gz
 ```
 
 ### 6. init app
@@ -423,6 +425,7 @@ mkdir -p $HOME/.story/story/cosmovisor/upgrades/v0.10.0/bin
 story_folder_name=$(tar -tf story-linux-amd64-0.10.0-9603826.tar.gz | head -n 1 | cut -f1 -d"/")
 tar -xzf story-linux-amd64-0.10.0-9603826.tar.gz
 sudo cp $HOME/$story_folder_name/story $HOME/.story/story/cosmovisor/upgrades/v0.10.0/bin/
+sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
 ### 4. stop the consensus client services
@@ -479,6 +482,7 @@ wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-l
 ```bash
 story_folder_name=$(tar -tf story-linux-amd64-0.10.0-9603826.tar.gz | head -n 1 | cut -f1 -d"/")
 tar -xzf story-linux-amd64-0.10.0-9603826.tar.gz
+sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
 ### 4. execute the cosmovisor `add-upgrade` command
