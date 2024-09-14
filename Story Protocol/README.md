@@ -320,7 +320,7 @@ if u use default port (26):
 curl http://127.0.0.1:26657/status | jq
 ```
 
-### 22. checK the node version
+### 22. check the node version
 
 ```bash
 cosmovisor run version
