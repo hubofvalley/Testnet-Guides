@@ -223,8 +223,8 @@ sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.0gchain/config/config.tom
 ### 15. configure cosmovisor folder
 
 ```bash
-cosmovisor init $HOME/go/bin/0gchaind
-mkdir -p $HOME/.0gchain/cosmovisor/upgrades
+cosmovisor init $HOME/go/bin/0gchaind && \
+mkdir -p $HOME/.0gchain/cosmovisor/upgrades && \
 mkdir -p $HOME/.0gchain/cosmovisor/backup
 ```
 

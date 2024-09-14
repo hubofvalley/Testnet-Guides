@@ -195,8 +195,8 @@ sed -i -e 's/^indexer = "null"/indexer = "kv"/' $HOME/.story/story/config/config
 ### 15. configure cosmovisor folder
 
 ```bash
-cosmovisor init $HOME/go/bin/story
-mkdir -p $HOME/.story/story/cosmovisor/upgrades
+cosmovisor init $HOME/go/bin/story && \
+mkdir -p $HOME/.story/story/cosmovisor/upgrades && \
 mkdir -p $HOME/.story/story/cosmovisor/backup
 ```
 
