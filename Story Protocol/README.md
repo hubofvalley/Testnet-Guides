@@ -387,7 +387,7 @@ sed -i "/STORY_/d" $HOME/.bash_profile
 
 ## Consensus client version update to v0.10.0
 
-## Method 1: Place the new binary directly
+## Method 1: Place the new binary directly (this method only applicable when your node has reached the required block)
 
 ### 1. define the path of cosmovisor for being used in the consensus client
 
@@ -432,6 +432,12 @@ sudo systemctl stop story
 sudo cp $HOME/$story_folder_name/story $HOME/.story/story/cosmovisor/genesis/bin
 ```
 
+### 5. set access and delete the existing upgrade file in data dir
+
+```bash
+sudo chown -R $USER:$USER $HOME && sudo rm $HOME/.story/story/data/upgrade-info.json
+```
+
 ### 6. restart consensus client services
 
 ```bash
@@ -451,7 +457,7 @@ cosmovisor run version
 sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
-## Method 2: Let Cosmovisor handle placing the binary itself (semi-automated)
+## Method 2: Let Cosmovisor handle placing the binary itself (can be applicable before the node reached the hard-fork block height,semi-automated)
 
 ### 1. define the path of cosmovisor for being used in the consensus client
 
@@ -480,6 +486,12 @@ wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-l
 ```bash
 story_folder_name=$(tar -tf story-linux-amd64-0.10.0-9603826.tar.gz | head -n 1 | cut -f1 -d"/")
 tar -xzf story-linux-amd64-0.10.0-9603826.tar.gz
+```
+
+### 4. set access
+
+```bash
+sudo chown -R $USER:$USER $HOME
 ```
 
 ### 4. execute the cosmovisor `add-upgrade` command
