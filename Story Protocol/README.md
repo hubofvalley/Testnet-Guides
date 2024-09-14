@@ -157,10 +157,10 @@ sudo rm -rf $HOME/$geth_folder_name $HOME/geth-linux-amd64-0.9.2-ea9f0d2.tar.gz
 
 # consensus client binary
 wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.9.13-b4c7db1.tar.gz
-story_folder_name=$(tar -tf story-linux-amd64-0.9.12-9ae4a63.tar.gz | head -n 1 | cut -f1 -d"/")
-tar -xzf story-linux-amd64-0.9.12-9ae4a63.tar.gz
+story_folder_name=$(tar -tf story-linux-amd64-0.9.13-b4c7db1.tar.gz | head -n 1 | cut -f1 -d"/")
+tar -xzf story-linux-amd64-0.9.13-b4c7db1.tar.gz
 mv $HOME/$story_folder_name/story $HOME/go/bin/
-sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.9.12-9ae4a63.tar.gz
+sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.9.13-b4c7db1.tar.gz
 ```
 
 ### 6. init app
