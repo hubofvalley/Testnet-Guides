@@ -240,7 +240,7 @@ After=network.target
 User=$USER
 Type=simple
 WorkingDirectory=$HOME/.story/story
-ExecStart=<input 1> run run --home <input 2>
+ExecStart=<input 1> run run
 Restart=on-failure
 LimitNOFILE=65535
 Environment="DAEMON_NAME=story"
@@ -322,7 +322,7 @@ curl http://127.0.0.1:26657/status | jq
 ### 22. chech the node version
 
 ```bash
- cosmovisor run version
+cosmovisor run version
 ```
 
 ## you can use any snapshots and no need to manually update the binary version
