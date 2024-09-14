@@ -286,7 +286,7 @@ EOF
 ```bash
 sudo systemctl daemon-reload && \
 sudo systemctl enable story-geth && \
-sudo systemctl restart story-geth && sudo systemctl status story-geth
+sudo systemctl restart story-geth && sudo journalctl -u story-geth -fn 100 -o cat
 ```
 
 #### start consensus client
@@ -294,24 +294,14 @@ sudo systemctl restart story-geth && sudo systemctl status story-geth
 ```bash
 sudo systemctl daemon-reload && \
 sudo systemctl enable story && \
-sudo systemctl restart story && sudo systemctl status story
+sudo systemctl restart story && sudo journalctl -u story -fn 100 -o cat
 ```
 
 #### this is an example of the node running properly
 
-![image](https://github.com/user-attachments/assets/129dd95d-de3e-437f-a6af-0c807044e230)
+![story-geth logs](image.png)
 
-### 19. check the geth logs
-
-```bash
-sudo journalctl -u story-geth -fn 100 -o cat
-```
-
-### 20. check the consensus client logs
-
-```bash
-sudo journalctl -u story -fn 100 -o cat
-```
+![story logs](image-1.png)
 
 ### 21. check node synchronization
 
