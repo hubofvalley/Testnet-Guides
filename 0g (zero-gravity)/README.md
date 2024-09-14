@@ -10,26 +10,29 @@
   <img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/b1a15f39-8e6a-428f-846b-4c430eac872b" width="400" height="200">
 </p>
 
-## 0gchain <a><img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/916ed2ba-bf46-48ea-b4f9-6d48c1eac3ed" width="50" height="50">
+# 0gchain <a><img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/916ed2ba-bf46-48ea-b4f9-6d48c1eac3ed" width="50" height="50">
 
-- **WHAT IS 0gchain?**
-  ZeroGravity (0G) is the first infinitely scalable, decentralized data availability layer featuring a built-in general-purpose storage system. This enables 0G to offer a highly scalable on-chain database suitable for various Web2 and Web3 data needs, including on-chain AI. Additionally, as a data availability layer, 0G ensures seamless verification of accurate data storage.
+## WHAT IS 0gchain?
+
+ZeroGravity (0G) is the first infinitely scalable, decentralized data availability layer featuring a built-in general-purpose storage system. This enables 0G to offer a highly scalable on-chain database suitable for various Web2 and Web3 data needs, including on-chain AI. Additionally, as a data availability layer, 0G ensures seamless verification of accurate data storage.
 
 In the sections below, we will delve deeper into this architecture and explore the key use cases it unlocks.
 
-- **0G’s Architecture**
-  0G achieves high scalability by dividing the data availability workflow into two main lanes:
+## 0G’s Architecture
 
-  1. **Data Storage Lane**: This lane achieves horizontal scalability through data partitioning, allowing for rapid storage and access of large amounts of data.
+0G achieves high scalability by dividing the data availability workflow into two main lanes:
 
-  2. **Data Publishing Lane**: This lane ensures data availability using a quorum-based system with an "honest majority" assumption, where the quorum is randomly selected via a Verifiable Random Function (VRF). This method avoids data broadcasting bottlenecks and supports larger data transfers in the Storage Lane.
+1. **Data Storage Lane**: This lane achieves horizontal scalability through data partitioning, allowing for rapid storage and access of large amounts of data.
+
+2. **Data Publishing Lane**: This lane ensures data availability using a quorum-based system with an "honest majority" assumption, where the quorum is randomly selected via a Verifiable Random Function (VRF). This method avoids data broadcasting bottlenecks and supports larger data transfers in the Storage Lane.
 
 0G Storage is an on-chain database made up of Storage Nodes that participate in a Proof of Random Access (PoRA) mining process. Nodes are rewarded for correctly responding to random data queries, promoting network participation and scalability.
 
 0G DA (Data Availability) Layer is built on 0G Storage and uses a quorum-based architecture for data availability confirmation. The system relies on an honest majority of nodes, with quorum selection randomized by VRF and GPUs enhancing the erasure coding process for data storage.
 
-- **0G solving target**
-  The increasing need for greater Layer 2 (L2) scalability has coincided with the rise of Data Availability Layers (DALs), which are essential for addressing Ethereum's scaling challenges. L2s handle transactions off-chain and settle on Ethereum for security, requiring transaction data to be posted somewhere for validation. By publishing data directly on Ethereum, high fees are distributed among L2 users, enhancing scalability.
+## 0G solving target
+
+The increasing need for greater Layer 2 (L2) scalability has coincided with the rise of Data Availability Layers (DALs), which are essential for addressing Ethereum's scaling challenges. L2s handle transactions off-chain and settle on Ethereum for security, requiring transaction data to be posted somewhere for validation. By publishing data directly on Ethereum, high fees are distributed among L2 users, enhancing scalability.
 
 DALs offer a more efficient method for publishing and maintaining off-chain data for inspection. However, existing DALs struggle to manage the growing volume of on-chain data, especially for data-intensive applications like on-chain AI, due to limited storage capacity and throughput.
 
@@ -43,11 +46,20 @@ DALs offer a more efficient method for publishing and maintaining off-chain data
 6. **On-chain Gaming**: Gaming requires reliable storage of cryptographic proofs and metadata, such as player assets and actions.
 7. **Data Markets**: Web3 data markets can store their data on-chain, feasible on a large scale with 0G.
 
+## Conclusion
+
 0G is a scalable, low-cost, and programmable DA solution essential for bringing vast amounts of data on-chain. Its role as an on-chain data storage solution unlocks numerous use cases, providing the database infrastructure for any on-chain application. 0G efficiently stores and proves the availability of any Web2 or Web3 data, extending benefits beyond confirming L2 transactions.
 
 For more detailed information, visit the [0G DA documentation](https://docs.0g.ai/0g-doc/docs/0g-da)
 
-With Public Testnet, 0gchain’s docs and code become public. Check them out below! - [0gchainWebsite](https://0g.ai/) - [0gchainX](https://x.com/0G_labs) - [0gchainDiscord](https://discord.com/invite/0glabs) - [0gchainDocs](https://docs.0g.ai/0g-doc) - [0gchainGithub](https://github.com/0glabs) - [0gchainExplorer](https://explorer.grandvalleys.com/0g-chain%20testnet)
+With Public Testnet, 0gchain’s docs and code become public. Check them out below! -
+
+- [0gchain Website](https://0g.ai/)
+- [0gchain X](https://x.com/0G_labs)
+- [0gchain Discord](https://discord.com/invite/0glabs)
+- [0gchain Docs](https://docs.0g.ai/0g-doc)
+- [0gchain Github](https://github.com/0glabs)
+- [0gchain Explorer](https://explorer.grandvalleys.com/0g-chain%20testnet)
 
 Grand Valley's 0G public endpoints:
 
