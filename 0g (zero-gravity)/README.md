@@ -1,4 +1,4 @@
-# 0gchain Testnet Guide
+# 0G Testnet Guide
 
 `will always update`
 
@@ -10,7 +10,7 @@
   <img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/b1a15f39-8e6a-428f-846b-4c430eac872b" width="400" height="200">
 </p>
 
-# 0gchain <a><img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/916ed2ba-bf46-48ea-b4f9-6d48c1eac3ed" width="50" height="50">
+# 0G <a><img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/916ed2ba-bf46-48ea-b4f9-6d48c1eac3ed" width="50" height="50">
 
 ## WHAT IS 0gchain?
 
@@ -67,7 +67,7 @@ Grand Valley's 0G public endpoints:
 - json-rpc: https://lightnode-rpc-0g.grandvalleys.com
 - api: https://lightnode-api-0g.grandvalleys.com
 
-## 0gchain Node Deployment Guide With Cosmovisor
+## 0G Node Deployment Guide With Cosmovisor
 
 ### **System Requirements**
 
