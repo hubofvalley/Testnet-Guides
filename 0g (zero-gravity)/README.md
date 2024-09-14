@@ -61,7 +61,7 @@ With Public Testnet, 0gchain’s docs and code become public. Check them out bel
 
 Grand Valley's 0G public endpoints:
 
-- rpc: https://lightnode-rpc-0g.grandvalleys.com
+- rpc: https://lightnode-0g.grandvalleys.com
 - json-rpc: https://lightnode-rpc-0g.grandvalleys.com
 - api: https://lightnode-api-0g.grandvalleys.com
 
