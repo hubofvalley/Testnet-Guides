@@ -320,7 +320,7 @@ cosmovisor run version
 
 ## you can use any snapshots and no need to manually update the binary version
 
-# Keys commands
+# Validator and key Commands
 
 ## 1. create wallet
 

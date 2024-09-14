@@ -376,7 +376,7 @@ story validator stake --private-key <your private key> --stake 10240000000000000
 story validator stake --private-key <your private key> --stake 1024000000000000000000 --validator-pubkey A2p1z6hM9IXltKaET6ny/wP0EPfIwBSPTkyeU135yroi
 ```
 
-### delete the node
+# delete the node
 
 ```bash
 sudo systemctl stop story-geth story
