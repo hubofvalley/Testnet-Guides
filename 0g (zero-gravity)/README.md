@@ -320,9 +320,9 @@ cosmovisor run version
 
 ## you can use any snapshots and no need to manually update the binary version
 
-# Validator and key Commands
+## Validator and key Commands
 
-## 1. create wallet
+### 1. create wallet
 
 ```bash
 0gchaind keys add $WALLET --eth
@@ -344,7 +344,7 @@ OR YOU CAN IMPORT YOUR EXISTING WALLET
 0gchaind keys add $WALLET --recover --keyring-backend os --eth
 ```
 
-## 2. check node synchronization
+### 2. check node synchronization
 
 ```bash
 0gchaind status | jq .sync_info
@@ -352,13 +352,13 @@ OR YOU CAN IMPORT YOUR EXISTING WALLET
 
 make sure your node block height has been synced with the latest block height. or you can check the `catching_up` value must be `false`
 
-## 3. check your balance
+### 3. check your balance
 
 ```bash
 0gchaind q bank balances $(0gchaind keys show $WALLET -a)
 ```
 
-## 4. create validator
+### 4. create validator
 
 EDIT YOUR IDENTITY, WEBSITE URL, YOUR MAIL AND YOUR DETAILS. BUT THOSE ARE OPTIONAL
 
@@ -383,7 +383,7 @@ EDIT YOUR IDENTITY, WEBSITE URL, YOUR MAIL AND YOUR DETAILS. BUT THOSE ARE OPTIO
 
 `1uaogi = (10)^(-6)AOGI = 0.000001AOGI`
 
-## 5. BACKUP YOUR VALIDATOR <img src="https://img.shields.io/badge/IMPORTANT-red" alt="Important" width="100">
+### 5. BACKUP YOUR VALIDATOR <img src="https://img.shields.io/badge/IMPORTANT-red" alt="Important" width="100">
 
 ```bash
 nano /$HOME/.0gchain/config/priv_validator_key.json
@@ -395,15 +395,15 @@ nano /$HOME/.0gchain/data/priv_validator_state.json
 
 copy all of the contents of the ![priv_validator_key.json](https://img.shields.io/badge/priv__validator__key.json-red) !and ![priv_validator_key.json](https://img.shields.io/badge/priv__validator__state.json-red) files and save them in a safe place. This is a vital step in case you need to migrate your validator node
 
-## 6. delegate token to validator
+### 6. delegate token to validator
 
-### self delegate
+#### self delegate
 
 ```bash
 0gchaind tx staking delegate $(0gchaind keys show $WALLET --bech val -a) 1000000ua0gi --from $WALLET --chain-id zgtendermint_16600-2 --gas=auto --gas-adjustment=1.4 --fees=800ua0gi -y
 ```
 
-### delegate to <a href="https://explorer.grandvalleys.com/0g-chain%20testnet/staking/0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4"><img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/e8704cc4-2319-4a21-9138-0264e75e3a82" alt="GRAND VALLEY" width="50" height="50">
+#### delegate to <a href="https://explorer.grandvalleys.com/0g-chain%20testnet/staking/0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4"><img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/e8704cc4-2319-4a21-9138-0264e75e3a82" alt="GRAND VALLEY" width="50" height="50">
 
 </a>
 
