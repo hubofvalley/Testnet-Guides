@@ -489,10 +489,10 @@ story_folder_name=$(tar -tf story-linux-amd64-0.10.0-9603826.tar.gz | head -n 1 
 tar -xzf story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
-### 4. set access
+### 4. set access and delete the existing upgrade file in data dir
 
 ```bash
-sudo chown -R $USER:$USER $HOME
+sudo chown -R $USER:$USER $HOME && sudo rm $HOME/.story/story/data/upgrade-info.json
 ```
 
 ### 4. execute the cosmovisor `add-upgrade` command
