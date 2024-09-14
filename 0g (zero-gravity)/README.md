@@ -225,7 +225,7 @@ input1=$(which cosmovisor)
 input2=$(find $HOME -type d -name ".0gchain")
 input3=$(find $HOME/.0gchain/cosmovisor -type d -name "backup")
 echo "export DAEMON_NAME=0gchaind" >> $HOME/.bash_profile
-echo "export DAEMON_HOME=$(find $HOME -type d -name ".0gchain")" >> $HOME/.bash_profile
+echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
 echo "export DAEMON_DATA_BACKUP_DIR=$(find $HOME/.0gchain/cosmovisor -type d -name "backup")" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 echo "input1. $input1"

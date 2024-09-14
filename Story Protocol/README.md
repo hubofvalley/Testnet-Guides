@@ -300,9 +300,11 @@ sudo systemctl restart story && sudo journalctl -u story -fn 100 -o cat
 #### this is an example of the node running properly
 
 ##### story-geth logs
+
 ![story-geth logs](image.png)
 
 ##### story logs
+
 ![story logs](image-1.png)
 
 ### 21. check node synchronization
