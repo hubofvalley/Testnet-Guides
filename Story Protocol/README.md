@@ -72,6 +72,7 @@ With Public Testnet, Story's docs and code become public. Check them out below!
 - [Story Docs](https://docs.story.foundation/)
 - [Story GitHub](https://github.com/storyprotocol)
 - [Story Explorer](https://testnet.storyscan.app/)
+- [Piplabs Explorer](https://github.com/piplabs)
 
 Grand Valley's Story public endpoints:
 
