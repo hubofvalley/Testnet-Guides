@@ -387,7 +387,7 @@ sed -i "/STORY_/d" $HOME/.bash_profile
 
 ## Consensus client version update to v0.10.0
 
-## Method 1: Place the new binary directly (this method only applicable when your node has reached the required block)
+## Method 1: Place the new binary directly (this method is only applicable when your node has reached the required block)
 
 ### 1. define the path of cosmovisor for being used in the consensus client
 
@@ -457,7 +457,7 @@ cosmovisor run version
 sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
-## Method 2: Let Cosmovisor handle placing the binary itself (can be applicable before the node reached the hard-fork block height,semi-automated)
+## Method 2: Let Cosmovisor handle placing the binary itself (this can be applied before the node reaches the hard-fork block height, making it semi-automated)
 
 ### 1. define the path of cosmovisor for being used in the consensus client
 
