@@ -83,30 +83,20 @@ current chain : `zgtendermint_16600-2`
 ### 1. Install dependencies for building from source
 
 ```bash
- sudo apt update && \
- sudo apt install curl git jq build-essential gcc unzip wget lz4 openssl -y
- sudo apt-get update -y
- sudo apt-get install clang cmake build-essential -y
- sudo apt install git -y
- sudo apt install libssl-dev -y
- sudo apt install pkg-config -y
- sudo apt-get install protobuf-compiler -y
- sudo apt-get install clang -y
- sudo apt-get install llvm llvm-dev -y
+sudo apt update -y && sudo apt upgrade -y && \
+sudo apt install -y curl git jq build-essential gcc unzip wget lz4 openssl \
+libssl-dev pkg-config protobuf-compiler clang cmake llvm llvm-dev
 ```
 
 ### 2. install go
 
 ```bash
-cd $HOME && \
-ver="1.22.0" && \
+cd $HOME && ver="1.22.0" && \
 wget "https://golang.org/dl/go$ver.linux-amd64.tar.gz" && \
-sudo rm -rf /usr/local/go && \
-sudo tar -C /usr/local -xzf "go$ver.linux-amd64.tar.gz" && \
+sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf "go$ver.linux-amd64.tar.gz" && \
 rm "go$ver.linux-amd64.tar.gz" && \
-echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> ~/.bash_profile && \
-source ~/.bash_profile && \
-go version
+echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile && \
+source ~/.bash_profile && go version
 ```
 
 ### 3. install cosmovisor
