@@ -107,7 +107,7 @@ go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 
 ### 4. set vars
 
-EDIT YOUR MONIKER
+EDIT YOUR MONIKER & YOUR PREFERRED PORT NUMBER
 
 ```
 echo "export WALLET="wallet"" >> $HOME/.bash_profile
