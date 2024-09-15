@@ -188,7 +188,7 @@ sed -i -e 's/^indexer = "null"/indexer = "kv"/' $HOME/.story/story/config/config
 sudo chown -R $USER:$USER $HOME/.story
 ```
 
-### 10. initialize cosmovisor
+### 11. initialize cosmovisor
 
 ```bash
 echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
@@ -198,7 +198,7 @@ mkdir -p $HOME/.story/story/cosmovisor/upgrades && \
 mkdir -p $HOME/.story/story/cosmovisor/backup
 ```
 
-### 11. define the path of cosmovisor for being used in the consensus client
+### 12. define the path of cosmovisor for being used in the consensus client
 
 ```bash
 input1=$(which cosmovisor)
@@ -219,7 +219,7 @@ echo "input3. $input3"
 
 ![image](https://github.com/user-attachments/assets/21ef09d9-2595-46b6-b014-e30d5ff09cc1)
 
-### 12. create service files
+### 13. create service files
 
 #### edit the `<input 1>` with the value of `input 1`
 
@@ -278,7 +278,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### 13. start the node
+### 14. start the node
 
 #### start geth
 
@@ -308,7 +308,7 @@ sudo journalctl -u story -fn 100 -o cat
 
 ![story logs](image-1.png)
 
-### 14. check node synchronization
+### 15. check node synchronization
 
 ```bash
 curl http://127.0.0.1:${STORY_PORT}657/status | jq
@@ -320,7 +320,7 @@ if u use default port (26):
 curl http://127.0.0.1:26657/status | jq
 ```
 
-### 15. check the node version
+### 16. check the node version
 
 ```bash
 cosmovisor run version
