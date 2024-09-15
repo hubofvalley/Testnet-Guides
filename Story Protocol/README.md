@@ -182,6 +182,12 @@ s%:26660%:${STORY_PORT}660%g" $HOME/.story/story/config/config.toml
 sed -i -e 's/^indexer = "null"/indexer = "kv"/' $HOME/.story/story/config/config.toml
 ```
 
+### 10. set access
+
+```bash
+sudo chown -R $USER:$USER $HOME/.story
+```
+
 ### 10. initialize cosmovisor
 
 ```bash
