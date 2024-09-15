@@ -143,14 +143,14 @@ sudo rm $HOME/.0gchain/config/genesis.json && \
 wget https://github.com/0glabs/0g-chain/releases/download/v0.2.3/genesis.json -O $HOME/.0gchain/config/genesis.json
 ```
 
-### 8. Add seeds to the config.toml
+### 8. add seeds to the config.toml
 
 ```bash
 SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de28667725a4fef26cdc7f9452cc34b16d@54.176.175.48:26656,e9b4bc203197b62cc7e6a80a64742e752f4210d5@54.193.250.204:26656,68b9145889e7576b652ca68d985826abd46ad660@18.166.164.232:26656" && \
 sed -i.bak -e "s/^seeds *=.*/seeds = \"${SEEDS}\"/" $HOME/.0gchain/config/config.toml
 ```
 
-### 9. Add peers to the config.toml
+### 9. add peers to the config.toml
 
 ```bash
 peers=$(curl -sS https://lightnode-0g.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
@@ -186,7 +186,7 @@ sed -i \
    $HOME/.0gchain/config/config.toml
 ```
 
-### 12. open json-rpc endpoints (required for running the storage node and storage kv)
+### 13. open json-rpc endpoints (required for running the storage node and storage kv)
 
 ```bash
 sed -i \
@@ -197,28 +197,30 @@ sed -i \
    $HOME/.0gchain/config/app.toml
 ```
 
-### 13. set minimum gas price and enable prometheus
+### 14. set minimum gas price and enable prometheus
 
 ```bash
 sed -i "s/^minimum-gas-prices *=.*/minimum-gas-prices = \"0ua0gi\"/" $HOME/.0gchain/config/app.toml
 sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.0gchain/config/config.toml
 ```
 
-### 14. disable indexer (optional) (if u want to run a full node, skip this step)
+### 15. disable indexer (optional) (if u want to run a full node, skip this step)
 
 ```bash
 sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.0gchain/config/config.toml
 ```
 
-### 15. configure cosmovisor folder
+### 16. initialize cosmovisor
 
 ```bash
+echo "export DAEMON_NAME=0gchaind" >> $HOME/.bash_profile
+echo "export DAEMON_HOME=$(find $HOME -type d -name ".0gchain")" >> $HOME/.bash_profile
 cosmovisor init $HOME/go/bin/0gchaind && \
 mkdir -p $HOME/.0gchain/cosmovisor/upgrades && \
 mkdir -p $HOME/.0gchain/cosmovisor/backup
 ```
 
-### 16. define the path of cosmovisor
+### 17. define the path of cosmovisor
 
 ```bash
 input1=$(which cosmovisor)
@@ -239,7 +241,7 @@ echo "input3. $input3"
 
 ![image](https://github.com/user-attachments/assets/af974b3d-f195-406f-9f97-c5b7c30cc88f)
 
-### 17. create service file
+### 18. create service file
 
 #### edit the `<input 1>` with the value of `input 1`
 
@@ -276,7 +278,7 @@ EOF
 
 ![image](https://github.com/user-attachments/assets/c502e089-bb81-498c-a0bb-7e7c1cd9f25a)
 
-### 18. start the node
+### 19. start the node
 
 ```bash
 sudo systemctl daemon-reload && \
@@ -288,7 +290,7 @@ sudo systemctl restart 0gchaind && sudo systemctl status 0gchaind
 
 ![image](https://github.com/user-attachments/assets/129dd95d-de3e-437f-a6af-0c807044e230)
 
-### 19. check the logs
+### 20. check the logs
 
 ```bash
 sudo journalctl -u 0gchaind -fn 100 -o cat
@@ -300,7 +302,7 @@ or
 tail -f $HOME/.0gchain/log/chain.log
 ```
 
-### 20. check node version
+### 21. check node version
 
 ```bash
 cosmovisor run version

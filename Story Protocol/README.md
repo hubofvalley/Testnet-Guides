@@ -159,7 +159,7 @@ sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.9.13-b4c7db1.tar.
 story init --network $STORY_CHAIN_ID --moniker $MONIKER
 ```
 
-### 9. add peers to the config.toml
+### 7. add peers to the config.toml
 
 ```bash
 peers=$(curl -sS https://lightnode-rpc-story.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
@@ -167,7 +167,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.story
 echo $peers
 ```
 
-### 10. set custom ports in config.toml file
+### 8. set custom ports in config.toml file
 
 ```bash
 sed -i.bak -e "s%:26658%:${STORY_PORT}658%g;
@@ -176,21 +176,23 @@ s%:26656%:${STORY_PORT}656%g;
 s%:26660%:${STORY_PORT}660%g" $HOME/.story/story/config/config.toml
 ```
 
-### 14. enable indexer (optional) (if u want to run a full node follow this step)
+### 9. enable indexer (optional) (if u want to run a full node follow this step)
 
 ```bash
 sed -i -e 's/^indexer = "null"/indexer = "kv"/' $HOME/.story/story/config/config.toml
 ```
 
-### 15. configure cosmovisor folder
+### 10. initialize cosmovisor
 
 ```bash
+echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
+echo "export DAEMON_HOME=$(find $HOME -type d -name "story")" >> $HOME/.bash_profile
 cosmovisor init $HOME/go/bin/story && \
 mkdir -p $HOME/.story/story/cosmovisor/upgrades && \
 mkdir -p $HOME/.story/story/cosmovisor/backup
 ```
 
-### 16. define the path of cosmovisor for being used in the consensus client
+### 11. define the path of cosmovisor for being used in the consensus client
 
 ```bash
 input1=$(which cosmovisor)
@@ -211,7 +213,7 @@ echo "input3. $input3"
 
 ![image](https://github.com/user-attachments/assets/21ef09d9-2595-46b6-b014-e30d5ff09cc1)
 
-### 17. create service files
+### 12. create service files
 
 #### edit the `<input 1>` with the value of `input 1`
 
@@ -270,7 +272,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### 18. start the node
+### 13. start the node
 
 #### start geth
 
@@ -298,7 +300,7 @@ sudo systemctl restart story && sudo journalctl -u story -fn 100 -o cat
 
 ![story logs](image-1.png)
 
-### 21. check node synchronization
+### 14. check node synchronization
 
 ```bash
 curl http://127.0.0.1:${STORY_PORT}657/status | jq
@@ -310,7 +312,7 @@ if u use default port (26):
 curl http://127.0.0.1:26657/status | jq
 ```
 
-### 22. check the node version
+### 15. check the node version
 
 ```bash
 cosmovisor run version
