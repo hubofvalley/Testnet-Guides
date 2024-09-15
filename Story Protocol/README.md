@@ -316,8 +316,6 @@ curl http://127.0.0.1:26657/status | jq
 cosmovisor run version
 ```
 
-## you can use any snapshots and no need to manually update the binary version
-
 ## Validator and key Commands
 
 ### 1. export evm public key and private key
