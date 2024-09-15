@@ -425,26 +425,26 @@ sudo systemctl stop story
 cp $HOME/$story_folder_name/story $HOME/.story/story/cosmovisor/genesis/bin
 ```
 
-### 5. set access and delete the existing upgrade file in data dir
+### 6. set access and delete the existing upgrade file in data dir
 
 ```bash
 sudo chown -R $USER:$USER $HOME/.story && sudo rm $HOME/.story/story/data/upgrade-info.json
 ```
 
-### 6. restart consensus client services
+### 7. restart consensus client services
 
 ```bash
 sudo systemctl daemon-reload && \
 sudo systemctl restart story
 ```
 
-### 7. check the node version
+### 8. check the node version
 
 ```bash
 cosmovisor run version
 ```
 
-### 8. after the instructions are succesfully completed, u can delete the tar file and folder
+### 9. after the instructions are succesfully completed, u can delete the tar file and folder
 
 ```bash
 sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
@@ -487,7 +487,7 @@ tar -xzf story-linux-amd64-0.10.0-9603826.tar.gz
 sudo chown -R $USER:$USER $HOME/.story && sudo rm $HOME/.story/story/data/upgrade-info.json
 ```
 
-### 4. execute the cosmovisor `add-upgrade` command
+### 5. execute the cosmovisor `add-upgrade` command
 
 **v0.10.0 block height upgrade is 626575**
 
@@ -495,7 +495,7 @@ sudo chown -R $USER:$USER $HOME/.story && sudo rm $HOME/.story/story/data/upgrad
 cosmovisor add-upgrade v0.10.0 $HOME/$story_folder_name/story --upgrade-height 626575 --force
 ```
 
-### 5. after the instructions are succesfully completed, u can delete the tar file and folder
+### 6. after the instructions are succesfully completed, u can delete the tar file and folder
 
 ```bash
 sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
