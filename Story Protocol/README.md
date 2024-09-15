@@ -182,7 +182,7 @@ s%:26660%:${STORY_PORT}660%g" $HOME/.story/story/config/config.toml
 sed -i -e 's/^indexer = "null"/indexer = "kv"/' $HOME/.story/story/config/config.toml
 ```
 
-### 10. initialize cosmovisor
+### 10. init cosmovisor
 
 ```bash
 echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
