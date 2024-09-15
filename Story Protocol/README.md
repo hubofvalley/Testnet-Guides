@@ -279,7 +279,8 @@ EOF
 ```bash
 sudo systemctl daemon-reload && \
 sudo systemctl enable story-geth && \
-sudo systemctl restart story-geth && sudo journalctl -u story-geth -fn 100 -o cat
+sudo systemctl restart story-geth && \
+sudo journalctl -u story-geth -fn 100 -o cat
 ```
 
 #### start consensus client
@@ -287,7 +288,8 @@ sudo systemctl restart story-geth && sudo journalctl -u story-geth -fn 100 -o ca
 ```bash
 sudo systemctl daemon-reload && \
 sudo systemctl enable story && \
-sudo systemctl restart story && sudo journalctl -u story -fn 100 -o cat
+sudo systemctl restart story && \
+sudo journalctl -u story -fn 100 -o cat
 ```
 
 #### this is an example of the node running properly
@@ -376,7 +378,7 @@ sudo rm -r .story
 sed -i "/STORY_/d" $HOME/.bash_profile
 ```
 
-## Consensus client version update to v0.10.0
+# Consensus client version update to v0.10.0
 
 ## Method 1: Place the new binary directly (this method is only applicable when your node has reached the required block)
 
@@ -426,7 +428,7 @@ cp $HOME/$story_folder_name/story $HOME/.story/story/cosmovisor/genesis/bin
 ### 5. set access and delete the existing upgrade file in data dir
 
 ```bash
-sudo chown -R $USER:$USER $HOME && sudo rm $HOME/.story/story/data/upgrade-info.json
+sudo chown -R $USER:$USER $HOME/.story && sudo rm $HOME/.story/story/data/upgrade-info.json
 ```
 
 ### 6. restart consensus client services
@@ -482,7 +484,7 @@ tar -xzf story-linux-amd64-0.10.0-9603826.tar.gz
 ### 4. set access and delete the existing upgrade file in data dir
 
 ```bash
-sudo chown -R $USER:$USER $HOME && sudo rm $HOME/.story/story/data/upgrade-info.json
+sudo chown -R $USER:$USER $HOME/.story && sudo rm $HOME/.story/story/data/upgrade-info.json
 ```
 
 ### 4. execute the cosmovisor `add-upgrade` command
