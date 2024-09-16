@@ -210,7 +210,7 @@ sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.0gchain/config/config
 sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.0gchain/config/config.toml
 ```
 
-### 16. init cosmovisor
+### 16. initialize cosmovisor
 
 ```bash
 echo "export DAEMON_NAME=0gchaind" >> $HOME/.bash_profile
