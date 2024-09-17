@@ -1,6 +1,6 @@
 # Make storage transaction using 0g storage-cli
 
-guide's current binary version: `v0.5.1`
+guide's current binary version: `v0.6.0`
 
 ## 0g storage-cli installation
 
@@ -14,9 +14,9 @@ git clone https://github.com/0glabs/0g-storage-client.git
 
 ```bash
 cd 0g-storage-client
-git tag -d v0.5.1
+git tag -d v0.6.0
 git fetch --all --tags
-git checkout e283cdbfef2f3e5c94f97ef4c1815b464851f399
+git checkout 343bf21dafb436593a2137dc5fe43bb26f5f64a4
 git submodule update --init
 go build
 ```
