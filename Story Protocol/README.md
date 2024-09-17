@@ -378,7 +378,7 @@ sudo rm -r .story
 sed -i "/STORY_/d" $HOME/.bash_profile
 ```
 
-# Consensus client version update to v0.10.0
+# Consensus client version update to v0.10.0 (HARDFORK at height 626575)
 
 ## Method 1: Place the new binary directly (this method is only applicable when your node has reached the required block)
 
@@ -501,4 +501,107 @@ cosmovisor add-upgrade v0.10.0 $HOME/$story_folder_name/story --upgrade-height 6
 sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
+## Method 3: Use snapshot for the post upgrade (thank you to Mandragora for allowing me to publish his snapshot file here)
+
+### 1. stop your consensus client
+
+```bash
+sudo systemctl stop story
+```
+
+### 2. backup ``priv_state_validator.json`` file
+
+```bash
+sudo cp $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
+```
+
+### 3. delete consensus client db
+
+```bash
+sudo rm -r $HOME/.story/story/data
+```
+
+### 4. download the snapshot file
+
+```bash
+wget -O story_snapshot.lz4 https://snapshots.mandragora.io/story_snapshot.lz4
+```
+``wait until it's finished``
+
+
+### 5. extract the snapshot file
+
+```bash
+lz4 -c -d story_snapshot.lz4 | tar -x -C $HOME/.story/story
+```
+
+### 6. delete the snapshot file (optional)
+
+```bash
+sudo rm -v story_snapshot.lz4
+```
+
+### 7. restore your ``priv_state_validator.json`` file
+
+```bash
+sudo cp $HOME/.story/priv_validator_state.json.backup $HOME/.story/story/data/priv_validator_state.json
+```
+
+### 8. download the node binary
+
+```bash
+cd $HOME && \
+wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.10.0-9603826.tar.gz
+```
+
+### 9. extract the new node binary
+
+```bash
+story_folder_name=$(tar -tf story-linux-amd64-0.10.0-9603826.tar.gz | head -n 1 | cut -f1 -d"/")
+tar -xzf story-linux-amd64-0.10.0-9603826.tar.gz
+```
+
+### 10. define the path of cosmovisor for being used in the consensus client
+
+```bash
+input1=$(which cosmovisor)
+input2=$(find $HOME -type d -name "story")
+input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
+echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
+echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
+echo "export DAEMON_DATA_BACKUP_DIR=$(find $HOME/.story/story/cosmovisor -type d -name "backup")" >> $HOME/.bash_profile
+source $HOME/.bash_profile
+echo "input1. $input1"
+echo "input2. $input2"
+echo "input3. $input3"
+```
+
+### 11. set access and delete the existing upgrade file in data dir
+
+```bash
+sudo chown -R $USER:$USER $HOME/.story && sudo rm $HOME/.story/story/data/upgrade-info.json
+```
+
+### 12. execute the cosmovisor `add-upgrade` command
+
+**v0.10.0 block height upgrade is 626575**
+
+```bash
+cosmovisor add-upgrade v0.10.0 $HOME/$story_folder_name/story --upgrade-height 626575 --force
+```
+
+### 13. after the instructions are succesfully completed, u can delete the tar file and folder
+
+```bash
+sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
+```
+
+### 14. start consensus client
+
+```bash
+sudo systemctl daemon-reload && \
+sudo systemctl enable story && \
+sudo systemctl restart story && \
+sudo journalctl -u story -fn 100 -o cat
+```
 # let's buidl together
