@@ -278,7 +278,7 @@ s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAI
 ```
 sudo systemctl daemon-reload && \
 sudo systemctl enable zgs && \
-sudo systemctl start zgs && \
+sudo systemctl restart zgs && \
 sudo systemctl status zgs
 ```
 
