@@ -1,4 +1,14 @@
+# Vana Testnet Guide
+
+`will always update`
+
+<p align="center">
+  <img src="" alt="let’s build Vana together" width="600" height="300">
+</p>
+
 # Vana: Turning Data into Currency
+
+## What Is Vana
 
 Welcome to Vana! Vana turns data into currency to push the frontiers of decentralized AI. It is a layer one blockchain designed for private, user-owned data. Vana allows users to collectively own, govern, and earn from the AI models trained on their data. For more context on why we built Vana, see [this blog post](https://docs.vana.org/vana).
 
@@ -39,11 +49,13 @@ With Vana, users and developers can incentivize global data contribution and acc
 **Incentivize 100 million people to export their Google, Facebook, Instagram, and Reddit data to create the first user-owned data treasury.**
 
 **Network Features:**
+
 - Non-custodial data storage
 - Attributes voting rights based on data contributions
 - Verifies the legitimacy of data to ensure quality
 
 **Process:**
+
 1. Each user adds their data to their personal server and grants access to a trusted verifier.
 2. Users then contribute their data to a collective server by encrypting it with the server's public key.
 3. The collective server operates according to rules set by the data contributors.
@@ -53,12 +65,14 @@ With Vana, users and developers can incentivize global data contribution and acc
 **Build a model owned and governed by 100 million data-contributing users.**
 
 **Network Features:**
+
 - Non-custodial storage of model weights
 - Secures distributed training on private data
 - Allows users to earn through model usage
 - Enables collective governance of the model
 
 **Process:**
+
 1. Users train a piece of the model on their personal servers and grant access to the foundation model DAO to merge all individual pieces.
 2. The foundation model DAO evaluates the value each person's data contributes and rewards them with a model-specific token.
 3. Developers interact with the model API by burning this token.
@@ -70,8 +84,305 @@ Vana is the scalable, low-cost, and fully programmable solution that’s necessa
 For more detailed information, visit the [Vana Documentation](https://docs.vana.org).
 
 Join us and be part of the revolution!
+
 - [Vana Website](https://www.vana.org)
 - [Vana Twitter](https://x.com/withvana)
 - [Vana Discord](https://discord.gg/withvana)
 - [Vana Docs](https://docs.vana.org)
 - [Vana GitHub Repository](https://github.com/vana-com)
+
+## Setups guide
+
+### 1. install dependencies
+
+```bash
+sudo apt update -y && sudo apt install -y git software-properties-common curl && \
+sudo add-apt-repository ppa:deadsnakes/ppa && sudo apt update -y && \
+sudo apt install -y python3.11 python3.11-venv python3.11-dev && \
+curl -sSL https://install.python-poetry.org | python3.11 - && \
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc && \
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && \
+sudo apt install -y nodejs && \
+git --version && python3.11 --version && poetry --version && node --version && npm --version
+```
+
+### 2. create python virtual environment
+
+```bash
+python3.11 -m venv myenv
+```
+
+### 3. activate python virtual environment
+
+```bash
+source myenv/bin/activate
+```
+
+### 4. install poetry inside python virtual environment
+
+```bash
+sudo apt install python3-poetry
+```
+
+### 4. download binary
+
+```bash
+git clone https://github.com/vana-com/vana-dlp-chatgpt.git
+cd vana-dlp-chatgpt
+```
+
+### 5. create `.env` file
+
+```bash
+cp .env.example .env
+```
+
+### 6. install app dependencies
+
+```bash
+poetry install
+```
+
+### 7. install Vana CLI (optional)
+
+```bash
+pip install vana
+```
+
+### 8. create a wallet
+
+input your wallet name, create your wallet password and backup the coldkey and hotkey mnemonic
+
+```bash
+vanacli wallet create --wallet.name <wallet-name> --wallet.hotkey default
+```
+
+- Coldkey: for human-managed transactions (like staking)
+- Hotkey: for validator-managed transactions (like submitting scores)
+
+### 9. deactivate python virtual environment
+
+```bash
+deactivate
+```
+
+### 10. add Satori Testnet to EVM Wallet Extension (i.e Metamask)
+
+| Network name | Satori Testnet |
+| RPC URL | https://rpc.satori.vana.org |
+| Chain ID | 14801 |
+| Currency | VANA |
+
+### 11. export your private keys
+
+input your wallet name
+
+```bash
+vanacli wallet export_private_key  --wallet.name <wallet-name>
+```
+
+enter `coldkey` then backup the coldkey's private key. execute the command again, enter `hotkey` then backup the hotkey's private key
+
+### 12. import both your coldkey and hotkey addresses into the EVM wallet extension using their private keys
+
+save those addresses
+
+### 13. request [faucet](https://faucet.vana.org) funds for both addresses
+
+- Note: you can only use the faucet once per day. Use the testnet faucet available at https://faucet.vana.org to fund your wallets, or ask a VANA holder to send you some test VANA tokens.
+
+### 14. deactivate python virtual environment
+
+```bash
+deactivate
+```
+
+## Create a DLP
+
+### 1. activate python virtual environment
+
+```bash
+source myenv/bin/activate
+```
+
+### 2. generate encryption keys
+
+```bash
+cd $HOME/vana-dlp-chatgpt/ && \
+./keygen.sh
+```
+
+- backup the generated keys
+- backup public_key.asc, public_key_base64.asc, private_key.asc and private_key_base64.asc files
+
+### 3. deactivate python virtual environment
+
+```bash
+deactivate
+```
+
+## Deploy DLP Smart Contracts
+
+### 1. activate python virtual environment
+
+```bash
+source myenv/bin/activate
+```
+
+### 2. download and the binary and install dependencies
+
+```bash
+cd $HOME
+git clone https://github.com/vana-com/vana-dlp-smart-contracts.git
+cd vana-dlp-smart-contracts
+yarn install
+```
+
+### 3. edit the `.env` file in the vana-dlp-smart-contracts directory
+
+```bash
+cp .env.example .env && nano .env
+```
+
+please provide the following values to configure your `.env` file
+
+```bash
+DEPLOYER_PRIVATE_KEY=0x... (your coldkey private key)
+OWNER_ADDRESS=0x... (your coldkey address)
+SATORI_RPC_URL=https://rpc.satori.vana.org
+DLP_NAME=... (your DLP name)
+DLP_TOKEN_NAME=... (your DLP token name)
+DLP_TOKEN_SYMBOL=... (your DLP token symbol)
+```
+
+### 4. deploy contracts
+
+```bash
+npx hardhat deploy --network satori --tags DLPDeploy
+```
+
+- note the deployed addresses for `DataLiquidityPool` and `DataLiquidityPoolToken`
+- confirm the contract on the block explorer: https://satori.vanascan.io/address/<DataLiquidityPool>
+
+### 5. configure the DLP contract
+
+- Visit https://satori.vanascan.io/address/
+- Go to "Write proxy" tab
+- Connect your wallet
+- Call updateFileRewardDelay and set it to 0
+- Call addRewardsForContributors with 1000000000000000000000000 (1 million tokens)
+
+### 6. verify the contracts
+
+```bash
+npx hardhat verify --network satori <DataLiquidityPool address>
+npx hardhat verify --network satori <DataLiquidityPoolToken address> "<DLP_TOKEN_NAME>" <DLP_TOKEN_SYMBOL> <OWNER_ADDRESS>
+```
+
+### 7. configure the DLP contract
+
+- Visit https://satori.vanascan.io/address/
+- Go to "Write proxy" tab
+- Connect your wallet
+- Call updateFileRewardDelay and set it to 0
+- Call addRewardsForContributors with 1000000000000000000000000 (1 million tokens)
+
+### 8. deactivate python virtual environment
+
+```bash
+deactivate
+```
+
+## Vana Validator Node Deployment Guide
+
+### **System Requirements**
+
+| Category  | Requirements                   |
+| --------- | ------------------------------ |
+| CPU       | 2 cores                        |
+| RAM       | 8+ GB                          |
+| Storage   | 100 GB SSD                     |
+| Bandwidth | 100 MBps for Download / Upload |
+
+guide's current binaries version: `service file name:`
+current chain : ``
+
+### 1. activate python virtual environment
+
+```bash
+source myenv/bin/activate
+```
+
+### 3. Fund Validator with DLP Tokens
+
+#### For DLP creators:
+
+- Import DLP token to Metamask using <DataLiquidityPoolToken address>
+- Send 10 tokens to your coldkey address
+
+#### For non-DLP creators:
+
+- Request DLP tokens from the DLP creator
+- Once received, ensure they are in your coldkey address
+
+### 4. register as a validator
+
+#### For DLP creators:
+
+```bash
+cd $HOME/vana-dlp-chatgpt
+./vanacli dlp register_validator --stake_amount 10
+```
+
+#### For non-DLP creators:
+
+ASK THE DLP OWNER TO ACCEPT YOUR REGISTRATION.
+
+- DLP creators can approve validators with:
+  ```bash
+  cd $HOME/vana-dlp-chatgpt
+  ./vanacli dlp approve_validator --validator_address=<your hotkey address from EVM wallet>
+  ```
+
+### 5. run the validator node
+
+```bash
+poetry run python -m chatgpt.nodes.validator
+```
+
+### 6. deactivate python virtual environment
+
+```bash
+deactivate
+```
+
+### 7. test your validator
+
+#### For the Public ChatGPT DLP
+
+If you're validating in the Public ChatGPT DLP, follow these steps:
+
+- Visit the official ChatGPT DLP UI.
+- Connect your wallet (must hold some VANA).
+- Follow the instructions on the UI to upload a file (to submit the addFile transaction).
+- Wait for your validator to process the file and write scores on-chain (verifyFile transaction).
+- Check the UI for a reward claiming dialog and test claiming rewards.
+- For Custom DLPs
+- If you're validating with your own or a custom DLP, follow these steps:
+
+#### If you're validating in the Custom ChatGPT DLP, follow these steps:
+
+- Connect your wallet (must hold some VANA).
+- Use the gear icon to set the DLP contract address and public encryption key.
+- Upload a file (to submit the addFile transaction).
+- In the console logs, note the uploaded file URL and encryption key (you can also add files manually via https://satori.vanascan.io/address/?tab=write_contract).
+- Wait for your validator to process the file and write scores on-chain (verifyFile transaction).
+- Check the UI for a reward claiming dialog and test claiming rewards.
+
+  ```bash
+  Note: For heavily modified DLPs, you may need to register through the Satori explorer using your wallet's browser extension:
+  1.  Import your hotkey into a browser-compatible wallet like MetaMask.
+  2.  Navigate to the Write proxy tab for the verified contract for the DLP in the Satori explorer. You can get this URL from the DLP owner.
+  3.  Connect to your hotkey with the button at the bottom of the page.
+  4.  Submit a validator registration transaction with the addresses of your hotkey and coldkey as the validator and validator owner addresses, along with an amount of the required tokens to stake. Ensure you stake at least the minimum of the specific token required by the DLP.
+  ```
