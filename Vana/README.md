@@ -11,7 +11,9 @@ At its core, Vana is a data liquidity network. It makes data liquid by solving t
 
 These mechanisms create a trustless environment where data can be securely tokenized, traded, and utilized for AI training without compromising user privacy or control. This paradigm shift not only democratizes AI development but also introduces a new economic model where data contributors become active stakeholders in the AI value chain.
 
-![alt text](image.png)
+<p align="center">
+  <img src="image.png" alt="let’s build Vana together" width="600" height="300">
+</p>
 
 ## The Value of Data
 
