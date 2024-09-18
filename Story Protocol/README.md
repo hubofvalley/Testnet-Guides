@@ -509,7 +509,7 @@ sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.
 sudo systemctl stop story
 ```
 
-### 2. backup ``priv_state_validator.json`` file
+### 2. backup `priv_state_validator.json` file
 
 ```bash
 sudo cp $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
@@ -526,8 +526,8 @@ sudo rm -r $HOME/.story/story/data
 ```bash
 wget -O story_snapshot.lz4 https://snapshots.mandragora.io/story_snapshot.lz4
 ```
-``wait until it's finished``
 
+`wait until it's finished`
 
 ### 5. extract the snapshot file
 
@@ -541,7 +541,7 @@ lz4 -c -d story_snapshot.lz4 | tar -x -C $HOME/.story/story
 sudo rm -v story_snapshot.lz4
 ```
 
-### 7. restore your ``priv_state_validator.json`` file
+### 7. restore your `priv_state_validator.json` file
 
 ```bash
 sudo cp $HOME/.story/priv_validator_state.json.backup $HOME/.story/story/data/priv_validator_state.json
@@ -604,4 +604,5 @@ sudo systemctl enable story && \
 sudo systemctl restart story && \
 sudo journalctl -u story -fn 100 -o cat
 ```
+
 # let's buidl together

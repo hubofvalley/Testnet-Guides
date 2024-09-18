@@ -81,7 +81,7 @@ git clone -b v0.5.1 https://github.com/0glabs/0g-storage-node.git
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 1434b94495fe19b1eccc8162237dd64c25b2bec8
+git checkout 4943f9119df23427995be4b5a921c935f5bbb7df
 git submodule update --init
 ```
 
@@ -94,7 +94,7 @@ cargo build --release
 ### 6. check the storage node version
 
 ```bash
-"$HOME/0g-storage-node/target/release/zgs_node" --version
+$HOME/0g-storage-node/target/release/zgs_node --version
 ```
 
 ### 7. wallet private key check
@@ -215,7 +215,7 @@ sudo systemctl stop zgs
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 1434b94495fe19b1eccc8162237dd64c25b2bec8
+git checkout 4943f9119df23427995be4b5a921c935f5bbb7df
 git submodule update --init
 ```
 
