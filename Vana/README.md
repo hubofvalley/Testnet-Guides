@@ -225,8 +225,9 @@ IGNORE THE ERROR
 
 ```bash
 npx hardhat verify --network satori <DataLiquidityPoolToken address> <DLP_TOKEN_NAME> <DLP_TOKEN_SYMBOL> <OWNER_ADDRESS>
-![alt text](image-6.png)
 ```
+
+![alt text](image-6.png)
 
 ### 5. configure the DLP contract
 
