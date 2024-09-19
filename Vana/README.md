@@ -249,9 +249,14 @@ nano $HOME/vana-dlp-chatgpt/.env
 follow these instructions
 
 ```
-DLP_SATORI_CONTRACT=0x... (DataLiquidityPool address)
-DLP_TOKEN_SATORI_CONTRACT=0x... (DataLiquidityPoolToken address)
-PRIVATE_FILE_ENCRYPTION_PUBLIC_KEY_BASE64=... (content of public_key_base64.asc)
+-   DLP_SATORI_CONTRACT=0x... (DataLiquidityPool address)
+-   DLP_TOKEN_SATORI_CONTRACT=0x... (DataLiquidityPoolToken address)
+-   PRIVATE_FILE_ENCRYPTION_PUBLIC_KEY_BASE64=... (content of public_key_base64.asc)
+-   DELETE THESE LINES:
+        DLP_MOKSHA_CONTRACT=0xee4e3Fd107BE4097718B8aACFA3a8d2d9349C9a5
+        DLP_SATORI_CONTRACT=0xa0519f5ADc4e82729b21Ef1586d397260D9B9E45
+        DLP_TOKEN_MOKSHA_CONTRACT=0xF1925473bA6aa147EeB2529197C2704454D66b43
+        DLP_TOKEN_SATORI_CONTRACT=0x3db29b7ED68Ca561794039B4D675f68fb64D6ac3
 ```
 
 ## Vana Validator Node Deployment Guide
