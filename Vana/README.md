@@ -106,50 +106,32 @@ sudo apt install -y nodejs && \
 git --version && python3.11 --version && poetry --version && node --version && npm --version
 ```
 
-### 2. create python virtual environment
-
-```bash
-python3.11 -m venv myenv
-```
-
-### 3. activate python virtual environment
-
-```bash
-source myenv/bin/activate
-```
-
-### 4. install poetry inside python virtual environment
-
-```bash
-sudo apt install python3-poetry
-```
-
-### 4. download binary
+### 2. download binary
 
 ```bash
 git clone https://github.com/vana-com/vana-dlp-chatgpt.git
 cd vana-dlp-chatgpt
 ```
 
-### 5. create `.env` file
+### 3. create `.env` file
 
 ```bash
 cp .env.example .env
 ```
 
-### 6. install app dependencies
+### 4. install app dependencies
 
 ```bash
 poetry install
 ```
 
-### 7. install Vana CLI (optional)
+### 5. install Vana CLI (optional)
 
 ```bash
 pip install vana
 ```
 
-### 8. create a wallet
+### 6. create a wallet
 
 input your wallet name, create your wallet password and backup the coldkey and hotkey mnemonic
 
@@ -160,38 +142,28 @@ vanacli wallet create --wallet.name default --wallet.hotkey default
 - Coldkey: for human-managed transactions (like staking)
 - Hotkey: for validator-managed transactions (like submitting scores)
 
-### 9. deactivate python virtual environment
-
-```bash
-deactivate
-```
-
-### 10. add Satori Testnet to EVM Wallet Extension (i.e Metamask)
+### 7. add Satori Testnet to EVM Wallet Extension (i.e Metamask)
 
 | Network name | Satori Testnet |
 | RPC URL | https://rpc.satori.vana.org |
 | Chain ID | 14801 |
 | Currency | VANA |
 
-### 11. export your private keys
-
-input your wallet name
+### 8. export your private keys
 
 ```bash
-vanacli wallet export_private_key  --wallet.name <wallet-name>
+vanacli wallet export_private_key  --wallet.name deafult
 ```
 
 enter `coldkey` then backup the coldkey's private key. execute the command again, enter `hotkey` then backup the hotkey's private key
 
-### 12. import both your coldkey and hotkey addresses into the EVM wallet extension using their private keys
+### 9. import both your coldkey and hotkey addresses into the EVM wallet extension using their private keys
 
 save those addresses
 
-### 13. request [faucet](https://faucet.vana.org) funds for both addresses
+### 10. request [faucet](https://faucet.vana.org) funds for both addresses
 
 - Note: you can only use the faucet once per day. Use the testnet faucet available at https://faucet.vana.org to fund your wallets, or ask a VANA holder to send you some test VANA tokens.
-
-### 14. deactivate python virtual environment
 
 ```bash
 deactivate
@@ -199,13 +171,7 @@ deactivate
 
 ## Create a DLP
 
-### 1. activate python virtual environment
-
-```bash
-source myenv/bin/activate
-```
-
-### 2. generate encryption keys
+### 1. generate encryption keys
 
 ```bash
 cd $HOME/vana-dlp-chatgpt/ && \
@@ -214,20 +180,6 @@ cd $HOME/vana-dlp-chatgpt/ && \
 
 - backup the generated keys
 - backup public_key.asc, public_key_base64.asc, private_key.asc and private_key_base64.asc files
-
-### 3. deactivate python virtual environment
-
-```bash
-deactivate
-```
-
-## Deploy DLP Smart Contracts
-
-### 1. activate python virtual environment
-
-```bash
-source myenv/bin/activate
-```
 
 ### 2. download and the binary and install dependencies
 
@@ -301,12 +253,6 @@ DLP_TOKEN_SATORI_CONTRACT=0x... (DataLiquidityPoolToken address)
 PRIVATE_FILE_ENCRYPTION_PUBLIC_KEY_BASE64=... (content of public_key_base64.asc)
 ```
 
-### 9. deactivate python virtual environment
-
-```bash
-deactivate
-```
-
 ## Vana Validator Node Deployment Guide
 
 ### **System Requirements**
@@ -321,13 +267,7 @@ deactivate
 guide's current binaries version: `service file name:`
 current chain : ``
 
-### 1. activate python virtual environment
-
-```bash
-source myenv/bin/activate
-```
-
-### 3. Fund Validator with DLP Tokens
+### 1. Fund Validator with DLP Tokens
 
 #### For DLP creators:
 
@@ -339,7 +279,7 @@ source myenv/bin/activate
 - Request DLP tokens from the DLP creator
 - Once received, ensure they are in your coldkey address
 
-### 4. register as a validator
+### 2. register as a validator
 
 #### For DLP creators:
 
@@ -358,7 +298,7 @@ ASK THE DLP OWNER TO ACCEPT YOUR REGISTRATION.
   ./vanacli dlp approve_validator --validator_address=<your hotkey address from EVM wallet>
   ```
 
-### 5. create service file
+### 3. create service file
 
 ```bash
 sudo tee /etc/systemd/system/vana.service > /dev/null <<EOF
@@ -372,14 +312,15 @@ Type=simple
 WorkingDirectory=$HOME/vana-dlp-chatgpt
 ExecStart=$HOME/.cache/pypoetry/virtualenvs/chatgpt-ySKKjQGy-py3.11/bin/python -m chatgpt.nodes.validator
 Restart=on-failure
-LimitNOFILE=4096
+Environment=PATH=$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin:/root/vana-dlp-chatgpt/myenv/bin
+Environment=PYTHONPATH=$HOME/vana-dlp-chatgpt
 
 [Install]
 WantedBy=multi-user.target
 EOF
 ```
 
-### 5. run the validator node
+### 4. run the validator node
 
 ```bash
 sudo systemctl daemon-reload && \
@@ -387,19 +328,13 @@ sudo systemctl enable vana && \
 sudo systemctl restart vana && sudo systemctl status vana
 ```
 
-### check the logs
+### 5. check the logs
 
 ```bash
 sudo journalctl -u vana -fn 100 -o cat
 ```
 
-### 6. deactivate python virtual environment
-
-```bash
-deactivate
-```
-
-### 7. test your validator
+### 6. test your validator
 
 #### For the Public ChatGPT DLP
 
