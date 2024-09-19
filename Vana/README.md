@@ -218,7 +218,14 @@ npx hardhat deploy --network satori --tags DLPDeploy
 
 ```bash
 npx hardhat verify --network satori <DataLiquidityPool address>
+```
+
+![alt text](image-7.png)
+IGNORE THE ERROR
+
+```bash
 npx hardhat verify --network satori <DataLiquidityPoolToken address> <DLP_TOKEN_NAME> <DLP_TOKEN_SYMBOL> <OWNER_ADDRESS>
+![alt text](image-6.png)
 ```
 
 ### 5. configure the DLP contract
@@ -228,7 +235,9 @@ npx hardhat verify --network satori <DataLiquidityPoolToken address> <DLP_TOKEN_
   ![alt text](image-2.png)
 - Connect your wallet
 - Call updateFileRewardDelay and set it to 0
+  ![alt text](image-4.png)
 - Call addRewardsForContributors with 1000000000000000000000000 (1 million tokens)
+  ![alt text](image-3.png)
 
 ### 6. update `.env` file in the `vana-dlp-chatgpt` directory:
 
@@ -255,7 +264,7 @@ PRIVATE_FILE_ENCRYPTION_PUBLIC_KEY_BASE64=... (content of public_key_base64.asc)
 | Storage   | 100 GB SSD                     |
 | Bandwidth | 100 MBps for Download / Upload |
 
-guide's current binaries version: `service file name:`
+guide's current binaries version: `service file name: vana.service`
 current chain : `satori testnet`
 
 ### 1. Fund Validator with DLP Tokens
@@ -279,6 +288,8 @@ cd $HOME/vana-dlp-chatgpt
 ./vanacli dlp register_validator --stake_amount 10
 ```
 
+![alt text](image-5.png)
+
 #### For non-DLP creators:
 
 ASK THE DLP OWNER TO ACCEPT YOUR REGISTRATION.
@@ -288,6 +299,7 @@ ASK THE DLP OWNER TO ACCEPT YOUR REGISTRATION.
   cd $HOME/vana-dlp-chatgpt
   ./vanacli dlp approve_validator --validator_address=<your hotkey address from EVM wallet>
   ```
+  ![alt text](image-8.png)
 
 ### 3. create service file
 
@@ -325,13 +337,15 @@ sudo systemctl restart vana && sudo systemctl status vana
 sudo journalctl -u vana -fn 100 -o cat
 ```
 
+![alt text](image-9.png)
+
 ### 6. test your validator
 
 #### For the Public ChatGPT DLP
 
 If you're validating in the Public ChatGPT DLP, follow these steps:
 
-- Visit the official ChatGPT DLP UI.
+- Visit the official [ChatGPT DLP UI](https://gptdatadao.org/claim).
 - Connect your wallet (must hold some VANA).
 - Follow the instructions on the UI to upload a file (to submit the addFile transaction).
 - Wait for your validator to process the file and write scores on-chain (verifyFile transaction).
@@ -341,6 +355,7 @@ If you're validating in the Public ChatGPT DLP, follow these steps:
 
 #### If you're validating in the Custom ChatGPT DLP, follow these steps:
 
+- Visit the [demo DLP UI](https://dlp-ui.vercel.vana.com/claim/upload)
 - Connect your wallet (must hold some VANA).
 - Use the gear icon to set the DLP contract address and public encryption key.
 - Upload a file (to submit the addFile transaction).
