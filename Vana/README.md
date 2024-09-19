@@ -152,7 +152,7 @@ vanacli wallet create --wallet.name default --wallet.hotkey default
 ### 8. export your private keys
 
 ```bash
-vanacli wallet export_private_key  --wallet.name deafult
+vanacli wallet export_private_key  --wallet.name default
 ```
 
 enter `coldkey` then backup the coldkey's private key. execute the command again, enter `hotkey` then backup the hotkey's private key
@@ -164,10 +164,6 @@ save those addresses
 ### 10. request [faucet](https://faucet.vana.org) funds for both addresses
 
 - Note: you can only use the faucet once per day. Use the testnet faucet available at https://faucet.vana.org to fund your wallets, or ask a VANA holder to send you some test VANA tokens.
-
-```bash
-deactivate
-```
 
 ## Create a DLP
 
@@ -181,7 +177,9 @@ cd $HOME/vana-dlp-chatgpt/ && \
 - backup the generated keys
 - backup public_key.asc, public_key_base64.asc, private_key.asc and private_key_base64.asc files
 
-### 2. download and the binary and install dependencies
+## Deploy DLP Smart Contracts
+
+### 1. download and the binary and install dependencies
 
 ```bash
 cd $HOME
@@ -190,7 +188,7 @@ cd vana-dlp-smart-contracts
 yarn install
 ```
 
-### 3. edit the `.env` file in the vana-dlp-smart-contracts directory
+### 2. edit the `.env` file in the vana-dlp-smart-contracts directory
 
 ```bash
 cp .env.example .env && nano .env
@@ -207,7 +205,7 @@ DLP_TOKEN_NAME=... (your DLP token name)
 DLP_TOKEN_SYMBOL=... (your DLP token symbol)
 ```
 
-### 4. deploy contracts
+### 3. deploy contracts
 
 ```bash
 npx hardhat deploy --network satori --tags DLPDeploy
@@ -216,30 +214,23 @@ npx hardhat deploy --network satori --tags DLPDeploy
 - note the deployed addresses for `DataLiquidityPool` and `DataLiquidityPoolToken`
 - confirm the contract on the block explorer: https://satori.vanascan.io/address/<DataLiquidityPool>
 
-### 5. configure the DLP contract
-
-- Visit https://satori.vanascan.io/address/
-- Go to "Write proxy" tab
-- Connect your wallet
-- Call updateFileRewardDelay and set it to 0
-- Call addRewardsForContributors with 1000000000000000000000000 (1 million tokens)
-
-### 6. verify the contracts
+### 4. verify the contracts
 
 ```bash
 npx hardhat verify --network satori <DataLiquidityPool address>
-npx hardhat verify --network satori <DataLiquidityPoolToken address> "<DLP_TOKEN_NAME>" <DLP_TOKEN_SYMBOL> <OWNER_ADDRESS>
+npx hardhat verify --network satori <DataLiquidityPoolToken address> <DLP_TOKEN_NAME> <DLP_TOKEN_SYMBOL> <OWNER_ADDRESS>
 ```
 
-### 7. configure the DLP contract
+### 5. configure the DLP contract
 
-- Visit https://satori.vanascan.io/address/<DataLiquidityPool>
+- Visit https://satori.vanascan.io/< DataLiquidity_Pool_address >
 - Go to "Write proxy" tab
+  ![alt text](image-2.png)
 - Connect your wallet
 - Call updateFileRewardDelay and set it to 0
 - Call addRewardsForContributors with 1000000000000000000000000 (1 million tokens)
 
-### 8. update `.env` file in the `vana-dlp-chatgpt` directory:
+### 6. update `.env` file in the `vana-dlp-chatgpt` directory:
 
 ```bash
 nano $HOME/vana-dlp-chatgpt/.env
@@ -265,14 +256,14 @@ PRIVATE_FILE_ENCRYPTION_PUBLIC_KEY_BASE64=... (content of public_key_base64.asc)
 | Bandwidth | 100 MBps for Download / Upload |
 
 guide's current binaries version: `service file name:`
-current chain : ``
+current chain : `satori testnet`
 
 ### 1. Fund Validator with DLP Tokens
 
 #### For DLP creators:
 
 - Import DLP token to Metamask using <DataLiquidityPoolToken address>
-- Send 10 tokens to your coldkey address
+- Send 10 tokens to your coldkey and hotkey addresses
 
 #### For non-DLP creators:
 
@@ -310,9 +301,9 @@ After=network.target
 User=$USER
 Type=simple
 WorkingDirectory=$HOME/vana-dlp-chatgpt
-ExecStart=$HOME/.cache/pypoetry/virtualenvs/chatgpt-ySKKjQGy-py3.11/bin/python -m chatgpt.nodes.validator
+ExecStart=$HOME/.local/bin/poetry run python -m chatgpt.nodes.validator
 Restart=on-failure
-Environment=PATH=$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin:/root/vana-dlp-chatgpt/myenv/bin
+Environment=PATH=$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin:$HOME/vana-dlp-chatgpt/myenv/bin
 Environment=PYTHONPATH=$HOME/vana-dlp-chatgpt
 
 [Install]
@@ -364,3 +355,12 @@ If you're validating in the Public ChatGPT DLP, follow these steps:
   3.  Connect to your hotkey with the button at the bottom of the page.
   4.  Submit a validator registration transaction with the addresses of your hotkey and coldkey as the validator and validator owner addresses, along with an amount of the required tokens to stake. Ensure you stake at least the minimum of the specific token required by the DLP.
   ```
+
+### 7. delete validator node
+
+```bash
+cd
+sudo systemctl stop vana && sudo systemctl disable vana && sudo rm -rf /etc/systemd/system/0gchaind.service
+sudo systemctl daemon-reload
+sudo rm vana-dlp-chatgpt
+```
