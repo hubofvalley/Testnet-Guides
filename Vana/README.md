@@ -350,8 +350,6 @@ If you're validating in the Public ChatGPT DLP, follow these steps:
 - Follow the instructions on the UI to upload a file (to submit the addFile transaction).
 - Wait for your validator to process the file and write scores on-chain (verifyFile transaction).
 - Check the UI for a reward claiming dialog and test claiming rewards.
-- For Custom DLPs
-- If you're validating with your own or a custom DLP, follow these steps:
 
 #### If you're validating in the Custom ChatGPT DLP, follow these steps:
 
