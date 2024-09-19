@@ -154,7 +154,7 @@ pip install vana
 input your wallet name, create your wallet password and backup the coldkey and hotkey mnemonic
 
 ```bash
-vanacli wallet create --wallet.name <wallet-name> --wallet.hotkey default
+vanacli wallet create --wallet.name default --wallet.hotkey default
 ```
 
 - Coldkey: for human-managed transactions (like staking)
@@ -281,13 +281,27 @@ npx hardhat verify --network satori <DataLiquidityPoolToken address> "<DLP_TOKEN
 
 ### 7. configure the DLP contract
 
-- Visit https://satori.vanascan.io/address/
+- Visit https://satori.vanascan.io/address/<DataLiquidityPool>
 - Go to "Write proxy" tab
 - Connect your wallet
 - Call updateFileRewardDelay and set it to 0
 - Call addRewardsForContributors with 1000000000000000000000000 (1 million tokens)
 
-### 8. deactivate python virtual environment
+### 8. update `.env` file in the `vana-dlp-chatgpt` directory:
+
+```bash
+nano $HOME/vana-dlp-chatgpt/.env
+```
+
+follow these instructions
+
+```
+DLP_SATORI_CONTRACT=0x... (DataLiquidityPool address)
+DLP_TOKEN_SATORI_CONTRACT=0x... (DataLiquidityPoolToken address)
+PRIVATE_FILE_ENCRYPTION_PUBLIC_KEY_BASE64=... (content of public_key_base64.asc)
+```
+
+### 9. deactivate python virtual environment
 
 ```bash
 deactivate
@@ -344,10 +358,31 @@ ASK THE DLP OWNER TO ACCEPT YOUR REGISTRATION.
   ./vanacli dlp approve_validator --validator_address=<your hotkey address from EVM wallet>
   ```
 
+### 5. create service file
+
+```bash
+sudo tee /etc/systemd/system/vana.service > /dev/null <<EOF
+[Unit]
+Description=Vana Validator Node
+After=network.target
+
+[Service]
+User=$USER
+Type=simple
+WorkingDirectory=$HOME/vana-dlp-chatgpt
+ExecStart=$HOME/.cache/pypoetry/virtualenvs/chatgpt-ySKKjQGy-py3.11/bin/python -m chatgpt.nodes.validator
+Restart=on-failure
+LimitNOFILE=4096
+
+[Install]
+WantedBy=multi-user.target
+EOF
+```
+
 ### 5. run the validator node
 
 ```bash
-poetry run python -m chatgpt.nodes.validator
+sudo systemctl 
 ```
 
 ### 6. deactivate python virtual environment
