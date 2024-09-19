@@ -122,6 +122,7 @@ cp .env.example .env
 ### 4. install app dependencies
 
 ```bash
+source myenv/bin/activate
 poetry env use python3.11
 poetry install
 ```
@@ -130,6 +131,7 @@ poetry install
 
 ```bash
 pip install vana
+deactivate
 ```
 
 ### 6. create a wallet
