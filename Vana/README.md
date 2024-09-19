@@ -382,7 +382,15 @@ EOF
 ### 5. run the validator node
 
 ```bash
-sudo systemctl 
+sudo systemctl daemon-reload && \
+sudo systemctl enable vana && \
+sudo systemctl restart vana && sudo systemctl status vana
+```
+
+### check the logs
+
+```bash
+sudo journalctl -u vana -fn 100 -o cat
 ```
 
 ### 6. deactivate python virtual environment
