@@ -320,6 +320,8 @@ curl http://127.0.0.1:26657/status | jq
 cosmovisor run version
 ```
 
+### 16. use the [SNAPSHOT](https://github.com/hubofvalley/Testnet-Guides/blob/main/Story%20Protocol/README.md#method-3-use-snapshot-for-the-post-upgrade-thank-you-to-mandragora-for-allowing-me-to-publish-his-snapshot-file-here)
+
 ## Validator and key Commands
 
 ### 1. export evm public key and private key
