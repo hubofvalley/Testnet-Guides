@@ -503,9 +503,10 @@ sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.
 
 ## Method 3: Use snapshot for the post upgrade (thank you to Mandragora for allowing me to publish his snapshot file here)
 
-### 1. stop your consensus client
+### 1. stop your geth and consensus client services
 
 ```bash
+sudo systemctl stop story-geth
 sudo systemctl stop story
 ```
 
@@ -515,13 +516,22 @@ sudo systemctl stop story
 sudo cp $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
 ```
 
-### 3. delete consensus client db
+### 3. delete geth and consensus client db
 
 ```bash
-sudo rm -r $HOME/.story/story/data
+sudo rm -rf $HOME/.story/geth/iliad/geth/chaindata
+sudo rm -rf $HOME/.story/story/data
 ```
 
-### 4. download the snapshot file
+### 4. download the geth snapshot file
+
+```bash
+wget -O geth_snapshot.lz4 https://snapshots.mandragora.io/geth_snapshot.lz4
+```
+
+`wait until it's finished`
+
+### 5. download the story snapshot file
 
 ```bash
 wget -O story_snapshot.lz4 https://snapshots.mandragora.io/story_snapshot.lz4
@@ -529,7 +539,13 @@ wget -O story_snapshot.lz4 https://snapshots.mandragora.io/story_snapshot.lz4
 
 `wait until it's finished`
 
-### 5. extract the snapshot file
+### 6. extract the geth snapshot file
+
+```bash
+lz4 -c -d geth_snapshot.lz4 | tar -x -C $HOME/.story/geth/iliad/geth
+```
+
+### 5. extract the story snapshot file
 
 ```bash
 lz4 -c -d story_snapshot.lz4 | tar -x -C $HOME/.story/story
@@ -538,6 +554,7 @@ lz4 -c -d story_snapshot.lz4 | tar -x -C $HOME/.story/story
 ### 6. delete the snapshot file (optional)
 
 ```bash
+sudo rm -v geth_snapshot.lz4
 sudo rm -v story_snapshot.lz4
 ```
 
@@ -596,7 +613,16 @@ cosmovisor add-upgrade v0.10.0 $HOME/$story_folder_name/story --upgrade-height 6
 sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
-### 14. start consensus client
+### 14. start geth service
+
+```bash
+sudo systemctl daemon-reload && \
+sudo systemctl enable story-geth && \
+sudo systemctl restart story-geth && \
+sudo journalctl -u story-geth -fn 100
+```
+
+### 15. start consensus client service
 
 ```bash
 sudo systemctl daemon-reload && \
