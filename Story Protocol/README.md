@@ -605,7 +605,7 @@ echo "input3. $input3"
 sudo chown -R $USER:$USER $HOME/.story && sudo rm $HOME/.story/story/data/upgrade-info.json
 ```
 
-### 12. execute the cosmovisor `add-upgrade` command
+### 12. execute the cosmovisor `add-upgrade` command (if u still use the old version)
 
 **v0.10.0 block height upgrade is 626575**
 
