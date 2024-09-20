@@ -343,7 +343,7 @@ sudo systemctl restart vana && sudo systemctl status vana
 ### 5. check the logs
 
 ```bash
-sudo journalctl -u vana -fn 100 -o cat
+sudo journalctl -u vana -fn 100
 ```
 
 ![alt text](image-9.png)

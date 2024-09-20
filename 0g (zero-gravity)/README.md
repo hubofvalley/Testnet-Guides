@@ -293,7 +293,7 @@ sudo systemctl restart 0gchaind && sudo systemctl status 0gchaind
 ### 20. check the logs
 
 ```bash
-sudo journalctl -u 0gchaind -fn 100 -o cat
+sudo journalctl -u 0gchaind -fn 100
 ```
 
 or

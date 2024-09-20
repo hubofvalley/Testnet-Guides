@@ -280,7 +280,7 @@ EOF
 sudo systemctl daemon-reload && \
 sudo systemctl enable story-geth && \
 sudo systemctl restart story-geth && \
-sudo journalctl -u story-geth -fn 100 -o cat
+sudo journalctl -u story-geth -fn 100
 ```
 
 #### start consensus client
@@ -289,7 +289,7 @@ sudo journalctl -u story-geth -fn 100 -o cat
 sudo systemctl daemon-reload && \
 sudo systemctl enable story && \
 sudo systemctl restart story && \
-sudo journalctl -u story -fn 100 -o cat
+sudo journalctl -u story -fn 100
 ```
 
 #### this is an example of the node running properly
@@ -602,7 +602,7 @@ sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.
 sudo systemctl daemon-reload && \
 sudo systemctl enable story && \
 sudo systemctl restart story && \
-sudo journalctl -u story -fn 100 -o cat
+sudo journalctl -u story -fn 100
 ```
 
 # let's buidl together
