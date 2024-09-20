@@ -547,11 +547,15 @@ wget -O story_snapshot.lz4 https://snapshots.mandragora.io/story_snapshot.lz4
 lz4 -c -d geth_snapshot.lz4 | tar -x -C $HOME/.story/geth/iliad/geth
 ```
 
+`wait until it's finished`
+
 ### 5. extract the story snapshot file
 
 ```bash
 lz4 -c -d story_snapshot.lz4 | tar -x -C $HOME/.story/story
 ```
+
+`wait until it's finished`
 
 ### 6. delete the snapshot file (optional)
 
