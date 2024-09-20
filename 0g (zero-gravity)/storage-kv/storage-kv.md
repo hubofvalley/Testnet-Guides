@@ -67,7 +67,7 @@ git clone -b v1.2.1 https://github.com/0glabs/0g-storage-kv.git
 cd $HOME/0g-storage-kv
 git stash
 git fetch --all --tags
-git checkout 97ba360a6a8dd8fb80c0092a005834061d787e23
+git checkout 5a041dbccf8f943d211216979a7baa1949d9de8d
 git submodule update --init
 sudo apt install cargo
 ```
