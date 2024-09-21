@@ -1,0 +1,3 @@
+[submodule "submodules/Grand-Valley-Resources"]
+	path = submodules/Grand-Valley-Resources
+	url = https://github.com/hubofvalley/Grand-Valley-Resources.git
