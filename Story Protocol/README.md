@@ -126,7 +126,7 @@ go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 
 EDIT YOUR MONIKER & YOUR PREFERRED PORT NUMBER
 
-```
+```bash
 echo "export MONIKER="<your-moniker>"" >> $HOME/.bash_profile
 echo "export STORY_CHAIN_ID="iliad"" >> $HOME/.bash_profile
 echo "export STORY_PORT="26"" >> $HOME/.bash_profile

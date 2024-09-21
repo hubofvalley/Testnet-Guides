@@ -109,7 +109,7 @@ go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 
 EDIT YOUR MONIKER & YOUR PREFERRED PORT NUMBER
 
-```
+```bash
 echo "export WALLET="wallet"" >> $HOME/.bash_profile
 echo "export MONIKER="<your-moniker>"" >> $HOME/.bash_profile
 echo "export OG_CHAIN_ID="zgtendermint_16600-2"" >> $HOME/.bash_profile
