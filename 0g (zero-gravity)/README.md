@@ -197,20 +197,29 @@ sed -i \
    $HOME/.0gchain/config/app.toml
 ```
 
-### 14. set minimum gas price and enable prometheus
+### 14. open api endpoints
+
+```bash
+sed -i \
+   -e '/^\[api\]/,/^\[/ s/^address = .*/address = "tcp:\/\/0.0.0.0:1317"/' \
+   -e '/^\[api\]/,/^\[/ s/^enable = .*/enable = true/' \
+   $HOME/.0gchain/config/app.toml
+```
+
+### 15. set minimum gas price and enable prometheus
 
 ```bash
 sed -i "s/^minimum-gas-prices *=.*/minimum-gas-prices = \"0ua0gi\"/" $HOME/.0gchain/config/app.toml
 sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.0gchain/config/config.toml
 ```
 
-### 15. disable indexer (optional) (if u want to run a full node, skip this step)
+### 16. disable indexer (optional) (if u want to run a full node, skip this step)
 
 ```bash
 sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.0gchain/config/config.toml
 ```
 
-### 16. initialize cosmovisor
+### 17. initialize cosmovisor
 
 ```bash
 echo "export DAEMON_NAME=0gchaind" >> $HOME/.bash_profile
@@ -220,7 +229,7 @@ mkdir -p $HOME/.0gchain/cosmovisor/upgrades && \
 mkdir -p $HOME/.0gchain/cosmovisor/backup
 ```
 
-### 17. define the path of cosmovisor
+### 18. define the path of cosmovisor
 
 ```bash
 input1=$(which cosmovisor)
@@ -241,7 +250,7 @@ echo "input3. $input3"
 
 ![image](https://github.com/user-attachments/assets/af974b3d-f195-406f-9f97-c5b7c30cc88f)
 
-### 18. create service file
+### 19. create service file
 
 #### edit the `<input 1>` with the value of `input 1`
 
@@ -278,29 +287,18 @@ EOF
 
 ![image](https://github.com/user-attachments/assets/c502e089-bb81-498c-a0bb-7e7c1cd9f25a)
 
-### 19. start the node
+### 20. start the node
 
 ```bash
 sudo systemctl daemon-reload && \
 sudo systemctl enable 0gchaind && \
-sudo systemctl restart 0gchaind && sudo systemctl status 0gchaind
-```
-
-#### this is an example of the node running properly
-
-![image](https://github.com/user-attachments/assets/129dd95d-de3e-437f-a6af-0c807044e230)
-
-### 20. check the logs
-
-```bash
+sudo systemctl restart 0gchaind && \
 sudo journalctl -u 0gchaind -fn 100
 ```
 
-or
+### this is an example of the node is running well
 
-```bash
-tail -f $HOME/.0gchain/log/chain.log
-```
+![alt text](image.png)
 
 ### 21. check node version
 
