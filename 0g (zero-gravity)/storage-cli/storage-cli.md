@@ -1,4 +1,4 @@
-# Make storage transaction using 0g storage-cli
+# Make storage transactions using 0g storage-client
 
 guide's current binary version: `v0.6.0`
 
