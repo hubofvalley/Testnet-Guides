@@ -4,13 +4,32 @@ guide's current binary version: `v0.6.0`
 
 ## 0g storage-cli installation
 
-### 1. Download binary
+### 1. install dependencies
+
+```bash
+sudo apt update -y && sudo apt upgrade -y && \
+sudo apt install -y curl git jq build-essential gcc unzip wget lz4 openssl \
+libssl-dev pkg-config protobuf-compiler clang cmake llvm llvm-dev
+```
+
+### 2. install go
+
+```bash
+cd $HOME && ver="1.22.0" && \
+wget "https://golang.org/dl/go$ver.linux-amd64.tar.gz" && \
+sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf "go$ver.linux-amd64.tar.gz" && \
+rm "go$ver.linux-amd64.tar.gz" && \
+echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile && \
+source ~/.bash_profile && go version
+```
+
+### 3. Download binary
 
 ```bash
 git clone https://github.com/0glabs/0g-storage-client.git
 ```
 
-### 2. Build the binary
+### 4. Build the binary
 
 ```bash
 cd 0g-storage-client
@@ -21,7 +40,7 @@ git submodule update --init
 go build
 ```
 
-## Preparation
+## variables configuration
 
 ### 1. Input your json-rpc, storage node url and private key
 
