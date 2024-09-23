@@ -296,11 +296,11 @@ sudo journalctl -u story -fn 100
 
 ##### story-geth logs
 
-![story-geth logs](image.png)
+![story-geth logs](resources/image.png)
 
 ##### story logs
 
-![story logs](image-1.png)
+![story logs](resources/image-1.png)
 
 ### 14. check node synchronization
 
