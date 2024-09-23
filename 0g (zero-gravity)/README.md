@@ -298,7 +298,7 @@ sudo journalctl -u 0gchaind -fn 100
 
 ### this is an example of the node is running well
 
-![alt text](image.png)
+![alt text](resources/image.png)
 
 ### 21. check node version
 
