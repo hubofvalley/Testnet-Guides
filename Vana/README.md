@@ -3,7 +3,7 @@
 `will always update`
 
 <p align="center">
-  <img src="let’s build vana together.png" alt="let’s build Vana together"
+  <img src="resources/let’s build vana together.png" alt="let’s build Vana together"
 </p>
 
 # Vana: Turning Data into Currency
@@ -22,7 +22,7 @@ At its core, Vana is a data liquidity network. It makes data liquid by solving t
 These mechanisms create a trustless environment where data can be securely tokenized, traded, and utilized for AI training without compromising user privacy or control. This paradigm shift not only democratizes AI development but also introduces a new economic model where data contributors become active stakeholders in the AI value chain.
 
 <p align="center">
-  <img src="image.png" alt="let’s build Vana together" width="600" height="300">
+  <img src="resources/image.png" alt="let’s build Vana together" width="600" height="300">
 </p>
 
 ## The Value of Data
@@ -223,25 +223,25 @@ npx hardhat deploy --network satori --tags DLPDeploy
 npx hardhat verify --network satori <DataLiquidityPool address>
 ```
 
-![alt text](image-7.png)
+![alt text](resources/image-7.png)
 IGNORE THE ERROR
 
 ```bash
 npx hardhat verify --network satori <DataLiquidityPoolToken address> <DLP_TOKEN_NAME> <DLP_TOKEN_SYMBOL> <OWNER_ADDRESS>
 ```
 
-![alt text](image-6.png)
+![alt text](resources/image-6.png)
 
 ### 5. configure the DLP contract
 
 - Visit https://satori.vanascan.io/< DataLiquidity_Pool_address >
 - Go to "Write proxy" tab
-  ![alt text](image-2.png)
+  ![alt text](resources/image-2.png)
 - Connect your wallet
 - Call updateFileRewardDelay and set it to 0
-  ![alt text](image-4.png)
+  ![alt text](resources/image-4.png)
 - Call addRewardsForContributors with 1000000000000000000000000 (1 million tokens)
-  ![alt text](image-3.png)
+  ![alt text](resources/image-3.png)
 
 ### 6. update `.env` file in the `vana-dlp-chatgpt` directory:
 
@@ -297,7 +297,7 @@ cd $HOME/vana-dlp-chatgpt
 ./vanacli dlp register_validator --stake_amount 10
 ```
 
-![alt text](image-5.png)
+![alt text](resources/image-5.png)
 
 #### For non-DLP creators:
 
@@ -308,7 +308,7 @@ ASK THE DLP OWNER TO ACCEPT YOUR REGISTRATION.
   cd $HOME/vana-dlp-chatgpt
   ./vanacli dlp approve_validator --validator_address=<your hotkey address from EVM wallet>
   ```
-  ![alt text](image-8.png)
+  ![alt text](resources/image-8.png)
 
 ### 3. create service file
 
@@ -346,7 +346,7 @@ sudo systemctl restart vana && sudo systemctl status vana
 sudo journalctl -u vana -fn 100
 ```
 
-![alt text](image-9.png)
+![alt text](resources/image-9.png)
 
 ### 6. test your validator
 
