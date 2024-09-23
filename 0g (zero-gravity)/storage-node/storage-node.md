@@ -81,7 +81,7 @@ git clone -b v0.5.1 https://github.com/0glabs/0g-storage-node.git
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 4943f9119df23427995be4b5a921c935f5bbb7df
+git checkout 5849e9c2ba6445c70242478e9d9b0dcc225b4989
 git submodule update --init
 ```
 
@@ -215,7 +215,7 @@ sudo systemctl stop zgs
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 4943f9119df23427995be4b5a921c935f5bbb7df
+git checkout 5849e9c2ba6445c70242478e9d9b0dcc225b4989
 git submodule update --init
 ```
 
@@ -279,6 +279,14 @@ s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAI
 sudo systemctl daemon-reload && \
 sudo systemctl restart zgs && \
 sudo systemctl status zgs
+```
+
+### 8. show the logs
+
+- full logs command
+
+```bash
+tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d)
 ```
 
 # [CONTINUE TO STORAGE KV](<https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/storage-kv/storage-kv.md>)
