@@ -76,11 +76,11 @@ With Public Testnet, Story's docs and code become public. Check them out below!
 
 Grand Valley's Story public endpoints:
 
-- cosmos rpc: https://lightnode-rpc-story.grandvalleys.com
-- json-rpc: https://lightnode-json-rpc-story.grandvalleys.com
-- cosmos rest-api: https://lightnode-api-story.grandvalleys.com
-- cosmos ws: wss://lightnode-rpc-story.grandvalleys.com/websocket
-- evm ws: wss://lightnode-wss-story.grandvalleys.com
+- cosmos rpc: `https://lightnode-rpc-story.grandvalleys.com`
+- json-rpc: `https://lightnode-json-rpc-story.grandvalleys.com`
+- cosmos rest-api: `https://lightnode-api-story.grandvalleys.com`
+- cosmos ws: `wss://lightnode-rpc-story.grandvalleys.com/websocket`
+- evm ws: `wss://lightnode-wss-story.grandvalleys.com`
 
 ## Story Node Deployment Guide With Cosmovisor
 

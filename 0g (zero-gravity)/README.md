@@ -61,9 +61,9 @@ With Public Testnet, 0G’s docs and code become public. Check them out below! -
 
 Grand Valley's 0G public endpoints:
 
-- cosmos rpc: https://lightnode-0g.grandvalleys.com
-- json-rpc: https://lightnode-rpc-0g.grandvalleys.com
-- cosmos rest-api: https://lightnode-api-0g.grandvalleys.com
+- cosmos rpc: `https://lightnode-0g.grandvalleys.com`
+- json-rpc: `https://lightnode-rpc-0g.grandvalleys.com`
+- cosmos rest-api: `https://lightnode-api-0g.grandvalleys.com`
 
 ## 0G Node Deployment Guide With Cosmovisor
 
