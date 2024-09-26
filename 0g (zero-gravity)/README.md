@@ -412,4 +412,4 @@ sed -i "/OG_/d" $HOME/.bash_profile
 
 # [CONTINUE TO STORAGE NODE](https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/storage-node.md)
 
-# let's buidl together
+### let's buidl together

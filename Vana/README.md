@@ -90,3 +90,7 @@ Join us and be part of the revolution!
 - [Vana Discord](https://discord.gg/withvana)
 - [Vana Docs](https://docs.vana.org)
 - [Vana GitHub Repository](https://github.com/vana-com)
+
+# [SETUP GUIDE](https://github.com/hubofvalley/Testnet-Guides/blob/main/Vana/setup.md)
+
+### let's buidl together

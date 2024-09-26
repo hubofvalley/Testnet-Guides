@@ -79,3 +79,7 @@ follow these instructions
         DLP_TOKEN_MOKSHA_CONTRACT=0xF1925473bA6aa147EeB2529197C2704454D66b43
         DLP_TOKEN_SATORI_CONTRACT=0x3db29b7ED68Ca561794039B4D675f68fb64D6ac3
 ```
+
+# [CONTINUE TO DLP VALIDATOR NODE](https://github.com/hubofvalley/Testnet-Guides/blob/main/Vana/DLP-validator-node.md)
+
+### let's buidl together

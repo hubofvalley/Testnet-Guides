@@ -127,3 +127,5 @@ cd $HOME/0g-storage-client && read -p "Enter file size (byte): " FILE_SIZE && ec
 ```
 
 ### SUCCESSFUL RESULT: ![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/ea095625-ae68-427e-a626-d742dcb575a7)
+
+### let's buidl together

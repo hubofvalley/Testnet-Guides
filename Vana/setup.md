@@ -86,3 +86,7 @@ cd $HOME/vana-dlp-chatgpt/ && \
 
 - backup the generated keys
 - backup public_key.asc, public_key_base64.asc, private_key.asc and private_key_base64.asc files
+
+# [CONTINUE TO DLP SMART CONTRACTS DEPLOYMENT](https://github.com/hubofvalley/Testnet-Guides/blob/main/Vana/DLP-smart-contracts.md)
+
+### let's buidl together
