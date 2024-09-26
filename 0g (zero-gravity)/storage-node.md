@@ -289,4 +289,4 @@ sudo systemctl status zgs
 tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d)
 ```
 
-# [CONTINUE TO STORAGE KV](<https://github.com/hubofvalley/Testnet-Guides/blob/main/storage-kv.md>)
+# [CONTINUE TO STORAGE KV](<https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/storage-kv.md>)

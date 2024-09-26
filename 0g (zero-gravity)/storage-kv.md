@@ -148,4 +148,4 @@ sudo rm -rf /etc/systemd/system/zgskv.service
 sudo rm -rf 0g-storage-kv
 ```
 
-# [CONTINUE TO STORAGE CLI](<https://github.com/hubofvalley/Testnet-Guides/blob/main/storage-cli.md>)
+# [CONTINUE TO STORAGE CLI](<https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/storage-cli.md>)
