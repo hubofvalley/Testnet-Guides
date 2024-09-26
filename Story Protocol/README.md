@@ -139,11 +139,11 @@ source $HOME/.bash_profile
 cd $HOME
 
 # geth binary
-wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/geth-public/geth-linux-amd64-0.9.2-ea9f0d2.tar.gz
-geth_folder_name=$(tar -tf geth-linux-amd64-0.9.2-ea9f0d2.tar.gz | head -n 1 | cut -f1 -d"/")
-tar -xvf geth-linux-amd64-0.9.2-ea9f0d2.tar.gz
+wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/geth-public/geth-linux-amd64-0.9.3-b224fdf.tar.gz
+geth_folder_name=$(tar -tf geth-linux-amd64-0.9.3-b224fdf.tar.gz | head -n 1 | cut -f1 -d"/")
+tar -xvf geth-linux-amd64-0.9.3-b224fdf.tar.gz
 mv $HOME/$geth_folder_name/geth $HOME/go/bin/
-sudo rm -rf $HOME/$geth_folder_name $HOME/geth-linux-amd64-0.9.2-ea9f0d2.tar.gz
+sudo rm -rf $HOME/$geth_folder_name $HOME/geth-linux-amd64-0.9.3-b224fdf.tar.gz
 
 # consensus client binary
 wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.9.13-b4c7db1.tar.gz
@@ -623,7 +623,6 @@ sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.
 
 ```bash
 sudo systemctl daemon-reload && \
-sudo systemctl enable story-geth && \
 sudo systemctl restart story-geth && \
 sudo journalctl -u story-geth -fn 100
 ```
@@ -632,9 +631,29 @@ sudo journalctl -u story-geth -fn 100
 
 ```bash
 sudo systemctl daemon-reload && \
-sudo systemctl enable story && \
 sudo systemctl restart story && \
 sudo journalctl -u story -fn 100
+```
+
+# Geth version update to v0.9.3 (before height 1,069,000)
+
+### 1. download geth binary
+
+```bash
+wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/geth-public/geth-linux-amd64-0.9.3-b224fdf.tar.gz
+geth_folder_name=$(tar -tf geth-linux-amd64-0.9.3-b224fdf.tar.gz | head -n 1 | cut -f1 -d"/")
+tar -xvf geth-linux-amd64-0.9.3-b224fdf.tar.gz
+mv $HOME/$geth_folder_name/geth $HOME/go/bin/
+sudo rm -rf $HOME/$geth_folder_name $HOME/geth-linux-amd64-0.9.3-b224fdf.tar.gz
+geth --version
+```
+
+### 2. restart geth service
+
+```bash
+sudo systemctl daemon-reload && \
+sudo systemctl restart story-geth && \
+sudo journalctl -u story-geth -fn 100
 ```
 
 # let's buidl together
