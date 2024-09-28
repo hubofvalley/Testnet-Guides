@@ -306,7 +306,7 @@ sudo journalctl -u 0gchaind -fn 100
 cosmovisor run version
 ```
 
-## you can use any snapshots and no need to manually update the binary version
+## you can use any snapshots and no need to manually update the node version
 
 ## Validator and key Commands
 
