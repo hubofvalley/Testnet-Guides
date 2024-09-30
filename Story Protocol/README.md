@@ -95,7 +95,7 @@ Grand Valley's Story public endpoints:
 
 service file name: `story.service` `story-geth.service`
 current chain: `iliad-0`
-current story node version: `v0.9.13`
+current story node version: `v0.10.1`
 current story-geth node version: `v0.9.3`
 
 ### 1. install dependencies for building from source
