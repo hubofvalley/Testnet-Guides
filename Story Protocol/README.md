@@ -657,4 +657,55 @@ sudo systemctl restart story-geth && \
 sudo journalctl -u story-geth -fn 100
 ```
 
+# Urgent story version update to v0.10.1 (height 990455, upgrade took at height 990454)
+
+### 1. define the path of cosmovisor for being used in the consensus client
+
+```bash
+input1=$(which cosmovisor)
+input2=$(find $HOME -type d -name "story")
+input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
+echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
+echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
+echo "export DAEMON_DATA_BACKUP_DIR=$(find $HOME/.story/story/cosmovisor -type d -name "backup")" >> $HOME/.bash_profile
+source $HOME/.bash_profile
+echo "input1. $input1"
+echo "input2. $input2"
+echo "input3. $input3"
+```
+
+### 2. download the node binary
+
+```bash
+cd $HOME && \
+wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.10.1-57567e5.tar.gz
+```
+
+### 3. extract the new node binary
+
+```bash
+story_folder_name=$(tar -tf story-linux-amd64-0.10.1-57567e5.tar.gz | head -n 1 | cut -f1 -d"/")
+tar -xzf story-linux-amd64-0.10.1-57567e5.tar.gz
+```
+
+### 4. set access and delete the existing upgrade file in data dir
+
+```bash
+sudo chown -R $USER:$USER $HOME/.story && sudo rm $HOME/.story/story/data/upgrade-info.json
+```
+
+### 5. execute the cosmovisor `add-upgrade` command
+
+**v0.10.1 block height upgrade is 990454**
+
+```bash
+cosmovisor add-upgrade v0.10.1 $HOME/$story_folder_name/story --upgrade-height 990454 --force
+```
+
+### 6. after the instructions are succesfully completed, u can delete the tar file and folder
+
+```bash
+sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.1-57567e5.tar.gz
+```
+
 ### let's buidl together
