@@ -275,7 +275,7 @@ s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAI
 
 ### 7. restart the node
 
-```
+```bash
 sudo systemctl daemon-reload && \
 sudo systemctl restart zgs && \
 sudo systemctl status zgs
