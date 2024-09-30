@@ -95,7 +95,7 @@ Grand Valley's Story public endpoints:
 
 service file name: `story.service` `story-geth.service`
 current chain: `iliad-0`
-current story node version: `v0.10.1`
+current story node version: `v0.9.13` update to `v0.10.0` and `v0.10.1`
 current story-geth node version: `v0.9.3`
 
 ### 1. install dependencies for building from source
@@ -383,78 +383,6 @@ sed -i "/STORY_/d" $HOME/.bash_profile
 
 # Consensus client version update to v0.10.0 (HARDFORK at height 626575)
 
-## Method 1: Place the new binary directly (this method is only applicable when your node has reached the required block)
-
-### 1. define the path of cosmovisor for being used in the consensus client
-
-```bash
-input1=$(which cosmovisor)
-input2=$(find $HOME -type d -name "story")
-input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
-echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
-echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
-echo "export DAEMON_DATA_BACKUP_DIR=$(find $HOME/.story/story/cosmovisor -type d -name "backup")" >> $HOME/.bash_profile
-source $HOME/.bash_profile
-echo "input1. $input1"
-echo "input2. $input2"
-echo "input3. $input3"
-```
-
-### 2. download the node binary
-
-```bash
-cd $HOME && \
-wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.10.0-9603826.tar.gz
-```
-
-### 3. create the new version dir, extract the node binary and copy It to the cosmovisor upgrades directory
-
-```bash
-mkdir -p $HOME/.story/story/cosmovisor/upgrades/v0.10.0/bin
-story_folder_name=$(tar -tf story-linux-amd64-0.10.0-9603826.tar.gz | head -n 1 | cut -f1 -d"/")
-tar -xzf story-linux-amd64-0.10.0-9603826.tar.gz
-cp $HOME/$story_folder_name/story $HOME/.story/story/cosmovisor/upgrades/v0.10.0/bin/
-```
-
-### 4. stop the consensus client services
-
-```bash
-sudo systemctl stop story
-```
-
-### 5. copy the current node binary to the cosmovisor genesis directory
-
-```bash
-cp $HOME/$story_folder_name/story $HOME/.story/story/cosmovisor/genesis/bin
-```
-
-### 6. set access and delete the existing upgrade file in data dir
-
-```bash
-sudo chown -R $USER:$USER $HOME/.story && sudo rm $HOME/.story/story/data/upgrade-info.json
-```
-
-### 7. restart consensus client services
-
-```bash
-sudo systemctl daemon-reload && \
-sudo systemctl restart story
-```
-
-### 8. check the node version
-
-```bash
-cosmovisor run version
-```
-
-### 9. after the instructions are succesfully completed, u can delete the tar file and folder
-
-```bash
-sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
-```
-
-## Method 2: Let Cosmovisor handle placing the binary itself (this can be applied before the node reaches the hard-fork block height, making it semi-automated)
-
 ### 1. define the path of cosmovisor for being used in the consensus client
 
 ```bash
@@ -608,7 +536,7 @@ sudo chown -R $USER:$USER $HOME/.story && sudo rm $HOME/.story/story/data/upgrad
 
 ### 14. execute the cosmovisor `add-upgrade` command (if u still use the old version)
 
-**v0.10.0 block height upgrade is 626575**
+**v0.10.1 block height upgrade is 990454**
 
 ```bash
 cosmovisor add-upgrade v0.10.1 $HOME/$story_folder_name/story --upgrade-height 990454 --force
