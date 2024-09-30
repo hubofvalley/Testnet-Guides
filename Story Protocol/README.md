@@ -545,7 +545,7 @@ cosmovisor add-upgrade v0.10.1 $HOME/$story_folder_name/story --upgrade-height 9
 ### 15. after the instructions are succesfully completed, u can delete the tar file and folder
 
 ```bash
-sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
+sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.1-9603826.tar.gz
 ```
 
 ### 16. start geth service
