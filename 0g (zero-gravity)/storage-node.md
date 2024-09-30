@@ -9,7 +9,7 @@
 | Storage   | 500GB / 1TB NVMe SSD           |
 | Bandwidth | 500 MBps for Download / Upload |
 
-guide's current binary version: `v0.5.1`
+guide's current binary version: `v0.5.3`
 
 ### 1. Install dependencies for building from source
 
