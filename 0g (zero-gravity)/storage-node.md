@@ -221,7 +221,7 @@ git submodule update --init
 
 ### 3. build the latest binary
 
-```
+```bash
 cargo build --release
 ```
 
