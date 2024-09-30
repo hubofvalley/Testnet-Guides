@@ -504,7 +504,7 @@ cosmovisor add-upgrade v0.10.0 $HOME/$story_folder_name/story --upgrade-height 6
 sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
-## Method 3: Use snapshot for the post upgrade (thank you to Mandragora for allowing me to publish his snapshot file here)
+# Snapshot for the post upgrade (thank you to Mandragora for allowing me to publish his snapshot file here)
 
 ### 1. stop your geth and consensus client services
 
@@ -550,7 +550,7 @@ lz4 -c -d geth_snapshot.lz4 | tar -x -C $HOME/.story/geth/iliad/geth
 
 `wait until it's finished`
 
-### 5. extract the story snapshot file
+### 7. extract the story snapshot file
 
 ```bash
 lz4 -c -d story_snapshot.lz4 | tar -x -C $HOME/.story/story
@@ -558,34 +558,34 @@ lz4 -c -d story_snapshot.lz4 | tar -x -C $HOME/.story/story
 
 `wait until it's finished`
 
-### 6. delete the snapshot file (optional)
+### 8. delete the snapshot file (optional)
 
 ```bash
 sudo rm -v geth_snapshot.lz4
 sudo rm -v story_snapshot.lz4
 ```
 
-### 7. restore your `priv_state_validator.json` file
+### 9. restore your `priv_state_validator.json` file
 
 ```bash
 sudo cp $HOME/.story/priv_validator_state.json.backup $HOME/.story/story/data/priv_validator_state.json
 ```
 
-### 8. download the node binary
+### 10. download the node binary
 
 ```bash
 cd $HOME && \
-wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.10.0-9603826.tar.gz
+wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.10.1-57567e5.tar.gz
 ```
 
-### 9. extract the new node binary
+### 11. extract the new node binary
 
 ```bash
-story_folder_name=$(tar -tf story-linux-amd64-0.10.0-9603826.tar.gz | head -n 1 | cut -f1 -d"/")
-tar -xzf story-linux-amd64-0.10.0-9603826.tar.gz
+story_folder_name=$(tar -tf story-linux-amd64-0.10.1-57567e5.tar.gz | head -n 1 | cut -f1 -d"/")
+tar -xzf story-linux-amd64-0.10.1-57567e5.tar.gz
 ```
 
-### 10. define the path of cosmovisor for being used in the consensus client
+### 12. define the path of cosmovisor for being used in the consensus client
 
 ```bash
 input1=$(which cosmovisor)
@@ -600,27 +600,27 @@ echo "input2. $input2"
 echo "input3. $input3"
 ```
 
-### 11. set access and delete the existing upgrade file in data dir
+### 13. set access and delete the existing upgrade file in data dir
 
 ```bash
 sudo chown -R $USER:$USER $HOME/.story && sudo rm $HOME/.story/story/data/upgrade-info.json
 ```
 
-### 12. execute the cosmovisor `add-upgrade` command (if u still use the old version)
+### 14. execute the cosmovisor `add-upgrade` command (if u still use the old version)
 
 **v0.10.0 block height upgrade is 626575**
 
 ```bash
-cosmovisor add-upgrade v0.10.0 $HOME/$story_folder_name/story --upgrade-height 626575 --force
+cosmovisor add-upgrade v0.10.1 $HOME/$story_folder_name/story --upgrade-height 990454 --force
 ```
 
-### 13. after the instructions are succesfully completed, u can delete the tar file and folder
+### 15. after the instructions are succesfully completed, u can delete the tar file and folder
 
 ```bash
 sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
-### 14. start geth service
+### 16. start geth service
 
 ```bash
 sudo systemctl daemon-reload && \
@@ -628,7 +628,7 @@ sudo systemctl restart story-geth && \
 sudo journalctl -u story-geth -fn 100
 ```
 
-### 15. start consensus client service
+### 17. start consensus client service
 
 ```bash
 sudo systemctl daemon-reload && \
