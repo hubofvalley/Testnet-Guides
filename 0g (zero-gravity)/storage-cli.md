@@ -35,7 +35,7 @@ git clone https://github.com/0glabs/0g-storage-client.git
 cd 0g-storage-client
 git tag -d v0.6.0
 git fetch --all --tags
-git checkout fad024db52c625fa82c2e9741e642288d5bf98ee
+git checkout 40c7b64e9094b08951744e6e557d2d645d76dfd0
 git submodule update --init
 go build
 ```
