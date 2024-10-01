@@ -9,7 +9,7 @@
 | Storage   | 500GB / 1TB NVMe SSD           |
 | Bandwidth | 500 MBps for Download / Upload |
 
-guide's current binary version: `v0.5.3`
+guide's current binary version: `v0.5.1`
 
 ### 1. Install dependencies for building from source
 
@@ -77,11 +77,11 @@ curl -s -X POST $BLOCKCHAIN_RPC_ENDPOINT -H "Content-Type: application/json" -d 
 
 ```bash
 cd $HOME
-git clone -b v0.5.3 https://github.com/0glabs/0g-storage-node.git
+git clone -b v0.5.1 https://github.com/0glabs/0g-storage-node.git
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 949462084a0108cb31b17b79b8be5911b5686ef9
+git checkout 4943f9119df23427995be4b5a921c935f5bbb7df
 git submodule update --init
 ```
 
@@ -201,7 +201,7 @@ sudo rm /etc/systemd/system/zgs.service
 sudo rm -rf $HOME/0g-storage-node
 ```
 
-## update the storage node to v0.5.3 (in case you're still in the previous version)
+## update the storage node to v0.5.1 (in case you're still in the previous version)
 
 ### 1. stop storage node
 
@@ -215,13 +215,13 @@ sudo systemctl stop zgs
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 949462084a0108cb31b17b79b8be5911b5686ef9
+git checkout 4943f9119df23427995be4b5a921c935f5bbb7df
 git submodule update --init
 ```
 
 ### 3. build the latest binary
 
-```bash
+```
 cargo build --release
 ```
 
@@ -275,7 +275,7 @@ s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAI
 
 ### 7. restart the node
 
-```bash
+```
 sudo systemctl daemon-reload && \
 sudo systemctl restart zgs && \
 sudo systemctl status zgs
