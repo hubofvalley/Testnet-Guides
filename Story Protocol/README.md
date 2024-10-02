@@ -101,7 +101,7 @@ current story-geth node version: `v0.9.3`
 ## Automatic installation
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Story-Protocol/main/resources/node-install.sh)
+bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/node-install.sh)
 ```
 
 ## Manual installation
