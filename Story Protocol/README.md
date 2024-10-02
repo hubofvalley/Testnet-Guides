@@ -98,6 +98,14 @@ current chain: `iliad-0`
 current story node version: `v0.9.13` update to `v0.10.0` and `v0.10.1`
 current story-geth node version: `v0.9.3`
 
+## Automatic installation
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Story-Protocol/main/resources/node-install.sh)
+```
+
+## Manual installation
+
 ### 1. install dependencies for building from source
 
 ```bash
@@ -188,6 +196,7 @@ sed -i -e 's/^indexer = "null"/indexer = "kv"/' $HOME/.story/story/config/config
 ```bash
 echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
 echo "export DAEMON_HOME=$(find $HOME -type d -name "story")" >> $HOME/.bash_profile
+source $HOME/.bash_profile
 cosmovisor init $HOME/go/bin/story && \
 mkdir -p $HOME/.story/story/cosmovisor/upgrades && \
 mkdir -p $HOME/.story/story/cosmovisor/backup
