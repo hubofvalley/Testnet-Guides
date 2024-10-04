@@ -9,7 +9,7 @@
 | Storage   | 500GB / 1TB NVMe SSD           |
 | Bandwidth | 500 MBps for Download / Upload |
 
-guide's current binary version: `v0.5.1`
+guide's current binary version: `v0.5.4`
 
 ### 1. Install dependencies for building from source
 
@@ -76,11 +76,11 @@ curl -s -X POST $BLOCKCHAIN_RPC_ENDPOINT -H "Content-Type: application/json" -d 
 
 ```bash
 cd $HOME
-git clone -b v0.5.1 https://github.com/0glabs/0g-storage-node.git
+git clone -b v0.5.4 https://github.com/0glabs/0g-storage-node.git
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 4943f9119df23427995be4b5a921c935f5bbb7df
+git checkout 949462084a0108cb31b17b79b8be5911b5686ef9
 git submodule update --init
 ```
 
@@ -200,7 +200,7 @@ sudo rm /etc/systemd/system/zgs.service
 sudo rm -rf $HOME/0g-storage-node
 ```
 
-## update the storage node to v0.5.1 (in case you're still in the previous version)
+## update the storage node to v0.5.4 (in case you're still in the previous version)
 
 ### 1. stop storage node
 
@@ -214,7 +214,7 @@ sudo systemctl stop zgs
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 4943f9119df23427995be4b5a921c935f5bbb7df
+git checkout 949462084a0108cb31b17b79b8be5911b5686ef9
 git submodule update --init
 ```
 
