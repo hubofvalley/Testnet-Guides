@@ -390,7 +390,7 @@ sudo rm -r .story
 sed -i "/STORY_/d" $HOME/.bash_profile
 ```
 
-# Consensus client version update to v0.10.0 (at height 626,575)
+# Consensus client version update to v0.10.0 (upgrade took at height 626,575)
 
 ### 1. define the path of cosmovisor for being used in the consensus client
 
