@@ -684,7 +684,7 @@ sudo chown -R $USER:$USER $HOME/.story && sudo rm $HOME/.story/story/data/upgrad
 
 ### 5. execute the cosmovisor `add-upgrade` command
 
-**v0.10.1 block height upgrade is 1,325,860**
+**v0.11.0 block height upgrade is 1,325,860**
 
 ```bash
 cosmovisor add-upgrade v0.11.0 $HOME/$story_folder_name/story --upgrade-height 1325860 --force
