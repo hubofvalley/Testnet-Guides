@@ -86,12 +86,12 @@ Grand Valley's Story public endpoints:
 
 ### **System Requirements**
 
-| Category  | Requirements |
-| --------- | ------------ |
-| CPU       | 8+ cores     |
-| RAM       | 32+ GB       |
-| Storage   | 500+ GB      |
-| Bandwidth | 10MBit/s     |
+| Category  | Requirements     |
+| --------- | ---------------- |
+| CPU       | 8+ cores         |
+| RAM       | 32+ GB           |
+| Storage   | 500+ GB NVMe SSD |
+| Bandwidth | 10MBit/s         |
 
 service file name: `story.service` `story-geth.service`
 current chain: `iliad-0`
