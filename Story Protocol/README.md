@@ -594,7 +594,7 @@ sudo systemctl restart story-geth && \
 sudo journalctl -u story-geth -fn 100
 ```
 
-# Consensus client version update to v0.10.1 (chain halt at height 990,455, upgrade took at height 990454)
+# Consensus client version update to v0.10.1 (chain halt at height 990,455, upgrade took at height 990,454)
 
 ### 1. define the path of cosmovisor for being used in the consensus client
 
