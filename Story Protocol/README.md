@@ -594,7 +594,7 @@ sudo systemctl restart story-geth && \
 sudo journalctl -u story-geth -fn 100
 ```
 
-# Story version update to v0.10.1 (chain halt at height 990,455, upgrade took at height 990454)
+# Consensus client version update to v0.10.1 (chain halt at height 990,455, upgrade took at height 990454)
 
 ### 1. define the path of cosmovisor for being used in the consensus client
 
@@ -645,7 +645,7 @@ cosmovisor add-upgrade v0.10.1 $HOME/$story_folder_name/story --upgrade-height 9
 sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.1-57567e5.tar.gz
 ```
 
-# Story version update to v0.11.0 (upgrade took at height 1,325,860)
+# Consensus client version update to v0.11.0 (upgrade took at height 1,325,860)
 
 ### 1. define the path of cosmovisor for being used in the consensus client
 
