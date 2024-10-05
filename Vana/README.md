@@ -3,7 +3,7 @@
 `will always update`
 
 <p align="center">
-  <img src="resources/let’s build vana together.png" alt="let’s build Vana together"
+  <img src="resources/let’s build Vana.jpg" alt="let’s build Vana together"
 </p>
 
 # Vana: Turning Data into Currency
