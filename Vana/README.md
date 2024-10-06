@@ -6,6 +6,19 @@
   <img src="resources/let’s build Vana.jpg" alt="let’s build Vana together"
 </p>
 
+- [Vana Testnet Guide](#vana-testnet-guide)
+- [Vana: Turning Data into Currency](#vana-turning-data-into-currency)
+  - [What Is Vana](#what-is-vana)
+  - [Core Concepts](#core-concepts)
+  - [The Value of Data](#the-value-of-data)
+  - [Our North Star](#our-north-star)
+  - [Our Guiding Use Cases](#our-guiding-use-cases)
+    - [User-Owned Data Treasury](#user-owned-data-treasury)
+    - [User-Owned Foundation Models](#user-owned-foundation-models)
+  - [Conclusion](#conclusion)
+- [SETUP GUIDE](#setup-guide)
+    - [let's buidl together](#lets-buidl-together)
+
 # Vana: Turning Data into Currency
 
 ## What Is Vana
