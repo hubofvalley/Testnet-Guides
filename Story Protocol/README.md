@@ -16,6 +16,7 @@
   - [Story Solving Target](#story-solving-target)
   - [Example Use Case](#example-use-case)
   - [Conclusion](#conclusion)
+  - [Grand Valley's Story Protocol public endpoints:](#grand-valleys-story-protocol-public-endpoints)
   - [Story Node Deployment Guide With Cosmovisor](#story-node-deployment-guide-with-cosmovisor)
     - [**System Requirements**](#system-requirements)
   - [Automatic installation](#automatic-installation)
@@ -170,7 +171,7 @@ With Public Testnet, Story's docs and code become public. Check them out below!
 - [Story Explorer](https://testnet.storyscan.app/)
 - [Piplabs Github](https://github.com/piplabs)
 
-Grand Valley's Story public endpoints:
+## Grand Valley's Story Protocol public endpoints:
 
 - cosmos rpc: `https://lightnode-rpc-story.grandvalleys.com`
 - json-rpc: `https://lightnode-json-rpc-story.grandvalleys.com`

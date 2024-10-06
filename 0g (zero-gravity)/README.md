@@ -12,6 +12,7 @@
   - [0G’s Architecture](#0gs-architecture)
   - [0G solving target](#0g-solving-target)
   - [Conclusion](#conclusion)
+  - [Grand Valley's 0G public endpoints:](#grand-valleys-0g-public-endpoints)
   - [0G Node Deployment Guide With Cosmovisor](#0g-node-deployment-guide-with-cosmovisor)
     - [**System Requirements**](#system-requirements)
     - [1. Install dependencies for building from source](#1-install-dependencies-for-building-from-source)
@@ -109,7 +110,7 @@ With Public Testnet, 0G’s docs and code become public. Check them out below! -
 - [0gchain Github](https://github.com/0glabs)
 - [0gchain Explorer](https://explorer.grandvalleys.com/0g-chain%20testnet)
 
-Grand Valley's 0G public endpoints:
+## Grand Valley's 0G public endpoints:
 
 - cosmos rpc: `https://lightnode-0g.grandvalleys.com`
 - json-rpc: `https://lightnode-rpc-0g.grandvalleys.com`
