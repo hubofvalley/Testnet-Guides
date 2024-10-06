@@ -24,7 +24,7 @@
     - [7. restart the node](#7-restart-the-node)
     - [8. show the logs](#8-show-the-logs)
 - [CONTINUE TO STORAGE KV](#continue-to-storage-kv)
-    - [let's buidl together](#lets-buidl-together)
+- [let's buidl together](#lets-buidl-together)
 
 ### **System Requirements**
 
@@ -315,4 +315,4 @@ tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d)
 
 # [CONTINUE TO STORAGE KV](<https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/storage-kv.md>)
 
-### let's buidl together
+# let's buidl together

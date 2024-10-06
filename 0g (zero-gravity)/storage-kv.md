@@ -16,7 +16,7 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
     - [10. check the logs](#10-check-the-logs)
   - [delete the node](#delete-the-node)
 - [CONTINUE TO STORAGE CLI](#continue-to-storage-cli)
-    - [let's buidl together](#lets-buidl-together)
+- [let's buidl together](#lets-buidl-together)
 
 ### **System Requirements**
 
@@ -166,4 +166,4 @@ sudo rm -rf 0g-storage-kv
 
 # [CONTINUE TO STORAGE CLI](<https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/storage-cli.md>)
 
-### let's buidl together
+# let's buidl together
