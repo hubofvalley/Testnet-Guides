@@ -53,9 +53,9 @@
     - [6. delegate token to validator](#6-delegate-token-to-validator)
       - [self delegate](#self-delegate)
       - [delegate to ](#delegate-to-)
-- [delete the node](#delete-the-node)
+  - [delete the node](#delete-the-node)
 - [CONTINUE TO STORAGE NODE](#continue-to-storage-node)
-    - [let's buidl together](#lets-buidl-together)
+  - [let's buidl together](#lets-buidl-together)
 
 # ZeroGravity
 
@@ -450,7 +450,7 @@ copy all of the contents of the ![priv_validator_key.json](https://img.shields.i
 0gchaind tx staking delegate 0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4 1000000ua0gi --from $WALLET --chain-id zgtendermint_16600-2 --gas=auto --gas-adjustment=1.4 --fees=800ua0gi -y
 ```
 
-# delete the node
+## delete the node
 
 ```bash
 sudo systemctl stop 0gchaind

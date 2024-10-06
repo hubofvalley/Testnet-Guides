@@ -58,15 +58,15 @@
     - [5. delegate token to validator](#5-delegate-token-to-validator)
     - [self delegate](#self-delegate)
     - [delegate to ](#delegate-to-)
-- [delete the node](#delete-the-node)
-- [Consensus client version update to v0.10.0 (upgrade took at height 626,575)](#consensus-client-version-update-to-v0100-upgrade-took-at-height-626575)
+  - [delete the node](#delete-the-node)
+  - [Consensus client version update to v0.10.0 (upgrade took at height 626,575)](#consensus-client-version-update-to-v0100-upgrade-took-at-height-626575)
     - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client)
     - [2. download the node binary](#2-download-the-node-binary)
     - [3. extract the new node binary](#3-extract-the-new-node-binary)
     - [4. set access and delete the existing upgrade file in data dir](#4-set-access-and-delete-the-existing-upgrade-file-in-data-dir)
     - [5. execute the cosmovisor `add-upgrade` command](#5-execute-the-cosmovisor-add-upgrade-command)
     - [6. after the instructions are succesfully completed, u can delete the tar file and folder](#6-after-the-instructions-are-succesfully-completed-u-can-delete-the-tar-file-and-folder)
-- [Snapshot for the post upgrade (thank you to Mandragora for allowing me to publish his snapshot file here)](#snapshot-for-the-post-upgrade-thank-you-to-mandragora-for-allowing-me-to-publish-his-snapshot-file-here)
+  - [Snapshot for the post upgrade (thank you to Mandragora for allowing me to publish his snapshot file here)](#snapshot-for-the-post-upgrade-thank-you-to-mandragora-for-allowing-me-to-publish-his-snapshot-file-here)
     - [1. stop your geth and consensus client services](#1-stop-your-geth-and-consensus-client-services)
     - [2. backup `priv_state_validator.json` file](#2-backup-priv_state_validatorjson-file)
     - [3. delete geth and consensus client db](#3-delete-geth-and-consensus-client-db)
@@ -84,17 +84,17 @@
     - [15. after the instructions are succesfully completed, u can delete the tar file and folder](#15-after-the-instructions-are-succesfully-completed-u-can-delete-the-tar-file-and-folder)
     - [16. start geth service](#16-start-geth-service)
     - [17. start consensus client service](#17-start-consensus-client-service)
-- [Geth version update to v0.9.3 (just in case u're still using the older version of geth, before height 1,069,000)](#geth-version-update-to-v093-just-in-case-ure-still-using-the-older-version-of-geth-before-height-1069000)
+  - [Geth version update to v0.9.3 (just in case u're still using the older version of geth, before height 1,069,000)](#geth-version-update-to-v093-just-in-case-ure-still-using-the-older-version-of-geth-before-height-1069000)
     - [1. download geth binary](#1-download-geth-binary)
     - [2. restart geth service](#2-restart-geth-service)
-- [Consensus client version update to v0.10.1 (chain halt at height 990,455, upgrade took at height 990,454)](#consensus-client-version-update-to-v0101-chain-halt-at-height-990455-upgrade-took-at-height-990454)
+  - [Consensus client version update to v0.10.1 (chain halt at height 990,455, upgrade took at height 990,454)](#consensus-client-version-update-to-v0101-chain-halt-at-height-990455-upgrade-took-at-height-990454)
     - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client-1)
     - [2. download the node binary](#2-download-the-node-binary-1)
     - [3. extract the new node binary](#3-extract-the-new-node-binary-1)
     - [4. set access and delete the existing upgrade file in data dir](#4-set-access-and-delete-the-existing-upgrade-file-in-data-dir-1)
     - [5. execute the cosmovisor `add-upgrade` command](#5-execute-the-cosmovisor-add-upgrade-command-1)
     - [6. after the instructions are succesfully completed, u can delete the tar file and folder](#6-after-the-instructions-are-succesfully-completed-u-can-delete-the-tar-file-and-folder-1)
-- [Consensus client version update to v0.11.0 (upgrade took at height 1,325,860)](#consensus-client-version-update-to-v0110-upgrade-took-at-height-1325860)
+  - [Consensus client version update to v0.11.0 (upgrade took at height 1,325,860)](#consensus-client-version-update-to-v0110-upgrade-took-at-height-1325860)
     - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client-2)
     - [2. download the node binary](#2-download-the-node-binary-2)
     - [3. extract the new node binary](#3-extract-the-new-node-binary-2)
@@ -477,7 +477,7 @@ story validator stake --private-key <your private key> --stake 10240000000000000
 story validator stake --private-key <your private key> --stake 1024000000000000000000 --validator-pubkey A2p1z6hM9IXltKaET6ny/wP0EPfIwBSPTkyeU135yroi
 ```
 
-# delete the node
+## delete the node
 
 ```bash
 sudo systemctl stop story-geth story
@@ -487,7 +487,7 @@ sudo rm -r .story
 sed -i "/STORY_/d" $HOME/.bash_profile
 ```
 
-# Consensus client version update to v0.10.0 (upgrade took at height 626,575)
+## Consensus client version update to v0.10.0 (upgrade took at height 626,575)
 
 ### 1. define the path of cosmovisor for being used in the consensus client
 
@@ -538,7 +538,7 @@ cosmovisor add-upgrade v0.10.0 $HOME/$story_folder_name/story --upgrade-height 6
 sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
-# Snapshot for the post upgrade (thank you to Mandragora for allowing me to publish his snapshot file here)
+## Snapshot for the post upgrade (thank you to Mandragora for allowing me to publish his snapshot file here)
 
 ### 1. stop your geth and consensus client services
 
@@ -670,7 +670,7 @@ sudo systemctl restart story && \
 sudo journalctl -u story -fn 100
 ```
 
-# Geth version update to v0.9.3 (just in case u're still using the older version of geth, before height 1,069,000)
+## Geth version update to v0.9.3 (just in case u're still using the older version of geth, before height 1,069,000)
 
 ### 1. download geth binary
 
@@ -691,7 +691,7 @@ sudo systemctl restart story-geth && \
 sudo journalctl -u story-geth -fn 100
 ```
 
-# Consensus client version update to v0.10.1 (chain halt at height 990,455, upgrade took at height 990,454)
+## Consensus client version update to v0.10.1 (chain halt at height 990,455, upgrade took at height 990,454)
 
 ### 1. define the path of cosmovisor for being used in the consensus client
 
@@ -742,7 +742,7 @@ cosmovisor add-upgrade v0.10.1 $HOME/$story_folder_name/story --upgrade-height 9
 sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.1-57567e5.tar.gz
 ```
 
-# Consensus client version update to v0.11.0 (upgrade took at height 1,325,860)
+## Consensus client version update to v0.11.0 (upgrade took at height 1,325,860)
 
 ### 1. define the path of cosmovisor for being used in the consensus client
 
