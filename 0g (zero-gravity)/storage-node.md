@@ -1,4 +1,30 @@
-## 0gchain Storage Node Deployment Guide
+# 0gchain Storage Node Deployment Guide
+
+- [0gchain Storage Node Deployment Guide](#0gchain-storage-node-deployment-guide)
+    - [**System Requirements**](#system-requirements)
+    - [1. Install dependencies for building from source](#1-install-dependencies-for-building-from-source)
+    - [2. install go](#2-install-go)
+    - [3. install rustup](#3-install-rustup)
+    - [4. set vars](#4-set-vars)
+    - [5. download binary](#5-download-binary)
+    - [6. check the storage node version](#6-check-the-storage-node-version)
+    - [7. wallet private key check](#7-wallet-private-key-check)
+    - [8. update node configuration](#8-update-node-configuration)
+    - [9. create service](#9-create-service)
+    - [10. start the node](#10-start-the-node)
+    - [11. show logs by date](#11-show-logs-by-date)
+    - [delete storage node](#delete-storage-node)
+- [update the storage node to v0.5.4 (in case you're still in the previous version)](#update-the-storage-node-to-v054-in-case-youre-still-in-the-previous-version)
+    - [1. stop storage node](#1-stop-storage-node)
+    - [2. update node](#2-update-node)
+    - [3. build the latest binary](#3-build-the-latest-binary)
+    - [4. set vars](#4-set-vars-1)
+    - [5. store your private key in variable:](#5-store-your-private-key-in-variable)
+    - [6. update node configuration](#6-update-node-configuration)
+    - [7. restart the node](#7-restart-the-node)
+    - [8. show the logs](#8-show-the-logs)
+- [CONTINUE TO STORAGE KV](#continue-to-storage-kv)
+    - [let's buidl together](#lets-buidl-together)
 
 ### **System Requirements**
 
@@ -200,7 +226,7 @@ sudo rm /etc/systemd/system/zgs.service
 sudo rm -rf $HOME/0g-storage-node
 ```
 
-## update the storage node to v0.5.4 (in case you're still in the previous version)
+# update the storage node to v0.5.4 (in case you're still in the previous version)
 
 ### 1. stop storage node
 
