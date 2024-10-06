@@ -190,10 +190,10 @@ With Public Testnet, Story's docs and code become public. Check them out below!
 | Storage   | 500+ GB NVMe SSD |
 | Bandwidth | 10MBit/s         |
 
-service file name: `story.service` `story-geth.service`
-current chain: `iliad-0`
-current story node version: `v0.9.13` update to `v0.10.0`, `v0.10.1` and `v0.11.0`
-current story-geth node version: `v0.9.3`
+- service file name: `story.service` `story-geth.service`
+- current chain: `iliad-0`
+- current story node version: `v0.9.13` update to `v0.10.0`, `v0.10.1` and `v0.11.0`
+- current story-geth node version: `v0.9.3`
 
 ## Automatic installation
 

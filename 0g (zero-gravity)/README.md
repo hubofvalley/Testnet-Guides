@@ -127,9 +127,9 @@ With Public Testnet, 0G’s docs and code become public. Check them out below! -
 | Storage   | 1+ TB NVMe SSD                 |
 | Bandwidth | 100 MBps for Download / Upload |
 
-guide's current binaries version: `v0.2.5 will automatically update to the latest version`
-service file name: `0gchaind.service`
-current chain : `zgtendermint_16600-2`
+- guide's current binaries version: `v0.2.5 will automatically update to the latest version`
+- service file name: `0gchaind.service`
+- current chain : `zgtendermint_16600-2`
 
 ### 1. Install dependencies for building from source
 
