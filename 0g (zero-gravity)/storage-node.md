@@ -14,7 +14,7 @@
     - [10. start the node](#10-start-the-node)
     - [11. show logs by date](#11-show-logs-by-date)
     - [delete storage node](#delete-storage-node)
-- [update the storage node to v0.5.4 (in case you're still in the previous version)](#update-the-storage-node-to-v054-in-case-youre-still-in-the-previous-version)
+  - [update the storage node to v0.5.4 (in case you're still in the previous version)](#update-the-storage-node-to-v054-in-case-youre-still-in-the-previous-version)
     - [1. stop storage node](#1-stop-storage-node)
     - [2. update node](#2-update-node)
     - [3. build the latest binary](#3-build-the-latest-binary)
@@ -226,7 +226,7 @@ sudo rm /etc/systemd/system/zgs.service
 sudo rm -rf $HOME/0g-storage-node
 ```
 
-# update the storage node to v0.5.4 (in case you're still in the previous version)
+## update the storage node to v0.5.4 (in case you're still in the previous version)
 
 ### 1. stop storage node
 

@@ -102,7 +102,6 @@
     - [6. after the instructions are succesfully completed, u can delete the tar file and folder](#6-after-the-instructions-are-succesfully-completed-u-can-delete-the-tar-file-and-folder-2)
 - [let's buidl together](#lets-buidl-together)
 
-
 # Story Protocol
 
 ## What Is Story?

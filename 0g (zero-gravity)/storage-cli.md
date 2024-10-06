@@ -1,5 +1,24 @@
 # storage-cli
 
+- [storage-cli](#storage-cli)
+  - [0g storage-cli installation](#0g-storage-cli-installation)
+    - [1. install dependencies](#1-install-dependencies)
+    - [2. install go](#2-install-go)
+    - [3. Download binary](#3-download-binary)
+    - [4. Build the binary](#4-build-the-binary)
+  - [variables configuration](#variables-configuration)
+    - [1. Input your json-rpc, storage node url and private key](#1-input-your-json-rpc-storage-node-url-and-private-key)
+    - [2. Set cli variables](#2-set-cli-variables)
+  - [Upload file transaction](#upload-file-transaction)
+    - [1. input size and path of the file you want to create then upload](#1-input-size-and-path-of-the-file-you-want-to-create-then-upload)
+    - [2. execute the transaction](#2-execute-the-transaction)
+    - [SUCCESSFUL RESULT: ](#successful-result-)
+  - [Download file transaction](#download-file-transaction)
+    - [1. input the output path and the root hash of the file you want to download](#1-input-the-output-path-and-the-root-hash-of-the-file-you-want-to-download)
+    - [2. execute the transaction](#2-execute-the-transaction-1)
+    - [SUCCESSFUL RESULT: ](#successful-result--1)
+    - [let's buidl together](#lets-buidl-together)
+
 guide's current binary version: `v0.6.0`
 
 ## 0g storage-cli installation

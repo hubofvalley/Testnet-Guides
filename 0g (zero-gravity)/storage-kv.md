@@ -1,6 +1,22 @@
 BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE](<https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/storage-node.md>)
 
-## 0gchain Storage KV Deployment Guide
+# 0gchain Storage KV Deployment Guide
+
+- [0gchain Storage KV Deployment Guide](#0gchain-storage-kv-deployment-guide)
+    - [**System Requirements**](#system-requirements)
+    - [1. Install dependencies for building from source](#1-install-dependencies-for-building-from-source)
+    - [2. install go](#2-install-go)
+    - [3. install rustup](#3-install-rustup)
+    - [4. set vars](#4-set-vars)
+    - [5. download binary](#5-download-binary)
+    - [6. copy a config\_example.toml file](#6-copy-a-config_exampletoml-file)
+    - [7. update storage kv configuration](#7-update-storage-kv-configuration)
+    - [8. create service](#8-create-service)
+    - [9. start the node](#9-start-the-node)
+    - [10. check the logs](#10-check-the-logs)
+  - [delete the node](#delete-the-node)
+- [CONTINUE TO STORAGE CLI](#continue-to-storage-cli)
+    - [let's buidl together](#lets-buidl-together)
 
 ### **System Requirements**
 

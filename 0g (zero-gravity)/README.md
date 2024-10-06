@@ -56,7 +56,6 @@
 - [CONTINUE TO STORAGE NODE](#continue-to-storage-node)
     - [let's buidl together](#lets-buidl-together)
 
-
 # ZeroGravity
 
 ## What Is 0G?
