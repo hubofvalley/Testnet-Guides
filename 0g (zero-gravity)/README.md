@@ -63,7 +63,7 @@
 
 ZeroGravity (0G) is the first infinitely scalable, decentralized data availability layer featuring a built-in general-purpose storage system. This enables 0G to offer a highly scalable on-chain database suitable for various Web2 and Web3 data needs, including on-chain AI. Additionally, as a data availability layer, 0G ensures seamless verification of accurate data storage.
 
-![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/b1a15f39-8e6a-428f-846b-4c430eac872b)
+![dAIOS](resources/dAIOS.png)
 
 In the sections below, we will delve deeper into this architecture and explore the key use cases it unlocks.
 
