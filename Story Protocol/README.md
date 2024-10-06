@@ -56,8 +56,8 @@
     - [3. create validator](#3-create-validator)
     - [4. BACKUP YOUR VALIDATOR ](#4-backup-your-validator-)
     - [5. delegate token to validator](#5-delegate-token-to-validator)
-    - [6. self delegate](#6-self-delegate)
-    - [7. delegate to ](#7-delegate-to-)
+      - [self delegate](#self-delegate)
+      - [delegate to ](#delegate-to-)
   - [delete the node](#delete-the-node)
   - [Consensus client version update to v0.10.0 (upgrade took at height 626,575)](#consensus-client-version-update-to-v0100-upgrade-took-at-height-626575)
     - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client)
@@ -463,13 +463,13 @@ copy all of the contents of the ![priv_validator_key.json](https://img.shields.i
 
 ### 5. delegate token to validator
 
-### 6. self delegate
+#### self delegate
 
 ```bash
 story validator stake --private-key <your private key> --stake 1024000000000000000000 --validator-pubkey <your validator public key>
 ```
 
-### 7. delegate to <a href="https://testnet.storyscan.app/validators/storyvaloper1cvsdp0tsz25fhedd7cjvntq42347astvar06v8"><img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/e8704cc4-2319-4a21-9138-0264e75e3a82" alt="GRAND VALLEY" width="50" height="50">
+#### delegate to <a href="https://testnet.storyscan.app/validators/storyvaloper1cvsdp0tsz25fhedd7cjvntq42347astvar06v8"><img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/e8704cc4-2319-4a21-9138-0264e75e3a82" alt="GRAND VALLEY" width="50" height="50">
 
 </a>
 
