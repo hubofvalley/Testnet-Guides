@@ -26,7 +26,7 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
 | RAM      | 4+ GB                                       |
 | Storage  | Matches the size of kv streams it maintains |
 
-guide's current binary version: `v1.2.1`
+guide's current binary version: `v1.2.2`
 
 ### 1. Install dependencies for building from source
 
@@ -79,7 +79,7 @@ echo -e "\n\033[31mCHECK YOUR STORAGE KV VARIABLES\033[0m\n\nZGS_NODE: $ZGS_NODE
 
 ```bash
 cd $HOME
-git clone -b v1.2.1 https://github.com/0glabs/0g-storage-kv.git
+git clone -b v1.2.2 https://github.com/0glabs/0g-storage-kv.git
 cd $HOME/0g-storage-kv
 git stash
 git fetch --all --tags
