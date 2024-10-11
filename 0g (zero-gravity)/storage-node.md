@@ -14,7 +14,7 @@
     - [10. start the node](#10-start-the-node)
     - [11. show logs by date](#11-show-logs-by-date)
     - [delete storage node](#delete-storage-node)
-  - [update the storage node to v0.5.4 (in case you're still in the previous version)](#update-the-storage-node-to-v054-in-case-youre-still-in-the-previous-version)
+  - [update the storage node to v0.6.0 (in case you're still in the previous version)](#update-the-storage-node-to-v060-in-case-youre-still-in-the-previous-version)
     - [1. stop storage node](#1-stop-storage-node)
     - [2. update node](#2-update-node)
     - [3. build the latest binary](#3-build-the-latest-binary)
@@ -35,7 +35,7 @@
 | Storage   | 500GB / 1TB NVMe SSD           |
 | Bandwidth | 500 MBps for Download / Upload |
 
-guide's current binary version: `v0.5.4`
+guide's current binary version: `v0.6.0`
 
 ### 1. Install dependencies for building from source
 
@@ -102,11 +102,11 @@ curl -s -X POST $BLOCKCHAIN_RPC_ENDPOINT -H "Content-Type: application/json" -d 
 
 ```bash
 cd $HOME
-git clone -b v0.5.4 https://github.com/0glabs/0g-storage-node.git
+git clone -b v0.6.0 https://github.com/0glabs/0g-storage-node.git
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 395aeabde75cf7121b8557ea5b8e04e403da7d5e
+git checkout 48868b60dbca05236ea83dcb827d78aa89cf1567
 git submodule update --init
 ```
 
@@ -226,7 +226,7 @@ sudo rm /etc/systemd/system/zgs.service
 sudo rm -rf $HOME/0g-storage-node
 ```
 
-## update the storage node to v0.5.4 (in case you're still in the previous version)
+## update the storage node to v0.6.0 (in case you're still in the previous version)
 
 ### 1. stop storage node
 
@@ -240,7 +240,7 @@ sudo systemctl stop zgs
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 395aeabde75cf7121b8557ea5b8e04e403da7d5e
+git checkout 48868b60dbca05236ea83dcb827d78aa89cf1567
 git submodule update --init
 ```
 
