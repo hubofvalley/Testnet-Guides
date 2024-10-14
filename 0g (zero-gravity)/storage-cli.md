@@ -19,7 +19,7 @@
     - [SUCCESSFUL RESULT: ](#successful-result--1)
 - [let's buidl together](#lets-buidl-together)
 
-guide's current binary version: `v0.6.0`
+guide's current binary version: `v0.6.1`
 
 ## 0g storage-cli installation
 
