@@ -39,11 +39,12 @@ source $HOME/.bash_profile
 cd $HOME
 
 # Geth binary
-wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/geth-public/geth-linux-amd64-0.9.3-b224fdf.tar.gz
-geth_folder_name=$(tar -tf geth-linux-amd64-0.9.3-b224fdf.tar.gz | head -n 1 | cut -f1 -d"/")
-tar -xvf geth-linux-amd64-0.9.3-b224fdf.tar.gz
-mv $HOME/$geth_folder_name/geth $HOME/go/bin/
-sudo rm -rf $HOME/$geth_folder_name $HOME/geth-linux-amd64-0.9.3-b224fdf.tar.gz
+wget https://github.com/piplabs/story-geth/releases/download/v0.9.4/geth-linux-amd64
+geth_file_name=geth-linux-amd64
+mv $HOME/$geth_file_name $HOME/go/bin/geth
+sudo chown -R $USER:$USER $HOME/go/bin/geth
+sudo chmod +x $HOME/go/bin/geth
+sudo rm -rf $HOME/$geth_file_name
 
 # Consensus client binary
 wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.9.13-b4c7db1.tar.gz

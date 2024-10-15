@@ -84,7 +84,7 @@
     - [15. after the instructions are succesfully completed, u can delete the tar file and folder](#15-after-the-instructions-are-succesfully-completed-u-can-delete-the-tar-file-and-folder)
     - [16. start geth service](#16-start-geth-service)
     - [17. start consensus client service](#17-start-consensus-client-service)
-  - [Geth version update to v0.9.3 (just in case u're still using the older version of geth, before height 1,069,000)](#geth-version-update-to-v093-just-in-case-ure-still-using-the-older-version-of-geth-before-height-1069000)
+  - [Geth version update to v0.9.4 (just in case u're still using the older version of geth)](#geth-version-update-to-v094-just-in-case-ure-still-using-the-older-version-of-geth)
     - [1. download geth binary](#1-download-geth-binary)
     - [2. restart geth service](#2-restart-geth-service)
   - [Consensus client version update to v0.10.1 (chain halt at height 990,455, upgrade took at height 990,454)](#consensus-client-version-update-to-v0101-chain-halt-at-height-990455-upgrade-took-at-height-990454)
@@ -193,7 +193,7 @@ With Public Testnet, Story's docs and code become public. Check them out below!
 - service file name: `story.service` `story-geth.service`
 - current chain: `iliad-0`
 - current story node version: `v0.9.13` update to `v0.10.0`, `v0.10.1` and `v0.11.0`
-- current story-geth node version: `v0.9.3`
+- current story-geth node version: `v0.9.4`
 
 ## Automatic installation
 
@@ -245,11 +245,12 @@ source $HOME/.bash_profile
 cd $HOME
 
 # geth binary
-wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/geth-public/geth-linux-amd64-0.9.3-b224fdf.tar.gz
-geth_folder_name=$(tar -tf geth-linux-amd64-0.9.3-b224fdf.tar.gz | head -n 1 | cut -f1 -d"/")
-tar -xvf geth-linux-amd64-0.9.3-b224fdf.tar.gz
-mv $HOME/$geth_folder_name/geth $HOME/go/bin/
-sudo rm -rf $HOME/$geth_folder_name $HOME/geth-linux-amd64-0.9.3-b224fdf.tar.gz
+wget https://github.com/piplabs/story-geth/releases/download/v0.9.4/geth-linux-amd64
+geth_file_name=geth-linux-amd64
+mv $HOME/$geth_file_name $HOME/go/bin/geth
+sudo chown -R $USER:$USER $HOME/go/bin/geth
+sudo chmod +x $HOME/go/bin/geth
+sudo rm -rf $HOME/$geth_file_name
 
 # consensus client binary
 wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.9.13-b4c7db1.tar.gz
@@ -670,16 +671,16 @@ sudo systemctl restart story && \
 sudo journalctl -u story -fn 100
 ```
 
-## Geth version update to v0.9.3 (just in case u're still using the older version of geth, before height 1,069,000)
+## Geth version update to v0.9.4 (just in case u're still using the older version of geth)
 
 ### 1. download geth binary
 
 ```bash
-wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/geth-public/geth-linux-amd64-0.9.3-b224fdf.tar.gz
-geth_folder_name=$(tar -tf geth-linux-amd64-0.9.3-b224fdf.tar.gz | head -n 1 | cut -f1 -d"/")
-tar -xvf geth-linux-amd64-0.9.3-b224fdf.tar.gz
-mv $HOME/$geth_folder_name/geth $HOME/go/bin/
-sudo rm -rf $HOME/$geth_folder_name $HOME/geth-linux-amd64-0.9.3-b224fdf.tar.gz
+wget https://github.com/piplabs/story-geth/releases/download/v0.9.4/geth-linux-amd64
+geth_file_name=geth-linux-amd64
+mv $HOME/$geth_file_name $HOME/go/bin/geth
+sudo chown -R $USER:$USER $HOME/go/bin/geth
+sudo chmod +x $HOME/go/bin/geth
 geth --version
 ```
 
