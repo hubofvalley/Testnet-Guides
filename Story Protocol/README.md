@@ -63,7 +63,7 @@
     - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client)
     - [2. update story node to v0.10.0](#2-update-story-node-to-v0100)
   - [Geth version update to `v0.9.4` (just in case u're still using the older version of geth)](#geth-version-update-to-v094-just-in-case-ure-still-using-the-older-version-of-geth)
-    - [1. update story-geth node to v0.10.1](#1-update-story-geth-node-to-v0101)
+    - [1. update story-geth node to v0.9.4](#1-update-story-geth-node-to-v094)
   - [Consensus client version update to `v0.10.1` (chain halt at height `990,455`, upgrade took at height `990,454`)](#consensus-client-version-update-to-v0101-chain-halt-at-height-990455-upgrade-took-at-height-990454)
     - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client-1)
     - [2. update story node to v0.10.1](#2-update-story-node-to-v0101)
@@ -504,9 +504,10 @@ sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.
 
 ## Geth version update to `v0.9.4` (just in case u're still using the older version of geth)
 
-### 1. update story-geth node to v0.10.1
+### 1. update story-geth node to v0.9.4
 
 ```bash
+cd $HOME
 wget https://github.com/piplabs/story-geth/releases/download/v0.9.4/geth-linux-amd64
 geth_file_name=geth-linux-amd64
 mv $HOME/$geth_file_name $HOME/go/bin/geth
