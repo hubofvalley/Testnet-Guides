@@ -6,6 +6,7 @@
     - [2. install go](#2-install-go)
     - [3. install rustup](#3-install-rustup)
     - [4. set vars](#4-set-vars)
+      - [ALSO CHECK THE JSON-RPC SYNC, MAKE SURE IT'S IN THE LATEST BLOCK](#also-check-the-json-rpc-sync-make-sure-its-in-the-latest-block)
     - [5. download binary](#5-download-binary)
     - [6. check the storage node version](#6-check-the-storage-node-version)
     - [7. wallet private key check](#7-wallet-private-key-check)
@@ -92,7 +93,7 @@ source ~/.bash_profile
 echo -e "\n\033[31mCHECK YOUR STORAGE NODE VARIABLES\033[0m\n\nLOG_CONTRACT_ADDRESS: $LOG_CONTRACT_ADDRESS\nMINE_CONTRACT: $MINE_CONTRACT\nREWARD_CONTRACT: $REWARD_CONTRACT\nZGS_LOG_SYNC_BLOCK: $ZGS_LOG_SYNC_BLOCK\nBLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT\n\n" "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
 ```
 
-ALSO CHECK THE JSON-RPC SYNC, MAKE SURE IT'S IN THE LATEST BLOCK
+#### ALSO CHECK THE JSON-RPC SYNC, MAKE SURE IT'S IN THE LATEST BLOCK
 
 ```bash
 curl -s -X POST $BLOCKCHAIN_RPC_ENDPOINT -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n"
