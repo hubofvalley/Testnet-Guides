@@ -61,7 +61,15 @@
   - [delete the node](#delete-the-node)
   - [Consensus client version update to v0.10.0 (upgrade took at height 626,575)](#consensus-client-version-update-to-v0100-upgrade-took-at-height-626575)
     - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client)
+    - [2. update story node to v0.10.0](#2-update-story-node-to-v0100)
+  - [Geth version update to v0.9.4 (just in case u're still using the older version of geth)](#geth-version-update-to-v094-just-in-case-ure-still-using-the-older-version-of-geth)
+    - [1. update story-geth node to v0.10.1](#1-update-story-geth-node-to-v0101)
+  - [Consensus client version update to v0.10.1 (chain halt at height 990,455, upgrade took at height 990,454)](#consensus-client-version-update-to-v0101-chain-halt-at-height-990455-upgrade-took-at-height-990454)
+    - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client-1)
     - [2. update story node to v0.10.1](#2-update-story-node-to-v0101)
+  - [Consensus client version update to v0.11.0 (upgrade took at height 1,325,860)](#consensus-client-version-update-to-v0110-upgrade-took-at-height-1325860)
+    - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client-2)
+    - [2. update story node to v0.11.0](#2-update-story-node-to-v0110)
   - [Snapshot for the post upgrade (thank you to Mandragora for allowing me to publish his snapshot file here)](#snapshot-for-the-post-upgrade-thank-you-to-mandragora-for-allowing-me-to-publish-his-snapshot-file-here)
     - [1. stop your geth and consensus client services](#1-stop-your-geth-and-consensus-client-services)
     - [2. backup `priv_state_validator.json` file](#2-backup-priv_state_validatorjson-file)
@@ -72,22 +80,7 @@
     - [7. extract the story snapshot file](#7-extract-the-story-snapshot-file)
     - [8. delete the snapshot file (optional)](#8-delete-the-snapshot-file-optional)
     - [9. restore your `priv_state_validator.json` file](#9-restore-your-priv_state_validatorjson-file)
-    - [10. download the node binary](#10-download-the-node-binary)
-    - [11. extract the new node binary](#11-extract-the-new-node-binary)
-    - [12. define the path of cosmovisor for being used in the consensus client](#12-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client)
-    - [13. set access and delete the existing upgrade file in data dir](#13-set-access-and-delete-the-existing-upgrade-file-in-data-dir)
-    - [14. execute the cosmovisor `add-upgrade` command (if u still use the old version)](#14-execute-the-cosmovisor-add-upgrade-command-if-u-still-use-the-old-version)
-    - [15. after the instructions are succesfully completed, u can delete the tar file and folder](#15-after-the-instructions-are-succesfully-completed-u-can-delete-the-tar-file-and-folder)
-    - [16. start geth service](#16-start-geth-service)
-    - [17. start consensus client service](#17-start-consensus-client-service)
-  - [Geth version update to v0.9.4 (just in case u're still using the older version of geth)](#geth-version-update-to-v094-just-in-case-ure-still-using-the-older-version-of-geth)
-    - [1. update story-geth node to v0.10.1](#1-update-story-geth-node-to-v0101)
-  - [Consensus client version update to v0.10.1 (chain halt at height 990,455, upgrade took at height 990,454)](#consensus-client-version-update-to-v0101-chain-halt-at-height-990455-upgrade-took-at-height-990454)
-    - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client-1)
-    - [2. update story node to v0.10.1](#2-update-story-node-to-v0101-1)
-  - [Consensus client version update to v0.11.0 (upgrade took at height 1,325,860)](#consensus-client-version-update-to-v0110-upgrade-took-at-height-1325860)
-    - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client-2)
-    - [2. update story node to v0.11.0](#2-update-story-node-to-v0110)
+    - [10. start geth and story services](#10-start-geth-and-story-services)
 - [let's buidl together](#lets-buidl-together)
 
 # Story Protocol
@@ -492,7 +485,7 @@ echo "input2. $input2"
 echo "input3. $input3"
 ```
 
-### 2. update story node to v0.10.1
+### 2. update story node to v0.10.0
 
 ```bash
 cd $HOME && \
@@ -507,138 +500,6 @@ sudo rm $HOME/.story/story/data/upgrade-info.json
 cosmovisor add-upgrade v0.10.0 $HOME/$story_folder_name/story --upgrade-height 626575 --force
 
 sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
-```
-
-## Snapshot for the post upgrade (thank you to Mandragora for allowing me to publish his snapshot file here)
-
-### 1. stop your geth and consensus client services
-
-```bash
-sudo systemctl stop story-geth
-sudo systemctl stop story
-```
-
-### 2. backup `priv_state_validator.json` file
-
-```bash
-sudo cp $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
-```
-
-### 3. delete geth and consensus client db
-
-```bash
-sudo rm -rf $HOME/.story/geth/iliad/geth/chaindata
-sudo rm -rf $HOME/.story/story/data
-```
-
-### 4. download the geth snapshot file
-
-```bash
-wget -O geth_snapshot.lz4 https://snapshots.mandragora.io/geth_snapshot.lz4
-```
-
-`wait until it's finished`
-
-### 5. download the story snapshot file
-
-```bash
-wget -O story_snapshot.lz4 https://snapshots.mandragora.io/story_snapshot.lz4
-```
-
-`wait until it's finished`
-
-### 6. extract the geth snapshot file
-
-```bash
-lz4 -c -d geth_snapshot.lz4 | tar -x -C $HOME/.story/geth/iliad/geth
-```
-
-`wait until it's finished`
-
-### 7. extract the story snapshot file
-
-```bash
-lz4 -c -d story_snapshot.lz4 | tar -x -C $HOME/.story/story
-```
-
-`wait until it's finished`
-
-### 8. delete the snapshot file (optional)
-
-```bash
-sudo rm -v geth_snapshot.lz4
-sudo rm -v story_snapshot.lz4
-```
-
-### 9. restore your `priv_state_validator.json` file
-
-```bash
-sudo cp $HOME/.story/priv_validator_state.json.backup $HOME/.story/story/data/priv_validator_state.json
-```
-
-### 10. download the node binary
-
-```bash
-cd $HOME && \
-wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.10.1-57567e5.tar.gz
-```
-
-### 11. extract the new node binary
-
-```bash
-story_folder_name=$(tar -tf story-linux-amd64-0.10.1-57567e5.tar.gz | head -n 1 | cut -f1 -d"/")
-tar -xzf story-linux-amd64-0.10.1-57567e5.tar.gz
-```
-
-### 12. define the path of cosmovisor for being used in the consensus client
-
-```bash
-input1=$(which cosmovisor)
-input2=$(find $HOME -type d -name "story")
-input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
-echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
-echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
-echo "export DAEMON_DATA_BACKUP_DIR=$(find $HOME/.story/story/cosmovisor -type d -name "backup")" >> $HOME/.bash_profile
-source $HOME/.bash_profile
-echo "input1. $input1"
-echo "input2. $input2"
-echo "input3. $input3"
-```
-
-### 13. set access and delete the existing upgrade file in data dir
-
-```bash
-sudo chown -R $USER:$USER $HOME/.story && sudo rm $HOME/.story/story/data/upgrade-info.json
-```
-
-### 14. execute the cosmovisor `add-upgrade` command (if u still use the old version)
-
-**v0.10.1 block height upgrade is 990454**
-
-```bash
-cosmovisor add-upgrade v0.10.1 $HOME/$story_folder_name/story --upgrade-height 990454 --force
-```
-
-### 15. after the instructions are succesfully completed, u can delete the tar file and folder
-
-```bash
-sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.1-9603826.tar.gz
-```
-
-### 16. start geth service
-
-```bash
-sudo systemctl daemon-reload && \
-sudo systemctl restart story-geth && \
-sudo journalctl -u story-geth -fn 100
-```
-
-### 17. start consensus client service
-
-```bash
-sudo systemctl daemon-reload && \
-sudo systemctl restart story && \
-sudo journalctl -u story -fn 100
 ```
 
 ## Geth version update to v0.9.4 (just in case u're still using the older version of geth)
@@ -722,6 +583,81 @@ sudo rm $HOME/.story/story/data/upgrade-info.json
 cosmovisor add-upgrade v0.11.0 $HOME/$story_folder_name/story --upgrade-height 1325860 --force
 
 sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.11.0-aac4bfe.tar.gz
+```
+
+## Snapshot for the post upgrade (thank you to Mandragora for allowing me to publish his snapshot file here)
+
+### 1. stop your geth and consensus client services
+
+```bash
+sudo systemctl stop story-geth
+sudo systemctl stop story
+```
+
+### 2. backup `priv_state_validator.json` file
+
+```bash
+sudo cp $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
+```
+
+### 3. delete geth and consensus client db
+
+```bash
+sudo rm -rf $HOME/.story/geth/iliad/geth/chaindata
+sudo rm -rf $HOME/.story/story/data
+```
+
+### 4. download the geth snapshot file
+
+```bash
+wget -O geth_snapshot.lz4 https://snapshots.mandragora.io/geth_snapshot.lz4
+```
+
+`wait until it's finished`
+
+### 5. download the story snapshot file
+
+```bash
+wget -O story_snapshot.lz4 https://snapshots.mandragora.io/story_snapshot.lz4
+```
+
+`wait until it's finished`
+
+### 6. extract the geth snapshot file
+
+```bash
+lz4 -c -d geth_snapshot.lz4 | tar -x -C $HOME/.story/geth/iliad/geth
+```
+
+`wait until it's finished`
+
+### 7. extract the story snapshot file
+
+```bash
+lz4 -c -d story_snapshot.lz4 | tar -x -C $HOME/.story/story
+```
+
+`wait until it's finished`
+
+### 8. delete the snapshot file (optional)
+
+```bash
+sudo rm -v geth_snapshot.lz4
+sudo rm -v story_snapshot.lz4
+```
+
+### 9. restore your `priv_state_validator.json` file
+
+```bash
+sudo cp $HOME/.story/priv_validator_state.json.backup $HOME/.story/story/data/priv_validator_state.json
+```
+
+### 10. start geth and story services
+
+```bash
+sudo systemctl daemon-reload && \
+sudo systemctl restart story-geth story && \
+sudo journalctl -u story -fn 100
 ```
 
 # let's buidl together
