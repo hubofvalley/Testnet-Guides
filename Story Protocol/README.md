@@ -59,15 +59,15 @@
       - [self delegate](#self-delegate)
       - [delegate to ](#delegate-to-)
   - [delete the node](#delete-the-node)
-  - [Consensus client version update to v0.10.0 (upgrade took at height 626,575)](#consensus-client-version-update-to-v0100-upgrade-took-at-height-626575)
+  - [Consensus client version update to `v0.10.0` (upgrade took at height `626,575`)](#consensus-client-version-update-to-v0100-upgrade-took-at-height-626575)
     - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client)
     - [2. update story node to v0.10.0](#2-update-story-node-to-v0100)
-  - [Geth version update to v0.9.4 (just in case u're still using the older version of geth)](#geth-version-update-to-v094-just-in-case-ure-still-using-the-older-version-of-geth)
+  - [Geth version update to `v0.9.4` (just in case u're still using the older version of geth)](#geth-version-update-to-v094-just-in-case-ure-still-using-the-older-version-of-geth)
     - [1. update story-geth node to v0.10.1](#1-update-story-geth-node-to-v0101)
-  - [Consensus client version update to v0.10.1 (chain halt at height 990,455, upgrade took at height 990,454)](#consensus-client-version-update-to-v0101-chain-halt-at-height-990455-upgrade-took-at-height-990454)
+  - [Consensus client version update to `v0.10.1` (chain halt at height `990,455`, upgrade took at height `990,454`)](#consensus-client-version-update-to-v0101-chain-halt-at-height-990455-upgrade-took-at-height-990454)
     - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client-1)
     - [2. update story node to v0.10.1](#2-update-story-node-to-v0101)
-  - [Consensus client version update to v0.11.0 (upgrade took at height 1,325,860)](#consensus-client-version-update-to-v0110-upgrade-took-at-height-1325860)
+  - [Consensus client version update to `v0.11.0` (upgrade took at height `1,325,860`)](#consensus-client-version-update-to-v0110-upgrade-took-at-height-1325860)
     - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client-2)
     - [2. update story node to v0.11.0](#2-update-story-node-to-v0110)
   - [Snapshot for the post upgrade (thank you to Mandragora for allowing me to publish his snapshot file here)](#snapshot-for-the-post-upgrade-thank-you-to-mandragora-for-allowing-me-to-publish-his-snapshot-file-here)
@@ -468,7 +468,7 @@ sudo rm -r .story
 sed -i "/STORY_/d" $HOME/.bash_profile
 ```
 
-## Consensus client version update to v0.10.0 (upgrade took at height 626,575)
+## Consensus client version update to `v0.10.0` (upgrade took at height `626,575`)
 
 ### 1. define the path of cosmovisor for being used in the consensus client
 
@@ -502,7 +502,7 @@ cosmovisor add-upgrade v0.10.0 $HOME/$story_folder_name/story --upgrade-height 6
 sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
 ```
 
-## Geth version update to v0.9.4 (just in case u're still using the older version of geth)
+## Geth version update to `v0.9.4` (just in case u're still using the older version of geth)
 
 ### 1. update story-geth node to v0.10.1
 
@@ -517,7 +517,7 @@ sudo systemctl restart story-geth && \
 sudo journalctl -u story-geth -fn 100
 ```
 
-## Consensus client version update to v0.10.1 (chain halt at height 990,455, upgrade took at height 990,454)
+## Consensus client version update to `v0.10.1` (chain halt at height `990,455`, upgrade took at height `990,454`)
 
 ### 1. define the path of cosmovisor for being used in the consensus client
 
@@ -551,7 +551,7 @@ cosmovisor add-upgrade v0.10.1 $HOME/$story_folder_name/story --upgrade-height 9
 sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.1-57567e5.tar.gz
 ```
 
-## Consensus client version update to v0.11.0 (upgrade took at height 1,325,860)
+## Consensus client version update to `v0.11.0` (upgrade took at height `1,325,860`)
 
 ### 1. define the path of cosmovisor for being used in the consensus client
 
