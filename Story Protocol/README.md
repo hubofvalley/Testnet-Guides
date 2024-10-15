@@ -85,8 +85,6 @@
     - [16. start geth service](#16-start-geth-service)
     - [17. start consensus client service](#17-start-consensus-client-service)
   - [Geth version update to v0.9.4 (just in case u're still using the older version of geth)](#geth-version-update-to-v094-just-in-case-ure-still-using-the-older-version-of-geth)
-    - [1. download geth binary](#1-download-geth-binary)
-    - [2. restart geth service](#2-restart-geth-service)
   - [Consensus client version update to v0.10.1 (chain halt at height 990,455, upgrade took at height 990,454)](#consensus-client-version-update-to-v0101-chain-halt-at-height-990455-upgrade-took-at-height-990454)
     - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client-1)
     - [2. download the node binary](#2-download-the-node-binary-1)
@@ -673,20 +671,12 @@ sudo journalctl -u story -fn 100
 
 ## Geth version update to v0.9.4 (just in case u're still using the older version of geth)
 
-### 1. download geth binary
-
 ```bash
 wget https://github.com/piplabs/story-geth/releases/download/v0.9.4/geth-linux-amd64
 geth_file_name=geth-linux-amd64
 mv $HOME/$geth_file_name $HOME/go/bin/geth
 sudo chown -R $USER:$USER $HOME/go/bin/geth
 sudo chmod +x $HOME/go/bin/geth
-geth --version
-```
-
-### 2. restart geth service
-
-```bash
 sudo systemctl daemon-reload && \
 sudo systemctl restart story-geth && \
 sudo journalctl -u story-geth -fn 100
