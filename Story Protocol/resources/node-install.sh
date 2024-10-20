@@ -181,3 +181,6 @@ echo "Node auto-update to version v0.10.0 has been successfully applied at heigh
 
 # Reminder for the next update
 echo "Reminder: You must update the node version to v0.10.1 when the node reaches height 990454."
+
+# show the full logs
+echo "sudo journalctl -u story-geth -u story -fn 100"
