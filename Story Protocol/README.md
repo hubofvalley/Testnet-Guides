@@ -42,8 +42,7 @@
       - [this is an example of the edited consensus client service file](#this-is-an-example-of-the-edited-consensus-client-service-file)
         - [geth service file](#geth-service-file)
     - [13. start the node](#13-start-the-node)
-      - [start geth](#start-geth)
-      - [start consensus client](#start-consensus-client)
+      - [start geth \& consensus client](#start-geth--consensus-client)
       - [this is an example of the node running properly](#this-is-an-example-of-the-node-running-properly)
         - [story-geth logs](#story-geth-logs)
         - [story logs](#story-logs)
@@ -362,22 +361,13 @@ EOF
 
 ### 13. start the node
 
-#### start geth
+#### start geth & consensus client
 
 ```bash
 sudo systemctl daemon-reload && \
-sudo systemctl enable story-geth && \
-sudo systemctl restart story-geth && \
-sudo journalctl -u story-geth -fn 100
-```
-
-#### start consensus client
-
-```bash
-sudo systemctl daemon-reload && \
-sudo systemctl enable story && \
-sudo systemctl restart story && \
-sudo journalctl -u story -fn 100
+sudo systemctl enable story-geth story && \
+sudo systemctl restart story-geth story && \
+sudo journalctl -u story-geth -u story -fn 100
 ```
 
 #### this is an example of the node running properly
@@ -658,7 +648,7 @@ sudo cp $HOME/.story/priv_validator_state.json.backup $HOME/.story/story/data/pr
 ```bash
 sudo systemctl daemon-reload && \
 sudo systemctl restart story-geth story && \
-sudo journalctl -u story -fn 100
+sudo journalctl -u story-geth -u story -fn 100
 ```
 
 # let's buidl together
