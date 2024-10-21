@@ -1,4 +1,4 @@
-BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE](<https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/storage-node.md>)
+BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [storage kv](<https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/storage-node.md>)
 
 # 0gchain Storage KV Deployment Guide
 
@@ -15,6 +15,14 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [STORAGE NODE]
     - [9. start the node](#9-start-the-node)
     - [10. check the logs](#10-check-the-logs)
   - [delete the node](#delete-the-node)
+  - [update the storage kv (in case you're still in the previous version)](#update-the-storage-kv-in-case-youre-still-in-the-previous-version)
+    - [1. stop storage kv](#1-stop-storage-kv)
+    - [2. update node](#2-update-node)
+    - [3. build the latest binary](#3-build-the-latest-binary)
+    - [4. set vars](#4-set-vars-1)
+    - [5. update storage kv configuration](#5-update-storage-kv-configuration)
+    - [6. restart the node](#6-restart-the-node)
+    - [7. show the logs](#7-show-the-logs)
 - [CONTINUE TO STORAGE CLI](#continue-to-storage-cli)
 - [let's buidl together](#lets-buidl-together)
 
@@ -57,17 +65,17 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 ### 4. set vars
 
-PLEASE INPUT YOUR STORAGE NODE URL (http://STORAGE_NODE_IP:5678) , YOUR JSON RPC ENDPOINT (VALIDATOR_NODE_IP:8545). CURRENTLY USING STANDARD LOG CONTRACT ADDRESS
+PLEASE INPUT YOUR storage kv URL (http://STORAGE_NODE_IP:5678) , YOUR JSON RPC ENDPOINT (VALIDATOR_NODE_IP:8545). CURRENTLY USING STANDARD LOG CONTRACT ADDRESS
 
 ```bash
 read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT && echo "Current json-rpc: $BLOCKCHAIN_RPC_ENDPOINT" &&
-read -p "Enter storage node urls: " ZGS_NODE && echo "Current storage node urls: $ZGS_NODE"
+read -p "Enter storage kv urls: " ZGS_NODE && echo "Current storage kv urls: $ZGS_NODE"
 ```
 
 ```bash
 echo 'export ZGS_LOG_SYNC_BLOCK="595059"' >> ~/.bash_profile
 echo "export ZGS_NODE=\"$ZGS_NODE\"" >> ~/.bash_profile
-echo 'export LOG_CONTRACT_ADDRESS="0x0460aA47b41a66694c0a73f667a1b795A5ED3556"' >> ~/.bash_profile
+echo 'export LOG_CONTRACT_ADDRESS="0xbD2C3F0E65eDF5582141C35969d66e34629cC768"' >> ~/.bash_profile
 echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
 
 source ~/.bash_profile
@@ -83,7 +91,7 @@ git clone -b v1.2.2 https://github.com/0glabs/0g-storage-kv.git
 cd $HOME/0g-storage-kv
 git stash
 git fetch --all --tags
-git checkout 5a041dbccf8f943d211216979a7baa1949d9de8d
+git checkout e7c737901d8953d6b73857dc8d7fb1740a416c5d
 git submodule update --init
 sudo apt install cargo
 ```
@@ -121,7 +129,7 @@ s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = "'"$BLOCKCHA
 ```bash
 sudo tee /etc/systemd/system/zgskv.service > /dev/null <<EOF
 [Unit]
-Description=ZGS KV
+Description=zgskv KV
 After=network.target
 
 [Service]
@@ -131,6 +139,9 @@ ExecStart=$HOME/0g-storage-kv/target/release/zgs_kv --config $HOME/0g-storage-kv
 Restart=on-failure
 RestartSec=10
 LimitNOFILE=65535
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=zgs_kv
 
 [Install]
 WantedBy=multi-user.target
@@ -162,6 +173,86 @@ sudo systemctl stop zgskv
 sudo systemctl disable zgskv
 sudo rm -rf /etc/systemd/system/zgskv.service
 sudo rm -rf 0g-storage-kv
+```
+
+## update the storage kv (in case you're still in the previous version)
+
+### 1. stop storage kv
+
+```bash
+sudo systemctl stop zgskv
+```
+
+### 2. update node
+
+```bash
+cd $HOME/0g-storage-kv
+git stash
+git fetch --all --tags
+git checkout e7c737901d8953d6b73857dc8d7fb1740a416c5d
+git submodule update --init
+```
+
+### 3. build the latest binary
+
+```bash
+cargo build --release
+```
+
+### 4. set vars
+
+PLEASE INPUT YOUR storage kv URL (http://STORAGE_NODE_IP:5678) , YOUR JSON RPC ENDPOINT (VALIDATOR_NODE_IP:8545). CURRENTLY USING STANDARD LOG CONTRACT ADDRESS
+
+```bash
+read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT && echo "Current json-rpc: $BLOCKCHAIN_RPC_ENDPOINT" &&
+read -p "Enter storage kv urls: " ZGS_NODE && echo "Current storage kv urls: $ZGS_NODE"
+```
+
+```bash
+echo 'export ZGS_LOG_SYNC_BLOCK="595059"' >> ~/.bash_profile
+echo "export ZGS_NODE=\"$ZGS_NODE\"" >> ~/.bash_profile
+echo 'export LOG_CONTRACT_ADDRESS="0xbD2C3F0E65eDF5582141C35969d66e34629cC768"' >> ~/.bash_profile
+echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
+
+source ~/.bash_profile
+
+echo -e "\n\033[31mCHECK YOUR STORAGE KV VARIABLES\033[0m\n\nZGS_NODE: $ZGS_NODE\nLOG_CONTRACT_ADDRESS: $LOG_CONTRACT_ADDRESS\nMINE_CONTRACT: $MINE_CONTRACT\nZGS_LOG_SYNC_BLOCK: $ZGS_LOG_SYNC_BLOCK\nBLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT\n\n" "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
+```
+
+### 5. update storage kv configuration
+
+```bash
+rm -rf $HOME/0g-storage-kv/run/config.toml && cp $HOME/0g-storage-kv/run/config_example.toml $HOME/0g-storage-kv/run/config.toml
+```
+
+```bash
+sed -i '
+s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
+s|^\s*#\?\s*rpc_listen_address\s*=.*|rpc_listen_address = "0.0.0.0:6789"|
+s|^\s*#\?\s*db_dir\s*=.*|db_dir = "db"|
+s|^\s*#\?\s*kv_db_dir\s*=.*|kv_db_dir = "kv.DB"|
+s|^\s*#\?\s*log_config_file\s*=.*|log_config_file = "log_config"|
+s|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = "'"$LOG_CONTRACT_ADDRESS"'"|
+s|^\s*#\?\s*zgs_node_urls\s*=.*|zgs_node_urls = "'"$ZGS_NODE"'"|
+s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = '"$ZGS_LOG_SYNC_BLOCK"'|
+s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = "'"$BLOCKCHAIN_RPC_ENDPOINT"'"|
+' $HOME/0g-storage-kv/run/config.toml
+```
+
+### 6. restart the node
+
+```bash
+sudo systemctl daemon-reload && \
+sudo systemctl restart zgskv && \
+sudo systemctl status zgskv
+```
+
+### 7. show the logs
+
+- full logs command
+
+```bash
+sudo journalctl -u zgskv -fn 100 -o cat
 ```
 
 # [CONTINUE TO STORAGE CLI](<https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/storage-cli.md>)
