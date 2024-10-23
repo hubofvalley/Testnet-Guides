@@ -11,6 +11,8 @@
     - [6. check the storage node version](#6-check-the-storage-node-version)
     - [7. wallet private key check](#7-wallet-private-key-check)
     - [8. update node configuration](#8-update-node-configuration)
+      - [TURBO CONTRACT](#turbo-contract)
+      - [STANDARD CONTRACT](#standard-contract)
     - [9. create service](#9-create-service)
     - [10. start the node](#10-start-the-node)
     - [11. show logs by date](#11-show-logs-by-date)
@@ -22,6 +24,8 @@
     - [4. set vars](#4-set-vars-1)
     - [5. store your private key in variable:](#5-store-your-private-key-in-variable)
     - [6. update node configuration](#6-update-node-configuration)
+      - [TURBO CONTRACT](#turbo-contract-1)
+      - [STANDARD CONTRACT](#standard-contract-1)
     - [7. restart the node](#7-restart-the-node)
     - [8. show the logs](#8-show-the-logs)
 - [CONTINUE TO STORAGE KV](#continue-to-storage-kv)
@@ -83,14 +87,11 @@ read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT && echo "Current json-rpc: $B
 echo "export ENR_ADDRESS=${ENR_ADDRESS}" >> ~/.bash_profile
 echo 'export ZGS_LOG_DIR="$HOME/0g-storage-node/run/log"' >> ~/.bash_profile
 echo 'export ZGS_LOG_SYNC_BLOCK="595059"' >> ~/.bash_profile
-echo 'export LOG_CONTRACT_ADDRESS="0xbD2C3F0E65eDF5582141C35969d66e34629cC768"' >> ~/.bash_profile
-echo 'export MINE_CONTRACT="0x6815F41019255e00D6F34aAB8397a6Af5b6D806f"' >> ~/.bash_profile
-echo 'export REWARD_CONTRACT="0x51998C4d486F406a788B766d93510980ae1f9360"' >> ~/.bash_profile
 echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
 
 source ~/.bash_profile
 
-echo -e "\n\033[31mCHECK YOUR STORAGE NODE VARIABLES\033[0m\n\nLOG_CONTRACT_ADDRESS: $LOG_CONTRACT_ADDRESS\nMINE_CONTRACT: $MINE_CONTRACT\nREWARD_CONTRACT: $REWARD_CONTRACT\nZGS_LOG_SYNC_BLOCK: $ZGS_LOG_SYNC_BLOCK\nBLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT\n\n" "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
+echo -e "\n\033[31mCHECK YOUR STORAGE NODE VARIABLES\033[0m\nZGS_LOG_SYNC_BLOCK: $ZGS_LOG_SYNC_BLOCK\nBLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT\n\n" "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
 ```
 
 #### ALSO CHECK THE JSON-RPC SYNC, MAKE SURE IT'S IN THE LATEST BLOCK
@@ -139,21 +140,16 @@ read -p "Enter your private key: " PRIVATE_KEY && echo "private key: $PRIVATE_KE
 
 ### 8. update node configuration
 
+#### TURBO CONTRACT
+
 ```bash
 rm -rf $HOME/0g-storage-node/run/config-testnet.toml && cp $HOME/0g-storage-node/run/config-testnet-turbo.toml $HOME/0g-storage-node/run/config-testnet.toml
 ```
 
+#### STANDARD CONTRACT
+
 ```bash
-sed -i "
-s|^\s*#\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|
-s|^\s*#\s*rpc_listen_address\s*=.*|rpc_listen_address = \"0.0.0.0:5678\"|
-s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
-s|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = \"$LOG_CONTRACT_ADDRESS\"|
-s|^\s*#\?\s*mine_contract_address\s*=.*|mine_contract_address = \"$MINE_CONTRACT\"|
-s|^\s*#\?\s*reward_contract_address\s*=.*|reward_contract_address = \"$REWARD_CONTRACT\"|
-s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = $ZGS_LOG_SYNC_BLOCK|
-s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|
-" $HOME/0g-storage-node/run/config-testnet.toml
+rm -rf $HOME/0g-storage-node/run/config-testnet.toml && cp $HOME/0g-storage-node/run/config-testnet-standard.toml $HOME/0g-storage-node/run/config-testnet.toml
 ```
 
 ### 9. create service
@@ -278,8 +274,16 @@ read -p "Enter your private key: " PRIVATE_KEY && echo "private key: $PRIVATE_KE
 
 ### 6. update node configuration
 
+#### TURBO CONTRACT
+
 ```bash
 rm -rf $HOME/0g-storage-node/run/config-testnet.toml && cp $HOME/0g-storage-node/run/config-testnet-turbo.toml $HOME/0g-storage-node/run/config-testnet.toml
+```
+
+#### STANDARD CONTRACT
+
+```bash
+rm -rf $HOME/0g-storage-node/run/config-testnet.toml && cp $HOME/0g-storage-node/run/config-testnet-standard.toml $HOME/0g-storage-node/run/config-testnet.toml
 ```
 
 ```bash
