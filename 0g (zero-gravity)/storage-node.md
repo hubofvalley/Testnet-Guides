@@ -263,9 +263,6 @@ read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT && echo "Current json-rpc: $B
 echo "export ENR_ADDRESS=${ENR_ADDRESS}" >> ~/.bash_profile
 echo 'export ZGS_LOG_DIR="$HOME/0g-storage-node/run/log"' >> ~/.bash_profile
 echo 'export ZGS_LOG_SYNC_BLOCK="595059"' >> ~/.bash_profile
-echo 'export LOG_CONTRACT_ADDRESS="0xbD2C3F0E65eDF5582141C35969d66e34629cC768"' >> ~/.bash_profile
-echo 'export MINE_CONTRACT="0x6815F41019255e00D6F34aAB8397a6Af5b6D806f"' >> ~/.bash_profile
-echo 'export REWARD_CONTRACT="0x51998C4d486F406a788B766d93510980ae1f9360"' >> ~/.bash_profile
 echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
 
 source ~/.bash_profile
@@ -290,9 +287,6 @@ sed -i "
 s|^\s*#\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|
 s|^\s*#\s*rpc_listen_address\s*=.*|rpc_listen_address = \"0.0.0.0:5678\"|
 s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
-s|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = \"$LOG_CONTRACT_ADDRESS\"|
-s|^\s*#\?\s*mine_contract_address\s*=.*|mine_contract_address = \"$MINE_CONTRACT\"|
-s|^\s*#\?\s*reward_contract_address\s*=.*|reward_contract_address = \"$REWARD_CONTRACT\"|
 s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = $ZGS_LOG_SYNC_BLOCK|
 s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|
 " $HOME/0g-storage-node/run/config-testnet.toml
