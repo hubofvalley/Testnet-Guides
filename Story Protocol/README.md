@@ -535,8 +535,10 @@ wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-l
 
 story_folder_name=$(tar -tf story-linux-amd64-0.10.1-57567e5.tar.gz | head -n 1 | cut -f1 -d"/")
 tar -xzf story-linux-amd64-0.10.1-57567e5.tar.gz
+sudo cp $HOME/$story_folder_name/story $HOME/go/bin/story
 
 sudo chown -R $USER:$USER $HOME/.story && \
+sudo chown -R $USER:$USER $HOME/go/bin/story && \
 sudo rm $HOME/.story/story/data/upgrade-info.json
 
 cosmovisor add-upgrade v0.10.1 $HOME/$story_folder_name/story --upgrade-height 990454 --force
@@ -572,6 +574,7 @@ tar -xzf story-linux-amd64-0.11.0-aac4bfe.tar.gz
 sudo cp $HOME/$story_folder_name/story $HOME/go/bin/story
 
 sudo chown -R $USER:$USER $HOME/.story && \
+sudo chown -R $USER:$USER $HOME/go/bin/story && \
 sudo rm $HOME/.story/story/data/upgrade-info.json
 
 cosmovisor add-upgrade v0.11.0 $HOME/$story_folder_name/story --upgrade-height 1325860 --force
