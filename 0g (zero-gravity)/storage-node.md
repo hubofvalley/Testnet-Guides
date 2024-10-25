@@ -35,10 +35,10 @@
 
 | Category  | Requirements                   |
 | --------- | ------------------------------ |
-| CPU       | 4+ cores                       |
-| RAM       | 16+ GB                         |
+| CPU       | 8+ cores                       |
+| RAM       | 32+ GB                         |
 | Storage   | 500GB / 1TB NVMe SSD           |
-| Bandwidth | 500 MBps for Download / Upload |
+| Bandwidth | 100 MBps for Download / Upload |
 
 guide's current binary version: `v0.6.0`
 

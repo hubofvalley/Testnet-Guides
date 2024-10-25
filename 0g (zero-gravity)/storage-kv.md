@@ -30,8 +30,8 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [storage kv](<
 
 | Category | Requirements                                |
 | -------- | ------------------------------------------- |
-| CPU      | 2+ cores                                    |
-| RAM      | 4+ GB                                       |
+| CPU      | 8+ cores                                    |
+| RAM      | 32+ GB                                      |
 | Storage  | Matches the size of kv streams it maintains |
 
 guide's current binary version: `v1.2.2`
