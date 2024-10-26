@@ -15,6 +15,8 @@
   - [Grand Valley's 0G public endpoints:](#grand-valleys-0g-public-endpoints)
   - [0G Node Deployment Guide With Cosmovisor](#0g-node-deployment-guide-with-cosmovisor)
     - [**System Requirements**](#system-requirements)
+  - [Automatic installation](#automatic-installation)
+  - [Manual installation](#manual-installation)
     - [1. Install dependencies for building from source](#1-install-dependencies-for-building-from-source)
     - [2. install go](#2-install-go)
     - [3. install cosmovisor](#3-install-cosmovisor)
@@ -130,6 +132,14 @@ With Public Testnet, 0G’s docs and code become public. Check them out below! -
 - guide's current binaries version: `v0.2.5 will automatically update to the latest version`
 - service file name: `0gchaind.service`
 - current chain : `zgtendermint_16600-2`
+
+## Automatic installation
+
+```bash
+bash <(curl -s https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/resources/0g_validator_node_install.sh)
+```
+
+## Manual installation
 
 ### 1. Install dependencies for building from source
 
