@@ -77,7 +77,16 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 ### 4. set vars
 
-PLEASE INPUT YOUR OWN JSON-RPC ENDPOINT (http://VALIDATOR_NODE_IP:8545)
+PLEASE INPUT YOUR OWN JSON-RPC ENDPOINT (http://VALIDATOR_NODE_IP:8545). OR U CAN USE ONE OF THESE RPCS
+
+`https://evmrpc-testnet.0g.ai`
+`https://rpc.ankr.com/0g_newton`
+`https://16600.rpc.thirdweb.com`
+`https://0g-json-rpc-public.originstake.com`
+`https://0g-rpc-evm01.validatorvn.com`
+`https://og-testnet-jsonrpc.itrocket.net:443`
+`https://0g-evmrpc-zstake.xyz`
+`https://zerog-testnet-json-rpc.contributiondao.com`
 
 ```bash
 read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT && echo "Current json-rpc: $BLOCKCHAIN_RPC_ENDPOINT"
@@ -260,7 +269,16 @@ cargo build --release
 
 ### 4. set vars
 
-PLEASE INPUT YOUR OWN JSON-RPC ENDPOINT (http://VALIDATOR_NODE_IP:8545)
+PLEASE INPUT YOUR OWN JSON-RPC ENDPOINT (http://VALIDATOR_NODE_IP:8545). OR U CAN USE ONE OF THESE RPCS
+
+`https://evmrpc-testnet.0g.ai`
+`https://rpc.ankr.com/0g_newton`
+`https://16600.rpc.thirdweb.com`
+`https://0g-json-rpc-public.originstake.com`
+`https://0g-rpc-evm01.validatorvn.com`
+`https://og-testnet-jsonrpc.itrocket.net:443`
+`https://0g-evmrpc-zstake.xyz`
+`https://zerog-testnet-json-rpc.contributiondao.com`
 
 ```bash
 read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT && echo "Current json-rpc: $BLOCKCHAIN_RPC_ENDPOINT"
