@@ -35,6 +35,14 @@ echo "$INTRO"
 read -p "Enter your moniker: " MONIKER
 read -p "Enter your custom port number (2 digits): " OG_PORT
 
+# Stop and remove existing 0G node
+sudo systemctl stop 0gchaind
+sudo systemctl disable 0gchaind
+sudo rm -rf /etc/systemd/system/0gchaind.service
+sudo rm -r 0g-chain
+sudo rm -rf $HOME/.0gchain
+sed -i "/OG_/d" $HOME/.bash_profile
+
 # 1. Install dependencies for building from source
 sudo apt update -y && sudo apt upgrade -y && \
 sudo apt install -y curl git jq build-essential gcc unzip wget lz4 openssl \
@@ -127,7 +135,6 @@ sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.0gchain/config/config.tom
 # 17. initialize cosmovisor
 echo "export DAEMON_NAME=0gchaind" >> $HOME/.bash_profile
 echo "export DAEMON_HOME=$(find $HOME -type d -name ".0gchain")" >> $HOME/.bash_profile
-source $HOME/.bash_profile
 cosmovisor init $HOME/go/bin/0gchaind && \
 mkdir -p $HOME/.0gchain/cosmovisor/upgrades && \
 mkdir -p $HOME/.0gchain/cosmovisor/backup
@@ -174,10 +181,10 @@ sudo systemctl enable 0gchaind && \
 sudo systemctl restart 0gchaind
 
 # 21. Confirmation message for installation completion
-if systemctl is-active --quiet story && systemctl is-active --quiet story-geth; then
-    echo "Node installation and services started successfully!"
+if systemctl is-active --quiet 0gchaind; then
+    echo "Validator Node installation and services started successfully!"
 else
-    echo "Node installation failed. Please check the logs for more information."
+    echo "Validator Node installation failed. Please check the logs for more information."
 fi
 
 # show the full logs
