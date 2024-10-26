@@ -40,7 +40,7 @@
 | Storage   | 500GB / 1TB NVMe SSD           |
 | Bandwidth | 100 MBps for Download / Upload |
 
-guide's current binary version: `v0.6.0`
+guide's current binary version: `v0.6.1`
 
 ### 1. Install dependencies for building from source
 
@@ -104,11 +104,11 @@ curl -s -X POST $BLOCKCHAIN_RPC_ENDPOINT -H "Content-Type: application/json" -d 
 
 ```bash
 cd $HOME
-git clone -b v0.6.0 https://github.com/0glabs/0g-storage-node.git
+git clone -b v0.6.1 https://github.com/0glabs/0g-storage-node.git
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 82fd29968b93e038753b9d819750e873322ac25c
+git checkout 8f17a7ad722f417a77fab85bf0a1e2e406b7bb50
 git submodule update --init
 ```
 
@@ -150,6 +150,17 @@ rm -rf $HOME/0g-storage-node/run/config-testnet.toml && cp $HOME/0g-storage-node
 
 ```bash
 rm -rf $HOME/0g-storage-node/run/config-testnet.toml && cp $HOME/0g-storage-node/run/config-testnet-standard.toml $HOME/0g-storage-node/run/config-testnet.toml
+```
+
+```bash
+sed -i "
+s|^\s*#\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|
+s|^\s*#\s*listen_address\s*=.*|listen_address = \"0.0.0.0:5678\"|
+s|^\s*#\s*listen_address_admin\s*=.*|listen_address_admin = \"0.0.0.0:5679\"|
+s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
+s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = $ZGS_LOG_SYNC_BLOCK|
+s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|
+" $HOME/0g-storage-node/run/config-testnet.toml
 ```
 
 ### 9. create service
@@ -237,7 +248,7 @@ sudo systemctl stop zgs
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 82fd29968b93e038753b9d819750e873322ac25c
+git checkout 8f17a7ad722f417a77fab85bf0a1e2e406b7bb50
 git submodule update --init
 ```
 
@@ -289,7 +300,8 @@ rm -rf $HOME/0g-storage-node/run/config-testnet.toml && cp $HOME/0g-storage-node
 ```bash
 sed -i "
 s|^\s*#\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|
-s|^\s*#\s*rpc_listen_address\s*=.*|rpc_listen_address = \"0.0.0.0:5678\"|
+s|^\s*#\s*listen_address\s*=.*|listen_address = \"0.0.0.0:5678\"|
+s|^\s*#\s*listen_address_admin\s*=.*|listen_address_admin = \"0.0.0.0:5679\"|
 s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
 s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = $ZGS_LOG_SYNC_BLOCK|
 s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|
