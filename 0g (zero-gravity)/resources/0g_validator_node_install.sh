@@ -15,7 +15,7 @@ Grand Valley's 0G public endpoints:
 "
 
 INTRO="
-0G Node Deployment Guide With Cosmovisor
+0G Node Automatic Deployment With Cosmovisor
 
 System Requirements
 | Category  | Requirements                   |
