@@ -31,6 +31,8 @@
 - [CONTINUE TO STORAGE KV](#continue-to-storage-kv)
 - [let's buidl together](#lets-buidl-together)
 
+![0G's storage infrastructure](resources/storage.png)
+
 ### **System Requirements**
 
 | Category  | Requirements                   |
