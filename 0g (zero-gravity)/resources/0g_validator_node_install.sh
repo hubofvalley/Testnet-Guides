@@ -171,5 +171,14 @@ EOF
 # 20. start the node
 sudo systemctl daemon-reload && \
 sudo systemctl enable 0gchaind && \
-sudo systemctl restart 0gchaind && \
-sudo journalctl -u 0gchaind -fn 100
+sudo systemctl restart 0gchaind
+
+# 21. Confirmation message for installation completion
+if systemctl is-active --quiet story && systemctl is-active --quiet story-geth; then
+    echo "Node installation and services started successfully!"
+else
+    echo "Node installation failed. Please check the logs for more information."
+fi
+
+# show the full logs
+echo "run this to show the full logs: sudo journalctl -u story-geth -u story -fn 100"
