@@ -324,6 +324,12 @@ sudo systemctl status zgs
 tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d)
 ```
 
+- check your storage node through rpc
+
+```bash
+curl -X POST http://localhost:5678 -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"zgs_getStatus","params":[],"id":1}'  | jq
+```
+
 # [CONTINUE TO STORAGE KV](<https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/storage-kv.md>)
 
 # let's buidl together
