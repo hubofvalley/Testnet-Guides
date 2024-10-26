@@ -9,9 +9,9 @@ LOGO="
 
 INTRO="
 Grand Valley's 0G public endpoints:
-- cosmos rpc: `https://lightnode-rpc-0g.grandvalleys.com`
-- json-rpc: `https://lightnode-json-rpc-0g.grandvalleys.com`
-- cosmos rest-api: `https://lightnode-api-0g.grandvalleys.com`
+- cosmos rpc: \`https://lightnode-rpc-0g.grandvalleys.com\`
+- json-rpc: \`https://lightnode-json-rpc-0g.grandvalleys.com\`
+- cosmos rest-api: \`https://lightnode-api-0g.grandvalleys.com\`
 
 0G Node Deployment Guide With Cosmovisor
 
