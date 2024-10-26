@@ -136,7 +136,7 @@ With Public Testnet, 0G’s docs and code become public. Check them out below! -
 ## Automatic installation
 
 ```bash
-bash <(curl -s https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/resources/0g_validator_node_install.sh)
+bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_validator_node_install.sh)
 ```
 
 ## Manual installation
