@@ -39,6 +39,7 @@ read -p "Enter your moniker: " MONIKER
 read -p "Enter your custom port number (2 digits): " OG_PORT
 
 # Stop and remove existing 0G node
+sudo systemctl daemon-reload
 sudo systemctl stop 0gchaind
 sudo systemctl disable 0gchaind
 sudo rm -rf /etc/systemd/system/0gchaind.service
