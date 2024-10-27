@@ -209,9 +209,10 @@ go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 EDIT YOUR MONIKER & YOUR PREFERRED PORT NUMBER
 
 ```bash
-echo "export MONIKER="<your-moniker>"" >> $HOME/.bash_profile
+read -p "Enter your moniker: " MONIKER && echo "Current moniker: $MONIKER" && read -p "Enter your 2 digits custom port: (default: 26)" OG_PORT && echo "Current port number: $OG_PORT"
+echo "export MONIKER="$MONIKER"" >> $HOME/.bash_profile
 echo "export STORY_CHAIN_ID="iliad"" >> $HOME/.bash_profile
-echo "export STORY_PORT="26"" >> $HOME/.bash_profile
+echo "export STORY_PORT="$STORY_PORT"" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 ```
 
