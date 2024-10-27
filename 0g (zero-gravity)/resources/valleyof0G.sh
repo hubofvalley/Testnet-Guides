@@ -57,7 +57,6 @@ Storage KV System Requirements
 storage kvs current binary version: v1.2.2
 
 ------------------------------------------------------------------
-
 "
 
 ENDPOINTS="
@@ -70,7 +69,6 @@ Grand Valley social media:
 - X: https://x.com/bacvalley
 - GitHub: https://github.com/hubofvalley
 - Email: letsbuidltogether@grandvalleys.com
-
 "
 
 # Display LOGO and wait for user input to continue
@@ -172,6 +170,24 @@ function deploy_storage_node() {
     menu
 }
 
+function update_storage_node() {
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_node_update.sh)
+    menu
+}
+
+function delete_storage_node() {
+    sudo systemctl stop zgs
+    sudo systemctl daemon-reload
+    sudo rm -r $HOME/0g-storage-node
+    echo "Storage node deleted successfully."
+    menu
+}
+
+function change_storage_node() {
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_node_change.sh)
+    menu
+}
+
 # Storage KV Functions
 function deploy_storage_kv() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_kv_install.sh)
@@ -191,6 +207,10 @@ function menu() {
     echo "    h. Restore Wallet"
     echo "    i. Create Wallet"
     echo "2. Storage Node"
+    echo "    a. Deploy Storage Node"
+    echo "    b. Update Storage Node"
+    echo "    c. Delete Storage Node"
+    echo "    d. Change Storage Node"
     echo "3. Storage KV"
     echo "4. Exit"
     read -p "Choose an option: " OPTION
@@ -211,7 +231,16 @@ function menu() {
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
-        2) deploy_storage_node ;;
+        2)
+            read -p "Choose a sub-option: " SUB_OPTION
+            case $SUB_OPTION in
+                a) deploy_storage_node ;;
+                b) update_storage_node ;;
+                c) delete_storage_node ;;
+                d) change_storage_node ;;
+                *) echo "Invalid sub-option. Please try again." ;;
+            esac
+            ;;
         3) deploy_storage_kv ;;
         4) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
