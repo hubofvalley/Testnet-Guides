@@ -60,18 +60,23 @@ echo "$LOGO"
 echo "$INTRO"
 echo "$ENDPOINTS"
 
-# Create Wallet
-function create_wallet() {
+# Validator Node Functions
+function deploy_validator_node() {
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_validator_node_install.sh)
+}
+
+function create_validator() {
     read -p "Enter wallet name: " WALLET_NAME
-    0gchaind keys add $WALLET_NAME
+    read -p "Enter validator name: " VALIDATOR_NAME
+    read -p "Enter amount to stake: " AMOUNT
+    0gchaind tx staking create-validator --pubkey=$(0gchaind tendermint show-validator) --amount=$AMOUNT --from=$WALLET_NAME --commission-rate="0.10" --commission-max-rate="0.20" --commission-max-change-rate="0.01" --min-self-delegation="1" --moniker=$VALIDATOR_NAME --chain-id=$OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
 }
 
-# Check Wallets
-function check_wallet() {
-    0gchaind keys list
+function query_balance() {
+    read -p "Enter wallet address: " WALLET_ADDRESS
+    0gchaind query bank balances $WALLET_ADDRESS --chain-id $OG_CHAIN_ID
 }
 
-# Send Transaction
 function send_transaction() {
     read -p "Enter sender wallet name: " SENDER_WALLET
     read -p "Enter recipient wallet address: " RECIPIENT_ADDRESS
@@ -79,13 +84,6 @@ function send_transaction() {
     0gchaind tx bank send $SENDER_WALLET $RECIPIENT_ADDRESS $AMOUNT --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
 }
 
-# Query Balance
-function query_balance() {
-    read -p "Enter wallet address: " WALLET_ADDRESS
-    0gchaind query bank balances $WALLET_ADDRESS --chain-id $OG_CHAIN_ID
-}
-
-# Stake Tokens
 function stake_tokens() {
     read -p "Enter wallet name: " WALLET_NAME
     read -p "Enter validator address: " VALIDATOR_ADDRESS
@@ -93,7 +91,6 @@ function stake_tokens() {
     0gchaind tx staking delegate $VALIDATOR_ADDRESS $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
 }
 
-# Unstake Tokens
 function unstake_tokens() {
     read -p "Enter wallet name: " WALLET_NAME
     read -p "Enter validator address: " VALIDATOR_ADDRESS
@@ -101,30 +98,53 @@ function unstake_tokens() {
     0gchaind tx staking unbond $VALIDATOR_ADDRESS $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
 }
 
-# Deploy Validator Node
-function deploy_node() {
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_validator_node_install.sh)
+function export_evm_private_key() {
+    read -p "Enter wallet name: " WALLET_NAME
+    0gchaind keys unsafe-export-eth-key $WALLET_NAME
+}
+
+# Storage Node Functions
+function deploy_storage_node() {
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_node_install.sh)
+}
+
+# Storage KV Functions
+function deploy_storage_kv() {
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_kv_install.sh)
 }
 
 # Menu
 function menu() {
-    echo "1. Create Wallet"
-    echo "2. Send Transaction"
-    echo "3. Query Balance"
-    echo "4. Stake Tokens"
-    echo "5. Unstake Tokens"
-    echo "6. Deploy Node"
-    echo "7. Exit"
+    echo "1. Validator Node"
+    echo "    a. Deploy Validator Node"
+    echo "    b. Create Validator"
+    echo "    c. Query Balance"
+    echo "    d. Send Transaction"
+    echo "    e. Stake Tokens"
+    echo "    f. Unstake Tokens"
+    echo "    g. Export EVM Private Key"
+    echo "2. Storage Node"
+    echo "3. Storage KV"
+    echo "4. Exit"
     read -p "Choose an option: " OPTION
 
     case $OPTION in
-        1) create_wallet ;;
-        2) send_transaction ;;
-        3) query_balance ;;
-        4) stake_tokens ;;
-        5) unstake_tokens ;;
-        6) deploy_node ;;
-        7) exit 0 ;;
+        1)
+            read -p "Choose a sub-option: " SUB_OPTION
+            case $SUB_OPTION in
+                a) deploy_validator_node ;;
+                b) create_validator ;;
+                c) query_balance ;;
+                d) send_transaction ;;
+                e) stake_tokens ;;
+                f) unstake_tokens ;;
+                g) export_evm_private_key ;;
+                *) echo "Invalid sub-option. Please try again." ;;
+            esac
+            ;;
+        2) deploy_storage_node ;;
+        3) deploy_storage_kv ;;
+        4) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
 }
@@ -133,22 +153,3 @@ function menu() {
 while true; do
     menu
 done
-
-please restructure the numbering. 'deploy_node' become 'validator_node' 
-
-1. validator_node
-    a. deploy_validator_node
-    b. create_validator
-    c. query_balance
-    d. send_transaction
-    e. stake_tokens
-    f. unstake_tokens
-    g. export_evm_private_key
-    h. 
-2. deploy_storage_node
-3. deploy_storage_kv
-
-the command:
-
-export_evm_private_key: 0gchaind keys unsafe-export-eth-key $WALLET
-deploy_storage_node: 
