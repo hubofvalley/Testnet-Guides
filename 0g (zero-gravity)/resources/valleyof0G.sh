@@ -74,6 +74,7 @@ echo "$ENDPOINTS"
 # Validator Node Functions
 function deploy_validator_node() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_validator_node_install.sh)
+    menu
 }
 
 function create_validator() {
@@ -99,11 +100,13 @@ function create_validator() {
     --details="let's buidl 0g together" \
     --gas=auto --gas-adjustment=1.4 \
     -y
+    menu
 }
 
 function query_balance() {
     read -p "Enter wallet address: " WALLET_ADDRESS
     0gchaind query bank balances $WALLET_ADDRESS --chain-id $OG_CHAIN_ID
+    menu
 }
 
 function send_transaction() {
@@ -111,6 +114,7 @@ function send_transaction() {
     read -p "Enter recipient wallet address: " RECIPIENT_ADDRESS
     read -p "Enter amount to send: " AMOUNT
     0gchaind tx bank send $SENDER_WALLET $RECIPIENT_ADDRESS $AMOUNT --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
+    menu
 }
 
 function stake_tokens() {
@@ -118,6 +122,7 @@ function stake_tokens() {
     read -p "Enter validator address: " VALIDATOR_ADDRESS
     read -p "Enter amount to stake: " AMOUNT
     0gchaind tx staking delegate $VALIDATOR_ADDRESS $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
+    menu
 }
 
 function unstake_tokens() {
@@ -125,31 +130,37 @@ function unstake_tokens() {
     read -p "Enter validator address: " VALIDATOR_ADDRESS
     read -p "Enter amount to unstake: " AMOUNT
     0gchaind tx staking unbond $VALIDATOR_ADDRESS $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
+    menu
 }
 
 function export_evm_private_key() {
     read -p "Enter wallet name: " WALLET_NAME
     0gchaind keys unsafe-export-eth-key $WALLET_NAME
+    menu
 }
 
 function restore_wallet() {
     read -p "Enter wallet name: " WALLET_NAME
     0gchaind keys add $WALLET_NAME --recover --eth
+    menu
 }
 
 function create_wallet() {
     read -p "Enter wallet name: " WALLET_NAME
     0gchaind keys add $WALLET_NAME --eth
+    menu
 }
 
 # Storage Node Functions
 function deploy_storage_node() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_node_install.sh)
+    menu
 }
 
 # Storage KV Functions
 function deploy_storage_kv() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_kv_install.sh)
+    menu
 }
 
 # Menu
