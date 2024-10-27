@@ -15,7 +15,7 @@
   - [Grand Valley's 0G public endpoints:](#grand-valleys-0g-public-endpoints)
   - [Valley Of 0G. 0G tools created by Grand Valley](#valley-of-0g-0g-tools-created-by-grand-valley)
     - [Key Features of Valley of 0G](#key-features-of-valley-of-0g)
-      - [In short, Valley of 0G is a streamlined solution for supporting blockchain infrastructure, making decentralized applications easier to scale and manage.](#in-short-valley-of-0g-is-a-streamlined-solution-for-supporting-blockchain-infrastructure-making-decentralized-applications-easier-to-scale-and-manage)
+    - [In short, Valley of 0G is a streamlined solution for supporting blockchain infrastructure, making decentralized applications easier to scale and manage.](#in-short-valley-of-0g-is-a-streamlined-solution-for-supporting-blockchain-infrastructure-making-decentralized-applications-easier-to-scale-and-manage)
   - [0G Validator Node Deployment Guide With Cosmovisor](#0g-validator-node-deployment-guide-with-cosmovisor)
     - [**System Requirements**](#system-requirements)
   - [Validator Node Manual installation](#validator-node-manual-installation)
@@ -142,7 +142,7 @@ In summary, Valley of 0G supports the growth and security of the 0G network by o
 
 5. **Community and Accessibility**: Valley of 0G offers public endpoints and active community support, allowing developers and users to connect easily and stay engaged with the network.
 
-#### In short, Valley of 0G is a streamlined solution for supporting blockchain infrastructure, making decentralized applications easier to scale and manage.
+### In short, Valley of 0G is a streamlined solution for supporting blockchain infrastructure, making decentralized applications easier to scale and manage.
 
 ## 0G Validator Node Deployment Guide With Cosmovisor
 
