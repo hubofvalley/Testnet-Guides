@@ -209,7 +209,7 @@ go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 EDIT YOUR MONIKER & YOUR PREFERRED PORT NUMBER
 
 ```bash
-read -p "Enter your moniker: " MONIKER && echo "Current moniker: $MONIKER" && read -p "Enter your 2 digits custom port: (default: 26)" OG_PORT && echo "Current port number: $OG_PORT"
+read -p "Enter your moniker: " MONIKER && echo "Current moniker: $MONIKER" && read -p "Enter your 2 digits custom port: (default: 26)" STORY_PORT && echo "Current port number: $STORY_PORT"
 echo "export MONIKER="$MONIKER"" >> $HOME/.bash_profile
 echo "export STORY_CHAIN_ID="iliad"" >> $HOME/.bash_profile
 echo "export STORY_PORT="$STORY_PORT"" >> $HOME/.bash_profile
@@ -336,7 +336,7 @@ EOF
 ```bash
 sudo tee /etc/systemd/system/story-geth.service > /dev/null <<EOF
 [Unit]
-Description=Story Geth daemon
+Description=Story Geth node
 After=network-online.target
 
 [Service]
