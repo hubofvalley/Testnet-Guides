@@ -166,7 +166,7 @@ function deploy_storage_kv() {
 # Menu
 function menu() {
     echo "1. Validator Node"
-    echo "    a. Deploy Validator Node"
+    echo "    a. Deploy Validator Node (Cosmovisor applied)"
     echo "    b. Create Validator"
     echo "    c. Query Balance"
     echo "    d. Send Transaction"
