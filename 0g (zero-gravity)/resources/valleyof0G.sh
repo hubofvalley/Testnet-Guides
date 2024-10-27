@@ -164,6 +164,17 @@ function create_wallet() {
     menu
 }
 
+function delete_validator_node() {
+    sudo systemctl stop 0gchaind
+    sudo systemctl disable 0gchaind
+    sudo rm -rf /etc/systemd/system/0gchaind.service
+    sudo rm -r 0g-chain
+    sudo rm -rf $HOME/.0gchain
+    sed -i "/OG_/d" $HOME/.bash_profile
+    echo "Validator node deleted successfully."
+    menu
+}
+
 # Storage Node Functions
 function deploy_storage_node() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_node_install.sh)
@@ -177,7 +188,8 @@ function update_storage_node() {
 
 function delete_storage_node() {
     sudo systemctl stop zgs
-    sudo systemctl daemon-reload
+    sudo systemctl disable zgs
+    sudo rm -rf /etc/systemd/system/zgs.service
     sudo rm -r $HOME/0g-storage-node
     echo "Storage node deleted successfully."
     menu
@@ -206,6 +218,7 @@ function menu() {
     echo "    g. Export EVM Private Key"
     echo "    h. Restore Wallet"
     echo "    i. Create Wallet"
+    echo "    j. Delete Validator Node"
     echo "2. Storage Node"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
@@ -228,6 +241,7 @@ function menu() {
                 g) export_evm_private_key ;;
                 h) restore_wallet ;;
                 i) create_wallet ;;
+                j) delete_validator_node ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
