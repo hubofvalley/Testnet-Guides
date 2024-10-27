@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LOGO="
- __      __     _  _                        __    ___    _____  
+ __      __     _  _                        __    ___    _____
  \ \    / /    | || |                      / _|  / _ \  / ____|
   \ \  / /__ _ | || |  ___  _   _    ___  | |_  | | | || |  __
   _\ \/ // _\` || || | / _ \\| | | |  / _ \\|  _| | | | || | |_ |
@@ -225,6 +225,7 @@ function menu() {
     echo "    c. Delete Storage Node"
     echo "    d. Change Storage Node"
     echo "3. Storage KV"
+    echo "    a. Deploy Storage KV"
     echo "4. Exit"
     read -p "Choose an option: " OPTION
 
@@ -255,7 +256,13 @@ function menu() {
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
-        3) deploy_storage_kv ;;
+        3)
+            read -p "Choose a sub-option: " SUB_OPTION
+            case $SUB_OPTION in
+                a) deploy_storage_kv ;;
+                *) echo "Invalid sub-option. Please try again." ;;
+            esac
+            ;;
         4) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
