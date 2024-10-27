@@ -1,6 +1,17 @@
 #!/bin/bash
 
 LOGO="
+ __      __     _  _                        __    ___    _____  
+ \ \    / /    | || |                      / _|  / _ \  / ____|
+  \ \  / /__ _ | || |  ___  _   _    ___  | |_  | | | || |  __
+  _\ \/ // _` || || | / _ \| | | |  / _ \ |  _| | | | || | |_ |
+ | |\  /| (_| || || ||  __/| |_| | | (_) || |   | |_| || |__| |
+ | |_\/  \__,_||_||_| \___| \__, |  \___/ |_|    \___/  \_____|
+ | '_ \ | | | |              __/ |
+ | |_) || |_| |             |___/
+ |_.__/  \__, |
+          __/ |
+         |___/
  __
 /__ ._ _. ._   _|   \  / _. | |  _
 \_| | (_| | | (_|    \/ (_| | | (/_ \/
@@ -8,14 +19,14 @@ LOGO="
 "
 
 ENDPOINTS="
-Grand Valley's 0G public endpoints:
+Valley Of 0G public endpoints:
 - cosmos rpc: `https://lightnode-rpc-0g.grandvalleys.com`
 - json-rpc: `https://lightnode-json-rpc-0g.grandvalleys.com`
 - cosmos rest-api: `https://lightnode-api-0g.grandvalleys.com`
 "
 
 INTRO="
-hubof0G by Grand Valley
+Valley Of 0G by Grand Valley
 
 0G Validator Node System Requirements
 | Category  | Requirements                   |
@@ -66,10 +77,28 @@ function deploy_validator_node() {
 }
 
 function create_validator() {
-    read -p "Enter wallet name: " WALLET_NAME
-    read -p "Enter validator name: " VALIDATOR_NAME
-    read -p "Enter amount to stake: " AMOUNT
-    0gchaind tx staking create-validator --pubkey=$(0gchaind tendermint show-validator) --amount=$AMOUNT --from=$WALLET_NAME --commission-rate="0.10" --commission-max-rate="0.20" --commission-max-change-rate="0.01" --min-self-delegation="1" --moniker=$VALIDATOR_NAME --chain-id=$OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
+    read -p "Enter wallet name: " WALLET
+    read -p "Enter validator name (moniker): " MONIKER
+    read -p "Enter your identity: " IDENTITY
+    read -p "Enter your website URL: " WEBSITE
+    read -p "Enter your email: " EMAIL
+
+    0gchaind tx staking create-validator \
+    --amount=1000000ua0gi \
+    --pubkey=$(0gchaind tendermint show-validator) \
+    --moniker=$MONIKER \
+    --chain-id=$OG_CHAIN_ID \
+    --commission-rate=0.10 \
+    --commission-max-rate=0.20 \
+    --commission-max-change-rate=0.01 \
+    --min-self-delegation=1 \
+    --from=$WALLET \
+    --identity=$IDENTITY \
+    --website=$WEBSITE \
+    --security-contact=$EMAIL \
+    --details="let's buidl 0g together" \
+    --gas=auto --gas-adjustment=1.4 \
+    -y
 }
 
 function query_balance() {
@@ -103,6 +132,16 @@ function export_evm_private_key() {
     0gchaind keys unsafe-export-eth-key $WALLET_NAME
 }
 
+function restore_wallet() {
+    read -p "Enter wallet name: " WALLET_NAME
+    0gchaind keys add $WALLET_NAME --recover --eth
+}
+
+function create_wallet() {
+    read -p "Enter wallet name: " WALLET_NAME
+    0gchaind keys add $WALLET_NAME --eth
+}
+
 # Storage Node Functions
 function deploy_storage_node() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_node_install.sh)
@@ -123,6 +162,8 @@ function menu() {
     echo "    e. Stake Tokens"
     echo "    f. Unstake Tokens"
     echo "    g. Export EVM Private Key"
+    echo "    h. Restore Wallet"
+    echo "    i. Create Wallet"
     echo "2. Storage Node"
     echo "3. Storage KV"
     echo "4. Exit"
@@ -139,6 +180,8 @@ function menu() {
                 e) stake_tokens ;;
                 f) unstake_tokens ;;
                 g) export_evm_private_key ;;
+                h) restore_wallet ;;
+                i) create_wallet ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
