@@ -175,6 +175,11 @@ function delete_validator_node() {
     menu
 }
 
+function show_validator_logs() {
+    sudo journalctl -u 0gchaind -fn 100
+    menu
+}
+
 # Storage Node Functions
 function deploy_storage_node() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_node_install.sh)
@@ -200,9 +205,19 @@ function change_storage_node() {
     menu
 }
 
+function show_storage_logs() {
+    tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d)
+    menu
+}
+
 # Storage KV Functions
 function deploy_storage_kv() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_kv_install.sh)
+    menu
+}
+
+function show_storage_kv_logs() {
+    sudo journalctl -u zgskv -fn 100
     menu
 }
 
@@ -219,13 +234,16 @@ function menu() {
     echo "    h. Restore Wallet"
     echo "    i. Create Wallet"
     echo "    j. Delete Validator Node"
+    echo "    k. Show Validator Logs"
     echo "2. Storage Node"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
     echo "    c. Delete Storage Node"
     echo "    d. Change Storage Node"
+    echo "    e. Show Storage Node Logs"
     echo "3. Storage KV"
     echo "    a. Deploy Storage KV"
+    echo "    b. Show Storage KV Logs"
     echo "4. Exit"
     read -p "Choose an option: " OPTION
 
@@ -243,6 +261,7 @@ function menu() {
                 h) restore_wallet ;;
                 i) create_wallet ;;
                 j) delete_validator_node ;;
+                k) show_validator_logs ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
@@ -253,6 +272,7 @@ function menu() {
                 b) update_storage_node ;;
                 c) delete_storage_node ;;
                 d) change_storage_node ;;
+                e) show_storage_logs ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
@@ -260,6 +280,7 @@ function menu() {
             read -p "Choose a sub-option: " SUB_OPTION
             case $SUB_OPTION in
                 a) deploy_storage_kv ;;
+                b) show_storage_kv_logs ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
