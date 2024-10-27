@@ -2,7 +2,7 @@
 
 # Prompt user for moniker and port number
 read -p "Enter your moniker: " MONIKER
-read -p "Enter your custom port number (2 digits): " OG_PORT
+read -p "Enter your custom port number (2 digits, default: 26): " OG_PORT
 
 # Stop and remove existing 0G node
 sudo systemctl daemon-reload
