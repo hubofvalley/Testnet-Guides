@@ -38,7 +38,6 @@
       - [save the results, they'll be used in the next step](#save-the-results-theyll-be-used-in-the-next-step)
       - [this is an example of the result](#this-is-an-example-of-the-result)
     - [19. create service file](#19-create-service-file)
-      - [this is an example of the edited service file](#this-is-an-example-of-the-edited-service-file)
     - [20. start the node](#20-start-the-node)
     - [this is an example of the node is running well](#this-is-an-example-of-the-node-is-running-well)
     - [21. check node version](#21-check-node-version)
@@ -336,10 +335,6 @@ Environment="UNSAFE_SKIP_BACKUP=true"
 WantedBy=multi-user.target
 EOF
 ```
-
-#### this is an example of the edited service file
-
-![image](https://github.com/user-attachments/assets/c502e089-bb81-498c-a0bb-7e7c1cd9f25a)
 
 ### 20. start the node
 

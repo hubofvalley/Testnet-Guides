@@ -36,7 +36,6 @@
       - [this is an example of the result](#this-is-an-example-of-the-result)
     - [12. create service files](#12-create-service-files)
         - [consensus client service file](#consensus-client-service-file)
-      - [this is an example of the edited consensus client service file](#this-is-an-example-of-the-edited-consensus-client-service-file)
         - [geth service file](#geth-service-file)
     - [13. start the node](#13-start-the-node)
       - [start geth \& consensus client](#start-geth--consensus-client)
@@ -326,10 +325,6 @@ Environment="UNSAFE_SKIP_BACKUP=true"
 WantedBy=multi-user.target
 EOF
 ```
-
-#### this is an example of the edited consensus client service file
-
-![image](https://github.com/user-attachments/assets/80bcf6ea-42d7-4eda-8303-a44808d125e6)
 
 ##### geth service file
 
