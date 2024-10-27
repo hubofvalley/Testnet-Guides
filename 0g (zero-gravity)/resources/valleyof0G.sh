@@ -4,25 +4,18 @@ LOGO="
  __      __     _  _                        __    ___    _____  
  \ \    / /    | || |                      / _|  / _ \  / ____|
   \ \  / /__ _ | || |  ___  _   _    ___  | |_  | | | || |  __
-  _\ \/ // _\` || || | / _ \| | | |  / _ \ |  _| | | | || | |_ |
+  _\ \/ // _\` || || | / _ \\| | | |  / _ \\|  _| | | | || | |_ |
  | |\  /| (_| || || ||  __/| |_| | | (_) || |   | |_| || |__| |
- | |_\/  \__,_||_||_| \___| \__, |  \___/ |_|    \___/  \_____|
- | '_ \ | | | |              __/ |
+ | |_\/  \\__,_||_||_| \\___| \\__, |  \\___/ |_|    \\___/  \\_____|
+ | '_ \\ | | | |              __/ |
  | |_) || |_| |             |___/
- |_.__/  \__, |
+ |_.__/  \\__, |
           __/ |
          |___/
  __
-/__ ._ _. ._   _|   \  / _. | |  _
-\_| | (_| | | (_|    \/ (_| | | (/_ \/
+/__ ._ _. ._   _|   \\  / _. | |  _
+\\_| | (_| | | (_|    \\/ (_| | | (/\\ /
                                     /
-"
-
-ENDPOINTS="
-Valley Of 0G public endpoints:
-- cosmos rpc: https://lightnode-rpc-0g.grandvalleys.com
-- json-rpc: https://lightnode-json-rpc-0g.grandvalleys.com
-- cosmos rest-api: https://lightnode-api-0g.grandvalleys.com
 "
 
 INTRO="
@@ -64,10 +57,33 @@ Storage KV System Requirements
 storage kvs current binary version: v1.2.2
 
 ------------------------------------------------------------------
+
 "
 
+ENDPOINTS="
+Grand Valley 0G public endpoints:
+- cosmos rpc: https://lightnode-rpc-0g.grandvalleys.com
+- json-rpc: https://lightnode-json-rpc-0g.grandvalleys.com
+- cosmos rest-api: https://lightnode-api-0g.grandvalleys.com
+
+Grand Valley social media:
+- X: https://x.com/bacvalley
+- GitHub: https://github.com/hubofvalley
+- Email: letsbuidltogether@grandvalleys.com
+
+"
+
+# Display LOGO and wait for user input to continue
 echo "$LOGO"
+echo -e "\nPress Enter to continue..."
+read -r
+
+# Display INTRO section and wait for user input to continue
 echo "$INTRO"
+echo -e "\nPress Enter to continue"
+read -r
+
+# Display ENDPOINTS section
 echo "$ENDPOINTS"
 
 # Validator Node Functions
@@ -86,16 +102,16 @@ function create_validator() {
     0gchaind tx staking create-validator \
     --amount=1000000ua0gi \
     --pubkey=$(0gchaind tendermint show-validator) \
-    --moniker="$MONIKER" \
-    --chain-id="$OG_CHAIN_ID" \
+    --moniker=$MONIKER \
+    --chain-id=$OG_CHAIN_ID \
     --commission-rate=0.10 \
     --commission-max-rate=0.20 \
     --commission-max-change-rate=0.01 \
     --min-self-delegation=1 \
-    --from="$WALLET" \
-    --identity="$IDENTITY" \
-    --website="$WEBSITE" \
-    --security-contact="$EMAIL" \
+    --from=$WALLET \
+    --identity=$IDENTITY \
+    --website=$WEBSITE \
+    --security-contact=$EMAIL \
     --details="let's buidl 0g together" \
     --gas=auto --gas-adjustment=1.4 \
     -y
@@ -104,7 +120,7 @@ function create_validator() {
 
 function query_balance() {
     read -p "Enter wallet address: " WALLET_ADDRESS
-    0gchaind query bank balances "$WALLET_ADDRESS" --chain-id "$OG_CHAIN_ID"
+    0gchaind query bank balances $WALLET_ADDRESS --chain-id $OG_CHAIN_ID
     menu
 }
 
@@ -112,7 +128,7 @@ function send_transaction() {
     read -p "Enter sender wallet name: " SENDER_WALLET
     read -p "Enter recipient wallet address: " RECIPIENT_ADDRESS
     read -p "Enter amount to send: " AMOUNT
-    0gchaind tx bank send "$SENDER_WALLET" "$RECIPIENT_ADDRESS" "$AMOUNT" --chain-id "$OG_CHAIN_ID" --gas auto --fees 5000ua0gi -y
+    0gchaind tx bank send $SENDER_WALLET $RECIPIENT_ADDRESS $AMOUNT --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
     menu
 }
 
@@ -120,7 +136,7 @@ function stake_tokens() {
     read -p "Enter wallet name: " WALLET_NAME
     read -p "Enter validator address: " VALIDATOR_ADDRESS
     read -p "Enter amount to stake: " AMOUNT
-    0gchaind tx staking delegate "$VALIDATOR_ADDRESS" "$AMOUNT" --from "$WALLET_NAME" --chain-id "$OG_CHAIN_ID" --gas auto --fees 5000ua0gi -y
+    0gchaind tx staking delegate $VALIDATOR_ADDRESS $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
     menu
 }
 
@@ -128,25 +144,25 @@ function unstake_tokens() {
     read -p "Enter wallet name: " WALLET_NAME
     read -p "Enter validator address: " VALIDATOR_ADDRESS
     read -p "Enter amount to unstake: " AMOUNT
-    0gchaind tx staking unbond "$VALIDATOR_ADDRESS" "$AMOUNT" --from "$WALLET_NAME" --chain-id "$OG_CHAIN_ID" --gas auto --fees 5000ua0gi -y
+    0gchaind tx staking unbond $VALIDATOR_ADDRESS $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
     menu
 }
 
 function export_evm_private_key() {
     read -p "Enter wallet name: " WALLET_NAME
-    0gchaind keys unsafe-export-eth-key "$WALLET_NAME"
+    0gchaind keys unsafe-export-eth-key $WALLET_NAME
     menu
 }
 
 function restore_wallet() {
     read -p "Enter wallet name: " WALLET_NAME
-    0gchaind keys add "$WALLET_NAME" --recover --eth
+    0gchaind keys add $WALLET_NAME --recover --eth
     menu
 }
 
 function create_wallet() {
     read -p "Enter wallet name: " WALLET_NAME
-    0gchaind keys add "$WALLET_NAME" --eth
+    0gchaind keys add $WALLET_NAME --eth
     menu
 }
 
@@ -179,10 +195,10 @@ function menu() {
     echo "4. Exit"
     read -p "Choose an option: " OPTION
 
-    case "$OPTION" in
+    case $OPTION in
         1)
             read -p "Choose a sub-option: " SUB_OPTION
-            case "$SUB_OPTION" in
+            case $SUB_OPTION in
                 a) deploy_validator_node ;;
                 b) create_validator ;;
                 c) query_balance ;;
