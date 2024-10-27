@@ -16,7 +16,7 @@
   - [0G Node Deployment Guide With Cosmovisor](#0g-node-deployment-guide-with-cosmovisor)
     - [**System Requirements**](#system-requirements)
   - [Valley Of 0G. 0G tools created by Grand Valley](#valley-of-0g-0g-tools-created-by-grand-valley)
-  - [Manual installation](#manual-installation)
+  - [Validator Node Manual installation](#validator-node-manual-installation)
     - [1. Install dependencies for building from source](#1-install-dependencies-for-building-from-source)
     - [2. install go](#2-install-go)
     - [3. install cosmovisor](#3-install-cosmovisor)
@@ -135,7 +135,7 @@ With Public Testnet, 0G’s docs and code become public. Check them out below! -
 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/valleyof0G.sh)
 ```
 
-## Manual installation
+## Validator Node Manual installation
 
 ### 1. Install dependencies for building from source
 
