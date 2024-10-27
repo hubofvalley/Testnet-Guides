@@ -20,9 +20,9 @@ LOGO="
 
 ENDPOINTS="
 Valley Of 0G public endpoints:
-- cosmos rpc: https://lightnode-rpc-0g.grandvalleys.com
-- json-rpc: https://lightnode-json-rpc-0g.grandvalleys.com
-- cosmos rest-api: https://lightnode-api-0g.grandvalleys.com
+- cosmos rpc: 'https://lightnode-rpc-0g.grandvalleys.com'
+- json-rpc: 'https://lightnode-json-rpc-0g.grandvalleys.com'
+- cosmos rest-api: 'https://lightnode-api-0g.grandvalleys.com'
 "
 
 INTRO="
@@ -50,7 +50,7 @@ Storage Node System Requirements
 | Storage   | 500GB / 1TB NVMe SSD           |
 | Bandwidth | 100 MBps for Download / Upload |
 
-storage node's current binary version: `v0.6.1`
+storage node's current binary version: 'v0.6.1'
 
 ------------------------------------------------------------------
 
@@ -61,7 +61,7 @@ Storage KV System Requirements
 | RAM      | 32+ GB                                      |
 | Storage  | Matches the size of kv streams it maintains |
 
-storage kv's current binary version: `v1.2.2`
+storage kv's current binary version: 'v1.2.2'
 
 ------------------------------------------------------------------
 
