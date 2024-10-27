@@ -38,9 +38,6 @@
       - [save the results, they'll be used in the next step](#save-the-results-theyll-be-used-in-the-next-step)
       - [this is an example of the result](#this-is-an-example-of-the-result)
     - [19. create service file](#19-create-service-file)
-      - [edit the `<input 1>` with the value of `input 1`](#edit-the-input-1-with-the-value-of-input-1)
-      - [edit the `<input 2>` with the result of `input 2`](#edit-the-input-2-with-the-result-of-input-2)
-      - [edit the `<input 3>` with the result of `input 3`](#edit-the-input-3-with-the-result-of-input-3)
       - [this is an example of the edited service file](#this-is-an-example-of-the-edited-service-file)
     - [20. start the node](#20-start-the-node)
     - [this is an example of the node is running well](#this-is-an-example-of-the-node-is-running-well)
@@ -314,12 +311,6 @@ echo "input3. $input3"
 
 ### 19. create service file
 
-#### edit the `<input 1>` with the value of `input 1`
-
-#### edit the `<input 2>` with the result of `input 2`
-
-#### edit the `<input 3>` with the result of `input 3`
-
 ```bash
 sudo tee /etc/systemd/system/0gchaind.service > /dev/null <<EOF
 [Unit]
@@ -330,14 +321,14 @@ After=network.target
 User=$USER
 Type=simple
 WorkingDirectory=$HOME/.0gchain
-ExecStart=<input 1> run start --log_output_console
+ExecStart=$input1 run start --log_output_console
 Restart=on-failure
 LimitNOFILE=65535
 Environment="DAEMON_NAME=0gchaind"
-Environment="DAEMON_HOME=<input 2>"
+Environment="DAEMON_HOME=$input2"
 Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=true"
 Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
-Environment="DAEMON_DATA_BACKUP_DIR=<input 3>"
+Environment="DAEMON_DATA_BACKUP_DIR=$input3"
 Environment="UNSAFE_SKIP_BACKUP=true"
 
 [Install]

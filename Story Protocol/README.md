@@ -35,10 +35,7 @@
       - [save the results, they'll be used in the next step](#save-the-results-theyll-be-used-in-the-next-step)
       - [this is an example of the result](#this-is-an-example-of-the-result)
     - [12. create service files](#12-create-service-files)
-      - [edit the `<input 1>` with the value of `input 1`](#edit-the-input-1-with-the-value-of-input-1)
-      - [edit the `<input 2>` with the result of `input 2`](#edit-the-input-2-with-the-result-of-input-2)
-      - [edit the `<input 3>` with the result of `input 3`](#edit-the-input-3-with-the-result-of-input-3)
-        - [consensus service file](#consensus-service-file)
+        - [consensus client service file](#consensus-client-service-file)
       - [this is an example of the edited consensus client service file](#this-is-an-example-of-the-edited-consensus-client-service-file)
         - [geth service file](#geth-service-file)
     - [13. start the node](#13-start-the-node)
@@ -302,13 +299,7 @@ echo "input3. $input3"
 
 ### 12. create service files
 
-#### edit the `<input 1>` with the value of `input 1`
-
-#### edit the `<input 2>` with the result of `input 2`
-
-#### edit the `<input 3>` with the result of `input 3`
-
-##### consensus service file
+##### consensus client service file
 
 ```bash
 sudo tee /etc/systemd/system/story.service > /dev/null <<EOF
@@ -320,14 +311,14 @@ After=network.target
 User=$USER
 Type=simple
 WorkingDirectory=$HOME/.story/story
-ExecStart=<input 1> run run
+ExecStart=$input1 run run
 Restart=on-failure
 LimitNOFILE=65535
 Environment="DAEMON_NAME=story"
-Environment="DAEMON_HOME=<input 2>"
+Environment="DAEMON_HOME=$input2"
 Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=true"
 Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
-Environment="DAEMON_DATA_BACKUP_DIR=<input 3>"
+Environment="DAEMON_DATA_BACKUP_DIR=$input3"
 Environment="UNSAFE_SKIP_BACKUP=true"
 
 [Install]

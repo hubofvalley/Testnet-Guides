@@ -194,3 +194,5 @@ fi
 
 # show the full logs
 echo "run this to show the full logs: sudo journalctl -u 0gchaind -fn 100"
+
+echo "Let's Buidl 0G Together"
