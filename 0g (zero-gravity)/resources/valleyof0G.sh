@@ -20,9 +20,9 @@ LOGO="
 
 ENDPOINTS="
 Valley Of 0G public endpoints:
-- cosmos rpc: `https://lightnode-rpc-0g.grandvalleys.com`
-- json-rpc: `https://lightnode-json-rpc-0g.grandvalleys.com`
-- cosmos rest-api: `https://lightnode-api-0g.grandvalleys.com`
+- cosmos rpc: https://lightnode-rpc-0g.grandvalleys.com
+- json-rpc: https://lightnode-json-rpc-0g.grandvalleys.com
+- cosmos rest-api: https://lightnode-api-0g.grandvalleys.com
 "
 
 INTRO="
@@ -166,7 +166,7 @@ function deploy_storage_kv() {
 # Menu
 function menu() {
     echo "1. Validator Node"
-    echo "    a. Deploy Validator Node (Cosmovisor applied)"
+    echo "    a. Deploy Validator Node"
     echo "    b. Create Validator"
     echo "    c. Query Balance"
     echo "    d. Send Transaction"

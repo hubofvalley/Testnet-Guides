@@ -1,39 +1,5 @@
 #!/bin/bash
 
-LOGO="
- __                                   
-/__ ._ _. ._   _|   \  / _. | |  _    
-\_| | (_| | | (_|    \/ (_| | | (/_ \/
-                                    /
-"
-
-ENDPOINTS="
-Grand Valley's 0G public endpoints:
-- cosmos rpc: \`https://lightnode-rpc-0g.grandvalleys.com\`
-- json-rpc: \`https://lightnode-json-rpc-0g.grandvalleys.com\`
-- cosmos rest-api: \`https://lightnode-api-0g.grandvalleys.com\`
-"
-
-INTRO="
-0G Node Automatic Deployment With Cosmovisor
-
-System Requirements
-| Category  | Requirements                   |
-| --------- | ------------------------------ |
-| CPU       | 8 cores                        |
-| RAM       | 64+ GB                         |
-| Storage   | 1+ TB NVMe SSD                 |
-| Bandwidth | 100 MBps for Download / Upload |
-
-guide's current binaries version: v0.2.5 will automatically update to the latest version
-service file name: 0gchaind.service
-current chain : zgtendermint_16600-2
-"
-
-echo "$LOGO"
-echo "$INTRO"
-echo "$ENDPOINTS"
-
 # Prompt user for moniker and port number
 read -p "Enter your moniker: " MONIKER
 read -p "Enter your custom port number (2 digits): " OG_PORT
