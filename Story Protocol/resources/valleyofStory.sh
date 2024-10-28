@@ -91,7 +91,7 @@ function query_balance() {
     case $choice in
         1)
             echo "Querying balance of your own EVM address..."
-            geth --exec "eth.getBalance('$(story validator export | grep -oP '(?<=EVM Public Key: ).*')')" attach $HOME/.story/geth/odyssey/geth.ipc
+            geth --exec "eth.getBalance('$(story validator export | grep -oP '(?<=EVM Address: ).*')')" attach $HOME/.story/geth/odyssey/geth.ipc
             ;;
         2)
             read -p "Enter the EVM address to query: " evm_address
@@ -136,7 +136,7 @@ function export_evm_private_key() {
 }
 
 function export_evm_public_key() {
-    story validator export | grep -oP '(?<=EVM Public Key: ).*'
+    story validator export | grep -oP '(?<=EVM Address: ).*'
     menu
 }
 
@@ -192,6 +192,30 @@ function show_node_status() {
     menu
 }
 
+function add_peers() {
+    echo "Select an option:"
+    echo "1. Add peers manually"
+    echo "2. Use Grand Valley's peers"
+    read -p "Enter your choice (1 or 2): " choice
+
+    case $choice in
+        1)
+            read -p "Enter peers (comma-separated): " peers
+            sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.story/story/config/config.toml
+            echo "Peers added manually."
+            ;;
+        2)
+            peers=$(curl -sS https://lightnode-rpc-story.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
+            sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.story/story/config/config.toml
+            echo "Grand Valley's peers added."
+            ;;
+        *)
+            echo "Invalid choice. Please enter 1 or 2."
+            ;;
+    esac
+    menu
+}
+
 # Menu
 function menu() {
     echo "1. Deploy Validator Node"
@@ -201,7 +225,7 @@ function menu() {
     echo "5. Stake Tokens"
     echo "6. Unstake Tokens"
     echo "7. Export EVM Private Key"
-    echo "8. Export EVM Public Key"
+    echo "8. Export EVM Address"
     echo "9. Delete Validator Node"
     echo "10. Stop Consensus Client"
     echo "11. Restart Consensus Client"
@@ -210,7 +234,8 @@ function menu() {
     echo "14. Show Consensus Client Logs"
     echo "15. Show Geth Logs"
     echo "16. Show Node Status"
-    echo "17. Exit"
+    echo "17. Add Peers"
+    echo "18. Exit"
     read -p "Choose an option: " OPTION
 
     case $OPTION in
@@ -230,7 +255,8 @@ function menu() {
         14) show_consensus_client_logs ;;
         15) show_geth_logs ;;
         16) show_node_status ;;
-        17) exit 0 ;;
+        17) add_peers ;;
+        18) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
 }
