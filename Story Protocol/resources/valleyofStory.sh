@@ -4,7 +4,7 @@ LOGO="
  __      __     _  _                        __    _____  _                       
  \ \    / /    | || |                      / _|  / ____|| |                      
   \ \  / /__ _ | || |  ___  _   _    ___  | |_  | (___  | |_  ___   _ __  _   _  
-  _\ \/ // _` || || | / _ \| | | |  / _ \ |  _|  \___ \ | __|/ _ \ | '__|| | | | 
+  _\ \/ // _\` || || | / _ \| | | |  / _ \ |  _|  \___ \ | __|/ _ \ | '__|| | | | 
  | |\  /| (_| || || ||  __/| |_| | | (_) || |    ____) || |_| (_) || |   | |_| | 
  | |_\/  \__,_||_||_| \___| \__, |  \___/ |_|   |_____/  \__|\___/ |_|    \__, | 
  | '_ \ | | | |              __/ |                                         __/ | 
@@ -129,7 +129,6 @@ function unstake_tokens() {
     menu
 }
 
-
 function export_evm_private_key() {
     story validator export --evm-key-path $HOME/.story/story/config/private_key.txt --export-evm-key
     cat $HOME/.story/story/config/private_key.txt
@@ -205,7 +204,7 @@ function menu() {
         11) show_consensus_client_logs ;;
         12) show_geth_logs ;;
         13) show_node_status ;;
-        13) exit 0 ;;
+        14) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
 }
