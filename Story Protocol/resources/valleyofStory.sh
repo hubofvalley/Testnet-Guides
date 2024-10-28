@@ -140,13 +140,6 @@ function export_evm_public_key() {
     menu
 }
 
-function restore_wallet() {
-    echo "Enter priv_validator_key in JSON format:"
-    read -r PRIV_VALIDATOR_KEY_JSON
-    echo "$PRIV_VALIDATOR_KEY_JSON" > $HOME/.story/story/config/priv_validator_key.json
-    menu
-}
-
 function delete_validator_node() {
     sudo systemctl stop story story-geth
     sudo systemctl disable story story-geth
@@ -177,6 +170,7 @@ function stop_geth() {
 }
 
 function restart_geth() {
+    sudo systemctl daemon-reload
     sudo systemctl restart story-geth
     echo "Geth service restarted."
     menu
@@ -207,16 +201,15 @@ function menu() {
     echo "6. Unstake Tokens"
     echo "7. Export EVM Private Key"
     echo "8. Export EVM Public Key"
-    echo "9. Restore Wallet"
-    echo "10. Delete Validator Node"
-    echo "11. Stop Consensus Client"
-    echo "12. Restart Consensus Client"
-    echo "13. Stop Geth Service"
-    echo "14. Restart Geth Service"
-    echo "15. Show Consensus Client Logs"
-    echo "16. Show Geth Logs"
-    echo "17. Show Node Status"
-    echo "18. Exit"
+    echo "9. Delete Validator Node"
+    echo "10. Stop Consensus Client"
+    echo "11. Restart Consensus Client"
+    echo "12. Stop Geth Service"
+    echo "13. Restart Geth Service"
+    echo "14. Show Consensus Client Logs"
+    echo "15. Show Geth Logs"
+    echo "16. Show Node Status"
+    echo "17. Exit"
     read -p "Choose an option: " OPTION
 
     case $OPTION in
@@ -228,16 +221,15 @@ function menu() {
         6) unstake_tokens ;;
         7) export_evm_private_key ;;
         8) export_evm_public_key ;;
-        9) restore_wallet ;;
-        10) delete_validator_node ;;
-        11) stop_consensus_client ;;
-        12) restart_consensus_client ;;
-        13) stop_geth ;;
-        14) restart_geth ;;
-        15) show_consensus_client_logs ;;
-        16) show_geth_logs ;;
-        17) show_node_status ;;
-        18) exit 0 ;;
+        9) delete_validator_node ;;
+        10) stop_consensus_client ;;
+        11) restart_consensus_client ;;
+        12) stop_geth ;;
+        13) restart_geth ;;
+        14) show_consensus_client_logs ;;
+        15) show_geth_logs ;;
+        16) show_node_status ;;
+        17) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
 }
