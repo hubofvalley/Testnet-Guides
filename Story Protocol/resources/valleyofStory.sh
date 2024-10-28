@@ -213,6 +213,7 @@ function add_peers() {
             echo "Invalid choice. Please enter 1 or 2."
             ;;
     esac
+    echo "Now u can restart your consensus client"
     menu
 }
 
