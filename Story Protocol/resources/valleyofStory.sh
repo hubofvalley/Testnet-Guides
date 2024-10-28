@@ -66,7 +66,7 @@ echo "$ENDPOINTS"
 
 # Validator Node Functions
 function deploy_validator_node() {
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_validator_node_install.sh)
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_validator_node_install_odyssey)
     menu
 }
 
