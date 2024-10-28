@@ -66,7 +66,7 @@ echo "$ENDPOINTS"
 
 # Validator Node Functions
 function deploy_validator_node() {
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_validator_node_install_odyssey)
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_validator_node_install_odyssey.sh)
     menu
 }
 

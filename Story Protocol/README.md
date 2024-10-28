@@ -17,10 +17,10 @@
   - [Example Use Case](#example-use-case)
   - [Conclusion](#conclusion)
   - [Grand Valley's Story Protocol public endpoints:](#grand-valleys-story-protocol-public-endpoints)
+  - [Valley Of Story. Story Protocol tools created by Grand Valley](#valley-of-story-story-protocol-tools-created-by-grand-valley)
   - [Story Node Deployment Guide With Cosmovisor](#story-node-deployment-guide-with-cosmovisor)
     - [**System Requirements**](#system-requirements)
-  - [Automatic installation](#automatic-installation)
-  - [Manual installation](#manual-installation)
+  - [Validator Manual installation](#validator-manual-installation)
     - [1. install dependencies for building from source](#1-install-dependencies-for-building-from-source)
     - [2. install go](#2-install-go)
     - [3. install cosmovisor](#3-install-cosmovisor)
@@ -54,28 +54,6 @@
       - [self delegate](#self-delegate)
       - [delegate to ](#delegate-to-)
   - [delete the node](#delete-the-node)
-  - [Consensus client version update to `v0.10.0` (upgrade took at height `626,575`)](#consensus-client-version-update-to-v0100-upgrade-took-at-height-626575)
-    - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client)
-    - [2. update story node to v0.10.0](#2-update-story-node-to-v0100)
-  - [Geth version update to `v0.9.4` (just in case u're still using the older version of geth)](#geth-version-update-to-v094-just-in-case-ure-still-using-the-older-version-of-geth)
-    - [1. update story-geth node to v0.9.4](#1-update-story-geth-node-to-v094)
-  - [Consensus client version update to `v0.10.1` (chain halt at height `990,455`, upgrade took at height `990,454`)](#consensus-client-version-update-to-v0101-chain-halt-at-height-990455-upgrade-took-at-height-990454)
-    - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client-1)
-    - [2. update story node to v0.10.1](#2-update-story-node-to-v0101)
-  - [Consensus client version update to `v0.11.0` (upgrade took at height `1,325,860`)](#consensus-client-version-update-to-v0110-upgrade-took-at-height-1325860)
-    - [1. define the path of cosmovisor for being used in the consensus client](#1-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client-2)
-    - [2. update story node to v0.11.0](#2-update-story-node-to-v0110)
-  - [Snapshot for the post upgrade (thank you to Mandragora for allowing me to publish his snapshot file here)](#snapshot-for-the-post-upgrade-thank-you-to-mandragora-for-allowing-me-to-publish-his-snapshot-file-here)
-    - [1. stop your geth and consensus client services](#1-stop-your-geth-and-consensus-client-services)
-    - [2. backup `priv_state_validator.json` file](#2-backup-priv_state_validatorjson-file)
-    - [3. delete geth and consensus client db](#3-delete-geth-and-consensus-client-db)
-    - [4. download the geth snapshot file](#4-download-the-geth-snapshot-file)
-    - [5. download the story snapshot file](#5-download-the-story-snapshot-file)
-    - [6. extract the geth snapshot file](#6-extract-the-geth-snapshot-file)
-    - [7. extract the story snapshot file](#7-extract-the-story-snapshot-file)
-    - [8. delete the snapshot file (optional)](#8-delete-the-snapshot-file-optional)
-    - [9. restore your `priv_state_validator.json` file](#9-restore-your-priv_state_validatorjson-file)
-    - [10. start geth and story services](#10-start-geth-and-story-services)
 - [let's buidl together](#lets-buidl-together)
 
 # Story Protocol
@@ -154,6 +132,12 @@ With Public Testnet, Story's docs and code become public. Check them out below!
 - cosmos ws: `wss://lightnode-rpc-story.grandvalleys.com/websocket`
 - evm ws: `wss://lightnode-wss-story.grandvalleys.com`
 
+## Valley Of Story. Story Protocol tools created by Grand Valley
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/valleyofStory.sh)
+```
+
 ## Story Node Deployment Guide With Cosmovisor
 
 ### **System Requirements**
@@ -166,17 +150,11 @@ With Public Testnet, Story's docs and code become public. Check them out below!
 | Bandwidth | 10MBit/s         |
 
 - service file name: `story.service` `story-geth.service`
-- current chain: `iliad-0`
-- current story node version: `v0.9.13` update to `v0.10.0`, `v0.10.1` and `v0.11.0`
-- current story-geth node version: `v0.9.4`
+- current chain: `odyssey`
+- current story node version: `v0.12.0`
+- current story-geth node version: `v0.10.0`
 
-## Automatic installation
-
-```bash
-bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/node-install.sh)
-```
-
-## Manual installation
+## Validator Manual installation
 
 ### 1. install dependencies for building from source
 
@@ -210,7 +188,7 @@ EDIT YOUR MONIKER & YOUR PREFERRED PORT NUMBER
 ```bash
 read -p "Enter your moniker: " MONIKER && echo "Current moniker: $MONIKER" && read -p "Enter your 2 digits custom port: (default: 26)" STORY_PORT && echo "Current port number: $STORY_PORT"
 echo "export MONIKER="$MONIKER"" >> $HOME/.bash_profile
-echo "export STORY_CHAIN_ID="iliad"" >> $HOME/.bash_profile
+echo "export STORY_CHAIN_ID="odyssey"" >> $HOME/.bash_profile
 echo "export STORY_PORT="$STORY_PORT"" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 ```
@@ -336,7 +314,7 @@ After=network-online.target
 
 [Service]
 User=$USER
-ExecStart=$(which geth) --iliad --syncmode full --http --http.api eth,net,web3,engine --http.vhosts '*' --http.addr 0.0.0.0 --http.port 8545 --ws --ws.api eth,web3,net,txpool --ws.addr 0.0.0.0 --ws.port 8546
+ExecStart=$(which geth) --odyssey --syncmode full --http --http.api eth,net,web3,engine --http.vhosts '*' --http.addr 0.0.0.0 --http.port 8545 --ws --ws.api eth,web3,net,txpool --ws.addr 0.0.0.0 --ws.port 8546
 Restart=on-failure
 RestartSec=3
 LimitNOFILE=65535
@@ -443,205 +421,6 @@ sudo systemctl disable story-geth story
 sudo rm -rf /etc/systemd/system/story-geth.service /etc/systemd/system/story.service
 sudo rm -r .story
 sed -i "/STORY_/d" $HOME/.bash_profile
-```
-
-## Consensus client version update to `v0.10.0` (upgrade took at height `626,575`)
-
-### 1. define the path of cosmovisor for being used in the consensus client
-
-```bash
-input1=$(which cosmovisor)
-input2=$(find $HOME -type d -name "story")
-input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
-echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
-echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
-echo "export DAEMON_DATA_BACKUP_DIR=$(find $HOME/.story/story/cosmovisor -type d -name "backup")" >> $HOME/.bash_profile
-source $HOME/.bash_profile
-echo "input1. $input1"
-echo "input2. $input2"
-echo "input3. $input3"
-```
-
-### 2. update story node to v0.10.0
-
-```bash
-cd $HOME && \
-wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.10.0-9603826.tar.gz
-
-story_folder_name=$(tar -tf story-linux-amd64-0.10.0-9603826.tar.gz | head -n 1 | cut -f1 -d"/")
-tar -xzf story-linux-amd64-0.10.0-9603826.tar.gz
-sudo cp $HOME/$story_folder_name/story $HOME/go/bin/story
-
-sudo chown -R $USER:$USER $HOME/.story && \
-sudo chown -R $USER:$USER $HOME/go/bin/story && \
-sudo rm $HOME/.story/story/data/upgrade-info.json
-
-cosmovisor add-upgrade v0.10.0 $HOME/$story_folder_name/story --upgrade-height 626575 --force
-
-sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.0-9603826.tar.gz
-```
-
-## Geth version update to `v0.9.4` (just in case u're still using the older version of geth)
-
-### 1. update story-geth node to v0.9.4
-
-```bash
-cd $HOME
-wget https://github.com/piplabs/story-geth/releases/download/v0.9.4/geth-linux-amd64
-geth_file_name=geth-linux-amd64
-mv $HOME/$geth_file_name $HOME/go/bin/geth
-sudo chown -R $USER:$USER $HOME/go/bin/geth
-sudo chmod +x $HOME/go/bin/geth
-sudo systemctl daemon-reload && \
-sudo systemctl restart story-geth && \
-sudo journalctl -u story-geth -fn 100
-```
-
-## Consensus client version update to `v0.10.1` (chain halt at height `990,455`, upgrade took at height `990,454`)
-
-### 1. define the path of cosmovisor for being used in the consensus client
-
-```bash
-input1=$(which cosmovisor)
-input2=$(find $HOME -type d -name "story")
-input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
-echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
-echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
-echo "export DAEMON_DATA_BACKUP_DIR=$(find $HOME/.story/story/cosmovisor -type d -name "backup")" >> $HOME/.bash_profile
-source $HOME/.bash_profile
-echo "input1. $input1"
-echo "input2. $input2"
-echo "input3. $input3"
-```
-
-### 2. update story node to v0.10.1
-
-```bash
-cd $HOME && \
-wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.10.1-57567e5.tar.gz
-
-story_folder_name=$(tar -tf story-linux-amd64-0.10.1-57567e5.tar.gz | head -n 1 | cut -f1 -d"/")
-tar -xzf story-linux-amd64-0.10.1-57567e5.tar.gz
-sudo cp $HOME/$story_folder_name/story $HOME/go/bin/story
-
-sudo chown -R $USER:$USER $HOME/.story && \
-sudo chown -R $USER:$USER $HOME/go/bin/story && \
-sudo rm $HOME/.story/story/data/upgrade-info.json
-
-cosmovisor add-upgrade v0.10.1 $HOME/$story_folder_name/story --upgrade-height 990454 --force
-
-sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.10.1-57567e5.tar.gz
-```
-
-## Consensus client version update to `v0.11.0` (upgrade took at height `1,325,860`)
-
-### 1. define the path of cosmovisor for being used in the consensus client
-
-```bash
-input1=$(which cosmovisor)
-input2=$(find $HOME -type d -name "story")
-input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
-echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
-echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
-echo "export DAEMON_DATA_BACKUP_DIR=$(find $HOME/.story/story/cosmovisor -type d -name "backup")" >> $HOME/.bash_profile
-source $HOME/.bash_profile
-echo "input1. $input1"
-echo "input2. $input2"
-echo "input3. $input3"
-```
-
-### 2. update story node to v0.11.0
-
-```bash
-cd $HOME && \
-wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.11.0-aac4bfe.tar.gz
-
-story_folder_name=$(tar -tf story-linux-amd64-0.11.0-aac4bfe.tar.gz | head -n 1 | cut -f1 -d"/")
-tar -xzf story-linux-amd64-0.11.0-aac4bfe.tar.gz
-sudo cp $HOME/$story_folder_name/story $HOME/go/bin/story
-
-sudo chown -R $USER:$USER $HOME/.story && \
-sudo chown -R $USER:$USER $HOME/go/bin/story && \
-sudo rm $HOME/.story/story/data/upgrade-info.json
-
-cosmovisor add-upgrade v0.11.0 $HOME/$story_folder_name/story --upgrade-height 1325860 --force
-
-sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.11.0-aac4bfe.tar.gz
-```
-
-## Snapshot for the post upgrade (thank you to Mandragora for allowing me to publish his snapshot file here)
-
-### 1. stop your geth and consensus client services
-
-```bash
-sudo systemctl stop story-geth
-sudo systemctl stop story
-```
-
-### 2. backup `priv_state_validator.json` file
-
-```bash
-sudo cp $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
-```
-
-### 3. delete geth and consensus client db
-
-```bash
-sudo rm -rf $HOME/.story/geth/iliad/geth/chaindata
-sudo rm -rf $HOME/.story/story/data
-```
-
-### 4. download the geth snapshot file
-
-```bash
-wget -O geth_snapshot.lz4 https://snapshots.mandragora.io/geth_snapshot.lz4
-```
-
-`wait until it's finished`
-
-### 5. download the story snapshot file
-
-```bash
-wget -O story_snapshot.lz4 https://snapshots.mandragora.io/story_snapshot.lz4
-```
-
-`wait until it's finished`
-
-### 6. extract the geth snapshot file
-
-```bash
-lz4 -c -d geth_snapshot.lz4 | tar -x -C $HOME/.story/geth/iliad/geth
-```
-
-`wait until it's finished`
-
-### 7. extract the story snapshot file
-
-```bash
-lz4 -c -d story_snapshot.lz4 | tar -x -C $HOME/.story/story
-```
-
-`wait until it's finished`
-
-### 8. delete the snapshot file (optional)
-
-```bash
-sudo rm -v geth_snapshot.lz4
-sudo rm -v story_snapshot.lz4
-```
-
-### 9. restore your `priv_state_validator.json` file
-
-```bash
-sudo cp $HOME/.story/priv_validator_state.json.backup $HOME/.story/story/data/priv_validator_state.json
-```
-
-### 10. start geth and story services
-
-```bash
-sudo systemctl daemon-reload && \
-sudo systemctl restart story-geth story && \
-sudo journalctl -u story-geth -u story -fn 100
 ```
 
 # let's buidl together
