@@ -78,7 +78,7 @@ function create_validator() {
 }
 
 function query_validator_pub_key() {
-    story validator export | grep -oP '(?<=Compressed Public Key (base64): ).*'
+    story validator export | grep -oP 'Compressed Public Key \(base64\): \K.*'
     menu
 }
 
