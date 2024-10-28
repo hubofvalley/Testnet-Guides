@@ -129,14 +129,10 @@ function unstake_tokens() {
     menu
 }
 
-function export_evm_private_key() {
+function export_evm_key() {
+    echo "query all of your current EVM key addreses including your EVM private key"
     story validator export --evm-key-path $HOME/.story/story/config/private_key.txt --export-evm-key
     cat $HOME/.story/story/config/private_key.txt
-    menu
-}
-
-function export_evm_public_key() {
-    story validator export | grep -oP '(?<=EVM Address: ).*'
     menu
 }
 
@@ -225,18 +221,17 @@ function menu() {
     echo "4. Query Balance"
     echo "5. Stake Tokens"
     echo "6. Unstake Tokens"
-    echo "7. Export EVM Private Key"
-    echo "8. Export EVM Address"
-    echo "9. Delete Validator Node"
-    echo "10. Stop Consensus Client"
-    echo "11. Restart Consensus Client"
-    echo "12. Stop Geth Service"
-    echo "13. Restart Geth Service"
-    echo "14. Show Consensus Client Logs"
-    echo "15. Show Geth Logs"
-    echo "16. Show Node Status"
-    echo "17. Add Peers"
-    echo "18. Exit"
+    echo "7. Export EVM Key"
+    echo "8. Delete Validator Node"
+    echo "9. Stop Consensus Client"
+    echo "10. Restart Consensus Client"
+    echo "11. Stop Geth Service"
+    echo "12. Restart Geth Service"
+    echo "13. Show Consensus Client Logs"
+    echo "14. Show Geth Logs"
+    echo "15. Show Node Status"
+    echo "16. Add Peers"
+    echo "17. Exit"
     read -p "Choose an option: " OPTION
 
     case $OPTION in
@@ -246,18 +241,17 @@ function menu() {
         4) query_balance ;;
         5) stake_tokens ;;
         6) unstake_tokens ;;
-        7) export_evm_private_key ;;
-        8) export_evm_public_key ;;
-        9) delete_validator_node ;;
-        10) stop_consensus_client ;;
-        11) restart_consensus_client ;;
-        12) stop_geth ;;
-        13) restart_geth ;;
-        14) show_consensus_client_logs ;;
-        15) show_geth_logs ;;
-        16) show_node_status ;;
-        17) add_peers ;;
-        18) exit 0 ;;
+        7) export_evm_key ;;
+        8) delete_validator_node ;;
+        9) stop_consensus_client ;;
+        10) restart_consensus_client ;;
+        11) stop_geth ;;
+        12) restart_geth ;;
+        13) show_consensus_client_logs ;;
+        14) show_geth_logs ;;
+        15) show_node_status ;;
+        16) add_peers ;;
+        17) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
 }
