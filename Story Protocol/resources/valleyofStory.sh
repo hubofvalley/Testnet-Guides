@@ -157,6 +157,30 @@ function delete_validator_node() {
     menu
 }
 
+function stop_consensus_client() {
+    sudo systemctl stop story
+    echo "Consensus client stopped."
+    menu
+}
+
+function restart_consensus_client() {
+    sudo systemctl restart story
+    echo "Consensus client restarted."
+    menu
+}
+
+function stop_geth() {
+    sudo systemctl stop story-geth
+    echo "Geth service stopped."
+    menu
+}
+
+function restart_geth() {
+    sudo systemctl restart story-geth
+    echo "Geth service restarted."
+    menu
+}
+
 function show_consensus_client_logs() {
     sudo journalctl -u story -fn 100
     menu
@@ -184,10 +208,14 @@ function menu() {
     echo "8. Export EVM Public Key"
     echo "9. Restore Wallet"
     echo "10. Delete Validator Node"
-    echo "11. Show Consensus Client Logs"
-    echo "12. Show Geth Logs"
-    echo "13. Show Node status"
-    echo "14. Exit"
+    echo "11. Stop Consensus Client"
+    echo "12. Restart Consensus Client"
+    echo "13. Stop Geth Service"
+    echo "14. Restart Geth Service"
+    echo "15. Show Consensus Client Logs"
+    echo "16. Show Geth Logs"
+    echo "17. Show Node Status"
+    echo "18. Exit"
     read -p "Choose an option: " OPTION
 
     case $OPTION in
@@ -201,15 +229,17 @@ function menu() {
         8) export_evm_public_key ;;
         9) restore_wallet ;;
         10) delete_validator_node ;;
-        11) show_consensus_client_logs ;;
-        12) show_geth_logs ;;
-        13) show_node_status ;;
-        14) exit 0 ;;
+        11) stop_consensus_client ;;
+        12) restart_consensus_client ;;
+        13) stop_geth ;;
+        14) restart_geth ;;
+        15) show_consensus_client_logs ;;
+        16) show_geth_logs ;;
+        17) show_node_status ;;
+        18) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
 }
 
-# Run the menu
-while true; do
-    menu
-done
+# Start menu
+menu

@@ -9,9 +9,10 @@ LOGO="
 
 echo "$LOGO"
 
-# Prompt for MONIKER and STORY_PORT
+# Prompt for MONIKER, STORY_PORT, and Indexer option
 read -p "Enter your moniker: " MONIKER
 read -p "Enter your preferred port number: " STORY_PORT
+read -p "Do you want to enable the indexer? (yes/no): " ENABLE_INDEXER
 
 # 1. Install dependencies for building from source
 sudo apt update -y && sudo apt upgrade -y
@@ -57,19 +58,25 @@ sudo chmod +x $HOME/go/bin/story
 # 6. Initialize the app
 story init --network $STORY_CHAIN_ID --moniker $MONIKER
 
-# 7. Add peers to the config.toml
-peers=$(curl -sS https://lightnode-rpc-story.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
-sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.story/story/config/config.toml
-echo $peers
-
-# 8. Set custom ports in config.toml
+# 7. Set custom ports in config.toml
 sed -i.bak -e "s%:26658%:${STORY_PORT}658%g;
 s%:26657%:${STORY_PORT}657%g;
 s%:26656%:${STORY_PORT}656%g;
 s%:26660%:${STORY_PORT}660%g" $HOME/.story/story/config/config.toml
 
-# 9. Enable indexer (optional)
-sed -i -e 's/^indexer = "null"/indexer = "kv"/' $HOME/.story/story/config/config.toml
+# 8. Add peers to the config.toml
+peers=$(curl -sS https://lightnode-rpc-story.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
+sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.story/story/config/config.toml
+echo $peers
+
+# 9. Enable or disable indexer based on user input
+if [ "$ENABLE_INDEXER" = "yes" ]; then
+    sed -i -e 's/^indexer = "null"/indexer = "kv"/' $HOME/.story/story/config/config.toml
+    echo "Indexer enabled."
+else
+    sed -i -e 's/^indexer = "kv"/indexer = "null"/' $HOME/.story/story/config/config.toml
+    echo "Indexer disabled."
+fi
 
 # 10. Export Private key
 story validator export --evm-key-path $HOME/.story/story/config/private_key.txt --export-evm-key
