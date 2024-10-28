@@ -298,7 +298,5 @@ function menu() {
     esac
 }
 
-# Run the menu
-while true; do
-    menu
-done
+# Start menu
+menu
