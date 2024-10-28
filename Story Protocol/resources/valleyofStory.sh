@@ -158,6 +158,7 @@ function stop_consensus_client() {
 }
 
 function restart_consensus_client() {
+    sudo systemctl daemon-reload
     sudo systemctl restart story
     echo "Consensus client restarted."
     menu
