@@ -111,7 +111,7 @@ function create_validator() {
     --identity=$IDENTITY \
     --website=$WEBSITE \
     --security-contact=$EMAIL \
-    --details="let's buidl 0g together" \
+    --details="lets buidl 0g together" \
     --gas=auto --gas-adjustment=1.4 \
     -y
     menu
