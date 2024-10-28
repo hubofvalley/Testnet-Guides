@@ -27,8 +27,8 @@
     - [4. set vars](#4-set-vars)
     - [5. download geth and consensus client binaries](#5-download-geth-and-consensus-client-binaries)
     - [6. init app](#6-init-app)
-    - [7. add peers to the config.toml](#7-add-peers-to-the-configtoml)
-    - [8. set custom ports in config.toml file](#8-set-custom-ports-in-configtoml-file)
+    - [7. set custom ports in config.toml file](#7-set-custom-ports-in-configtoml-file)
+    - [8. add peers to the config.toml](#8-add-peers-to-the-configtoml)
     - [9. enable indexer (optional) (if u want to run a full node follow this step)](#9-enable-indexer-optional-if-u-want-to-run-a-full-node-follow-this-step)
     - [10. init cosmovisor](#10-init-cosmovisor)
     - [11. define the path of cosmovisor for being used in the consensus client](#11-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client)
@@ -44,7 +44,6 @@
         - [story logs](#story-logs)
     - [14. check node synchronization](#14-check-node-synchronization)
     - [15. check the node version](#15-check-the-node-version)
-    - [16. use the SNAPSHOT](#16-use-the-snapshot)
   - [Validator and key Commands](#validator-and-key-commands)
     - [1. export evm public key and private key](#1-export-evm-public-key-and-private-key)
     - [2. claim faucet](#2-claim-faucet)
@@ -199,19 +198,20 @@ source $HOME/.bash_profile
 cd $HOME
 
 # geth binary
-wget https://github.com/piplabs/story-geth/releases/download/v0.9.4/geth-linux-amd64
-geth_file_name=geth-linux-amd64
-mv $HOME/$geth_file_name $HOME/go/bin/geth
+mkdir -p story-geth-v0.10.0
+wget -O story-geth-v0.10.0/geth-linux-amd64 https://github.com/piplabs/story-geth/releases/download/v0.10.0/geth-linux-amd64
+story_file__name=geth-linux-amd64
+cp story-geth-v0.10.0/$story_file__name $HOME/go/bin/geth
 sudo chown -R $USER:$USER $HOME/go/bin/geth
 sudo chmod +x $HOME/go/bin/geth
-sudo rm -rf $HOME/$geth_file_name
 
 # consensus client binary
-wget https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.9.13-b4c7db1.tar.gz
-story_folder_name=$(tar -tf story-linux-amd64-0.9.13-b4c7db1.tar.gz | head -n 1 | cut -f1 -d"/")
-tar -xzf story-linux-amd64-0.9.13-b4c7db1.tar.gz
-mv $HOME/$story_folder_name/story $HOME/go/bin/
-sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.9.13-b4c7db1.tar.gz
+mkdir -p story-v0.12.0
+wget -O story-v0.12.0/story-linux-amd64 https://github.com/piplabs/story/releases/download/v0.12.0/story-linux-amd64
+story_file__name=story-linux-amd64
+cp story-v0.12.0/$story_file__name $HOME/go/bin/story
+sudo chown -R $USER:$USER $HOME/go/bin/story
+sudo chmod +x $HOME/go/bin/story
 ```
 
 ### 6. init app
@@ -220,21 +220,21 @@ sudo rm -rf $HOME/$story_folder_name $HOME/story-linux-amd64-0.9.13-b4c7db1.tar.
 story init --network $STORY_CHAIN_ID --moniker $MONIKER
 ```
 
-### 7. add peers to the config.toml
+### 7. set custom ports in config.toml file
+
+```bash
+sed -i.bak -e "/^\[p2p\]/,/^$/ s%laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${STORY_PORT}656\"%g;
+s%prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${STORY_PORT}660\"%g;
+s%proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${STORY_PORT}658\"%g;
+s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://0.0.0.0:${STORY_PORT}657\"%g" $HOME/.story/story/config/config.toml
+```
+
+### 8. add peers to the config.toml
 
 ```bash
 peers=$(curl -sS https://lightnode-rpc-story.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
 sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.story/story/config/config.toml
 echo $peers
-```
-
-### 8. set custom ports in config.toml file
-
-```bash
-sed -i.bak -e "s%:26658%:${STORY_PORT}658%g;
-s%:26657%:${STORY_PORT}657%g;
-s%:26656%:${STORY_PORT}656%g;
-s%:26660%:${STORY_PORT}660%g" $HOME/.story/story/config/config.toml
 ```
 
 ### 9. enable indexer (optional) (if u want to run a full node follow this step)
@@ -291,7 +291,12 @@ Type=simple
 WorkingDirectory=$HOME/.story/story
 ExecStart=$input1 run run
 Restart=on-failure
-LimitNOFILE=65535
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=node-story
+StartLimitInterval=0
+LimitNOFILE=65536
+LimitNPROC=65536
 Environment="DAEMON_NAME=story"
 Environment="DAEMON_HOME=$input2"
 Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=true"
@@ -317,7 +322,12 @@ User=$USER
 ExecStart=$(which geth) --odyssey --syncmode full --http --http.api eth,net,web3,engine --http.vhosts '*' --http.addr 0.0.0.0 --http.port 8545 --ws --ws.api eth,web3,net,txpool --ws.addr 0.0.0.0 --ws.port 8546
 Restart=on-failure
 RestartSec=3
-LimitNOFILE=65535
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=node-geth
+StartLimitInterval=0
+LimitNOFILE=65536
+LimitNPROC=65536
 
 [Install]
 WantedBy=multi-user.target
@@ -362,8 +372,6 @@ curl http://127.0.0.1:26657/status | jq
 ```bash
 cosmovisor run version
 ```
-
-### 16. use the [SNAPSHOT](https://github.com/hubofvalley/Testnet-Guides/blob/main/Story%20Protocol/README.md#method-3-use-snapshot-for-the-post-upgrade-thank-you-to-mandragora-for-allowing-me-to-publish-his-snapshot-file-here)
 
 ## Validator and key Commands
 
