@@ -105,18 +105,29 @@ function query_balance() {
 }
 
 function stake_tokens() {
-    read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
+    read -p "Stake to self or another validator? (self/other): " TARGET
+    if [ "$TARGET" == "self" ]; then
+        VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key \(base64\): \K.*')
+    else
+        read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
+    fi
     read -p "Enter amount to stake: " AMOUNT
-    story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT  --private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt) -y
+    story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT --private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt) -y
     menu
 }
 
 function unstake_tokens() {
-    read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
-    read -p "Enter amount to stake: " AMOUNT
-    story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT  --private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt)  -y
+    read -p "Unstake from self or another validator? (self/other): " TARGET
+    if [ "$TARGET" == "self" ]; then
+        VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key \(base64\): \K.*')
+    else
+        read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
+    fi
+    read -p "Enter amount to unstake: " AMOUNT
+    story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT --private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt) -y
     menu
 }
+
 
 function export_evm_private_key() {
     story validator export --evm-key-path $HOME/.story/story/config/private_key.txt --export-evm-key
@@ -156,6 +167,11 @@ function show_geth_logs() {
     menu
 }
 
+function show_node_status() {
+    story status
+    menu
+}
+
 # Menu
 function menu() {
     echo "1. Deploy Validator Node"
@@ -170,7 +186,8 @@ function menu() {
     echo "10. Delete Validator Node"
     echo "11. Show Consensus Client Logs"
     echo "12. Show Geth Logs"
-    echo "13. Exit"
+    echo "13. Show Node status"
+    echo "14. Exit"
     read -p "Choose an option: " OPTION
 
     case $OPTION in
@@ -186,6 +203,7 @@ function menu() {
         10) delete_validator_node ;;
         11) show_consensus_client_logs ;;
         12) show_geth_logs ;;
+        13) show_node_status ;;
         13) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
