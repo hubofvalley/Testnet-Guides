@@ -1,17 +1,18 @@
 #!/bin/bash
 
 LOGO="
- __      __     _  _                        __    ___    _____
- \ \    / /    | || |                      / _|  / _ \  / ____|
-  \ \  / /__ _ | || |  ___  _   _    ___  | |_  | | | || |  __
-  _\ \/ // _\` || || | / _ \\| | | |  / _ \\|  _| | | | || | |_ |
- | |\  /| (_| || || ||  __/| |_| | | (_) || |   | |_| || |__| |
- | |_\/  \\__,_||_||_| \\___| \\__, |  \\___/ |_|    \\___/  \\_____|
- | '_ \\ | | | |              __/ |
- | |_) || |_| |             |___/
- |_.__/  \\__, |
-          __/ |
-         |___/
+ __      __     _  _                        __    ___    _____  
+ \ \    / /    | || |                      / _|  / _ \  / ____| 
+  \ \  / /__ _ | || |  ___  _   _    ___  | |_  | | | || |  __  
+  _\ \/ // _` || || | / _ \| | | |  / _ \ |  _| | | | || | |_ | 
+ | |\  /| (_| || || ||  __/| |_| | | (_) || |   | |_| || |__| | 
+ | |_\/  \__,_||_||_| \___| \__, |  \___/ |_|    \___/  \_____| 
+ | '_ \ | | | |              __/ |                              
+ | |_) || |_| |             |___/                               
+ |_.__/  \__, |                                                 
+          __/ |                                                 
+         |___/                                                  
+
  __                                   
 /__ ._ _. ._   _|   \  / _. | |  _    
 \_| | (_| | | (_|    \/ (_| | | (/_ \/
@@ -180,6 +181,11 @@ function show_validator_logs() {
     menu
 }
 
+function show_node_status() {
+    0gchaind status | jq
+    menu
+}
+
 # Storage Node Functions
 function deploy_storage_node() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_node_install.sh)
@@ -235,6 +241,7 @@ function menu() {
     echo "    i. Create Wallet"
     echo "    j. Delete Validator Node"
     echo "    k. Show Validator Logs"
+    echo "    l. Show Node Status"
     echo "2. Storage Node"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
@@ -262,6 +269,7 @@ function menu() {
                 i) create_wallet ;;
                 j) delete_validator_node ;;
                 k) show_validator_logs ;;
+                l) show_node_status ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
