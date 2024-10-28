@@ -28,22 +28,23 @@ Story Validator Node System Requirements
 | CPU       | 8+ cores         |
 | RAM       | 32+ GB           |
 | Storage   | 500+ GB NVMe SSD |
-| Bandwidth | 100+ MBit/s         |
+| Bandwidth | 100+ MBit/s      |
 
-- service file name: `story.service` `story-geth.service`
-- current chain: `odyssey`
-- current story node version: `v0.12.0`
-- current story-geth node version: `v0.10.0`
+- consensus client service file name: story.service
+- geth service file name: story-geth.service
+- current chain: odyssey
+- current story node version: v0.12.0
+- current story-geth node version: v0.10.0
 
 "
 
 ENDPOINTS="
 Grand Valley Story Protocol public endpoints:
-- cosmos rpc: `https://lightnode-rpc-story.grandvalleys.com`
-- json-rpc: `https://lightnode-json-rpc-story.grandvalleys.com`
-- cosmos rest-api: `https://lightnode-api-story.grandvalleys.com`
-- cosmos ws: `wss://lightnode-rpc-story.grandvalleys.com/websocket`
-- evm ws: `wss://lightnode-wss-story.grandvalleys.com`
+- cosmos rpc: https://lightnode-rpc-story.grandvalleys.com
+- json-rpc: https://lightnode-json-rpc-story.grandvalleys.com
+- cosmos rest-api: https://lightnode-api-story.grandvalleys.com
+- cosmos ws: wss://lightnode-rpc-story.grandvalleys.com/websocket
+- evm ws: wss://lightnode-wss-story.grandvalleys.com
 
 Grand Valley social media:
 - X: https://x.com/bacvalley
