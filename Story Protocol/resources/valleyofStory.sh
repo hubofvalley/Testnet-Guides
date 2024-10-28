@@ -141,8 +141,9 @@ function export_evm_public_key() {
 }
 
 function restore_wallet() {
-    read -p "Enter priv_validator_key: " PRIV_VALIDATOR_KEY
-    echo "$PRIV_VALIDATOR_KEY" > $HOME/.story/story/config/priv_validator_key.json
+    echo "Enter priv_validator_key in JSON format:"
+    read -r PRIV_VALIDATOR_KEY_JSON
+    echo "$PRIV_VALIDATOR_KEY_JSON" > $HOME/.story/story/config/priv_validator_key.json
     menu
 }
 
