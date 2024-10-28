@@ -59,10 +59,10 @@ sudo chmod +x $HOME/go/bin/story
 story init --network $STORY_CHAIN_ID --moniker $MONIKER
 
 # 7. Set custom ports in config.toml
-sed -i.bak -e "s%:26658%:${STORY_PORT}658%g;
-s%:26657%:${STORY_PORT}657%g;
-s%:26656%:${STORY_PORT}656%g;
-s%:26660%:${STORY_PORT}660%g" $HOME/.story/story/config/config.toml
+sed -i.bak -e "/^\[p2p\]/,/^$/ s%laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${STORY_PORT}656\"%g;
+s%prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${STORY_PORT}660\"%g;
+s%proxy_app = \"tcp://127.0.0.1:29658\"%proxy_app = \"tcp://127.0.0.1:${STORY_PORT}658\"%g;
+s%^laddr = \"tcp://127.0.0.1:29657\"%laddr = \"tcp://0.0.0.0:${STORY_PORT}657\"%g" $HOME/.story/story/config/config.toml
 
 # 8. Add peers to the config.toml
 peers=$(curl -sS https://lightnode-rpc-story.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
