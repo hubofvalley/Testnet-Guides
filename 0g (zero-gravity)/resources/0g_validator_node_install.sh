@@ -49,25 +49,25 @@ cd $HOME
 0gchaind config node tcp://localhost:${OG_PORT}657
 0gchaind config keyring-backend os
 
-# 7. download genesis.json
-sudo rm $HOME/.0gchain/config/genesis.json && \
-wget https://github.com/0glabs/0g-chain/releases/download/v0.2.3/genesis.json -O $HOME/.0gchain/config/genesis.json
-
-# 8. add seeds to the config.toml
-SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de28667725a4fef26cdc7f9452cc34b16d@54.176.175.48:26656,e9b4bc203197b62cc7e6a80a64742e752f4210d5@54.193.250.204:26656,68b9145889e7576b652ca68d985826abd46ad660@18.166.164.232:26656,8f21742ea5487da6e0697ba7d7b36961d3599567@og-testnet-seed.itrocket.net:47656" && \
-sed -i.bak -e "s/^seeds *=.*/seeds = \"${SEEDS}\"/" $HOME/.0gchain/config/config.toml
-
-# 9. add peers to the config.toml
-peers=$(curl -sS https://lightnode-rpc-0g.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
-echo $peers
-sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchain/config/config.toml
-
-# 10. set custom ports in config.toml file
+# 7. set custom ports in config.toml file
 sed -i.bak -e "s%:26658%:${OG_PORT}658%g;
 s%:26657%:${OG_PORT}657%g;
 s%:6060%:${OG_PORT}060%g;
 s%:26656%:${OG_PORT}656%g;
 s%:26660%:${OG_PORT}660%g" $HOME/.0gchain/config/config.toml
+
+# 8. download genesis.json
+sudo rm $HOME/.0gchain/config/genesis.json && \
+wget https://github.com/0glabs/0g-chain/releases/download/v0.2.3/genesis.json -O $HOME/.0gchain/config/genesis.json
+
+# 9. add seeds to the config.toml
+SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de28667725a4fef26cdc7f9452cc34b16d@54.176.175.48:26656,e9b4bc203197b62cc7e6a80a64742e752f4210d5@54.193.250.204:26656,68b9145889e7576b652ca68d985826abd46ad660@18.166.164.232:26656,8f21742ea5487da6e0697ba7d7b36961d3599567@og-testnet-seed.itrocket.net:47656" && \
+sed -i.bak -e "s/^seeds *=.*/seeds = \"${SEEDS}\"/" $HOME/.0gchain/config/config.toml
+
+# 10. add peers to the config.toml
+peers=$(curl -sS https://lightnode-rpc-0g.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
+echo $peers
+sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchain/config/config.toml
 
 # 11. configure pruning to save storage (optional) (if u want to run a full node, skip this step)
 sed -i \
