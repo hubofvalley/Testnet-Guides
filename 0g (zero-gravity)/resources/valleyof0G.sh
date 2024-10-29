@@ -228,6 +228,15 @@ function show_storage_kv_logs() {
     menu
 }
 
+function delete_storage_kv() {
+    sudo systemctl stop zgskv
+    sudo systemctl disable zgskv
+    sudo rm -rf /etc/systemd/system/zgskv.service
+    sudo rm -r $HOME/0g-storage-kv
+    echo "Storage KV deleted successfully."
+    menu
+}
+
 # Menu
 function menu() {
     echo "1. Validator Node"
@@ -252,6 +261,7 @@ function menu() {
     echo "3. Storage KV"
     echo "    a. Deploy Storage KV"
     echo "    b. Show Storage KV Logs"
+    echo "    c. Delete Storage KV"
     echo "4. Exit"
     read -p "Choose an option: " OPTION
 
@@ -290,6 +300,7 @@ function menu() {
             case $SUB_OPTION in
                 a) deploy_storage_kv ;;
                 b) show_storage_kv_logs ;;
+                c) delete_storage_kv ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
