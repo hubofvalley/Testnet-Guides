@@ -89,14 +89,15 @@ go version
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # 4. Set vars
-echo "export ENR_ADDRESS=${ENR_ADDRESS}" >> ~/.bash_profile
-echo 'export ZGS_LOG_DIR="$HOME/0g-storage-node/run/log"' >> ~/.bash_profile
 echo 'export ZGS_LOG_SYNC_BLOCK="595059"' >> ~/.bash_profile
+echo "export ZGS_NODE=\"$ZGS_NODE\"" >> ~/.bash_profile
 echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
 
 source ~/.bash_profile
 
-echo -e "\n\033[31mCHECK YOUR STORAGE NODE VARIABLES\033[0m\nZGS_LOG_SYNC_BLOCK: $ZGS_LOG_SYNC_BLOCK\nBLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT\n\n" "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
+echo 'export LOG_CONTRACT_ADDRESS="'"$LOG_CONTRACT_ADDRESS"'"' >> ~/.bash_profile
+
+echo -e "\n\033[31mCHECK YOUR STORAGE KV VARIABLES\033[0m\n\nZGS_NODE: $ZGS_NODE\nLOG_CONTRACT_ADDRESS: $LOG_CONTRACT_ADDRESS\nZGS_LOG_SYNC_BLOCK: $ZGS_LOG_SYNC_BLOCK\nBLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT\n\n" "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
 
 # Check JSON-RPC sync
 curl -s -X POST $BLOCKCHAIN_RPC_ENDPOINT -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n"

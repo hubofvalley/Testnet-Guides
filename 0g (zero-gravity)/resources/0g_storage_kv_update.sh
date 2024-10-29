@@ -89,9 +89,6 @@ git submodule update --init
 cargo build --release
 
 ### 4. Set vars
-read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT && echo "Current json-rpc: $BLOCKCHAIN_RPC_ENDPOINT" &&
-read -p "Enter storage kv urls: " ZGS_NODE && echo "Current storage kv urls: $ZGS_NODE"
-
 echo 'export ZGS_LOG_SYNC_BLOCK="595059"' >> ~/.bash_profile
 echo "export ZGS_NODE=\"$ZGS_NODE\"" >> ~/.bash_profile
 echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
