@@ -11,7 +11,7 @@ echo "$LOGO"
 
 # Prompt for MONIKER, STORY_PORT, and Indexer option
 read -p "Enter your moniker: " MONIKER
-read -p "Enter your preferred port number: " STORY_PORT
+read -p "Enter your preferred port number: (default: 26)" STORY_PORT
 read -p "Do you want to enable the indexer? (yes/no): " ENABLE_INDEXER
 
 # 1. Install dependencies for building from source
