@@ -130,7 +130,7 @@ function unstake_tokens() {
 }
 
 function export_evm_key() {
-    echo "query all of your current EVM key addreses including your EVM private key"
+    echo "Query all of your current EVM key addresses including your EVM private key"
     story validator export --evm-key-path $HOME/.story/story/config/private_key.txt --export-evm-key
     cat $HOME/.story/story/config/private_key.txt
     menu
@@ -210,49 +210,65 @@ function add_peers() {
             echo "Invalid choice. Please enter 1 or 2."
             ;;
     esac
-    echo "Now u can restart your consensus client"
+    echo "Now you can restart your consensus client"
     menu
 }
 
 # Menu
 function menu() {
-    echo "1. Deploy Validator Node"
-    echo "2. Create Validator"
-    echo "3. Query Validator Public Key"
-    echo "4. Query Balance"
-    echo "5. Stake Tokens"
-    echo "6. Unstake Tokens"
-    echo "7. Export EVM Key"
-    echo "8. Delete Validator Node"
-    echo "9. Stop Consensus Client"
-    echo "10. Restart Consensus Client"
-    echo "11. Stop Geth Service"
-    echo "12. Restart Geth Service"
-    echo "13. Show Consensus Client Logs"
-    echo "14. Show Geth Logs"
-    echo "15. Show Node Status"
-    echo "16. Add Peers"
-    echo "17. Exit"
+    echo "1. Node Interactions"
+    echo "2. Validator/Key Interactions"
+    echo "3. Exit"
     read -p "Choose an option: " OPTION
 
     case $OPTION in
-        1) deploy_validator_node ;;
-        2) create_validator ;;
-        3) query_validator_pub_key ;;
-        4) query_balance ;;
-        5) stake_tokens ;;
-        6) unstake_tokens ;;
-        7) export_evm_key ;;
-        8) delete_validator_node ;;
-        9) stop_consensus_client ;;
-        10) restart_consensus_client ;;
-        11) stop_geth ;;
-        12) restart_geth ;;
-        13) show_consensus_client_logs ;;
-        14) show_geth_logs ;;
-        15) show_node_status ;;
-        16) add_peers ;;
-        17) exit 0 ;;
+        1)
+            echo "Node Interactions:"
+            echo "   a. Deploy Validator Node"
+            echo "   b. Delete Validator Node"
+            echo "   c. Stop Consensus Client"
+            echo "   d. Restart Consensus Client"
+            echo "   e. Stop Geth Service"
+            echo "   f. Restart Geth Service"
+            echo "   g. Show Consensus Client Logs"
+            echo "   h. Show Geth Logs"
+            echo "   i. Show Node Status"
+            echo "   j. Add Peers"
+            read -p "Choose a sub-option: " SUB_OPTION
+            case $SUB_OPTION in
+                a) deploy_validator_node ;;
+                b) delete_validator_node ;;
+                c) stop_consensus_client ;;
+                d) restart_consensus_client ;;
+                e) stop_geth ;;
+                f) restart_geth ;;
+                g) show_consensus_client_logs ;;
+                h) show_geth_logs ;;
+                i) show_node_status ;;
+                j) add_peers ;;
+                *) echo "Invalid sub-option. Please try again." ;;
+            esac
+            ;;
+        2)
+            echo "Validator/Key Interactions:"
+            echo "   a. Create Validator"
+            echo "   b. Query Validator Public Key"
+            echo "   c. Query Balance"
+            echo "   d. Stake Tokens"
+            echo "   e. Unstake Tokens"
+            echo "   f. Export EVM Key"
+            read -p "Choose a sub-option: " SUB_OPTION
+            case $SUB_OPTION in
+                a) create_validator ;;
+                b) query_validator_pub_key ;;
+                c) query_balance ;;
+                d) stake_tokens ;;
+                e) unstake_tokens ;;
+                f) export_evm_key ;;
+                *) echo "Invalid sub-option. Please try again." ;;
+            esac
+            ;;
+        3) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
 }

@@ -187,6 +187,17 @@ function show_node_status() {
     menu
 }
 
+function stop_validator_node() {
+    sudo systemctl stop 0gchaind
+    menu
+}
+
+function restart_validator_node() {
+    sudo systemctl daemon-reload
+    sudo systemctl restart 0gchaind
+    menu
+}
+
 # Storage Node Functions
 function deploy_storage_node() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_node_install.sh)
@@ -222,6 +233,17 @@ function show_storage_status() {
     menu
 }
 
+function stop_storage_node() {
+    sudo systemctl stop zgs
+    menu
+}
+
+function restart_storage_node() {
+    sudo systemctl daemon-reload
+    sudo systemctl restart zgs
+    menu
+}
+
 # Storage KV Functions
 function deploy_storage_kv() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_kv_install.sh)
@@ -247,6 +269,17 @@ function update_storage_kv() {
     menu
 }
 
+function stop_storage_kv() {
+    sudo systemctl stop zgskv
+    menu
+}
+
+function restart_storage_kv() {
+    sudo systemctl daemon-reload
+    sudo systemctl restart zgskv
+    menu
+}
+
 # Menu
 function menu() {
     echo "1. Validator Node"
@@ -262,6 +295,8 @@ function menu() {
     echo "    j. Delete Validator Node"
     echo "    k. Show Validator Logs"
     echo "    l. Show Node Status"
+    echo "    m. Stop Validator Node"
+    echo "    n. Restart Validator Node"
     echo "2. Storage Node"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
@@ -269,11 +304,15 @@ function menu() {
     echo "    d. Change Storage Node"
     echo "    e. Show Storage Node Logs"
     echo "    f. Show Storage Node Status"
+    echo "    g. Stop Storage Node"
+    echo "    h. Restart Storage Node"
     echo "3. Storage KV"
     echo "    a. Deploy Storage KV"
     echo "    b. Show Storage KV Logs"
     echo "    c. Update Storage KV"
     echo "    d. Delete Storage KV"
+    echo "    e. Stop Storage KV"
+    echo "    f. Restart Storage KV"
     echo "4. Exit"
     read -p "Choose an option: " OPTION
 
@@ -293,6 +332,8 @@ function menu() {
                 j) delete_validator_node ;;
                 k) show_validator_logs ;;
                 l) show_node_status ;;
+                m) stop_validator_node ;;
+                n) restart_validator_node ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
@@ -305,6 +346,8 @@ function menu() {
                 d) change_storage_node ;;
                 e) show_storage_logs ;;
                 f) show_storage_status ;;
+                g) stop_storage_node ;;
+                h) restart_storage_node ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
@@ -315,6 +358,8 @@ function menu() {
                 b) show_storage_kv_logs ;;
                 c) update_storage_kv ;;
                 d) delete_storage_kv ;;
+                e) stop_storage_kv ;;
+                f) restart_storage_kv ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
