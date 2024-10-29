@@ -217,6 +217,11 @@ function show_storage_logs() {
     menu
 }
 
+function show_storage_status() {
+    curl -X POST http://localhost:5678 -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"zgs_getStatus","params":[],"id":1}'  | jq
+    menu
+}
+
 # Storage KV Functions
 function deploy_storage_kv() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_kv_install.sh)
@@ -263,6 +268,7 @@ function menu() {
     echo "    c. Delete Storage Node"
     echo "    d. Change Storage Node"
     echo "    e. Show Storage Node Logs"
+    echo "    f. Show Storage Node Status"
     echo "3. Storage KV"
     echo "    a. Deploy Storage KV"
     echo "    b. Show Storage KV Logs"
@@ -298,6 +304,7 @@ function menu() {
                 c) delete_storage_node ;;
                 d) change_storage_node ;;
                 e) show_storage_logs ;;
+                f) show_storage_status ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
