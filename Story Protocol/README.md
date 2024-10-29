@@ -133,6 +133,10 @@ With Public Testnet, Story's docs and code become public. Check them out below!
 
 ## Valley Of Story. Story Protocol tools created by Grand Valley
 
+![image](https://github.com/user-attachments/assets/5110da6d-4ec2-492d-86ea-887b34b279b4)
+
+![image](https://github.com/user-attachments/assets/91a3e70a-913b-4e01-95f5-482fbade4cfe)
+
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/valleyofStory.sh)
 ```
