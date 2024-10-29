@@ -216,24 +216,29 @@ function add_peers() {
 
 # Menu
 function menu() {
-    echo "1. Node Interactions"
-    echo "2. Validator/Key Interactions"
+    echo "1. Node Interactions:"
+    echo "   a. Deploy Validator Node"
+    echo "   b. Delete Validator Node"
+    echo "   c. Stop Consensus Client"
+    echo "   d. Restart Consensus Client"
+    echo "   e. Stop Geth Service"
+    echo "   f. Restart Geth Service"
+    echo "   g. Show Consensus Client Logs"
+    echo "   h. Show Geth Logs"
+    echo "   i. Show Node Status"
+    echo "   j. Add Peers"
+    echo "2. Validator/Key Interactions:"
+    echo "   a. Create Validator"
+    echo "   b. Query Validator Public Key"
+    echo "   c. Query Balance"
+    echo "   d. Stake Tokens"
+    echo "   e. Unstake Tokens"
+    echo "   f. Export EVM Key"
     echo "3. Exit"
     read -p "Choose an option: " OPTION
 
     case $OPTION in
         1)
-            echo "Node Interactions:"
-            echo "   a. Deploy Validator Node"
-            echo "   b. Delete Validator Node"
-            echo "   c. Stop Consensus Client"
-            echo "   d. Restart Consensus Client"
-            echo "   e. Stop Geth Service"
-            echo "   f. Restart Geth Service"
-            echo "   g. Show Consensus Client Logs"
-            echo "   h. Show Geth Logs"
-            echo "   i. Show Node Status"
-            echo "   j. Add Peers"
             read -p "Choose a sub-option: " SUB_OPTION
             case $SUB_OPTION in
                 a) deploy_validator_node ;;
@@ -250,13 +255,6 @@ function menu() {
             esac
             ;;
         2)
-            echo "Validator/Key Interactions:"
-            echo "   a. Create Validator"
-            echo "   b. Query Validator Public Key"
-            echo "   c. Query Balance"
-            echo "   d. Stake Tokens"
-            echo "   e. Unstake Tokens"
-            echo "   f. Export EVM Key"
             read -p "Choose a sub-option: " SUB_OPTION
             case $SUB_OPTION in
                 a) create_validator ;;
