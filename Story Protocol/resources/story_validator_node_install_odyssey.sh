@@ -116,6 +116,7 @@ Type=simple
 WorkingDirectory=$HOME/.story/story
 ExecStart=$input1 run run
 Restart=on-failure
+RestartSec=5
 StandardOutput=journal
 StandardError=journal
 SyslogIdentifier=node-story
@@ -136,7 +137,7 @@ EOF
 # Geth service file
 sudo tee /etc/systemd/system/story-geth.service > /dev/null <<EOF
 [Unit]
-Description=Story Geth daemon
+Description=Story Geth Node
 After=network-online.target
 
 [Service]
