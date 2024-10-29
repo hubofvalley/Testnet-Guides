@@ -122,7 +122,6 @@ With Public Testnet, 0G’s docs and code become public. Check them out below! -
 
 ![image](https://github.com/user-attachments/assets/0e55c39c-9f1c-4bfd-87e7-41c9296720b2)
 
-
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/valleyof0G.sh)
 ```
