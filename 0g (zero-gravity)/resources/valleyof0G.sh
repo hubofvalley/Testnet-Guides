@@ -237,6 +237,11 @@ function delete_storage_kv() {
     menu
 }
 
+function update_storage_kv() {
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_kv_update.sh)
+    menu
+}
+
 # Menu
 function menu() {
     echo "1. Validator Node"
@@ -261,7 +266,8 @@ function menu() {
     echo "3. Storage KV"
     echo "    a. Deploy Storage KV"
     echo "    b. Show Storage KV Logs"
-    echo "    c. Delete Storage KV"
+    echo "    c. Update Storage KV"
+    echo "    d. Delete Storage KV"
     echo "4. Exit"
     read -p "Choose an option: " OPTION
 
@@ -300,7 +306,8 @@ function menu() {
             case $SUB_OPTION in
                 a) deploy_storage_kv ;;
                 b) show_storage_kv_logs ;;
-                c) delete_storage_kv ;;
+                c) update_storage_kv ;;
+                d) delete_storage_kv ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
