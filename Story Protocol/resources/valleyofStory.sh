@@ -184,6 +184,7 @@ function show_geth_logs() {
 }
 
 function show_node_status() {
+    curl http://127.0.0.1:${STORY_PORT}657/status | jq
     story status
     menu
 }
