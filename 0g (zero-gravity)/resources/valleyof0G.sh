@@ -292,7 +292,7 @@ function menu() {
     echo "    g. Export EVM Private Key"
     echo "    h. Restore Wallet"
     echo "    i. Create Wallet"
-    echo "    j. Delete Validator Node"
+    echo "    j. Delete Validator Node (DON'T FORGET TO BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE U DID THIS)"
     echo "    k. Show Validator Logs"
     echo "    l. Show Node Status"
     echo "    m. Stop Validator Node"

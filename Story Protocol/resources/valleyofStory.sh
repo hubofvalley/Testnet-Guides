@@ -218,7 +218,7 @@ function add_peers() {
 function menu() {
     echo "1. Node Interactions:"
     echo "   a. Deploy Validator Node"
-    echo "   b. Delete Validator Node"
+    echo "   b. Delete Validator Node (DON'T FORGET TO BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE U DID THIS)"
     echo "   c. Stop Consensus Client"
     echo "   d. Restart Consensus Client"
     echo "   e. Stop Geth Service"
