@@ -198,6 +198,11 @@ function restart_validator_node() {
     menu
 }
 
+function backup_validator_key() {
+    cp $HOME/.0gchain/config/priv_validator_key.json $HOME/priv_validator_key.json
+    menu
+}
+
 # Storage Node Functions
 function deploy_storage_node() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_node_install.sh)
@@ -297,6 +302,7 @@ function menu() {
     echo "    l. Show Node Status"
     echo "    m. Stop Validator Node"
     echo "    n. Restart Validator Node"
+    echo "    o. Backup Validator Key (store it to $HOME directory)"
     echo "2. Storage Node"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"

@@ -189,6 +189,11 @@ function show_node_status() {
     menu
 }
 
+function backup_validator_key() {
+    cp $HOME/.story/story/config/priv_validator_key.json $HOME/priv_validator_key.json
+    menu
+}
+
 function add_peers() {
     echo "Select an option:"
     echo "1. Add peers manually"
@@ -234,6 +239,7 @@ function menu() {
     echo "   d. Stake Tokens"
     echo "   e. Unstake Tokens"
     echo "   f. Export EVM Key"
+    echo "   g. Backup Validator Key (store it to $HOME directory)"
     echo "3. Exit"
     read -p "Choose an option: " OPTION
 
@@ -263,6 +269,7 @@ function menu() {
                 d) stake_tokens ;;
                 e) unstake_tokens ;;
                 f) export_evm_key ;;
+                g) backup_validator_key ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
