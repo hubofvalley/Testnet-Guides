@@ -321,6 +321,8 @@ function menu() {
     echo "    f. Restart Storage KV"
     echo "4. Exit"
     read -p "Choose an option: " OPTION
+    
+    echo "Let's Buidl 0G Together - Grand Valley"
 
     case $OPTION in
         1)
