@@ -320,6 +320,7 @@ function menu() {
     echo "    e. Stop Storage KV"
     echo "    f. Restart Storage KV"
     echo "4. Exit"
+    
     echo "Let's Buidl 0G Together - Grand Valley"
     read -p "Choose an option: " OPTION
 
