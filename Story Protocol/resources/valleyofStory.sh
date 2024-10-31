@@ -241,9 +241,8 @@ function menu() {
     echo "   f. Export EVM Key"
     echo "   g. Backup Validator Key (store it to $HOME directory)"
     echo "3. Exit"
-    read -p "Choose an option: " OPTION
-        
     echo "Let's Buidl Story Together - Grand Valley"
+    read -p "Choose an option: " OPTION
 
     case $OPTION in
         1)
