@@ -16,11 +16,15 @@ choose_json_rpc_endpoint() {
 
     if [ "$JSON_RPC_CHOICE" == "1" ]; then
         read -p "Enter your JSON-RPC endpoint: " BLOCKCHAIN_RPC_ENDPOINT
-        BLOCK_NUMBER=$(query_block_number "$BLOCKCHAIN_RPC_ENDPOINT")
-        echo "Latest block number for $BLOCKCHAIN_RPC_ENDPOINT: $BLOCK_NUMBER"
-        read -p "Do you want to continue with this RPC endpoint? (yes/no): " CONTINUE_CHOICE
-        if [ "$CONTINUE_CHOICE" != "yes" ]; then
-            choose_json_rpc_endpoint
+        if [ -n "$BLOCKCHAIN_RPC_ENDPOINT" ]; then
+            BLOCK_NUMBER=$(query_block_number "$BLOCKCHAIN_RPC_ENDPOINT")
+            echo "Latest block number for $BLOCKCHAIN_RPC_ENDPOINT: $BLOCK_NUMBER"
+            read -p "Do you want to continue with this RPC endpoint? (yes/no): " CONTINUE_CHOICE
+            if [ "$CONTINUE_CHOICE" != "yes" ]; then
+                choose_json_rpc_endpoint
+            fi
+        else
+            BLOCKCHAIN_RPC_ENDPOINT=""
         fi
     elif [ "$JSON_RPC_CHOICE" == "2" ]; then
         echo "Available public JSON-RPC endpoints:"
@@ -57,19 +61,35 @@ choose_json_rpc_endpoint
 
 # Prompt user for private key
 read -p "Enter your private key: " PRIVATE_KEY
-echo "private key: $PRIVATE_KEY"
 
 # Stop the storage node
 sudo systemctl stop zgs
 
 # Update config file
+CONFIG_FILE="$HOME/0g-storage-node/run/config-testnet.toml"
+
+# Read existing values from the config file
+EXISTING_MINER_KEY=$(grep -oP 'miner_key\s*=\s*"\K[^"]+' "$CONFIG_FILE")
+EXISTING_RPC_ENDPOINT=$(grep -oP 'blockchain_rpc_endpoint\s*=\s*"\K[^"]+' "$CONFIG_FILE")
+
+# Update only if new values are provided
+if [ -n "$PRIVATE_KEY" ]; then
+    sed -i "s|^\s*#\?\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|" "$CONFIG_FILE"
+else
+    PRIVATE_KEY=$EXISTING_MINER_KEY
+fi
+
+if [ -n "$BLOCKCHAIN_RPC_ENDPOINT" ]; then
+    sed -i "s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|" "$CONFIG_FILE"
+else
+    BLOCKCHAIN_RPC_ENDPOINT=$EXISTING_RPC_ENDPOINT
+fi
+
 sed -i "
-s|^\s*#\?\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|
-s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|
 s|^\s*#\?\s*listen_address\s*=.*|listen_address = \"0.0.0.0:5678\"|
 s|^\s*#\?\s*listen_address_admin\s*=.*|listen_address_admin = \"0.0.0.0:5679\"|
 s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
-" "$HOME/0g-storage-node/run/config-testnet.toml"
+" "$CONFIG_FILE"
 
 # Restart the node
 sudo systemctl daemon-reload && \
