@@ -56,54 +56,72 @@ choose_json_rpc_endpoint() {
     fi
 }
 
-# Prompt user for JSON-RPC endpoint
-choose_json_rpc_endpoint
+# Function to prompt user to change miner key
+change_miner_key() {
+    read -p "Enter your private key: " PRIVATE_KEY
+}
 
-# Prompt user for private key
-read -p "Enter your private key: " PRIVATE_KEY
+# Main function to handle user choices
+main() {
+    echo "Choose what you want to change:"
+    echo "1. Change RPC endpoint"
+    echo "2. Change miner key"
+    read -p "Enter your choice (1/2): " USER_CHOICE
 
-# Stop the storage node
-sudo systemctl stop zgs
+    if [ "$USER_CHOICE" == "1" ]; then
+        choose_json_rpc_endpoint
+    elif [ "$USER_CHOICE" == "2" ]; then
+        change_miner_key
+    else
+        echo "Invalid choice. Exiting."; exit 1
+    fi
 
-# Update config file
-CONFIG_FILE="$HOME/0g-storage-node/run/config-testnet.toml"
+    # Stop the storage node
+    sudo systemctl stop zgs
 
-# Read existing values from the config file
-EXISTING_MINER_KEY=$(grep -oP 'miner_key\s*=\s*"\K[^"]+' "$CONFIG_FILE")
-EXISTING_RPC_ENDPOINT=$(grep -oP 'blockchain_rpc_endpoint\s*=\s*"\K[^"]+' "$CONFIG_FILE")
+    # Update config file
+    CONFIG_FILE="$HOME/0g-storage-node/run/config-testnet.toml"
 
-# Update only if new values are provided
-if [ -n "$PRIVATE_KEY" ]; then
-    sed -i "s|^\s*#\?\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|" "$CONFIG_FILE"
-else
-    PRIVATE_KEY=$EXISTING_MINER_KEY
-fi
+    # Read existing values from the config file
+    EXISTING_MINER_KEY=$(grep -oP 'miner_key\s*=\s*"\K[^"]+' "$CONFIG_FILE")
+    EXISTING_RPC_ENDPOINT=$(grep -oP 'blockchain_rpc_endpoint\s*=\s*"\K[^"]+' "$CONFIG_FILE")
 
-if [ -n "$BLOCKCHAIN_RPC_ENDPOINT" ]; then
-    sed -i "s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|" "$CONFIG_FILE"
-else
-    BLOCKCHAIN_RPC_ENDPOINT=$EXISTING_RPC_ENDPOINT
-fi
+    # Update only if new values are provided
+    if [ -n "$PRIVATE_KEY" ]; then
+        sed -i "s|^\s*#\?\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|" "$CONFIG_FILE"
+    else
+        PRIVATE_KEY=$EXISTING_MINER_KEY
+    fi
 
-sed -i "
-s|^\s*#\?\s*listen_address\s*=.*|listen_address = \"0.0.0.0:5678\"|
-s|^\s*#\?\s*listen_address_admin\s*=.*|listen_address_admin = \"0.0.0.0:5679\"|
-s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
-" "$CONFIG_FILE"
+    if [ -n "$BLOCKCHAIN_RPC_ENDPOINT" ]; then
+        sed -i "s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|" "$CONFIG_FILE"
+    else
+        BLOCKCHAIN_RPC_ENDPOINT=$EXISTING_RPC_ENDPOINT
+    fi
 
-# Restart the node
-sudo systemctl daemon-reload && \
-sudo systemctl restart zgs && \
-sudo systemctl status zgs
+    sed -i "
+    s|^\s*#\?\s*listen_address\s*=.*|listen_address = \"0.0.0.0:5678\"|
+    s|^\s*#\?\s*listen_address_admin\s*=.*|listen_address_admin = \"0.0.0.0:5679\"|
+    s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
+    " "$CONFIG_FILE"
 
-# Show logs
-echo "Full logs command: tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d)"
+    # Restart the node
+    sudo systemctl daemon-reload && \
+    sudo systemctl restart zgs && \
+    sudo systemctl status zgs
 
-# Confirmation message for update completion
-if systemctl is-active --quiet zgs; then
-    echo "Storage Node update and services restarted successfully!"
-else
-    echo "Storage Node update failed. Please check the logs for more information."
-fi
+    # Show logs
+    echo "Full logs command: tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d)"
 
-echo "Let's Buidl 0G Together"
+    # Confirmation message for update completion
+    if systemctl is-active --quiet zgs; then
+        echo "Storage Node update and services restarted successfully!"
+    else
+        echo "Storage Node update failed. Please check the logs for more information."
+    fi
+
+    echo "Let's Buidl 0G Together"
+}
+
+# Execute the main function
+main
