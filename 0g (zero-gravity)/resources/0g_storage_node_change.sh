@@ -70,8 +70,16 @@ main() {
 
     if [ "$USER_CHOICE" == "1" ]; then
         choose_json_rpc_endpoint
+        read -p "Do you want to change the miner key as well? (yes/no): " CHANGE_MINER_KEY
+        if [ "$CHANGE_MINER_KEY" == "yes" ]; then
+            change_miner_key
+        fi
     elif [ "$USER_CHOICE" == "2" ]; then
         change_miner_key
+        read -p "Do you want to change the RPC endpoint as well? (yes/no): " CHANGE_RPC
+        if [ "$CHANGE_RPC" == "yes" ]; then
+            choose_json_rpc_endpoint
+        fi
     else
         echo "Invalid choice. Exiting."; exit 1
     fi
