@@ -15,7 +15,7 @@ choose_json_rpc_endpoint() {
     read -p "Enter your choice (1/2): " JSON_RPC_CHOICE
 
     if [ "$JSON_RPC_CHOICE" == "1" ]; then
-        read -p "Enter your JSON-RPC endpoint: " BLOCKCHAIN_RPC_ENDPOINT
+        read -p "Enter your JSON-RPC endpoint (leave empty to skip): " BLOCKCHAIN_RPC_ENDPOINT
         if [ -n "$BLOCKCHAIN_RPC_ENDPOINT" ]; then
             BLOCK_NUMBER=$(query_block_number "$BLOCKCHAIN_RPC_ENDPOINT")
             echo "Latest block number for $BLOCKCHAIN_RPC_ENDPOINT: $BLOCK_NUMBER"
@@ -37,20 +37,24 @@ choose_json_rpc_endpoint() {
         echo "7. https://og-testnet-jsonrpc.itrocket.net:443 [$(query_block_number https://og-testnet-jsonrpc.itrocket.net:443)]"
         echo "8. https://0g-evmrpc-zstake.xyz [$(query_block_number https://0g-evmrpc-zstake.xyz)]"
         echo "9. https://zerog-testnet-json-rpc.contributiondao.com [$(query_block_number https://zerog-testnet-json-rpc.contributiondao.com)]"
-        read -p "Enter the number of your chosen public JSON-RPC endpoint: " PUBLIC_RPC_CHOICE
+        read -p "Enter the number of your chosen public JSON-RPC endpoint (leave empty to skip): " PUBLIC_RPC_CHOICE
 
-        case $PUBLIC_RPC_CHOICE in
-            1) BLOCKCHAIN_RPC_ENDPOINT="https://lightnode-json-rpc-0g.grandvalleys.com";;
-            2) BLOCKCHAIN_RPC_ENDPOINT="https://evmrpc-testnet.0g.ai";;
-            3) BLOCKCHAIN_RPC_ENDPOINT="https://rpc.ankr.com/0g_newton";;
-            4) BLOCKCHAIN_RPC_ENDPOINT="https://16600.rpc.thirdweb.com";;
-            5) BLOCKCHAIN_RPC_ENDPOINT="https://0g-json-rpc-public.originstake.com";;
-            6) BLOCKCHAIN_RPC_ENDPOINT="https://0g-rpc-evm01.validatorvn.com";;
-            7) BLOCKCHAIN_RPC_ENDPOINT="https://og-testnet-jsonrpc.itrocket.net:443";;
-            8) BLOCKCHAIN_RPC_ENDPOINT="https://0g-evmrpc-zstake.xyz";;
-            9) BLOCKCHAIN_RPC_ENDPOINT="https://zerog-testnet-json-rpc.contributiondao.com";;
-            *) echo "Invalid choice. Exiting."; exit 1;;
-        esac
+        if [ -n "$PUBLIC_RPC_CHOICE" ]; then
+            case $PUBLIC_RPC_CHOICE in
+                1) BLOCKCHAIN_RPC_ENDPOINT="https://lightnode-json-rpc-0g.grandvalleys.com";;
+                2) BLOCKCHAIN_RPC_ENDPOINT="https://evmrpc-testnet.0g.ai";;
+                3) BLOCKCHAIN_RPC_ENDPOINT="https://rpc.ankr.com/0g_newton";;
+                4) BLOCKCHAIN_RPC_ENDPOINT="https://16600.rpc.thirdweb.com";;
+                5) BLOCKCHAIN_RPC_ENDPOINT="https://0g-json-rpc-public.originstake.com";;
+                6) BLOCKCHAIN_RPC_ENDPOINT="https://0g-rpc-evm01.validatorvn.com";;
+                7) BLOCKCHAIN_RPC_ENDPOINT="https://og-testnet-jsonrpc.itrocket.net:443";;
+                8) BLOCKCHAIN_RPC_ENDPOINT="https://0g-evmrpc-zstake.xyz";;
+                9) BLOCKCHAIN_RPC_ENDPOINT="https://zerog-testnet-json-rpc.contributiondao.com";;
+                *) echo "Invalid choice. Exiting."; exit 1;;
+            esac
+        else
+            BLOCKCHAIN_RPC_ENDPOINT=""
+        fi
     else
         echo "Invalid choice. Exiting."; exit 1
     fi
@@ -58,7 +62,7 @@ choose_json_rpc_endpoint() {
 
 # Function to prompt user to change miner key
 change_miner_key() {
-    read -p "Enter your private key: " PRIVATE_KEY
+    read -p "Enter your private key (leave empty to skip): " PRIVATE_KEY
 }
 
 # Main function to handle user choices
