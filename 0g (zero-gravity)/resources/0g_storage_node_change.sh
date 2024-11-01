@@ -64,9 +64,10 @@ sudo systemctl stop zgs
 
 # Update config file
 sed -i "
-s|^\s*#\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|
-s|^\s*#\s*listen_address\s*=.*|listen_address = \"0.0.0.0:5678\"|
-s|^\s*#\s*listen_address_admin\s*=.*|listen_address_admin = \"0.0.0.0:5679\"|
+s|^\s*#\?\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|
+s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|
+s|^\s*#\?\s*listen_address\s*=.*|listen_address = \"0.0.0.0:5678\"|
+s|^\s*#\?\s*listen_address_admin\s*=.*|listen_address_admin = \"0.0.0.0:5679\"|
 s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
 " "$HOME/0g-storage-node/run/config-testnet.toml"
 
