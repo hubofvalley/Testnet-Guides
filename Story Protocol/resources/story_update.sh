@@ -31,7 +31,7 @@ update_version() {
     sudo rm $HOME/.story/story/data/upgrade-info.json
 
     # Add the upgrade to cosmovisor
-    cosmovisor add-upgrade $version $HOME/$version/$story_file_name --upgrade-height $upgrade_height --force
+    cosmovisor add-upgrade $version $HOME/go/bin/story --upgrade-height $upgrade_height --force
 }
 
 # Menu for selecting the version
