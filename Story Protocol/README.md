@@ -54,6 +54,12 @@
       - [delegate to ](#delegate-to-)
   - [delete the node](#delete-the-node)
   - [upgrade consensus client version to v0.12.1 at height 322000](#upgrade-consensus-client-version-to-v0121-at-height-322000)
+- [Define variables](#define-variables)
+- [Export environment variables](#export-environment-variables)
+- [Create directory and download the binary](#create-directory-and-download-the-binary)
+- [Move the binary to the appropriate directory](#move-the-binary-to-the-appropriate-directory)
+- [Set ownership and permissions](#set-ownership-and-permissions)
+- [Add the upgrade to cosmovisor](#add-the-upgrade-to-cosmovisor)
 - [let's buidl together](#lets-buidl-together)
 
 # Story Protocol
@@ -468,11 +474,5 @@ sudo rm $HOME/.story/story/data/upgrade-info.json
 
 # Add the upgrade to cosmovisor
 cosmovisor add-upgrade v0.12.1 $HOME/v0.12.1/$story_file_name --upgrade-height 322000 --force
-
-# Restart the service
-sudo systemctl daemon-reload && \
-sudo systemctl restart story
-```
-
 
 # let's buidl together

@@ -32,10 +32,6 @@ update_version() {
 
     # Add the upgrade to cosmovisor
     cosmovisor add-upgrade $version $HOME/$version/$story_file_name --upgrade-height $upgrade_height --force
-
-    # Restart the service
-    sudo systemctl daemon-reload && \
-    sudo systemctl restart story
 }
 
 # Menu for selecting the version
