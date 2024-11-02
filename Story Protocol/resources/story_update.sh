@@ -16,6 +16,7 @@ source $HOME/.bash_profile
 update_version() {
     local version=$1
     local download_url=$2
+    local upgrade_height=$3
 
     # Create directory and download the binary
     mkdir -p $HOME/$version
@@ -30,7 +31,7 @@ update_version() {
     sudo rm $HOME/.story/story/data/upgrade-info.json
 
     # Add the upgrade to cosmovisor
-    cosmovisor add-upgrade $version $HOME/$version/$story_file_name --upgrade-height 322000 --force
+    cosmovisor add-upgrade $version $HOME/$version/$story_file_name --upgrade-height $upgrade_height --force
 
     # Restart the service
     sudo systemctl daemon-reload && \
@@ -39,13 +40,13 @@ update_version() {
 
 # Menu for selecting the version
 echo "Choose the version to update to:"
-echo "1. v0.12.1"
+echo "a. v0.12.1 (Upgrade height: 322000)"
 echo "Note: There are currently no versions available after v0.12.1."
-read -p "Enter the number corresponding to the version: " choice
+read -p "Enter the letter corresponding to the version: " choice
 
 case $choice in
-    1)
-        update_version "v0.12.1" "https://github.com/piplabs/story/releases/download/v0.12.1"
+    a)
+        update_version "v0.12.1" "https://github.com/piplabs/story/releases/download/v0.12.1" 322000
         ;;
     *)
         echo "Invalid choice. Exiting."
