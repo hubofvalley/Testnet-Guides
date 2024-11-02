@@ -53,6 +53,7 @@
       - [self delegate](#self-delegate)
       - [delegate to ](#delegate-to-)
   - [delete the node](#delete-the-node)
+  - [upgrade consensus client version to v0.12.1 at height 322000](#upgrade-consensus-client-version-to-v0121-at-height-322000)
 - [let's buidl together](#lets-buidl-together)
 
 # Story Protocol
@@ -436,5 +437,42 @@ sudo rm -rf /etc/systemd/system/story-geth.service /etc/systemd/system/story.ser
 sudo rm -r .story
 sed -i "/STORY_/d" $HOME/.bash_profile
 ```
+
+## upgrade consensus client version to v0.12.1 at height 322000
+
+```bash
+# Define variables
+input1=$(which cosmovisor)
+input2=$(find $HOME -type d -name "story")
+input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
+story_file_name=story-linux-amd64
+
+# Export environment variables
+echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
+echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
+echo "export DAEMON_DATA_BACKUP_DIR=$input3" >> $HOME/.bash_profile
+source $HOME/.bash_profile
+
+# Create directory and download the binary
+mkdir -p $HOME/v0.12.1
+cd $HOME/v0.12.1 && \
+wget https://github.com/piplabs/story/releases/download/v0.12.1/$story_file_name
+
+# Move the binary to the appropriate directory
+sudo cp $HOME/v0.12.1/$story_file_name $HOME/go/bin/story
+
+# Set ownership and permissions
+sudo chown -R $USER:$USER $HOME/.story && \
+sudo chown -R $USER:$USER $HOME/go/bin/story && \
+sudo rm $HOME/.story/story/data/upgrade-info.json
+
+# Add the upgrade to cosmovisor
+cosmovisor add-upgrade v0.12.1 $HOME/v0.12.1/$story_file_name --upgrade-height 322000 --force
+
+# Restart the service
+sudo systemctl daemon-reload && \
+sudo systemctl restart story
+```
+
 
 # let's buidl together
