@@ -1,65 +1,72 @@
 #!/bin/bash
 
+# ANSI color codes
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
 LOGO="
- __      __     _  _                        __    _____  _                       
- \ \    / /    | || |                      / _|  / ____|| |                      
-  \ \  / /__ _ | || |  ___  _   _    ___  | |_  | (___  | |_  ___   _ __  _   _  
-  _\ \/ // _\` || || | / _ \| | | |  / _ \ |  _|  \___ \ | __|/ _ \ | '__|| | | | 
- | |\  /| (_| || || ||  __/| |_| | | (_) || |    ____) || |_| (_) || |   | |_| | 
- | |_\/  \__,_||_||_| \___| \__, |  \___/ |_|   |_____/  \__|\___/ |_|    \__, | 
- | '_ \ | | | |              __/ |                                         __/ | 
- | |_) || |_| |             |___/                                         |___/  
- |_.__/  \__, |                                                                  
-          __/ |                                                                  
-         |___/                                                                   
- __                                   
-/__ ._ _. ._   _|   \  / _. | |  _    
-\_| | (_| | | (_|    \/ (_| | | (/_ \/
-                                    /
+${BLUE} __      __     _  _                        __    _____  _                        ${NC}
+${BLUE} \ \    / /    | || |                      / _|  / ____|| |                       ${NC}
+${BLUE}  \ \  / /__ _ | || |  ___  _   _    ___  | |_  | (___  | |_  ___   _ __  _   _   ${NC}
+${BLUE}  _\ \/ // _\` || || | / _ \| | | |  / _ \ |  _|  \___ \ | __|/ _ \ | '__|| | | |  ${NC}
+${BLUE} | |\  /| (_| || || ||  __/| |_| | | (_) || |    ____) || |_| (_) || |   | |_| |  ${NC}
+${BLUE} | |_\/  \__,_||_||_| \___| \__, |  \___/ |_|   |_____/  \__|\___/ |_|    \__, |  ${NC}
+${BLUE} | '_ \ | | | |              __/ |                                         __/ |  ${NC}
+${BLUE} | |_) || |_| |             |___/                                         |___/   ${NC}
+${BLUE} |_.__/  \__, |                                                                   ${NC}
+${BLUE}          __/ |                                                                   ${NC}
+${BLUE}         |___/                                                                    ${NC}
+${BLUE} __                                    ${NC}
+${BLUE}/__ ._ _. ._   _|   \  / _. | |  _     ${NC}
+${BLUE}\_| | (_| | | (_|    \/ (_| | | (/_ \/ ${NC}
+${BLUE}                                    /  ${NC}
 "
 
 INTRO="
-Valley Of 0G by Grand Valley
+${GREEN}Valley Of 0G by Grand Valley${NC}
 
-Story Validator Node System Requirements
+${YELLOW}Story Validator Node System Requirements${NC}
 
-| Category  | Requirements     |
-| --------- | ---------------- |
-| CPU       | 8+ cores         |
-| RAM       | 32+ GB           |
-| Storage   | 500+ GB NVMe SSD |
-| Bandwidth | 100+ MBit/s      |
+${GREEN}| Category  | Requirements     |${NC}
+${GREEN}| --------- | ---------------- |${NC}
+${GREEN}| CPU       | 8+ cores         |${NC}
+${GREEN}| RAM       | 32+ GB           |${NC}
+${GREEN}| Storage   | 500+ GB NVMe SSD |${NC}
+${GREEN}| Bandwidth | 100+ MBit/s      |${NC}
 
-- consensus client service file name: story.service
-- geth service file name: story-geth.service
-- current chain: odyssey
-- current story node version: v0.12.0
-- current story-geth node version: v0.10.0
+${YELLOW}- consensus client service file name: story.service${NC}
+${YELLOW}- geth service file name: story-geth.service${NC}
+${YELLOW}- current chain: odyssey${NC}
+${YELLOW}- current story node version: v0.12.0${NC}
+${YELLOW}- current story-geth node version: v0.10.0${NC}
 
 "
 
 ENDPOINTS="
-Grand Valley Story Protocol public endpoints:
-- cosmos rpc: https://lightnode-rpc-story.grandvalleys.com
-- json-rpc: https://lightnode-json-rpc-story.grandvalleys.com
-- cosmos rest-api: https://lightnode-api-story.grandvalleys.com
-- cosmos ws: wss://lightnode-rpc-story.grandvalleys.com/websocket
-- evm ws: wss://lightnode-wss-story.grandvalleys.com
+${GREEN}Grand Valley Story Protocol public endpoints:${NC}
+${YELLOW}- cosmos rpc: https://lightnode-rpc-story.grandvalleys.com${NC}
+${YELLOW}- json-rpc: https://lightnode-json-rpc-story.grandvalleys.com${NC}
+${YELLOW}- cosmos rest-api: https://lightnode-api-story.grandvalleys.com${NC}
+${YELLOW}- cosmos ws: wss://lightnode-rpc-story.grandvalleys.com/websocket${NC}
+${YELLOW}- evm ws: wss://lightnode-wss-story.grandvalleys.com${NC}
 
-Grand Valley social media:
-- X: https://x.com/bacvalley
-- GitHub: https://github.com/hubofvalley
-- Email: letsbuidltogether@grandvalleys.com
+${GREEN}Grand Valley social media:${NC}
+${YELLOW}- X: https://x.com/bacvalley${NC}
+${YELLOW}- GitHub: https://github.com/hubofvalley${NC}
+${YELLOW}- Email: letsbuidltogether@grandvalleys.com${NC}
 "
 
 # Display LOGO and wait for user input to continue
 echo "$LOGO"
-echo -e "\nPress Enter to continue..."
+echo -e "\n${YELLOW}Press Enter to continue...${NC}"
 read -r
 
 # Display INTRO section and wait for user input to continue
 echo "$INTRO"
-echo -e "\nPress Enter to continue"
+echo -e "\n${YELLOW}Press Enter to continue${NC}"
 read -r
 
 # Display ENDPOINTS section
@@ -226,29 +233,29 @@ function update_consensus_client() {
 
 # Menu
 function menu() {
-    echo "1. Node Interactions:"
-    echo "   a. Deploy Validator Node"
-    echo "   b. Delete Validator Node (DON'T FORGET TO BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE U DID THIS)"
-    echo "   c. Stop Consensus Client"
-    echo "   d. Restart Consensus Client"
-    echo "   e. Stop Geth Service"
-    echo "   f. Restart Geth Service"
-    echo "   g. Show Consensus Client Logs"
-    echo "   h. Show Geth Logs"
-    echo "   i. Show Node Status"
-    echo "   j. Add Peers"
-    echo "   k. Update Consensus Client"
-    echo "2. Validator/Key Interactions:"
-    echo "   a. Create Validator"
-    echo "   b. Query Validator Public Key"
-    echo "   c. Query Balance"
-    echo "   d. Stake Tokens"
-    echo "   e. Unstake Tokens"
-    echo "   f. Export EVM Key"
-    echo "   g. Backup Validator Key (store it to $HOME directory)"
-    echo "3. Exit"
+    echo "${GREEN}1. Node Interactions:${NC}"
+    echo "${YELLOW}   a. Deploy Validator Node${NC}"
+    echo "${YELLOW}   b. Delete Validator Node (DON'T FORGET TO BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE U DID THIS)${NC}"
+    echo "${YELLOW}   c. Stop Consensus Client${NC}"
+    echo "${YELLOW}   d. Restart Consensus Client${NC}"
+    echo "${YELLOW}   e. Stop Geth Service${NC}"
+    echo "${YELLOW}   f. Restart Geth Service${NC}"
+    echo "${YELLOW}   g. Show Consensus Client Logs${NC}"
+    echo "${YELLOW}   h. Show Geth Logs${NC}"
+    echo "${YELLOW}   i. Show Node Status${NC}"
+    echo "${YELLOW}   j. Add Peers${NC}"
+    echo "${YELLOW}   k. Update Consensus Client${NC}"
+    echo "${GREEN}2. Validator/Key Interactions:${NC}"
+    echo "${YELLOW}   a. Create Validator${NC}"
+    echo "${YELLOW}   b. Query Validator Public Key${NC}"
+    echo "${YELLOW}   c. Query Balance${NC}"
+    echo "${YELLOW}   d. Stake Tokens${NC}"
+    echo "${YELLOW}   e. Unstake Tokens${NC}"
+    echo "${YELLOW}   f. Export EVM Key${NC}"
+    echo "${YELLOW}   g. Backup Validator Key (store it to $HOME directory)${NC}"
+    echo "${GREEN}3. Exit${NC}"
 
-    echo "Let's Buidl Story Together - Grand Valley"
+    echo "${BLUE}Let's Buidl Story Together - Grand Valley${NC}"
     read -p "Choose an option: " OPTION
 
     case $OPTION in
