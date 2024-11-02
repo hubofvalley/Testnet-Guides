@@ -219,6 +219,11 @@ function add_peers() {
     menu
 }
 
+function update_consensus_client() {
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_update.sh)
+    menu
+}
+
 # Menu
 function menu() {
     echo "1. Node Interactions:"
@@ -232,6 +237,7 @@ function menu() {
     echo "   h. Show Geth Logs"
     echo "   i. Show Node Status"
     echo "   j. Add Peers"
+    echo "   k. Update Consensus Client"
     echo "2. Validator/Key Interactions:"
     echo "   a. Create Validator"
     echo "   b. Query Validator Public Key"
@@ -241,7 +247,7 @@ function menu() {
     echo "   f. Export EVM Key"
     echo "   g. Backup Validator Key (store it to $HOME directory)"
     echo "3. Exit"
-    
+
     echo "Let's Buidl Story Together - Grand Valley"
     read -p "Choose an option: " OPTION
 
@@ -259,6 +265,7 @@ function menu() {
                 h) show_geth_logs ;;
                 i) show_node_status ;;
                 j) add_peers ;;
+                k) update_consensus_client ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
