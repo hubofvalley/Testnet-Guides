@@ -67,7 +67,7 @@ read -p "Enter the letter corresponding to the version: " choice
 
 case $choice in
     a)
-        update_version "v0.12.1" "https://github.com/piplabs/story/releases/download/v0.12.1" 322000
+        update_version "v0.12.1" "https://github.com/piplabs/story/releases/download/v0.12.1/story-linux-amd64" 322000
         ;;
     *)
         echo "Invalid choice. Exiting."
