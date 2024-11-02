@@ -6,6 +6,24 @@ input2=$(find $HOME -type d -name "story")
 input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
 story_file_name=story-linux-amd64
 
+# Check if cosmovisor is installed
+if [ -z "$input1" ]; then
+    echo "cosmovisor is not installed. Please install it first."
+    exit 1
+fi
+
+# Check if story directory exists
+if [ -z "$input2" ]; then
+    echo "Story directory not found. Please ensure it exists."
+    exit 1
+fi
+
+# Check if backup directory exists
+if [ -z "$input3" ]; then
+    echo "Backup directory not found. Please ensure it exists."
+    exit 1
+fi
+
 # Export environment variables
 echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
 echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
@@ -19,19 +37,26 @@ update_version() {
     local upgrade_height=$3
 
     # Create directory and download the binary
+    cd $HOME
     mkdir -p $HOME/$version
-    cd $HOME/$version && wget $download_url/$story_file_name
+    if ! wget -P $HOME/$version $download_url/$story_file_name -O $HOME/$version/story; then
+        echo "Failed to download the binary. Exiting."
+        exit 1
+    fi
 
     # Move the binary to the appropriate directory
-    sudo cp $HOME/$version/$story_file_name $HOME/go/bin/story
+    sudo cp $HOME/$version/story $HOME/go/bin/story
 
     # Set ownership and permissions
     sudo chown -R $USER:$USER $HOME/.story && \
     sudo chown -R $USER:$USER $HOME/go/bin/story && \
-    sudo rm $HOME/.story/story/data/upgrade-info.json
+    sudo rm -f $HOME/.story/story/data/upgrade-info.json
 
     # Add the upgrade to cosmovisor
-    cosmovisor add-upgrade $version $HOME/go/bin/story --upgrade-height $upgrade_height --force
+    if ! cosmovisor add-upgrade $version $HOME/go/bin/story --upgrade-height $upgrade_height --force; then
+        echo "Failed to add upgrade to cosmovisor. Exiting."
+        exit 1
+    fi
 }
 
 # Menu for selecting the version
