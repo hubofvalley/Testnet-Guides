@@ -53,7 +53,7 @@
       - [self delegate](#self-delegate)
       - [delegate to ](#delegate-to-)
   - [delete the node](#delete-the-node)
-  - [upgrade consensus client version to v0.12.1 at height 322000](#upgrade-consensus-client-version-to-v0121-at-height-322000)
+  - [upgrade consensus client version to `v0.12.1` at height `322000`](#upgrade-consensus-client-version-to-v0121-at-height-322000)
 - [let's buidl together](#lets-buidl-together)
 
 # Story Protocol
@@ -438,7 +438,7 @@ sudo rm -r .story
 sed -i "/STORY_/d" $HOME/.bash_profile
 ```
 
-## upgrade consensus client version to v0.12.1 at height 322000
+## upgrade consensus client version to `v0.12.1` at height `322000`
 
 ```bash
 # Define variables
