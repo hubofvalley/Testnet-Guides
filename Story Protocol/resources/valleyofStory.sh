@@ -203,16 +203,31 @@ function add_peers() {
     case $choice in
         1)
             read -p "Enter peers (comma-separated): " peers
-            sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.story/story/config/config.toml
-            echo "Peers added manually."
+            echo "You have entered the following peers: $peers"
+            read -p "Do you want to proceed? (yes/no): " confirm
+            if [[ $confirm == "yes" ]]; then
+                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.story/story/config/config.toml
+                echo "Peers added manually."
+            else
+                echo "Operation cancelled. Returning to menu."
+                menu
+            fi
             ;;
         2)
             peers=$(curl -sS https://lightnode-rpc-story.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
-            sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.story/story/config/config.toml
-            echo "Grand Valley's peers added."
+            echo "Grand Valley's peers: $peers"
+            read -p "Do you want to proceed? (yes/no): " confirm
+            if [[ $confirm == "yes" ]]; then
+                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.story/story/config/config.toml
+                echo "Grand Valley's peers added."
+            else
+                echo "Operation cancelled. Returning to menu."
+                menu
+            fi
             ;;
         *)
             echo "Invalid choice. Please enter 1 or 2."
+            menu
             ;;
     esac
     echo "Now you can restart your consensus client"
@@ -228,7 +243,7 @@ function update_consensus_client() {
 function menu() {
     echo "1. Node Interactions:"
     echo "   a. Deploy Validator Node"
-    echo "   b. Delete Validator Node (DON'T FORGET TO BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE U DID THIS)"
+    echo "   b. Delete Validator Node (DON'T FORGET TO BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
     echo "   c. Stop Consensus Client"
     echo "   d. Restart Consensus Client"
     echo "   e. Stop Geth Service"
