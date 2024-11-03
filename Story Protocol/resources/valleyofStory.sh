@@ -52,6 +52,11 @@ Grand Valley Story Protocol public endpoints:${RESET}
 - cosmos ws: ${BLUE}wss://lightnode-rpc-story.grandvalleys.com/websocket${RESET}
 - evm ws: ${BLUE}wss://lightnode-wss-story.grandvalleys.com${RESET}
 
+${GREEN}Connect with Story Protocol:${RESET}
+- Official Website: ${BLUE}https://www.story.foundation${RESET}
+- X: ${BLUE}https://x.com/StoryProtocol${RESET}
+- Official Docs: ${BLUE}https://docs.story.foundation${RESET}
+
 ${GREEN}Connect with Grand Valley:${RESET}
 - X: ${BLUE}https://x.com/bacvalley${RESET}
 - GitHub: ${BLUE}https://github.com/hubofvalley${RESET}
