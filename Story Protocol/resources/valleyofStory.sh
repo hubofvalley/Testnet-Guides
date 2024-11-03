@@ -147,29 +147,16 @@ function delete_validator_node() {
     menu
 }
 
-function stop_consensus_client() {
-    sudo systemctl stop story
-    echo "Consensus client stopped."
+function stop_services() {
+    sudo systemctl stop story story-geth
+    echo "Consensus client and Geth service stopped."
     menu
 }
 
-function restart_consensus_client() {
+function restart_services() {
     sudo systemctl daemon-reload
-    sudo systemctl restart story
-    echo "Consensus client restarted."
-    menu
-}
-
-function stop_geth() {
-    sudo systemctl stop story-geth
-    echo "Geth service stopped."
-    menu
-}
-
-function restart_geth() {
-    sudo systemctl daemon-reload
-    sudo systemctl restart story-geth
-    echo "Geth service restarted."
+    sudo systemctl restart story story-geth
+    echo "Consensus client and Geth service restarted."
     menu
 }
 
@@ -244,15 +231,13 @@ function menu() {
     echo "1. Node Interactions:"
     echo "   a. Deploy Validator Node"
     echo "   b. Delete Validator Node (DON'T FORGET TO BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
-    echo "   c. Stop Consensus Client"
-    echo "   d. Restart Consensus Client"
-    echo "   e. Stop Geth Service"
-    echo "   f. Restart Geth Service"
-    echo "   g. Show Consensus Client Logs"
-    echo "   h. Show Geth Logs"
-    echo "   i. Show Node Status"
-    echo "   j. Add Peers"
-    echo "   k. Update Consensus Client"
+    echo "   c. Stop Consensus Client and Geth Service"
+    echo "   d. Restart Consensus Client and Geth Service"
+    echo "   e. Show Consensus Client Logs"
+    echo "   f. Show Geth Logs"
+    echo "   g. Show Node Status"
+    echo "   h. Add Peers"
+    echo "   i. Update Consensus Client"
     echo "2. Validator/Key Interactions:"
     echo "   a. Create Validator"
     echo "   b. Query Validator Public Key"
@@ -264,28 +249,32 @@ function menu() {
     echo "3. Exit"
 
     echo "Let's Buidl Story Together - Grand Valley"
-    read -p "Choose an option: " OPTION
+    read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
-    case $OPTION in
+    if [[ $OPTION =~ ^[1-2][a-i]$ ]]; then
+        MAIN_OPTION=${OPTION:0:1}
+        SUB_OPTION=${OPTION:1:1}
+    else
+        read -p "Choose a sub-option: " SUB_OPTION
+        MAIN_OPTION=$OPTION
+    fi
+
+    case $MAIN_OPTION in
         1)
-            read -p "Choose a sub-option: " SUB_OPTION
             case $SUB_OPTION in
                 a) deploy_validator_node ;;
                 b) delete_validator_node ;;
-                c) stop_consensus_client ;;
-                d) restart_consensus_client ;;
-                e) stop_geth ;;
-                f) restart_geth ;;
-                g) show_consensus_client_logs ;;
-                h) show_geth_logs ;;
-                i) show_node_status ;;
-                j) add_peers ;;
-                k) update_consensus_client ;;
+                c) stop_services ;;
+                d) restart_services ;;
+                e) show_consensus_client_logs ;;
+                f) show_geth_logs ;;
+                g) show_node_status ;;
+                h) add_peers ;;
+                i) update_consensus_client ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
         2)
-            read -p "Choose a sub-option: " SUB_OPTION
             case $SUB_OPTION in
                 a) create_validator ;;
                 b) query_validator_pub_key ;;
