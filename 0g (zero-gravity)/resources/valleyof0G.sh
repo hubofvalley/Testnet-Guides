@@ -1,61 +1,68 @@
 #!/bin/bash
 
-LOGO="
- __      __     _  _                        __    ___    _____  
- \ \    / /    | || |                      / _|  / _ \  / ____| 
-  \ \  / /__ _ | || |  ___  _   _    ___  | |_  | | | || |  __  
-  _\ \/ // _. || || | / _ \| | | |  / _ \ |  _| | | | || | |_ | 
- | |\  /| (_| || || ||  __/| |_| | | (_) || |   | |_| || |__| | 
- | |_\/  \__,_||_||_| \___| \__, |  \___/ |_|    \___/  \_____| 
- | __ \ | | | |              __/ |                              
- | |_) || |_| |             |___/                               
- |_.__/  \__, |                                                 
-          __/ |                                                 
-         |___/                                                  
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+YELLOW='\033[0;33m'
+RESET='\033[0m'
 
+LOGO="
+ __      __     _  _                        __    ___    _____ 
+ \ \    / /    | || |                      / _|  / _ \  / ____|
+  \ \  / /__ _ | || |  ___  _   _    ___  | |_  | | | || |  __ 
+  _\ \/ // __ || || | / _ \| | | |  / _ \ |  _| | | | || | |_ |
+ | |\  /| (_| || || ||  __/| |_| | | (_) || |   | |_| || |__| |
+ | |_\/  \__,_||_||_| \___| \__, |  \___/ |_|    \___/  \_____|
+ | '_ \ | | | |              __/ |                             
+ | |_) || |_| |             |___/                              
+ |____/  \__, |                                                
+          __/ |                                                
+         |___/                                                 
  __                                   
-/__ ._ _. ._   _|   \  / _. | |  _    
+/__ __ __ __   _|   \  / __ | |  _    
 \_| | (_| | | (_|    \/ (_| | | (/_ \/
                                     /
 "
 
-INTRO="
+INTRO="${GREEN}
 Valley Of 0G by Grand Valley
 
 0G Validator Node System Requirements
-| Category  | Requirements                   |
+${YELLOW}| Category  | Requirements                   |
 | --------- | ------------------------------ |
 | CPU       | 8 cores                        |
 | RAM       | 64+ GB                         |
 | Storage   | 1+ TB NVMe SSD                 |
-| Bandwidth | 100 MBps for Download / Upload |
+| Bandwidth | 100 MBps for Download / Upload |${RESET}
 
-validator node current binaries version: v0.2.5 will automatically update to the latest version
+validator node current binaries version: ${CYAN}v0.2.5${RESET} will automatically update to the latest version
 service file name: 0gchaind.service
 current chain : zgtendermint_16600-2
 
 ------------------------------------------------------------------
 
 Storage Node System Requirements
-| Category  | Requirements                   |
+${YELLOW}| Category  | Requirements                   |
 | --------- | ------------------------------ |
 | CPU       | 8+ cores                       |
 | RAM       | 32+ GB                         |
 | Storage   | 500GB / 1TB NVMe SSD           |
-| Bandwidth | 100 MBps for Download / Upload |
+| Bandwidth | 100 MBps for Download / Upload |${RESET}
 
-storage node current binary version: v0.6.1
+storage node current binary version: ${CYAN}v0.6.1${RESET}
 
 ------------------------------------------------------------------
 
 Storage KV System Requirements
-| Category | Requirements                                |
+${YELLOW}| Category | Requirements                                |
 | -------- | ------------------------------------------- |
 | CPU      | 8+ cores                                    |
 | RAM      | 32+ GB                                      |
-| Storage  | Matches the size of kv streams it maintains |
+| Storage  | Matches the size of kv streams it maintains |${RESET}
 
-storage kvs current binary version: v1.2.2
+storage kvs current binary version: ${CYAN}v1.2.2${RESET}
 
 ------------------------------------------------------------------
 "
@@ -326,7 +333,7 @@ function restart_storage_kv() {
 
 # Menu
 function menu() {
-    echo "1. Validator Node"
+    echo "${GREEN}1. Validator Node${RESET}"
     echo "    a. Deploy Validator Node"
     echo "    b. Create Validator"
     echo "    c. Query Balance"
@@ -343,7 +350,7 @@ function menu() {
     echo "    n. Restart Validator Node"
     echo "    o. Add Peers"
     echo "    p. Backup Validator Key (store it to $HOME directory)"
-    echo "2. Storage Node"
+    echo "${GREEN}2. Storage Node${RESET}"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
     echo "    c. Delete Storage Node"
@@ -352,14 +359,14 @@ function menu() {
     echo "    f. Show Storage Node Status"
     echo "    g. Stop Storage Node"
     echo "    h. Restart Storage Node"
-    echo "3. Storage KV"
+    echo "${GREEN}3. Storage KV${RESET}"
     echo "    a. Deploy Storage KV"
     echo "    b. Show Storage KV Logs"
     echo "    c. Update Storage KV"
     echo "    d. Delete Storage KV"
     echo "    e. Stop Storage KV"
     echo "    f. Restart Storage KV"
-    echo "4. Exit"
+    echo "${RED}4. Exit"${RESET}
 
     echo "Let's Buidl 0G Together - Grand Valley"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
