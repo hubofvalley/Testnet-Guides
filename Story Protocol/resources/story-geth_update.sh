@@ -30,7 +30,6 @@ update_version() {
 
 # Inform the user that there is no currently latest version of story-geth
 echo "There is currently no latest version of story-geth available."
-echo "Please update the script manually with the version number and download link for the update."
 
 # Menu for selecting the version
 echo "Choose the version to update to:"

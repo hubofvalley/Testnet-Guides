@@ -255,29 +255,7 @@ function update_consensus_client() {
 }
 
 function update_geth() {
-    echo "There is currently no latest version of story-geth available."
-    echo "Please update the script manually with the version number and download link for the update."
-
-    # Placeholder for future versions
-    # Uncomment and add new versions here
-    # echo "a. v0.9.4"
-    # echo "b. v0.9.5"
-
-    read -p "Enter the letter corresponding to the version: " choice
-
-    case $choice in
-        # Placeholder for future versions
-        # Uncomment and add new versions here
-        # a)
-        #     update_geth_version "v0.9.4" "https://github.com/piplabs/story-geth/releases/download/v0.9.4"
-        #     ;;
-        # b)
-        #     update_geth_version "v0.9.5" "https://github.com/piplabs/story-geth/releases/download/v0.9.5"
-        #     ;;
-        *)
-            echo "Invalid choice. Exiting."
-            ;;
-    esac
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story-geth_update.sh)
     menu
 }
 
