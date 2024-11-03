@@ -90,7 +90,7 @@ echo -e "${YELLOW}\nPress Enter to continue${RESET}"
 read -r
 
 # Display ENDPOINTS section
-echo "$ENDPOINTS"
+echo -e "$ENDPOINTS"
 
 # Validator Node Functions
 function deploy_validator_node() {
