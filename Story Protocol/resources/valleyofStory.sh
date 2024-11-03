@@ -316,6 +316,8 @@ function show_all_logs() {
 
 # Menu
 function menu() {
+    echo "Story Validator Node = Consensus Client Service + Execution Client Service (geth/story-geth)"
+    echo "Menu:"
     echo "1. Node Interactions:"
     echo "   a. Deploy Validator Node"
     echo "   b. Delete Validator Node (DON'T FORGET TO BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
