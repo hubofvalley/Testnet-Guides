@@ -30,7 +30,6 @@ INTRO="
 Valley Of Story by Grand Valley
 
 ${GREEN}Story Validator Node System Requirements${RESET}
-
 ${YELLOW}| Category  | Requirements     |
 | --------- | ---------------- |
 | CPU       | 8+ cores         |
