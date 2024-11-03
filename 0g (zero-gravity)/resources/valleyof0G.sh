@@ -203,6 +203,31 @@ function backup_validator_key() {
     menu
 }
 
+function add_peers() {
+    echo "Select an option:"
+    echo "1. Add peers manually"
+    echo "2. Use Grand Valley's peers"
+    read -p "Enter your choice (1 or 2): " choice
+
+    case $choice in
+        1)
+            read -p "Enter peers (comma-separated): " peers
+            sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchain/config/config.toml
+            echo "Peers added manually."
+            ;;
+        2)
+            peers=$(curl -sS https://lightnode-rpc-0g.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
+            sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchain/config/config.toml
+            echo "Grand Valley's peers added."
+            ;;
+        *)
+            echo "Invalid choice. Please enter 1 or 2."
+            ;;
+    esac
+    echo "Now you can restart your consensus client"
+    menu
+}
+
 # Storage Node Functions
 function deploy_storage_node() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_storage_node_install.sh)
@@ -302,7 +327,8 @@ function menu() {
     echo "    l. Show Node Status"
     echo "    m. Stop Validator Node"
     echo "    n. Restart Validator Node"
-    echo "    o. Backup Validator Key (store it to $HOME directory)"
+    echo "    o. Add Peers"
+    echo "    p. Backup Validator Key (store it to $HOME directory)"
     echo "2. Storage Node"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
@@ -342,6 +368,8 @@ function menu() {
                 l) show_node_status ;;
                 m) stop_validator_node ;;
                 n) restart_validator_node ;;
+                o) add_peers ;;
+                p) backup_validator_key ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
