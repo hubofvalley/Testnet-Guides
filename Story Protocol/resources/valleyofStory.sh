@@ -65,6 +65,34 @@ read -r
 # Display ENDPOINTS section
 echo "$ENDPOINTS"
 
+# Define variables
+geth_file_name=geth-linux-amd64
+
+# Function to update to a specific version
+update_geth_version() {
+    local version=$1
+    local download_url=$2
+
+    # Create directory and download the binary
+    cd $HOME
+    mkdir -p $HOME/$version
+    if ! wget -P $HOME/$version $download_url/$geth_file_name -O $HOME/$version/geth; then
+        echo "Failed to download the binary. Exiting."
+        exit 1
+    fi
+
+    # Move the binary to the appropriate directory
+    sudo mv $HOME/$version/geth $HOME/go/bin/geth
+
+    # Set ownership and permissions
+    sudo chown -R $USER:$USER $HOME/go/bin/geth
+    sudo chmod +x $HOME/go/bin/geth
+
+    # Restart the service
+    sudo systemctl daemon-reload && \
+    sudo systemctl restart story-geth
+}
+
 # Validator Node Functions
 function deploy_validator_node() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_validator_node_install_odyssey.sh)
@@ -226,6 +254,33 @@ function update_consensus_client() {
     menu
 }
 
+function update_geth() {
+    echo "There is currently no latest version of story-geth available."
+    echo "Please update the script manually with the version number and download link for the update."
+
+    # Placeholder for future versions
+    # Uncomment and add new versions here
+    # echo "a. v0.9.4"
+    # echo "b. v0.9.5"
+
+    read -p "Enter the letter corresponding to the version: " choice
+
+    case $choice in
+        # Placeholder for future versions
+        # Uncomment and add new versions here
+        # a)
+        #     update_geth_version "v0.9.4" "https://github.com/piplabs/story-geth/releases/download/v0.9.4"
+        #     ;;
+        # b)
+        #     update_geth_version "v0.9.5" "https://github.com/piplabs/story-geth/releases/download/v0.9.5"
+        #     ;;
+        *)
+            echo "Invalid choice. Exiting."
+            ;;
+    esac
+    menu
+}
+
 # New functions for stopping and restarting individual services
 function stop_consensus_client() {
     sudo systemctl stop story
@@ -271,11 +326,12 @@ function menu() {
     echo "   g. Show Node Status"
     echo "   h. Add Peers"
     echo "   i. Update Consensus Client Version"
-    echo "   j. Stop Consensus Client Only"
-    echo "   k. Stop Geth Only"
-    echo "   l. Restart Consensus Client Only"
-    echo "   m. Restart Geth Only"
-    echo "   n. Show Consensus Client & Geth Logs Together"
+    echo "   j. Update Geth Version"
+    echo "   k. Stop Consensus Client Only"
+    echo "   l. Stop Geth Only"
+    echo "   m. Restart Consensus Client Only"
+    echo "   n. Restart Geth Only"
+    echo "   o. Show Consensus Client & Geth Logs Together"
     echo "2. Validator/Key Interactions:"
     echo "   a. Create Validator"
     echo "   b. Query Validator Public Key"
@@ -289,7 +345,7 @@ function menu() {
     echo "Let's Buidl Story Together - Grand Valley"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
-    if [[ $OPTION =~ ^[1-2][a-n]$ ]]; then
+    if [[ $OPTION =~ ^[1-2][a-o]$ ]]; then
         MAIN_OPTION=${OPTION:0:1}
         SUB_OPTION=${OPTION:1:1}
     else
@@ -309,11 +365,12 @@ function menu() {
                 g) show_node_status ;;
                 h) add_peers ;;
                 i) update_consensus_client ;;
-                j) stop_consensus_client ;;
-                k) stop_geth ;;
-                l) restart_consensus_client ;;
-                m) restart_geth ;;
-                n) show_all_logs ;;
+                j) update_geth ;;
+                k) stop_consensus_client ;;
+                l) stop_geth ;;
+                m) restart_consensus_client ;;
+                n) restart_geth ;;
+                o) show_all_logs ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
