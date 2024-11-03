@@ -62,8 +62,8 @@ storage kvs current binary version: v1.2.2
 
 ENDPOINTS="
 Grand Valley 0G public endpoints:
-- cosmos rpc: https://lightnode-rpc-0g.grandvalleys.com
-- json-rpc: https://lightnode-json-rpc-0g.grandvalleys.com
+- cosmos-rpc: https://lightnode-rpc-0g.grandvalleys.com
+- evm-rpc: https://lightnode-json-rpc-0g.grandvalleys.com
 - cosmos rest-api: https://lightnode-api-0g.grandvalleys.com
 
 Grand Valley social media:
