@@ -26,10 +26,10 @@ LOGO="
                                     /
 "
 
-INTRO="${GREEN}
+INTRO="
 Valley Of 0G by Grand Valley
 
-0G Validator Node System Requirements${RESET}
+${GREEN}0G Validator Node System Requirements${RESET}
 ${YELLOW}| Category  | Requirements                   |
 | --------- | ------------------------------ |
 | CPU       | 8 cores                        |

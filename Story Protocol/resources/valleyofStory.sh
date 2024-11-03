@@ -26,10 +26,10 @@ LOGO="
                                     /
 "
 
-INTRO="${GREEN}
+INTRO="
 Valley Of 0G by Grand Valley
 
-Story Validator Node System Requirements
+${GREEN}Story Validator Node System Requirements${RESET}
 
 ${YELLOW}| Category  | Requirements     |
 | --------- | ---------------- |
