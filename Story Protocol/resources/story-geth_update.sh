@@ -41,7 +41,7 @@ echo "Note: There are currently no versions available."
 # echo "a. v0.9.4"
 # echo "b. v0.9.5"
 
-read -p "Enter the letter corresponding to the version: " choice
+# read -p "Enter the letter corresponding to the version: " choice
 
 case $choice in
     # Placeholder for future versions
