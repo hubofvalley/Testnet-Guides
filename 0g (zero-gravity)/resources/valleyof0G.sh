@@ -368,7 +368,7 @@ function menu() {
     echo "    f. Restart Storage KV"
     echo -e "${RED}4. Exit"${RESET}
 
-    echo "${GREEN}Let's Buidl 0G Together - Grand Valley${RESET}"
+    echo -e "${GREEN}Let's Buidl 0G Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
     if [[ $OPTION =~ ^[1-3][a-p]$ ]]; then
