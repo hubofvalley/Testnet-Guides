@@ -27,7 +27,7 @@ LOGO="
 "
 
 INTRO="
-Valley Of 0G by Grand Valley
+Valley Of Story by Grand Valley
 
 ${GREEN}Story Validator Node System Requirements${RESET}
 
