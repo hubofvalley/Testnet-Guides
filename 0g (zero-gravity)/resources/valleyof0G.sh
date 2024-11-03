@@ -86,6 +86,7 @@ ${GREEN}Connect with Grand Valley:${RESET}
 
 # Display LOGO and wait for user input to continue
 echo -e "$LOGO"
+echo -e "$ENDPOINTS"
 echo -e "${YELLOW}\nPress Enter to continue...${RESET}"
 read -r
 
@@ -93,9 +94,6 @@ read -r
 echo -e "$INTRO"
 echo -e "${YELLOW}\nPress Enter to continue${RESET}"
 read -r
-
-# Display ENDPOINTS section
-echo -e "$ENDPOINTS"
 
 # Validator Node Functions
 function deploy_validator_node() {
