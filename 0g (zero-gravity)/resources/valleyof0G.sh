@@ -336,6 +336,7 @@ function restart_storage_kv() {
 
 # Menu
 function menu() {
+    echo -e "${CYAN}Story Validator Node = Consensus Client Service + Execution Client Service (geth/story-geth)${RESET}"
     echo -e "${GREEN}1. Validator Node${RESET}"
     echo "    a. Deploy Validator Node"
     echo "    b. Create Validator"
