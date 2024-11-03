@@ -212,16 +212,31 @@ function add_peers() {
     case $choice in
         1)
             read -p "Enter peers (comma-separated): " peers
-            sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchain/config/config.toml
-            echo "Peers added manually."
+            echo "You have entered the following peers: $peers"
+            read -p "Do you want to proceed? (yes/no): " confirm
+            if [[ $confirm == "yes" ]]; then
+                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchain/config/config.toml
+                echo "Peers added manually."
+            else
+                echo "Operation cancelled. Returning to menu."
+                menu
+            fi
             ;;
         2)
             peers=$(curl -sS https://lightnode-rpc-0g.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
-            sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchain/config/config.toml
-            echo "Grand Valley's peers added."
+            echo "Grand Valley's peers: $peers"
+            read -p "Do you want to proceed? (yes/no): " confirm
+            if [[ $confirm == "yes" ]]; then
+                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchain/config/config.toml
+                echo "Grand Valley's peers added."
+            else
+                echo "Operation cancelled. Returning to menu."
+                menu
+            fi
             ;;
         *)
             echo "Invalid choice. Please enter 1 or 2."
+            menu
             ;;
     esac
     echo "Now you can restart your consensus client"
