@@ -330,7 +330,7 @@ function menu() {
     echo "   g. Backup Validator Key (store it to $HOME directory)"
     echo -e "${RED}3. Exit${RESET}"
 
-    echo -e "${GREEN} Let's Buidl Story Together - Grand Valley${RESET}"
+    echo -e "${GREEN}Let's Buidl Story Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
     if [[ $OPTION =~ ^[1-2][a-o]$ ]]; then

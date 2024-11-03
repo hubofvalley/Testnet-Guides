@@ -80,12 +80,12 @@ Grand Valley social media:
 "
 
 # Display LOGO and wait for user input to continue
-echo "$LOGO"
+echo -e "$LOGO"
 echo -e "${YELLOW}\nPress Enter to continue...${RESET}"
 read -r
 
 # Display INTRO section and wait for user input to continue
-echo "$INTRO"
+echo -e "$INTRO"
 echo -e "${YELLOW}\nPress Enter to continue${RESET}"
 read -r
 
@@ -333,7 +333,7 @@ function restart_storage_kv() {
 
 # Menu
 function menu() {
-    echo "${GREEN}1. Validator Node${RESET}"
+    echo -e "${GREEN}1. Validator Node${RESET}"
     echo "    a. Deploy Validator Node"
     echo "    b. Create Validator"
     echo "    c. Query Balance"
@@ -350,7 +350,7 @@ function menu() {
     echo "    n. Restart Validator Node"
     echo "    o. Add Peers"
     echo "    p. Backup Validator Key (store it to $HOME directory)"
-    echo "${GREEN}2. Storage Node${RESET}"
+    echo -e "${GREEN}2. Storage Node${RESET}"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
     echo "    c. Delete Storage Node"
@@ -359,16 +359,16 @@ function menu() {
     echo "    f. Show Storage Node Status"
     echo "    g. Stop Storage Node"
     echo "    h. Restart Storage Node"
-    echo "${GREEN}3. Storage KV${RESET}"
+    echo -e "${GREEN}3. Storage KV${RESET}"
     echo "    a. Deploy Storage KV"
     echo "    b. Show Storage KV Logs"
     echo "    c. Update Storage KV"
     echo "    d. Delete Storage KV"
     echo "    e. Stop Storage KV"
     echo "    f. Restart Storage KV"
-    echo "${RED}4. Exit"${RESET}
+    echo -e "${RED}4. Exit"${RESET}
 
-    echo "Let's Buidl 0G Together - Grand Valley"
+    echo "${GREEN}Let's Buidl 0G Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
     if [[ $OPTION =~ ^[1-3][a-p]$ ]]; then
