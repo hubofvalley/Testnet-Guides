@@ -73,7 +73,7 @@ Grand Valley 0G public endpoints:${RESET}
 - evm-rpc: ${BLUE}https://lightnode-json-rpc-0g.grandvalleys.com${RESET}
 - cosmos rest-api: ${BLUE}https://lightnode-api-0g.grandvalleys.com${RESET}
 
-${GREEN}Grand Valley social media:${RESET}
+${GREEN}Connect with Grand Valley:${RESET}
 - X: ${BLUE}https://x.com/bacvalley${RESET}
 - GitHub: ${BLUE}https://github.com/hubofvalley${RESET}
 - Email: ${BLUE}letsbuidltogether@grandvalleys.com${RESET}
