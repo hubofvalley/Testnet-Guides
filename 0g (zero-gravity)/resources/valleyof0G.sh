@@ -29,7 +29,7 @@ LOGO="
 INTRO="${GREEN}
 Valley Of 0G by Grand Valley
 
-0G Validator Node System Requirements
+0G Validator Node System Requirements${RESET}
 ${YELLOW}| Category  | Requirements                   |
 | --------- | ------------------------------ |
 | CPU       | 8 cores                        |
@@ -43,7 +43,7 @@ current chain : zgtendermint_16600-2
 
 ------------------------------------------------------------------
 
-Storage Node System Requirements
+${GREEN}Storage Node System Requirements${RESET}
 ${YELLOW}| Category  | Requirements                   |
 | --------- | ------------------------------ |
 | CPU       | 8+ cores                       |
@@ -55,7 +55,7 @@ storage node current binary version: ${CYAN}v0.6.1${RESET}
 
 ------------------------------------------------------------------
 
-Storage KV System Requirements
+${GREEN}Storage KV System Requirements${RESET}
 ${YELLOW}| Category | Requirements                                |
 | -------- | ------------------------------------------- |
 | CPU      | 8+ cores                                    |
@@ -68,12 +68,12 @@ storage kvs current binary version: ${CYAN}v1.2.2${RESET}
 "
 
 ENDPOINTS="${GREEN}
-Grand Valley 0G public endpoints:
+Grand Valley 0G public endpoints:${RESET}
 - cosmos-rpc: ${BLUE}https://lightnode-rpc-0g.grandvalleys.com${RESET}
 - evm-rpc: ${BLUE}https://lightnode-json-rpc-0g.grandvalleys.com${RESET}
 - cosmos rest-api: ${BLUE}https://lightnode-api-0g.grandvalleys.com${RESET}
 
-Grand Valley social media:
+${GREEN}Grand Valley social media:${RESET}
 - X: ${BLUE}https://x.com/bacvalley${RESET}
 - GitHub: ${BLUE}https://github.com/hubofvalley${RESET}
 - Email: ${BLUE}letsbuidltogether@grandvalleys.com${RESET}
