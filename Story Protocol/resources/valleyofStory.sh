@@ -70,11 +70,9 @@ read -r
 
 # Display INTRO section and wait for user input to continue
 echo -e "$INTRO"
+echo -e "$ENDPOINTS"
 echo -e "\n${YELLOW}Press Enter to continue${RESET}"
 read -r
-
-# Display ENDPOINTS section
-echo -e "$ENDPOINTS"
 
 # Define variables
 geth_file_name=geth-linux-amd64
