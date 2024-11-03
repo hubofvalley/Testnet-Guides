@@ -38,8 +38,8 @@ ${YELLOW}| Category  | Requirements                   |
 | Bandwidth | 100 MBps for Download / Upload |${RESET}
 
 validator node current binaries version: ${CYAN}v0.2.5${RESET} will automatically update to the latest version
-service file name: 0gchaind.service
-current chain : zgtendermint_16600-2
+service file name: ${CYAN}0gchaind.service${RESET}
+current chain : ${CYAN}zgtendermint_16600-2${RESET}
 
 ------------------------------------------------------------------
 

@@ -38,8 +38,8 @@ ${YELLOW}| Category  | Requirements     |
 | Storage   | 500+ GB NVMe SSD |
 | Bandwidth | 100+ MBit/s      |${RESET}
 
-- consensus client service file name: ${BLUE}story.service${RESET}
-- geth service file name: ${BLUE}story-geth.service${RESET}
+- consensus client service file name: ${CYAN}story.service${RESET}
+- geth service file name: ${CYAN}story-geth.service${RESET}
 - current chain: ${CYAN}odyssey${RESET}
 - current story node version: ${CYAN}v0.12.0${RESET}
 - current story-geth node version: ${CYAN}v0.10.0${RESET}
