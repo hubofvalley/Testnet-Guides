@@ -67,26 +67,26 @@ storage kvs current binary version: ${CYAN}v1.2.2${RESET}
 ------------------------------------------------------------------
 "
 
-ENDPOINTS="
+ENDPOINTS="${GREEN}
 Grand Valley 0G public endpoints:
-- cosmos-rpc: https://lightnode-rpc-0g.grandvalleys.com
-- evm-rpc: https://lightnode-json-rpc-0g.grandvalleys.com
-- cosmos rest-api: https://lightnode-api-0g.grandvalleys.com
+- cosmos-rpc: ${BLUE}https://lightnode-rpc-0g.grandvalleys.com${RESET}
+- evm-rpc: ${BLUE}https://lightnode-json-rpc-0g.grandvalleys.com${RESET}
+- cosmos rest-api: ${BLUE}https://lightnode-api-0g.grandvalleys.com${RESET}
 
 Grand Valley social media:
-- X: https://x.com/bacvalley
-- GitHub: https://github.com/hubofvalley
-- Email: letsbuidltogether@grandvalleys.com
+- X: ${BLUE}https://x.com/bacvalley${RESET}
+- GitHub: ${BLUE}https://github.com/hubofvalley${RESET}
+- Email: ${BLUE}letsbuidltogether@grandvalleys.com${RESET}
 "
 
 # Display LOGO and wait for user input to continue
 echo "$LOGO"
-echo -e "\nPress Enter to continue..."
+echo -e "${YELLOW}\nPress Enter to continue...${RESET}"
 read -r
 
 # Display INTRO section and wait for user input to continue
 echo "$INTRO"
-echo -e "\nPress Enter to continue"
+echo -e "${YELLOW}\nPress Enter to continue${RESET}"
 read -r
 
 # Display ENDPOINTS section
