@@ -13,7 +13,6 @@ LOGO="
           __/ |                                                 
          |___/                                                  
 
-
  __                                   
 /__ ._ _. ._   _|   \  / _. | |  _    
 \_| | (_| | | (_|    \/ (_| | | (/_ \/
@@ -361,13 +360,20 @@ function menu() {
     echo "    e. Stop Storage KV"
     echo "    f. Restart Storage KV"
     echo "4. Exit"
-    
-    echo "Let's Buidl 0G Together - Grand Valley"
-    read -p "Choose an option: " OPTION
 
-    case $OPTION in
+    echo "Let's Buidl 0G Together - Grand Valley"
+    read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
+
+    if [[ $OPTION =~ ^[1-3][a-p]$ ]]; then
+        MAIN_OPTION=${OPTION:0:1}
+        SUB_OPTION=${OPTION:1:1}
+    else
+        read -p "Choose a sub-option: " SUB_OPTION
+        MAIN_OPTION=$OPTION
+    fi
+
+    case $MAIN_OPTION in
         1)
-            read -p "Choose a sub-option: " SUB_OPTION
             case $SUB_OPTION in
                 a) deploy_validator_node ;;
                 b) create_validator ;;
@@ -389,7 +395,6 @@ function menu() {
             esac
             ;;
         2)
-            read -p "Choose a sub-option: " SUB_OPTION
             case $SUB_OPTION in
                 a) deploy_storage_node ;;
                 b) update_storage_node ;;
@@ -403,7 +408,6 @@ function menu() {
             esac
             ;;
         3)
-            read -p "Choose a sub-option: " SUB_OPTION
             case $SUB_OPTION in
                 a) deploy_storage_kv ;;
                 b) show_storage_kv_logs ;;

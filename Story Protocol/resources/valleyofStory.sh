@@ -226,6 +226,40 @@ function update_consensus_client() {
     menu
 }
 
+# New functions for stopping and restarting individual services
+function stop_consensus_client() {
+    sudo systemctl stop story
+    echo "Consensus client service stopped."
+    menu
+}
+
+function stop_geth() {
+    sudo systemctl stop story-geth
+    echo "Geth service stopped."
+    menu
+}
+
+function restart_consensus_client() {
+    sudo systemctl daemon-reload
+    sudo systemctl restart story
+    echo "Consensus client service restarted."
+    menu
+}
+
+function restart_geth() {
+    sudo systemctl daemon-reload
+    sudo systemctl restart story-geth
+    echo "Geth service restarted."
+    menu
+}
+
+function show_all_logs() {
+    echo "Displaying both Consensus Client and Geth Logs:"
+    sudo journalctl -u story -fn 100 &
+    sudo journalctl -u story-geth -fn 100
+    menu
+}
+
 # Menu
 function menu() {
     echo "1. Node Interactions:"
@@ -237,7 +271,12 @@ function menu() {
     echo "   f. Show Geth Logs"
     echo "   g. Show Node Status"
     echo "   h. Add Peers"
-    echo "   i. Update Consensus Client"
+    echo "   i. Update Consensus Client Version"
+    echo "   j. Stop Consensus Client Only"
+    echo "   k. Stop Geth Only"
+    echo "   l. Restart Consensus Client Only"
+    echo "   m. Restart Geth Only"
+    echo "   n. Show Consensus Client & Geth Logs Together"
     echo "2. Validator/Key Interactions:"
     echo "   a. Create Validator"
     echo "   b. Query Validator Public Key"
@@ -251,7 +290,7 @@ function menu() {
     echo "Let's Buidl Story Together - Grand Valley"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
-    if [[ $OPTION =~ ^[1-2][a-i]$ ]]; then
+    if [[ $OPTION =~ ^[1-2][a-n]$ ]]; then
         MAIN_OPTION=${OPTION:0:1}
         SUB_OPTION=${OPTION:1:1}
     else
@@ -271,6 +310,11 @@ function menu() {
                 g) show_node_status ;;
                 h) add_peers ;;
                 i) update_consensus_client ;;
+                j) stop_consensus_client ;;
+                k) stop_geth ;;
+                l) restart_consensus_client ;;
+                m) restart_geth ;;
+                n) show_all_logs ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
