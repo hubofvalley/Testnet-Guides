@@ -255,7 +255,7 @@ function restart_geth() {
 
 function show_all_logs() {
     echo "Displaying both Consensus Client and Geth Logs:"
-    sudo journalctl -u story story-geth -fn 100
+    sudo journalctl -u story -u story-geth -fn 100
     menu
 }
 
