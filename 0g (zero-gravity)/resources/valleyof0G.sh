@@ -366,7 +366,7 @@ function menu() {
     echo "    d. Delete Storage KV"
     echo "    e. Stop Storage KV"
     echo "    f. Restart Storage KV"
-    echo -e "${RED}4. Exit"${RESET}
+    echo -e "${RED}4. Exit${RESET}"
 
     echo -e "${GREEN}Let's Buidl 0G Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
