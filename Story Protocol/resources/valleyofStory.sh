@@ -1,10 +1,18 @@
 #!/bin/bash
 
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+YELLOW='\033[0;33m'
+RESET='\033[0m'
+
 LOGO="
  __      __     _  _                        __    _____  _                       
  \ \    / /    | || |                      / _|  / ____|| |                      
   \ \  / /__ _ | || |  ___  _   _    ___  | |_  | (___  | |_  ___   _ __  _   _  
-  _\ \/ // _\` || || | / _ \| | | |  / _ \ |  _|  \___ \ | __|/ _ \ | '__|| | | | 
+  _\ \/ // _\`|| || | / _ \| | | |  / _ \ |  _|  \___ \ | __|/ _ \ | '__|| || | 
  | |\  /| (_| || || ||  __/| |_| | | (_) || |    ____) || |_| (_) || |   | |_| | 
  | |_\/  \__,_||_||_| \___| \__, |  \___/ |_|   |_____/  \__|\___/ |_|    \__, | 
  | '_ \ | | | |              __/ |                                         __/ | 
@@ -18,52 +26,51 @@ LOGO="
                                     /
 "
 
-INTRO="
+INTRO="${GREEN}
 Valley Of 0G by Grand Valley
 
 Story Validator Node System Requirements
 
-| Category  | Requirements     |
+${YELLOW}| Category  | Requirements     |
 | --------- | ---------------- |
 | CPU       | 8+ cores         |
 | RAM       | 32+ GB           |
 | Storage   | 500+ GB NVMe SSD |
-| Bandwidth | 100+ MBit/s      |
+| Bandwidth | 100+ MBit/s      |${RESET}
 
-- consensus client service file name: story.service
-- geth service file name: story-geth.service
-- current chain: odyssey
-- current story node version: v0.12.0
-- current story-geth node version: v0.10.0
-
+- consensus client service file name: ${BLUE}story.service${RESET}
+- geth service file name: ${BLUE}story-geth.service${RESET}
+- current chain: ${CYAN}odyssey${RESET}
+- current story node version: ${CYAN}v0.12.0${RESET}
+- current story-geth node version: ${CYAN}v0.10.0${RESET}
 "
 
-ENDPOINTS="
-Grand Valley Story Protocol public endpoints:
-- cosmos-rpc: https://lightnode-rpc-story.grandvalleys.com
-- evm-rpc: https://lightnode-json-rpc-story.grandvalleys.com
-- cosmos rest-api: https://lightnode-api-story.grandvalleys.com
-- cosmos ws: wss://lightnode-rpc-story.grandvalleys.com/websocket
-- evm ws: wss://lightnode-wss-story.grandvalleys.com
+ENDPOINTS="${GREEN}
+Grand Valley Story Protocol public endpoints:${RESET}
+- cosmos-rpc: ${BLUE}https://lightnode-rpc-story.grandvalleys.com${RESET}
+- evm-rpc: ${BLUE}https://lightnode-json-rpc-story.grandvalleys.com${RESET}
+- cosmos rest-api: ${BLUE}https://lightnode-api-story.grandvalleys.com${RESET}
+- cosmos ws: ${BLUE}wss://lightnode-rpc-story.grandvalleys.com/websocket${RESET}
+- evm ws: ${BLUE}wss://lightnode-wss-story.grandvalleys.com${RESET}
 
 Grand Valley social media:
-- X: https://x.com/bacvalley
-- GitHub: https://github.com/hubofvalley
-- Email: letsbuidltogether@grandvalleys.com
+- X: ${BLUE}https://x.com/bacvalley${RESET}
+- GitHub: ${BLUE}https://github.com/hubofvalley${RESET}
+- Email: ${BLUE}letsbuidltogether@grandvalleys.com${RESET}
 "
 
 # Display LOGO and wait for user input to continue
-echo "$LOGO"
-echo -e "\nPress Enter to continue..."
+echo -e "$LOGO"
+echo -e "\n${YELLOW}Press Enter to continue...${RESET}"
 read -r
 
 # Display INTRO section and wait for user input to continue
-echo "$INTRO"
-echo -e "\nPress Enter to continue"
+echo -e "$INTRO"
+echo -e "\n${YELLOW}Press Enter to continue${RESET}"
 read -r
 
 # Display ENDPOINTS section
-echo "$ENDPOINTS"
+echo -e "$ENDPOINTS"
 
 # Define variables
 geth_file_name=geth-linux-amd64
@@ -77,7 +84,7 @@ update_geth_version() {
     cd $HOME
     mkdir -p $HOME/$version
     if ! wget -P $HOME/$version $download_url/$geth_file_name -O $HOME/$version/geth; then
-        echo "Failed to download the binary. Exiting."
+        echo -e "${RED}Failed to download the binary. Exiting.${RESET}"
         exit 1
     fi
 
@@ -95,6 +102,7 @@ update_geth_version() {
 
 # Validator Node Functions
 function deploy_validator_node() {
+    echo -e "${CYAN}Deploying Validator Node...${RESET}"
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_validator_node_install_odyssey.sh)
     menu
 }
@@ -111,23 +119,23 @@ function query_validator_pub_key() {
 }
 
 function query_balance() {
-    echo "Select an option:"
+    echo -e "${CYAN}Select an option:${RESET}"
     echo "1. Query balance of your own EVM address"
     echo "2. Query balance of another EVM address"
     read -p "Enter your choice (1 or 2): " choice
 
     case $choice in
         1)
-            echo "Querying balance of your own EVM address..."
+            echo -e "${GREEN}Querying balance of your own EVM address...${RESET}"
             geth --exec "eth.getBalance('$(story validator export | grep -oP '(?<=EVM Address: ).*')')" attach $HOME/.story/geth/odyssey/geth.ipc
             ;;
         2)
             read -p "Enter the EVM address to query: " evm_address
-            echo "Querying balance of $evm_address..."
+            echo -e "${GREEN}Querying balance of $evm_address...${RESET}"
             geth --exec "eth.getBalance('$evm_address')" attach $HOME/.story/geth/odyssey/geth.ipc
             ;;
         *)
-            echo "Invalid choice. Please enter 1 or 2."
+            echo -e "${RED}Invalid choice. Please enter 1 or 2.${RESET}"
             ;;
     esac
     menu
@@ -158,7 +166,7 @@ function unstake_tokens() {
 }
 
 function export_evm_key() {
-    echo "Query all of your current EVM key addresses including your EVM private key"
+    echo -e "${CYAN}Query all of your current EVM key addresses including your EVM private key${RESET}"
     story validator export --evm-key-path $HOME/.story/story/config/private_key.txt --export-evm-key
     cat $HOME/.story/story/config/private_key.txt
     menu
@@ -171,7 +179,7 @@ function delete_validator_node() {
     sudo rm -rf /etc/systemd/system/story-geth.service
     sudo rm -rf $HOME/.story
     sed -i "/STORY_/d" $HOME/.bash_profile
-    echo "Story Validator node deleted successfully."
+    echo -e "${RED}Story Validator node deleted successfully.${RESET}"
     menu
 }
 
@@ -294,9 +302,9 @@ function show_all_logs() {
 
 # Menu
 function menu() {
-    echo "Story Validator Node = Consensus Client Service + Execution Client Service (geth/story-geth)"
+    echo -e "${CYAN}Story Validator Node = Consensus Client Service + Execution Client Service (geth/story-geth)${RESET}"
     echo "Menu:"
-    echo "1. Node Interactions:"
+    echo -e "${GREEN}1. Node Interactions:${RESET}"
     echo "   a. Deploy Validator Node"
     echo "   b. Delete Validator Node (DON'T FORGET TO BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
     echo "   c. Stop Consensus Client and Geth Service"
@@ -312,7 +320,7 @@ function menu() {
     echo "   m. Restart Consensus Client Only"
     echo "   n. Restart Geth Only"
     echo "   o. Show Consensus Client & Geth Logs Together"
-    echo "2. Validator/Key Interactions:"
+    echo -e "${GREEN}2. Validator/Key Interactions:${RESET}"
     echo "   a. Create Validator"
     echo "   b. Query Validator Public Key"
     echo "   c. Query Balance"
@@ -320,7 +328,7 @@ function menu() {
     echo "   e. Unstake Tokens"
     echo "   f. Export EVM Key"
     echo "   g. Backup Validator Key (store it to $HOME directory)"
-    echo "3. Exit"
+    echo -e "${RED}3. Exit${RESET}"
 
     echo "Let's Buidl Story Together - Grand Valley"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
@@ -373,3 +381,4 @@ function menu() {
 
 # Start menu
 menu
+
