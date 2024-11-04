@@ -144,7 +144,7 @@ function send_transaction() {
 function stake_tokens() {
     DEFAULT_WALLET=$WALLET  # Assuming $WALLET is set elsewhere in your script
     while true; do
-        read -p "Enter wallet name (leave empty to use current default wallet: $DEFAULT_WALLET): " WALLET_NAME
+        read -p "Enter wallet name (leave empty to use current default wallet --> $DEFAULT_WALLET): " WALLET_NAME
         if [ -z "$WALLET_NAME" ]; then
             WALLET_NAME=$DEFAULT_WALLET
         fi
