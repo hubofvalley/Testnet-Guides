@@ -389,6 +389,11 @@ function install_story_app() {
     menu
 }
 
+function apply_snapshot() {
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/apply_snapshot.sh)
+    menu
+}
+
 # Menu
 function menu() {
     echo -e "${CYAN}Story Validator Node = Consensus Client Service + Execution Client Service (geth/story-geth)${RESET}"
@@ -398,18 +403,17 @@ function menu() {
     echo "   b. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
     echo "   c. Stop Validator Node"
     echo "   d. Restart Validator Node"
-    echo "   e. Show Consensus Client Logs"
-    echo "   f. Show Geth Logs"
-    echo "   g. Show Validator Node Status"
-    echo "   h. Add Peers"
-    echo "   i. Update Consensus Client Version"
-    echo "   j. Update Geth Version"
-    echo "   k. Stop Consensus Client Only"
-    echo "   l. Stop Geth Only"
-    echo "   m. Restart Consensus Client Only"
-    echo "   n. Restart Geth Only"
-    echo "   o. Show Consensus Client & Geth Logs Together"
-    echo "   p. Install Story App only (v0.12.1)(for executing transactions without running the node)"
+    echo "   e. Show Validator Node Status"
+    echo "   f. Add Peers"
+    echo "   g. Update Consensus Client Version"
+    echo "   h. Update Geth Version"
+    echo "   i. Stop Consensus Client Only"
+    echo "   j. Stop Geth Only"
+    echo "   k. Restart Consensus Client Only"
+    echo "   l. Restart Geth Only"
+    echo "   m. Show Consensus Client & Geth Logs Together"
+    echo "   n. Install Story App only (v0.12.1)(for executing transactions without running the node)"
+    echo "   o. Apply Snapshot"
     echo -e "${GREEN}2. Validator/Key Interactions:${RESET}"
     echo "   a. Create Validator"
     echo "   b. Query Validator Public Key"
@@ -438,18 +442,17 @@ function menu() {
                 b) delete_validator_node ;;
                 c) stop_services ;;
                 d) restart_services ;;
-                e) show_consensus_client_logs ;;
-                f) show_geth_logs ;;
-                g) show_node_status ;;
-                h) add_peers ;;
-                i) update_consensus_client ;;
-                j) update_geth ;;
-                k) stop_consensus_client ;;
-                l) stop_geth ;;
-                m) restart_consensus_client ;;
-                n) restart_geth ;;
-                o) show_all_logs ;;
-                p) install_story_app ;;
+                e) show_node_status ;;
+                f) add_peers ;;
+                g) update_consensus_client ;;
+                h) update_geth ;;
+                i) stop_consensus_client ;;
+                j) stop_geth ;;
+                k) restart_consensus_client ;;
+                l) restart_geth ;;
+                m) show_all_logs ;;
+                n) install_story_app ;;
+                o) apply_snapshot ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
