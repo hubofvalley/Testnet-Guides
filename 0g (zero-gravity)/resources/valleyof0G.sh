@@ -143,18 +143,21 @@ function send_transaction() {
 
 function stake_tokens() {
     DEFAULT_WALLET=$WALLET  # Assuming $WALLET is set elsewhere in your script
-    read -p "Enter wallet name (leave empty to use current default wallet: $DEFAULT_WALLET): " WALLET_NAME
-    if [ -z "$WALLET_NAME" ]; then
-        WALLET_NAME=$DEFAULT_WALLET
-    fi
+    while true; do
+        read -p "Enter wallet name (leave empty to use current default wallet: $DEFAULT_WALLET): " WALLET_NAME
+        if [ -z "$WALLET_NAME" ]; then
+            WALLET_NAME=$DEFAULT_WALLET
+        fi
 
-    # Get wallet address
-    WALLET_ADDRESS=$(0gchaind keys list | grep -E "name: $WALLET_NAME" -A 1 | grep -E 'address:' | sed 's/[^:]*: //')
+        # Get wallet address
+        WALLET_ADDRESS=$(0gchaind keys list | grep -E 'address:' | sed 's/[^:]*: //')
 
-    if [ -z "$WALLET_ADDRESS" ]; then
-        echo "Wallet name not found. Please check the wallet name and try again."
-        return
-    fi
+        if [ -n "$WALLET_ADDRESS" ]; then
+            break
+        else
+            echo "Wallet name not found. Please check the wallet name and try again."
+        fi
+    done
 
     echo "Using wallet: $WALLET_NAME ($WALLET_ADDRESS)"
 
