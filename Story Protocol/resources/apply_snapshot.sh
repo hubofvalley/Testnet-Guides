@@ -1,15 +1,22 @@
 #!/bin/bash
 
+# ANSI color codes
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
 # Function to display the menu
 show_menu() {
-    echo "Choose a snapshot provider:"
+    echo -e "${GREEN}Choose a snapshot provider:${NC}"
     echo "1. Mandragora"
     echo "2. Exit"
 }
 
 # Function to choose snapshot type for Mandragora
 choose_mandragora_snapshot() {
-    echo "Choose the type of snapshot for Mandragora:"
+    echo -e "${GREEN}Choose the type of snapshot for Mandragora:${NC}"
     echo "1. Pruned"
     echo "2. Archive"
     read -p "Enter your choice: " snapshot_type_choice
@@ -24,7 +31,7 @@ choose_mandragora_snapshot() {
             STORY_SNAPSHOT_URL="https://snapshots.mandragora.io/story_snapshot.lz4"
             ;;
         *)
-            echo "Invalid choice. Exiting."
+            echo -e "${RED}Invalid choice. Exiting.${NC}"
             exit 1
             ;;
     esac
@@ -39,15 +46,15 @@ provider_name=""
 case $provider_choice in
     1)
         provider_name="Mandragora"
-        echo "Grand Valley extends its gratitude to $provider_name for providing snapshot support."
+        echo -e "${GREEN}Grand Valley extends its gratitude to $provider_name for providing snapshot support.${NC}"
         choose_mandragora_snapshot
         ;;
     2)
-        echo "Exiting."
+        echo -e "${GREEN}Exiting.${NC}"
         exit 0
         ;;
     *)
-        echo "Invalid choice. Exiting."
+        echo -e "${RED}Invalid choice. Exiting.${NC}"
         exit 1
         ;;
 esac
@@ -89,4 +96,4 @@ sudo cp $HOME/.story/priv_validator_state.json.backup $HOME/.story/story/data/pr
 # Start your story-geth and story nodes
 sudo systemctl restart story-geth story
 
-echo "Snapshot setup completed successfully."
+echo -e "${GREEN}Snapshot setup completed successfully.${NC}"
