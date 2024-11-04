@@ -3,6 +3,8 @@
 # Prompt user for moniker and port number
 read -p "Enter your moniker: " MONIKER
 read -p "Enter your custom port number (2 digits, default: 26): " OG_PORT
+read -p "Enter your wallet name: " WALLET
+
 
 # Stop and remove existing 0G node
 sudo systemctl daemon-reload
@@ -30,7 +32,7 @@ source ~/.bash_profile && go version
 go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 
 # 4. set vars
-echo "export WALLET="wallet"" >> $HOME/.bash_profile
+echo "export WALLET="$WALLET"" >> $HOME/.bash_profile
 echo "export MONIKER="$MONIKER"" >> $HOME/.bash_profile
 echo "export OG_CHAIN_ID="zgtendermint_16600-2"" >> $HOME/.bash_profile
 echo "export OG_PORT="$OG_PORT"" >> $HOME/.bash_profile

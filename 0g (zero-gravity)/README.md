@@ -195,11 +195,14 @@ go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 ENTER YOUR MONIKER & YOUR PREFERRED PORT NUMBER
 
 ```bash
-read -p "Enter your moniker: " MONIKER && echo "Current moniker: $MONIKER" && read -p "Enter your 2 digits custom port: (default: 26)" OG_PORT && echo "Current port number: $OG_PORT"
-echo "export WALLET="wallet"" >> $HOME/.bash_profile
-echo "export MONIKER="$MONIKER"" >> $HOME/.bash_profile
-echo "export OG_CHAIN_ID="zgtendermint_16600-2"" >> $HOME/.bash_profile
-echo "export OG_PORT="$OG_PORT"" >> $HOME/.bash_profile
+read -p "Enter your moniker: " MONIKER && echo "Current moniker: $MONIKER"
+read -p "Enter your 2 digits custom port: (default: 26) " OG_PORT && echo "Current port number: ${OG_PORT:-26}"
+read -p "Enter your wallet name: " WALLET && echo "Current wallet name: $WALLET"
+
+echo "export WALLET=\"$WALLET\"" >> $HOME/.bash_profile
+echo "export MONIKER=\"$MONIKER\"" >> $HOME/.bash_profile
+echo "export OG_CHAIN_ID=\"zgtendermint_16600-2\"" >> $HOME/.bash_profile
+echo "export OG_PORT=\"${OG_PORT:-26}\"" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 ```
 
