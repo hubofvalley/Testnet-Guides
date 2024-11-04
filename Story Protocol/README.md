@@ -141,6 +141,7 @@ With Public Testnet, Story's docs and code become public. Check them out below!
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/valleyofStory.sh)
 ```
+
 **Valley of Story** by Grand Valley is a robust infrastructure solution supporting Story Protocol, a decentralized network aimed at scalable, reliable data and transaction processing.
 
 ## Story Node Deployment Guide With Cosmovisor
@@ -189,7 +190,6 @@ go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 ### 4. set vars
 
 EDIT YOUR MONIKER & YOUR PREFERRED PORT NUMBER
-
 
 ```bash
 read -p "Enter your moniker: " MONIKER && echo "Current moniker: $MONIKER"

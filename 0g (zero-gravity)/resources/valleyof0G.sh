@@ -142,10 +142,37 @@ function send_transaction() {
 }
 
 function stake_tokens() {
-    read -p "Enter wallet name: " WALLET_NAME
-    read -p "Enter validator address: " VALIDATOR_ADDRESS
-    read -p "Enter amount to stake: " AMOUNT
-    0gchaind tx staking delegate $VALIDATOR_ADDRESS $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
+    DEFAULT_WALLET=$WALLET  # Assuming $WALLET is set elsewhere in your script
+    read -p "Enter wallet name (leave empty to use current default wallet: $DEFAULT_WALLET): " WALLET_NAME
+    if [ -z "$WALLET_NAME" ]; then
+        WALLET_NAME=$DEFAULT_WALLET
+    fi
+
+    echo "Choose an option:"
+    echo "1. Delegate to Grand Valley"
+    echo "2. Self-delegate"
+    echo "3. Delegate to another validator"
+    read -p "Enter your choice (1, 2, or 3): " CHOICE
+
+    case $CHOICE in
+        1)
+            read -p "Enter amount to stake: " AMOUNT
+            0gchaind tx staking delegate 0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4 $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
+            ;;
+        2)
+            read -p "Enter amount to stake: " AMOUNT
+            0gchaind tx staking delegate $(0gchaind keys show $WALLET_NAME --bech val -a) $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas=auto --fees=5000ua0gi -y
+            ;;
+        3)
+            read -p "Enter validator address: " VALIDATOR_ADDRESS
+            read -p "Enter amount to stake: " AMOUNT
+            0gchaind tx staking delegate $VALIDATOR_ADDRESS $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
+            ;;
+        *)
+            echo "Invalid choice. Please enter 1, 2, or 3."
+            ;;
+    esac
+
     menu
 }
 
