@@ -101,6 +101,17 @@ function deploy_validator_node() {
     menu
 }
 
+function install_0gchain_app() {
+    cd $HOME
+    mkdir -p 0gchain-v0.4.0
+    wget -O 0gchain-v0.4.0/0gchaind https://github.com/0glabs/0g-chain/releases/download/v0.4.0/0gchaind-linux-v0.4.0
+    cp 0gchain-v0.4.0/0gchaind $HOME/go/bin/0gchaind
+    sudo chown -R $USER:$USER $HOME/go/bin/0gchaind
+    sudo chmod +x $HOME/go/bin/0gchaind
+    echo "0gchain app installed successfully."
+    menu
+}
+
 function create_validator() {
     read -p "Enter wallet name: " WALLET
     read -p "Enter validator name (moniker): " MONIKER
@@ -236,7 +247,6 @@ function unstake_tokens() {
 
     menu
 }
-
 
 function export_evm_private_key() {
     read -p "Enter wallet name: " WALLET_NAME
@@ -435,6 +445,7 @@ function menu() {
     echo "    n. Restart Validator Node"
     echo "    o. Add Peers"
     echo "    p. Backup Validator Key (store it to $HOME directory)"
+    echo "    q. Install 0gchain App (v0.4.0)(this is only for those who wanna make transaction without running the validator node)"
     echo -e "${GREEN}2. Storage Node${RESET}"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
@@ -456,7 +467,7 @@ function menu() {
     echo -e "${GREEN}Let's Buidl 0G Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
-    if [[ $OPTION =~ ^[1-3][a-p]$ ]]; then
+    if [[ $OPTION =~ ^[1-3][a-q]$ ]]; then
         MAIN_OPTION=${OPTION:0:1}
         SUB_OPTION=${OPTION:1:1}
     else
@@ -483,6 +494,7 @@ function menu() {
                 n) restart_validator_node ;;
                 o) add_peers ;;
                 p) backup_validator_key ;;
+                q) install_0gchain_app ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
