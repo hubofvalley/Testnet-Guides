@@ -73,6 +73,9 @@ echo -e "$INTRO"
 echo -e "$ENDPOINTS"
 echo -e "\n${YELLOW}Press Enter to continue${RESET}"
 read -r
+echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
+echo "export STORY_CHAIN_ID="odyssey"" >> $HOME/.bash_profile
+source $HOME/.bash_profile
 
 # Define variables
 geth_file_name=geth-linux-amd64
