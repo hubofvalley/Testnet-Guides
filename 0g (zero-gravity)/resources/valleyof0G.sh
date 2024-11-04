@@ -167,19 +167,33 @@ function stake_tokens() {
     echo "3. Delegate to another validator"
     read -p "Enter your choice (1, 2, or 3): " CHOICE
 
+    read -p "Do you want to use your own RPC or Grand Valley's RPC? (own/grandvalley): " RPC_CHOICE
+
     case $CHOICE in
         1)
             read -p "Enter amount to stake: " AMOUNT
-            0gchaind tx staking delegate 0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4 $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
+            if [ "$RPC_CHOICE" == "grandvalley" ]; then
+                0gchaind tx staking delegate 0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4 $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi --node https://lightnode-rpc-0g.grandvalleys.com -y
+            else
+                0gchaind tx staking delegate 0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4 $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
+            fi
             ;;
         2)
             read -p "Enter amount to stake: " AMOUNT
-            0gchaind tx staking delegate $(0gchaind keys show $WALLET_NAME --bech val -a) $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas=auto --fees=5000ua0gi -y
+            if [ "$RPC_CHOICE" == "grandvalley" ]; then
+                0gchaind tx staking delegate $(0gchaind keys show $WALLET_NAME --bech val -a) $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas=auto --fees=5000ua0gi --node https://lightnode-rpc-0g.grandvalleys.com -y
+            else
+                0gchaind tx staking delegate $(0gchaind keys show $WALLET_NAME --bech val -a) $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas=auto --fees=5000ua0gi -y
+            fi
             ;;
         3)
             read -p "Enter validator address: " VALIDATOR_ADDRESS
             read -p "Enter amount to stake: " AMOUNT
-            0gchaind tx staking delegate $VALIDATOR_ADDRESS $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
+            if [ "$RPC_CHOICE" == "grandvalley" ]; then
+                0gchaind tx staking delegate $VALIDATOR_ADDRESS $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi --node https://lightnode-rpc-0g.grandvalleys.com -y
+            else
+                0gchaind tx staking delegate $VALIDATOR_ADDRESS $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
+            fi
             ;;
         *)
             echo "Invalid choice. Please enter 1, 2, or 3."
@@ -190,12 +204,39 @@ function stake_tokens() {
 }
 
 function unstake_tokens() {
-    read -p "Enter wallet name: " WALLET_NAME
+    DEFAULT_WALLET=$WALLET  # Assuming $WALLET is set elsewhere in your script
+    while true; do
+        read -p "Enter wallet name (leave empty to use current default wallet --> $DEFAULT_WALLET): " WALLET_NAME
+        if [ -z "$WALLET_NAME" ]; then
+            WALLET_NAME=$DEFAULT_WALLET
+        fi
+
+        # Get wallet address
+        WALLET_ADDRESS=$(0gchaind keys list | grep -E 'address:' | sed 's/[^:]*: //')
+
+        if [ -n "$WALLET_ADDRESS" ]; then
+            break
+        else
+            echo "Wallet name not found. Please check the wallet name and try again."
+        fi
+    done
+
+    echo "Using wallet: $WALLET_NAME ($WALLET_ADDRESS)"
+
     read -p "Enter validator address: " VALIDATOR_ADDRESS
     read -p "Enter amount to unstake: " AMOUNT
-    0gchaind tx staking unbond $VALIDATOR_ADDRESS $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
+
+    read -p "Do you want to use your own RPC or Grand Valley's RPC? (own/grandvalley): " RPC_CHOICE
+
+    if [ "$RPC_CHOICE" == "grandvalley" ]; then
+        0gchaind tx staking unbond $VALIDATOR_ADDRESS $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi --node https://lightnode-rpc-0g.grandvalleys.com -y
+    else
+        0gchaind tx staking unbond $VALIDATOR_ADDRESS $AMOUNT --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --fees 5000ua0gi -y
+    fi
+
     menu
 }
+
 
 function export_evm_private_key() {
     read -p "Enter wallet name: " WALLET_NAME
