@@ -147,26 +147,82 @@ function query_balance() {
 }
 
 function stake_tokens() {
-    read -p "Stake to self or another validator? (self/other): " TARGET
-    if [ "$TARGET" == "self" ]; then
-        VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key \(base64\): \K.*')
-    else
-        read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
-    fi
+    echo "Choose an option to delegate tokens:"
+    echo "1. Delegate to Grand Valley"
+    echo "2. Delegate to self"
+    echo "3. Delegate to another validator"
+    read -p "Enter your choice (1/2/3): " CHOICE
+
+    case $CHOICE in
+        1)
+            VALIDATOR_PUBKEY="A2p1z6hM9IXltKaET6ny/wP0EPfIwBSPTkyeU135yroi"
+            ;;
+        2)
+            VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key \(base64\): \K.*')
+            ;;
+        3)
+            read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
+            ;;
+        *)
+            echo "Invalid choice. Please select a valid option."
+            return
+            ;;
+    esac
+
+    echo "Choose the RPC to use:"
+    echo "1. Use your own RPC"
+    echo "2. Use Grand Valley's RPC"
+    read -p "Enter your choice (1/2): " RPC_CHOICE
+
     read -p "Enter amount to stake: " AMOUNT
-    story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT --private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt) -y
+
+    if [ "$RPC_CHOICE" == "2" ]; then
+        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT --private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt) --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 -y
+    elif [ "$RPC_CHOICE" == "1" ]; then
+        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT --private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt) -y
+    else
+        echo "Invalid choice. Please select a valid option."
+        return
+    fi
+
     menu
 }
 
 function unstake_tokens() {
-    read -p "Unstake from self or another validator? (self/other): " TARGET
-    if [ "$TARGET" == "self" ]; then
-        VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key \(base64\): \K.*')
-    else
-        read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
-    fi
+    echo "Choose an option to unstake tokens:"
+    echo "1. Unstake from self"
+    echo "2. Unstake from another validator"
+    read -p "Enter your choice (1/2): " CHOICE
+
+    case $CHOICE in
+        1)
+            VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key \(base64\): \K.*')
+            ;;
+        2)
+            read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
+            ;;
+        *)
+            echo "Invalid choice. Please select a valid option."
+            return
+            ;;
+    esac
+
+    echo "Choose the RPC to use:"
+    echo "1. Use your own RPC"
+    echo "2. Use Grand Valley's RPC"
+    read -p "Enter your choice (1/2): " RPC_CHOICE
+
     read -p "Enter amount to unstake: " AMOUNT
-    story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT --private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt) -y
+
+    if [ "$RPC_CHOICE" == "2" ]; then
+        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT --private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt) --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 -y
+    elif [ "$RPC_CHOICE" == "1" ]; then
+        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT --private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt) -y
+    else
+        echo "Invalid choice. Please select a valid option."
+        return
+    fi
+
     menu
 }
 
@@ -305,6 +361,17 @@ function show_all_logs() {
     menu
 }
 
+function install_story_app() {
+    echo -e "${YELLOW}This option is only for those who want to execute the transactions without running the node.${RESET}"
+    mkdir -p story-v0.12.1
+    wget -O story-v0.12.1/story https://github.com/piplabs/story/releases/download/v0.12.1/story-linux-amd64
+    cp story-v0.12.1/story $HOME/go/bin/story
+    sudo chown -R $USER:$USER $HOME/go/bin/story
+    sudo chmod +x $HOME/go/bin/story
+    echo "story app installed successfully."
+    menu
+}
+
 # Menu
 function menu() {
     echo -e "${CYAN}Story Validator Node = Consensus Client Service + Execution Client Service (geth/story-geth)${RESET}"
@@ -325,6 +392,7 @@ function menu() {
     echo "   m. Restart Consensus Client Only"
     echo "   n. Restart Geth Only"
     echo "   o. Show Consensus Client & Geth Logs Together"
+    echo "   p. Install Story App (v0.12.1)(for executing transactions without running the node)"
     echo -e "${GREEN}2. Validator/Key Interactions:${RESET}"
     echo "   a. Create Validator"
     echo "   b. Query Validator Public Key"
@@ -338,7 +406,7 @@ function menu() {
     echo -e "${GREEN}Let's Buidl Story Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
-    if [[ $OPTION =~ ^[1-2][a-o]$ ]]; then
+    if [[ $OPTION =~ ^[1-2][a-p]$ ]]; then
         MAIN_OPTION=${OPTION:0:1}
         SUB_OPTION=${OPTION:1:1}
     else
@@ -364,6 +432,7 @@ function menu() {
                 m) restart_consensus_client ;;
                 n) restart_geth ;;
                 o) show_all_logs ;;
+                p) install_story_app ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
@@ -386,4 +455,3 @@ function menu() {
 
 # Start menu
 menu
-

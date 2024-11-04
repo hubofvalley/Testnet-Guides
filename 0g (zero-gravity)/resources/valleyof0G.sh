@@ -449,7 +449,7 @@ function menu() {
     echo "    n. Restart Validator Node"
     echo "    o. Add Peers"
     echo "    p. Backup Validator Key (store it to $HOME directory)"
-    echo "    q. Install 0gchain App only (v0.4.0)(this is only for those who wanna make transaction without running the validator node)"
+    echo "    q. Install 0gchain App only (v0.4.0)(for executing transactions without running the node)"
     echo -e "${GREEN}2. Storage Node${RESET}"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
