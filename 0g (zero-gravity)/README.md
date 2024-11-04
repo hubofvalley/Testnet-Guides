@@ -196,7 +196,7 @@ ENTER YOUR MONIKER & YOUR PREFERRED PORT NUMBER
 
 ```bash
 read -p "Enter your moniker: " MONIKER && echo "Current moniker: $MONIKER"
-read -p "Enter your 2 digits custom port: (default: 26) " OG_PORT && echo "Current port number: ${OG_PORT:-26}"
+read -p "Enter your 2 digits custom port: (leave empty to use default: 26) " OG_PORT && echo "Current port number: ${OG_PORT:-26}"
 read -p "Enter your wallet name: " WALLET && echo "Current wallet name: $WALLET"
 
 echo "export WALLET=\"$WALLET\"" >> $HOME/.bash_profile

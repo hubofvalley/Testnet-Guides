@@ -190,8 +190,11 @@ go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 
 EDIT YOUR MONIKER & YOUR PREFERRED PORT NUMBER
 
+
 ```bash
-read -p "Enter your moniker: " MONIKER && echo "Current moniker: $MONIKER" && read -p "Enter your 2 digits custom port: (default: 26)" STORY_PORT && echo "Current port number: $STORY_PORT"
+read -p "Enter your moniker: " MONIKER && echo "Current moniker: $MONIKER"
+read -p "Enter your 2 digits custom port: (leave empty to use default: 26)" STORY_PORT && echo "Current port number: ${STORY_PORT:-26}"
+
 echo "export MONIKER="$MONIKER"" >> $HOME/.bash_profile
 echo "export STORY_CHAIN_ID="odyssey"" >> $HOME/.bash_profile
 echo "export STORY_PORT="$STORY_PORT"" >> $HOME/.bash_profile
