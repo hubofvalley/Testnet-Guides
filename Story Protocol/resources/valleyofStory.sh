@@ -246,6 +246,7 @@ function export_evm_key() {
     echo -e "${CYAN}Query all of your current EVM key addresses including your EVM private key${RESET}"
     story validator export --evm-key-path $HOME/.story/story/config/private_key.txt --export-evm-key
     cat $HOME/.story/story/config/private_key.txt
+    echo
     menu
 }
 
