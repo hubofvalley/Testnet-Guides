@@ -149,7 +149,7 @@ function stake_tokens() {
     fi
 
     # Get wallet address
-    WALLET_ADDRESS=$(0gchaind keys list | grep -E 'address:|name:' | sed 's/[^:]*: //' | grep -A 1 "$WALLET_NAME" | tail -n 1)
+    WALLET_ADDRESS=$(0gchaind keys list | grep -E 'address:' | sed 's/[^:]*: //' | grep -A 1 "$WALLET_NAME" | tail -n 1)
 
     echo "Using wallet: $WALLET_NAME ($WALLET_ADDRESS)"
 
