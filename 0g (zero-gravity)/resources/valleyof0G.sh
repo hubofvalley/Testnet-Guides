@@ -148,6 +148,11 @@ function stake_tokens() {
         WALLET_NAME=$DEFAULT_WALLET
     fi
 
+    # Get wallet address
+    WALLET_ADDRESS=$(0gchaind keys list | grep -E 'address:|name:' | sed 's/[^:]*: //' | grep -A 1 "$WALLET_NAME" | tail -n 1)
+
+    echo "Using wallet: $WALLET_NAME ($WALLET_ADDRESS)"
+
     echo "Choose an option:"
     echo "1. Delegate to Grand Valley"
     echo "2. Self-delegate"
