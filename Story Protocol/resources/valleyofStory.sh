@@ -176,10 +176,18 @@ function stake_tokens() {
 
     read -p "Enter amount to stake: " AMOUNT
 
+    read -p "Enter private key (leave blank to use local private key): " PRIVATE_KEY
+
+    if [ -n "$PRIVATE_KEY" ]; then
+        PRIVATE_KEY_FLAG="--private-key $PRIVATE_KEY"
+    else
+        PRIVATE_KEY_FLAG="--private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt)"
+    fi
+
     if [ "$RPC_CHOICE" == "2" ]; then
-        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT --private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt) --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 -y
+        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 -y
     elif [ "$RPC_CHOICE" == "1" ]; then
-        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT --private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt) -y
+        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG -y
     else
         echo "Invalid choice. Please select a valid option."
         return
@@ -214,10 +222,18 @@ function unstake_tokens() {
 
     read -p "Enter amount to unstake: " AMOUNT
 
+    read -p "Enter private key (leave blank to use local private key): " PRIVATE_KEY
+
+    if [ -n "$PRIVATE_KEY" ]; then
+        PRIVATE_KEY_FLAG="--private-key $PRIVATE_KEY"
+    else
+        PRIVATE_KEY_FLAG="--private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt)"
+    fi
+
     if [ "$RPC_CHOICE" == "2" ]; then
-        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT --private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt) --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 -y
+        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT $PRIVATE_KEY_FLAG --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 -y
     elif [ "$RPC_CHOICE" == "1" ]; then
-        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT --private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt) -y
+        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT $PRIVATE_KEY_FLAG -y
     else
         echo "Invalid choice. Please select a valid option."
         return
@@ -392,7 +408,7 @@ function menu() {
     echo "   m. Restart Consensus Client Only"
     echo "   n. Restart Geth Only"
     echo "   o. Show Consensus Client & Geth Logs Together"
-    echo "   p. Install Story App (v0.12.1)(for executing transactions without running the node)"
+    echo "   p. Install Story App only (v0.12.1)(for executing transactions without running the node)"
     echo -e "${GREEN}2. Validator/Key Interactions:${RESET}"
     echo "   a. Create Validator"
     echo "   b. Query Validator Public Key"
