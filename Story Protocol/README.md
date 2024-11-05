@@ -137,7 +137,7 @@ With Public Testnet, Story's docs and code become public. Check them out below!
 
 ![image](https://github.com/user-attachments/assets/5110da6d-4ec2-492d-86ea-887b34b279b4)
 
-![image](https://github.com/user-attachments/assets/91a3e70a-913b-4e01-95f5-482fbade4cfe)
+![image](https://github.com/user-attachments/assets/88238d7d-5638-484d-82f9-58ed36c58625)
 
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/valleyofStory.sh)
