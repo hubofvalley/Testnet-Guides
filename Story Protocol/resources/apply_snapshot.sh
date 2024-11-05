@@ -109,7 +109,7 @@ sudo rm -f $HOME/.story/story/data/upgrade-info.json
 cd $HOME
 
 # Install required dependencies
-sudo apt-get install wget lz4 -y
+sudo apt-get install wget lz4 aria2 -y
 
 # Stop your story-geth and story nodes
 sudo systemctl stop story-geth story
@@ -121,8 +121,8 @@ sudo cp $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_vali
 sudo rm -rf $HOME/.story/geth/odyssey/chaindata $HOME/.story/story/data
 
 # Download story-geth and story snapshots in the background
-wget -O $GETH_SNAPSHOT_FILE $GETH_SNAPSHOT_URL &
-wget -O $STORY_SNAPSHOT_FILE $STORY_SNAPSHOT_URL &
+aria2c -x 16 -s 16 -o $GETH_SNAPSHOT_FILE $GETH_SNAPSHOT_URL &
+aria2c -x 16 -s 16 -o $STORY_SNAPSHOT_FILE $STORY_SNAPSHOT_URL &
 
 # Wait for downloads to complete
 wait
@@ -130,8 +130,16 @@ wait
 # Decompress story-geth and story snapshots
 decompress_snapshots
 
-# Delete downloaded story-geth and story snapshots
-sudo rm -v $GETH_SNAPSHOT_FILE $STORY_SNAPSHOT_FILE
+# Ask the user if they want to delete the downloaded snapshot files
+read -p "Do you want to delete the downloaded snapshot files? (y/n): " delete_choice
+
+if [[ $delete_choice == "y" || $delete_choice == "Y" ]]; then
+    # Delete downloaded story-geth and story snapshots
+    sudo rm -v $GETH_SNAPSHOT_FILE $STORY_SNAPSHOT_FILE
+    echo -e "${GREEN}Downloaded snapshot files have been deleted.${NC}"
+else
+    echo -e "${GREEN}Downloaded snapshot files have been kept.${NC}"
+fi
 
 # Restore your validator state
 sudo cp $HOME/.story/priv_validator_state.json.backup $HOME/.story/story/data/priv_validator_state.json
