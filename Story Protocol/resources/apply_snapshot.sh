@@ -104,7 +104,7 @@ sudo rm -f $HOME/.story/story/data/upgrade-info.json
 cd $HOME
 
 # Install required dependencies
-sudo apt-get install wget lz4 aria2 -y
+sudo apt-get install wget lz4 -y
 
 # Stop your story-geth and story nodes
 sudo systemctl stop story-geth story
@@ -115,12 +115,9 @@ sudo cp $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_vali
 # Delete previous geth chaindata and story data folders
 sudo rm -rf $HOME/.story/geth/odyssey/chaindata $HOME/.story/story/data
 
-# Download story-geth and story snapshots in the background
-aria2c -x 16 -s 16 -o $GETH_SNAPSHOT_FILE $GETH_SNAPSHOT_URL &
-aria2c -x 16 -s 16 -o $STORY_SNAPSHOT_FILE $STORY_SNAPSHOT_URL &
-
-# Wait for downloads to complete
-wait
+# Download story-geth and story snapshots
+wget -O $GETH_SNAPSHOT_FILE $GETH_SNAPSHOT_URL
+wget -O $STORY_SNAPSHOT_FILE $STORY_SNAPSHOT_URL
 
 # Decompress story-geth and story snapshots
 decompress_snapshots
