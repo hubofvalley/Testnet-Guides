@@ -18,6 +18,7 @@
   - [Conclusion](#conclusion)
   - [Grand Valley's Story Protocol public endpoints:](#grand-valleys-story-protocol-public-endpoints)
   - [Valley Of Story. Story Protocol tools created by Grand Valley](#valley-of-story-story-protocol-tools-created-by-grand-valley)
+    - [Key Features of Valley Of Story](#key-features-of-valley-of-story)
   - [Story Node Deployment Guide With Cosmovisor](#story-node-deployment-guide-with-cosmovisor)
     - [**System Requirements**](#system-requirements)
   - [Validator Manual installation](#validator-manual-installation)
@@ -141,6 +142,33 @@ With Public Testnet, Story's docs and code become public. Check them out below!
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/valleyofStory.sh)
 ```
+
+### Key Features of Valley Of Story
+
+1. **Node Interactions**:
+
+   - **Deploy and Manage Validator Nodes**: Easily deploy a new validator node or remove an existing one. Important! Make sure to back up critical files (seed phrases, private keys, `priv_validator_key.json`) before deletion.
+   - **Node Control**: Start, stop, or restart the validator node as needed.
+   - **Node Status**: View the current operational status of the validator node.
+   - **Peer Management**: Add peers to ensure efficient communication and stability within the network.
+   - **Client Updates**: Update both the Consensus Client and Geth (Execution Client) versions to maintain node compatibility and performance.
+   - **Targeted Controls**: Stop or restart only specific services, such as the Consensus Client or Geth, for fine-tuned management.
+   - **Logging**: Access combined logs for both Consensus Client and Geth, streamlining troubleshooting and monitoring.
+
+2. **Validator and Key Interactions**:
+
+   - **Validator Setup**: Create a validator to participate in consensus and network security.
+   - **Key Management**: Export EVM private keys and back up the validator key to prevent any potential data loss.
+   - **Stake and Unstake Tokens**: Stake tokens to secure the network or unstake them as needed, along with querying the validator's public key and account balance.
+
+3. **Snapshot Application**:
+
+   - Apply the latest snapshot to speed up the node setup process, allowing quick synchronization with the network.
+
+4. **Story App Installation**:
+   - Install the Story app without running the node, enabling users to execute transactions or interact with the network directly from the command line (version v0.12.1).
+
+Valley Of Story is designed to provide node runners in the Story Protocol ecosystem with an accessible, powerful set of tools for node management and validator interaction, all within a single, streamlined interface.
 
 **Valley of Story** by Grand Valley is a robust infrastructure solution supporting Story Protocol, a decentralized network aimed at scalable, reliable data and transaction processing.
 
