@@ -85,8 +85,8 @@ choose_itrocket_snapshot() {
 
 # Function to decompress snapshots
 decompress_snapshots() {
-    tar -I lz4 -xvf $GETH_SNAPSHOT_FILE -C $HOME/.story/geth/odyssey/geth
-    tar -I lz4 -xvf $STORY_SNAPSHOT_FILE -C $HOME/.story/story
+    lz4 -c -d $GETH_SNAPSHOT_FILE | tar -xv -C $HOME/.story/geth/odyssey/geth
+    lz4 -c -d $STORY_SNAPSHOT_FILE | tar -xv -C $HOME/.story/story
 }
 
 # Main script
