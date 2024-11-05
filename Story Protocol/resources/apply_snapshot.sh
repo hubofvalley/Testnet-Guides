@@ -7,6 +7,18 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# Mandragora URLs
+MAND_PRUNED_GETH_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/geth_snapshot.lz4"
+MAND_PRUNED_STORY_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/story_snapshot.lz4"
+MAND_ARCHIVE_GETH_SNAPSHOT_URL="https://snapshots.mandragora.io/geth_snapshot.lz4"
+MAND_ARCHIVE_STORY_SNAPSHOT_URL="https://snapshots.mandragora.io/story_snapshot.lz4"
+
+# ITRocket URLs
+ITR_PRUNED_GETH_SNAPSHOT_URL="https://server-1.itrocket.net/testnet/story/geth_story_2024-11-05_304590_snap.tar.lz4"
+ITR_PRUNED_STORY_SNAPSHOT_URL="https://server-1.itrocket.net/testnet/story/story_2024-11-05_304590_snap.tar.lz4"
+ITR_ARCHIVE_GETH_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/story/geth_story_2024-11-05_303734_snap.tar.lz4"
+ITR_ARCHIVE_STORY_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/story/story_2024-11-05_303734_snap.tar.lz4"
+
 # Function to display the menu
 show_menu() {
     echo -e "${GREEN}Choose a snapshot provider:${NC}"
@@ -34,12 +46,12 @@ choose_mandragora_snapshot() {
 
     case $snapshot_type_choice in
         1)
-            GETH_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/geth_snapshot.lz4"
-            STORY_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/story_snapshot.lz4"
+            GETH_SNAPSHOT_URL=$MAND_PRUNED_GETH_SNAPSHOT_URL
+            STORY_SNAPSHOT_URL=$MAND_PRUNED_STORY_SNAPSHOT_URL
             ;;
         2)
-            GETH_SNAPSHOT_URL="https://snapshots.mandragora.io/geth_snapshot.lz4"
-            STORY_SNAPSHOT_URL="https://snapshots.mandragora.io/story_snapshot.lz4"
+            GETH_SNAPSHOT_URL=$MAND_ARCHIVE_GETH_SNAPSHOT_URL
+            STORY_SNAPSHOT_URL=$MAND_ARCHIVE_STORY_SNAPSHOT_URL
             ;;
         *)
             echo -e "${RED}Invalid choice. Exiting.${NC}"
@@ -57,12 +69,12 @@ choose_itrocket_snapshot() {
 
     case $snapshot_type_choice in
         1)
-            GETH_SNAPSHOT_URL="https://server-3.itrocket.net/testnet/story/geth_story_2024-11-05_307009_snap.tar.lz4"
-            STORY_SNAPSHOT_URL="https://server-3.itrocket.net/testnet/story/story_2024-11-05_307009_snap.tar.lz4"
+            GETH_SNAPSHOT_URL=$ITR_PRUNED_GETH_SNAPSHOT_URL
+            STORY_SNAPSHOT_URL=$ITR_PRUNED_STORY_SNAPSHOT_URL
             ;;
         2)
-            GETH_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/story/geth_story_2024-11-05_303734_snap.tar.lz4"
-            STORY_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/story/story_2024-11-05_303734_snap.tar.lz4"
+            GETH_SNAPSHOT_URL=$ITR_ARCHIVE_GETH_SNAPSHOT_URL
+            STORY_SNAPSHOT_URL=$ITR_ARCHIVE_STORY_SNAPSHOT_URL
             ;;
         *)
             echo -e "${RED}Invalid choice. Exiting.${NC}"
@@ -90,13 +102,13 @@ case $provider_choice in
 
         echo -e "${GREEN}Checking availability of Mandragora snapshots:${NC}"
         echo -n "Pruned GETH Snapshot: "
-        check_url "https://snapshots2.mandragora.io/story/geth_snapshot.lz4"
+        check_url $MAND_PRUNED_GETH_SNAPSHOT_URL
         echo -n "Pruned STORY Snapshot: "
-        check_url "https://snapshots2.mandragora.io/story/story_snapshot.lz4"
+        check_url $MAND_PRUNED_STORY_SNAPSHOT_URL
         echo -n "Archive GETH Snapshot: "
-        check_url "https://snapshots.mandragora.io/geth_snapshot.lz4"
+        check_url $MAND_ARCHIVE_GETH_SNAPSHOT_URL
         echo -n "Archive STORY Snapshot: "
-        check_url "https://snapshots.mandragora.io/story_snapshot.lz4"
+        check_url $MAND_ARCHIVE_STORY_SNAPSHOT_URL
 
         choose_mandragora_snapshot
         GETH_SNAPSHOT_FILE="geth_snapshot.lz4"
@@ -108,13 +120,13 @@ case $provider_choice in
 
         echo -e "${GREEN}Checking availability of ITRocket snapshots:${NC}"
         echo -n "Pruned GETH Snapshot: "
-        check_url "https://server-3.itrocket.net/testnet/story/geth_story_2024-11-05_307009_snap.tar.lz4"
+        check_url $ITR_PRUNED_GETH_SNAPSHOT_URL
         echo -n "Pruned STORY Snapshot: "
-        check_url "https://server-3.itrocket.net/testnet/story/story_2024-11-05_307009_snap.tar.lz4"
+        check_url $ITR_PRUNED_STORY_SNAPSHOT_URL
         echo -n "Archive GETH Snapshot: "
-        check_url "https://server-5.itrocket.net/testnet/story/geth_story_2024-11-05_303734_snap.tar.lz4"
+        check_url $ITR_ARCHIVE_GETH_SNAPSHOT_URL
         echo -n "Archive STORY Snapshot: "
-        check_url "https://server-5.itrocket.net/testnet/story/story_2024-11-05_303734_snap.tar.lz4"
+        check_url $ITR_ARCHIVE_STORY_SNAPSHOT_URL
 
         choose_itrocket_snapshot
         GETH_SNAPSHOT_FILE="geth_snapshot.tar.lz4"
