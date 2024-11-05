@@ -166,6 +166,9 @@ wget -O $STORY_SNAPSHOT_FILE $STORY_SNAPSHOT_URL
 # Decompress story-geth and story snapshots
 decompress_snapshots
 
+# Change ownership of the .story directory
+sudo chown -R $USER:$USER $HOME/.story
+
 # Ask the user if they want to delete the downloaded snapshot files
 read -p "Do you want to delete the downloaded snapshot files? (y/n): " delete_choice
 
