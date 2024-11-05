@@ -86,7 +86,7 @@ provider_name=""
 case $provider_choice in
     1)
         provider_name="Mandragora"
-        echo -e "${GREEN}Grand Valley extends its gratitude to $provider_name for providing snapshot support.${NC}"
+        echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
 
         echo -e "${GREEN}Checking availability of Mandragora snapshots:${NC}"
         echo -n "Pruned GETH Snapshot: "
@@ -104,7 +104,7 @@ case $provider_choice in
         ;;
     2)
         provider_name="ITRocket"
-        echo -e "${GREEN}Grand Valley extends its gratitude to $provider_name for providing snapshot support.${NC}"
+        echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
 
         echo -e "${GREEN}Checking availability of ITRocket snapshots:${NC}"
         echo -n "Pruned GETH Snapshot: "
