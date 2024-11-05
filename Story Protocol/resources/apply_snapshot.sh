@@ -7,24 +7,26 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Mandragora URLs
+# Snapshot URLs
 MAND_PRUNED_GETH_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/geth_snapshot.lz4"
 MAND_PRUNED_STORY_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/story_snapshot.lz4"
 MAND_ARCHIVE_GETH_SNAPSHOT_URL="https://snapshots.mandragora.io/geth_snapshot.lz4"
 MAND_ARCHIVE_STORY_SNAPSHOT_URL="https://snapshots.mandragora.io/story_snapshot.lz4"
 
-# ITRocket URLs
 ITR_PRUNED_GETH_SNAPSHOT_URL="https://server-1.itrocket.net/testnet/story/geth_story_2024-11-05_304590_snap.tar.lz4"
 ITR_PRUNED_STORY_SNAPSHOT_URL="https://server-1.itrocket.net/testnet/story/story_2024-11-05_304590_snap.tar.lz4"
 ITR_ARCHIVE_GETH_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/story/geth_story_2024-11-05_303734_snap.tar.lz4"
 ITR_ARCHIVE_STORY_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/story/story_2024-11-05_303734_snap.tar.lz4"
+
+CROUTON_SNAPSHOT_URL="https://storage.crouton.digital/testnet/story/snapshots/story_latest.tar.lz4"
 
 # Function to display the menu
 show_menu() {
     echo -e "${GREEN}Choose a snapshot provider:${NC}"
     echo "1. Mandragora"
     echo "2. ITRocket"
-    echo "3. Exit"
+    echo "3. CroutonDigital"
+    echo "4. Exit"
 }
 
 # Function to check if a URL is available
@@ -83,10 +85,15 @@ choose_itrocket_snapshot() {
     esac
 }
 
-# Function to decompress snapshots
+# Function to decompress snapshots for Mandragora and ITRocket
 decompress_snapshots() {
     lz4 -c -d $GETH_SNAPSHOT_FILE | tar -xv -C $HOME/.story/geth/odyssey/geth
     lz4 -c -d $STORY_SNAPSHOT_FILE | tar -xv -C $HOME/.story/story
+}
+
+# Function to decompress snapshot for CroutonDigital
+decompress_crouton_snapshot() {
+    lz4 -c -d $CROUTON_SNAPSHOT_FILE | tar -xv -C $HOME/.story
 }
 
 # Main script
@@ -133,6 +140,16 @@ case $provider_choice in
         STORY_SNAPSHOT_FILE="story_snapshot.tar.lz4"
         ;;
     3)
+        provider_name="CroutonDigital"
+        echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
+
+        echo -e "${GREEN}Checking availability of CroutonDigital snapshot:${NC}"
+        echo -n "Archive Snapshot: "
+        check_url $CROUTON_SNAPSHOT_URL
+
+        CROUTON_SNAPSHOT_FILE="story_latest.tar.lz4"
+        ;;
+    4)
         echo -e "${GREEN}Exiting.${NC}"
         exit 0
         ;;
@@ -159,12 +176,15 @@ sudo cp $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_vali
 # Delete previous geth chaindata and story data folders
 sudo rm -rf $HOME/.story/geth/odyssey/chaindata $HOME/.story/story/data
 
-# Download story-geth and story snapshots
-wget -O $GETH_SNAPSHOT_FILE $GETH_SNAPSHOT_URL
-wget -O $STORY_SNAPSHOT_FILE $STORY_SNAPSHOT_URL
-
-# Decompress story-geth and story snapshots
-decompress_snapshots
+# Download and decompress snapshots based on the provider
+if [[ $provider_choice -eq 1 || $provider_choice -eq 2 ]]; then
+    wget -O $GETH_SNAPSHOT_FILE $GETH_SNAPSHOT_URL
+    wget -O $STORY_SNAPSHOT_FILE $STORY_SNAPSHOT_URL
+    decompress_snapshots
+elif [[ $provider_choice -eq 3 ]]; then
+    wget -O $CROUTON_SNAPSHOT_FILE $CROUTON_SNAPSHOT_URL
+    decompress_crouton_snapshot
+fi
 
 # Change ownership of the .story directory
 sudo chown -R $USER:$USER $HOME/.story
@@ -173,8 +193,12 @@ sudo chown -R $USER:$USER $HOME/.story
 read -p "Do you want to delete the downloaded snapshot files? (y/n): " delete_choice
 
 if [[ $delete_choice == "y" || $delete_choice == "Y" ]]; then
-    # Delete downloaded story-geth and story snapshots
-    sudo rm -v $GETH_SNAPSHOT_FILE $STORY_SNAPSHOT_FILE
+    # Delete downloaded snapshot files
+    if [[ $provider_choice -eq 1 || $provider_choice -eq 2 ]]; then
+        sudo rm -v $GETH_SNAPSHOT_FILE $STORY_SNAPSHOT_FILE
+    elif [[ $provider_choice -eq 3 ]]; then
+        sudo rm -v $CROUTON_SNAPSHOT_FILE
+    fi
     echo -e "${GREEN}Downloaded snapshot files have been deleted.${NC}"
 else
     echo -e "${GREEN}Downloaded snapshot files have been kept.${NC}"
