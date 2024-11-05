@@ -15,6 +15,16 @@ show_menu() {
     echo "3. Exit"
 }
 
+# Function to check if a URL is available
+check_url() {
+    local url=$1
+    if curl --output /dev/null --silent --head --fail "$url"; then
+        echo -e "${GREEN}Available${NC}"
+    else
+        echo -e "${RED}Not available at the moment${NC}"
+    fi
+}
+
 # Function to choose snapshot type for Mandragora
 choose_mandragora_snapshot() {
     echo -e "${GREEN}Choose the type of snapshot for Mandragora:${NC}"
@@ -36,12 +46,18 @@ choose_mandragora_snapshot() {
             exit 1
             ;;
     esac
+
+    echo -e "${GREEN}Checking availability of Mandragora snapshots:${NC}"
+    echo -n "GETH Snapshot: "
+    check_url $GETH_SNAPSHOT_URL
+    echo -n "STORY Snapshot: "
+    check_url $STORY_SNAPSHOT_URL
 }
 
 # Function to choose snapshot type for ITRocket
 choose_itrocket_snapshot() {
     echo -e "${GREEN}Choose the type of snapshot for ITRocket:${NC}"
-    echo "1. Pruned (not available at the moment)"
+    echo "1. Pruned"
     echo "2. Archive"
     read -p "Enter your choice: " snapshot_type_choice
 
@@ -59,6 +75,12 @@ choose_itrocket_snapshot() {
             exit 1
             ;;
     esac
+
+    echo -e "${GREEN}Checking availability of ITRocket snapshots:${NC}"
+    echo -n "GETH Snapshot: "
+    check_url $GETH_SNAPSHOT_URL
+    echo -n "STORY Snapshot: "
+    check_url $STORY_SNAPSHOT_URL
 }
 
 # Function to decompress snapshots
