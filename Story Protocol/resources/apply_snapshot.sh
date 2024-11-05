@@ -37,6 +37,7 @@ check_url() {
     else
         echo -e "${RED}Not available at the moment${NC}"
     fi
+    read -p "Press Enter to continue..."
 }
 
 # Function to choose snapshot type for Mandragora
