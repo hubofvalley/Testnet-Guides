@@ -11,7 +11,7 @@ NC='\033[0m' # No Color
 show_menu() {
     echo -e "${GREEN}Choose a snapshot provider:${NC}"
     echo "1. Mandragora"
-    echo "2. ITRocket"
+    echo "2. ITRocket (not available atm)"
     echo "3. Exit"
 }
 
