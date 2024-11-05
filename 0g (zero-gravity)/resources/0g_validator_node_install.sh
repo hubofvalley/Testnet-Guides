@@ -135,10 +135,10 @@ User=$USER
 Type=simple
 WorkingDirectory=$HOME/.0gchain
 ExecStart=$input1 run start --log_output_console
-Restart=on-failure
-LimitNOFILE=65535
 StandardOutput=journal
 StandardError=journal
+Restart=on-failure
+LimitNOFILE=65535
 Environment="DAEMON_NAME=0gchaind"
 Environment="DAEMON_HOME=$input2"
 Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=true"

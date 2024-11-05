@@ -11,7 +11,7 @@ NC='\033[0m' # No Color
 show_menu() {
     echo -e "${GREEN}Choose a snapshot provider:${NC}"
     echo "1. Mandragora"
-    echo "2. ITRocket (not available atm)"
+    echo "2. ITRocket"
     echo "3. Exit"
 }
 
@@ -41,7 +41,7 @@ choose_mandragora_snapshot() {
 # Function to choose snapshot type for ITRocket
 choose_itrocket_snapshot() {
     echo -e "${GREEN}Choose the type of snapshot for ITRocket:${NC}"
-    echo "1. Pruned"
+    echo "1. Pruned (not available at the moment)"
     echo "2. Archive"
     read -p "Enter your choice: " snapshot_type_choice
 
