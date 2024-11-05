@@ -46,12 +46,6 @@ choose_mandragora_snapshot() {
             exit 1
             ;;
     esac
-
-    echo -e "${GREEN}Checking availability of Mandragora snapshots:${NC}"
-    echo -n "GETH Snapshot: "
-    check_url $GETH_SNAPSHOT_URL
-    echo -n "STORY Snapshot: "
-    check_url $STORY_SNAPSHOT_URL
 }
 
 # Function to choose snapshot type for ITRocket
@@ -75,12 +69,6 @@ choose_itrocket_snapshot() {
             exit 1
             ;;
     esac
-
-    echo -e "${GREEN}Checking availability of ITRocket snapshots:${NC}"
-    echo -n "GETH Snapshot: "
-    check_url $GETH_SNAPSHOT_URL
-    echo -n "STORY Snapshot: "
-    check_url $STORY_SNAPSHOT_URL
 }
 
 # Function to decompress snapshots
@@ -99,6 +87,17 @@ case $provider_choice in
     1)
         provider_name="Mandragora"
         echo -e "${GREEN}Grand Valley extends its gratitude to $provider_name for providing snapshot support.${NC}"
+
+        echo -e "${GREEN}Checking availability of Mandragora snapshots:${NC}"
+        echo -n "Pruned GETH Snapshot: "
+        check_url "https://snapshots2.mandragora.io/story/geth_snapshot.lz4"
+        echo -n "Pruned STORY Snapshot: "
+        check_url "https://snapshots2.mandragora.io/story/story_snapshot.lz4"
+        echo -n "Archive GETH Snapshot: "
+        check_url "https://snapshots.mandragora.io/geth_snapshot.lz4"
+        echo -n "Archive STORY Snapshot: "
+        check_url "https://snapshots.mandragora.io/story_snapshot.lz4"
+
         choose_mandragora_snapshot
         GETH_SNAPSHOT_FILE="geth_snapshot.lz4"
         STORY_SNAPSHOT_FILE="story_snapshot.lz4"
@@ -106,6 +105,17 @@ case $provider_choice in
     2)
         provider_name="ITRocket"
         echo -e "${GREEN}Grand Valley extends its gratitude to $provider_name for providing snapshot support.${NC}"
+
+        echo -e "${GREEN}Checking availability of ITRocket snapshots:${NC}"
+        echo -n "Pruned GETH Snapshot: "
+        check_url "https://server-1.itrocket.net/testnet/story/geth_story_2024-11-05_304590_snap.tar.lz4"
+        echo -n "Pruned STORY Snapshot: "
+        check_url "https://server-1.itrocket.net/testnet/story/story_2024-11-05_304590_snap.tar.lz4"
+        echo -n "Archive GETH Snapshot: "
+        check_url "https://server-5.itrocket.net/testnet/story/geth_story_2024-11-05_303734_snap.tar.lz4"
+        echo -n "Archive STORY Snapshot: "
+        check_url "https://server-5.itrocket.net/testnet/story/story_2024-11-05_303734_snap.tar.lz4"
+
         choose_itrocket_snapshot
         GETH_SNAPSHOT_FILE="geth_snapshot.tar.lz4"
         STORY_SNAPSHOT_FILE="story_snapshot.tar.lz4"
