@@ -51,8 +51,8 @@ choose_itrocket_snapshot() {
             STORY_SNAPSHOT_URL="https://server-1.itrocket.net/testnet/story/story_2024-11-05_304590_snap.tar.lz4"
             ;;
         2)
-            GETH_SNAPSHOT_URL="geth-archive-snap.tar.lz4 https://server-5.itrocket.net/testnet/story/geth_story_2024-11-05_303734_snap.tar.lz4"
-            STORY_SNAPSHOT_URL="story-archive-snap.tar.lz4 https://server-5.itrocket.net/testnet/story/story_2024-11-05_303734_snap.tar.lz4"
+            GETH_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/story/geth_story_2024-11-05_303734_snap.tar.lz4"
+            STORY_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/story/story_2024-11-05_303734_snap.tar.lz4"
             ;;
         *)
             echo -e "${RED}Invalid choice. Exiting.${NC}"
@@ -63,13 +63,8 @@ choose_itrocket_snapshot() {
 
 # Function to decompress snapshots
 decompress_snapshots() {
-    if [[ $GETH_SNAPSHOT_FILE == *.tar.lz4 ]]; then
-        lz4 -c -d $GETH_SNAPSHOT_FILE | tar -xv -C $HOME/.story/geth/odyssey/geth
-        lz4 -c -d $STORY_SNAPSHOT_FILE | tar -xv -C $HOME/.story/story
-    else
-        lz4 -c -d $GETH_SNAPSHOT_FILE | tar -xv -C $HOME/.story/geth/odyssey/geth
-        lz4 -c -d $STORY_SNAPSHOT_FILE | tar -xv -C $HOME/.story/story
-    fi
+    tar -I lz4 -xvf $GETH_SNAPSHOT_FILE -C $HOME/.story/geth/odyssey/geth
+    tar -I lz4 -xvf $STORY_SNAPSHOT_FILE -C $HOME/.story/story
 }
 
 # Main script
