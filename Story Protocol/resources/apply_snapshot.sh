@@ -37,7 +37,6 @@ check_url() {
     else
         echo -e "${RED}Not available at the moment${NC}"
     fi
-    read -p "Press Enter to continue..."
 }
 
 # Function to choose snapshot type for Mandragora
@@ -118,6 +117,8 @@ case $provider_choice in
         echo -n "Archive STORY Snapshot: "
         check_url $MAND_ARCHIVE_STORY_SNAPSHOT_URL
 
+        read -p "Press Enter to continue..."
+
         choose_mandragora_snapshot
         GETH_SNAPSHOT_FILE="geth_snapshot.lz4"
         STORY_SNAPSHOT_FILE="story_snapshot.lz4"
@@ -136,6 +137,8 @@ case $provider_choice in
         echo -n "Archive STORY Snapshot: "
         check_url $ITR_ARCHIVE_STORY_SNAPSHOT_URL
 
+        read -p "Press Enter to continue..."
+
         choose_itrocket_snapshot
         GETH_SNAPSHOT_FILE="geth_snapshot.tar.lz4"
         STORY_SNAPSHOT_FILE="story_snapshot.tar.lz4"
@@ -147,6 +150,8 @@ case $provider_choice in
         echo -e "${GREEN}Checking availability of CroutonDigital snapshot:${NC}"
         echo -n "Archive Snapshot: "
         check_url $CROUTON_SNAPSHOT_URL
+
+        read -p "Press Enter to continue..."
 
         CROUTON_SNAPSHOT_FILE="story_latest.tar.lz4"
         ;;
