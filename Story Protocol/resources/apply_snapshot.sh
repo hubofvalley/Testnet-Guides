@@ -57,8 +57,8 @@ choose_itrocket_snapshot() {
 
     case $snapshot_type_choice in
         1)
-            GETH_SNAPSHOT_URL="https://server-1.itrocket.net/testnet/story/geth_story_2024-11-05_304590_snap.tar.lz4"
-            STORY_SNAPSHOT_URL="https://server-1.itrocket.net/testnet/story/story_2024-11-05_304590_snap.tar.lz4"
+            GETH_SNAPSHOT_URL="https://server-3.itrocket.net/testnet/story/geth_story_2024-11-05_307009_snap.tar.lz4"
+            STORY_SNAPSHOT_URL="https://server-3.itrocket.net/testnet/story/story_2024-11-05_307009_snap.tar.lz4"
             ;;
         2)
             GETH_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/story/geth_story_2024-11-05_303734_snap.tar.lz4"
@@ -108,9 +108,9 @@ case $provider_choice in
 
         echo -e "${GREEN}Checking availability of ITRocket snapshots:${NC}"
         echo -n "Pruned GETH Snapshot: "
-        check_url "https://server-1.itrocket.net/testnet/story/geth_story_2024-11-05_304590_snap.tar.lz4"
+        check_url "https://server-3.itrocket.net/testnet/story/geth_story_2024-11-05_307009_snap.tar.lz4"
         echo -n "Pruned STORY Snapshot: "
-        check_url "https://server-1.itrocket.net/testnet/story/story_2024-11-05_304590_snap.tar.lz4"
+        check_url "https://server-3.itrocket.net/testnet/story/story_2024-11-05_307009_snap.tar.lz4"
         echo -n "Archive GETH Snapshot: "
         check_url "https://server-5.itrocket.net/testnet/story/geth_story_2024-11-05_303734_snap.tar.lz4"
         echo -n "Archive STORY Snapshot: "
