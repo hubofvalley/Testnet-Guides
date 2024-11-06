@@ -120,15 +120,18 @@ function create_validator() {
 
     read -p "Enter the moniker for your validator: " MONIKER
 
-    read -p "Enter the amount to be staked (minimum requirement is 1024 IP (1024000000000000000000)): " STAKE
+    read -p "Enter the amount to be staked in IP (minimum requirement is 1024 IP): " STAKE_IP
 
-    # Convert the stake to the required format (assuming 1 IP = 10^18 units)
-    MIN_STAKE=1024000000000000000000
-    if [ "$STAKE" -lt "$MIN_STAKE" ]; then
+    # Convert IP to the required format (assuming 1 IP = 10^18 units)
+    MIN_STAKE=1024
+    if [ "$STAKE_IP" -lt "$MIN_STAKE" ]; then
         echo "The stake amount is below the minimum requirement of 1024 IP."
         menu
         return
     fi
+
+    # Convert the stake from IP to the required unit format
+    STAKE=$(echo "$STAKE_IP * 10^18" | bc)
 
     story validator create --stake "$STAKE" --moniker "$MONIKER" --private-key "$PRIVATE_KEY"
     menu
