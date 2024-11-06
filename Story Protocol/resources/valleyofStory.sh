@@ -301,7 +301,7 @@ function show_geth_logs() {
 }
 
 function show_node_status() {
-    port=$(grep -oP 'laddr = "tcp://0.0.0.0:\K[0-9]+57' "$HOME/.story/story/config/config.toml") && curl "http://127.0.0.1:$port/status" | jq
+    port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.story/story/config/config.toml") && curl "http://127.0.0.1:$port/status" | jq
     story status
     menu
 }

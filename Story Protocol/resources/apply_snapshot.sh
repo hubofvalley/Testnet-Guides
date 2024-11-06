@@ -129,8 +129,6 @@ decompress_crouton_snapshot() {
 prompt_back_or_continue() {
     read -p "Press Enter to continue or type 'back' to go back to the menu: " user_choice
     if [[ $user_choice == "back" ]]; then
-        show_menu
-        read -p "Enter your choice: " provider_choice
         main_script
     fi
 }
