@@ -313,6 +313,9 @@ main_script() {
     # Restore your validator state
     sudo cp $HOME/.story/priv_validator_state.json.backup $HOME/.story/story/data/priv_validator_state.json
 
+    # Update version
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_update.sh)
+
     # Start your story-geth and story nodes
     sudo systemctl restart story-geth story
 

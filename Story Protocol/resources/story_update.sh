@@ -38,14 +38,14 @@ update_version() {
 
     # Create directory and download the binary
     cd $HOME
-    mkdir -p $HOME/$version
-    if ! wget -P $HOME/$version $download_url/$story_file_name -O $HOME/$version/story; then
+    mkdir -p $HOME/story-$version
+    if ! wget -P $HOME/story-$version $download_url/$story_file_name -O $HOME/story-$version/story; then
         echo "Failed to download the binary. Exiting."
         exit 1
     fi
 
     # Move the binary to the appropriate directory
-    sudo cp $HOME/$version/story $HOME/go/bin/story
+    sudo cp $HOME/story-$version/story $HOME/go/bin/story
 
     # Set ownership and permissions
     sudo chown -R $USER:$USER $HOME/.story && \
