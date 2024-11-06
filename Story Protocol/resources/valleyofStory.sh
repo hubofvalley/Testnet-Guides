@@ -120,7 +120,7 @@ function create_validator() {
 
     read -p "Enter the moniker for your validator: " MONIKER
 
-    read -p "Enter the amount to be staked in IP (minimum requirement is 1024 IP): " STAKE_IP
+    read -p "Enter the amount to be staked in IP (e.g., 1024 for 1024 IP, minimum requirement is 1024 IP): " STAKE_IP
 
     # Convert IP to the required format (assuming 1 IP = 10^18 units)
     MIN_STAKE=1024
@@ -202,7 +202,10 @@ function stake_tokens() {
     echo "2. Use Grand Valley's RPC"
     read -p "Enter your choice (1/2): " RPC_CHOICE
 
-    read -p "Enter amount to stake: " AMOUNT
+    read -p "Enter the amount to stake in IP (e.g., 10 for 10 IP, no need to include the denomination rate): " AMOUNT_IP
+
+    # Convert IP to the required format (assuming 1 IP = 10^18 units)
+    AMOUNT=$(echo "$AMOUNT_IP * 10^18" | bc)
 
     read -p "Enter private key (leave blank to use local private key): " PRIVATE_KEY
 
@@ -252,7 +255,10 @@ function unstake_tokens() {
     echo "2. Use Grand Valley's RPC"
     read -p "Enter your choice (1/2): " RPC_CHOICE
 
-    read -p "Enter amount to unstake: " AMOUNT
+    read -p "Enter the amount to unstake in IP (e.g., 10 for 10 IP, no need to include the denomination rate): " AMOUNT_IP
+
+    # Convert IP to the required format (assuming 1 IP = 10^18 units)
+    AMOUNT=$(echo "$AMOUNT_IP * 10^18" | bc)
 
     read -p "Enter private key (leave blank to use local private key): " PRIVATE_KEY
 
@@ -273,6 +279,7 @@ function unstake_tokens() {
 
     menu
 }
+
 
 function export_evm_key() {
     echo -e "${CYAN}Query all of your current EVM key addresses including your EVM private key${RESET}"
