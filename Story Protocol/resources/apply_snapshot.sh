@@ -25,6 +25,9 @@ JOSEPHTRAN_PRUNED_STORY_SNAPSHOT_URL="https://story.josephtran.co/Story_snapshot
 JOSEPHTRAN_ARCHIVE_GETH_SNAPSHOT_URL="https://story.josephtran.co/archive_Geth_snapshot.lz4"
 JOSEPHTRAN_ARCHIVE_STORY_SNAPSHOT_URL="https://story.josephtran.co/archive_Story_snapshot.lz4"
 
+ORIGINSTAKE_PRUNED_API_URL="https://snapshot.originstake.com/story_snapshot_metadata.json"
+ORIGINSTAKE_ARCHIVE_API_URL="https://snapshot.originstake.com/full/story_full_snapshot_metadata.json"
+
 # Function to display the menu
 show_menu() {
     echo -e "${GREEN}Choose a snapshot provider:${NC}"
@@ -32,7 +35,8 @@ show_menu() {
     echo "2. ITRocket"
     echo "3. CroutonDigital"
     echo "4. Josephtran (J•Node)"
-    echo "5. Exit"
+    echo "5. OriginStake"
+    echo "6. Exit"
 }
 
 # Function to check if a URL is available
@@ -114,15 +118,39 @@ choose_josephtran_snapshot() {
     esac
 }
 
+# Function to choose snapshot type for OriginStake
+choose_originstake_snapshot() {
+    echo -e "${GREEN}Choose the type of snapshot for OriginStake:${NC}"
+    echo "1. Pruned"
+    echo "2. Archive"
+    read -p "Enter your choice: " snapshot_type_choice
+
+    case $snapshot_type_choice in
+        1)
+            SNAPSHOT_API_URL=$ORIGINSTAKE_PRUNED_API_URL
+            ;;
+        2)
+            SNAPSHOT_API_URL=$ORIGINSTAKE_ARCHIVE_API_URL
+            ;;
+        *)
+            echo -e "${RED}Invalid choice. Exiting.${NC}"
+            exit 1
+            ;;
+    esac
+
+    FILE_NAME=$(curl -s $SNAPSHOT_API_URL | jq -r '.name')
+    SNAPSHOT_URL="https://snapshot.originstake.com/$FILE_NAME"
+}
+
 # Function to decompress snapshots for Mandragora, ITRocket, and Josephtran
 decompress_snapshots() {
     lz4 -c -d $GETH_SNAPSHOT_FILE | tar -xv -C $HOME/.story/geth/odyssey/geth
     lz4 -c -d $STORY_SNAPSHOT_FILE | tar -xv -C $HOME/.story/story
 }
 
-# Function to decompress snapshot for CroutonDigital
-decompress_crouton_snapshot() {
-    lz4 -c -d $CROUTON_SNAPSHOT_FILE | tar -xv -C $HOME/.story
+# Function to decompress snapshot for CroutonDigital and OriginStake
+decompress_crouton_originstake_snapshot() {
+    lz4 -c -d $SNAPSHOT_FILE | tar -xv -C $HOME/.story
 }
 
 # Function to prompt user to back or continue
@@ -214,6 +242,21 @@ main_script() {
             STORY_SNAPSHOT_FILE="Story_snapshot.lz4"
             ;;
         5)
+            provider_name="OriginStake"
+            echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
+
+            echo -e "${GREEN}Checking availability of OriginStake snapshots:${NC}"
+            echo -n "Pruned Snapshot: "
+            check_url $ORIGINSTAKE_PRUNED_API_URL
+            echo -n "Archive Snapshot: "
+            check_url $ORIGINSTAKE_ARCHIVE_API_URL
+
+            prompt_back_or_continue
+
+            choose_originstake_snapshot
+            SNAPSHOT_FILE=$FILE_NAME
+            ;;
+        6)
             echo -e "${GREEN}Exiting.${NC}"
             exit 0
             ;;
@@ -229,7 +272,7 @@ main_script() {
     cd $HOME
 
     # Install required dependencies
-    sudo apt-get install wget lz4 -y
+    sudo apt-get install wget lz4 jq -y
 
     # Stop your story-geth and story nodes
     sudo systemctl stop story-geth story
@@ -245,9 +288,9 @@ main_script() {
         wget -O $GETH_SNAPSHOT_FILE $GETH_SNAPSHOT_URL
         wget -O $STORY_SNAPSHOT_FILE $STORY_SNAPSHOT_URL
         decompress_snapshots
-    elif [[ $provider_choice -eq 3 ]]; then
-        wget -O $CROUTON_SNAPSHOT_FILE $CROUTON_SNAPSHOT_URL
-        decompress_crouton_snapshot
+    elif [[ $provider_choice -eq 3 || $provider_choice -eq 5 ]]; then
+        wget -O $SNAPSHOT_FILE $SNAPSHOT_URL
+        decompress_crouton_originstake_snapshot
     fi
 
     # Change ownership of the .story directory
@@ -260,8 +303,8 @@ main_script() {
         # Delete downloaded snapshot files
         if [[ $provider_choice -eq 1 || $provider_choice -eq 2 || $provider_choice -eq 4 ]]; then
             sudo rm -v $GETH_SNAPSHOT_FILE $STORY_SNAPSHOT_FILE
-        elif [[ $provider_choice -eq 3 ]]; then
-            sudo rm -v $CROUTON_SNAPSHOT_FILE
+        elif [[ $provider_choice -eq 3 || $provider_choice -eq 5 ]]; then
+            sudo rm -v $SNAPSHOT_FILE
         fi
         echo -e "${GREEN}Downloaded snapshot files have been deleted.${NC}"
     else
