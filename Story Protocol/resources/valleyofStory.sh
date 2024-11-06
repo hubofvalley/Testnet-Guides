@@ -198,7 +198,7 @@ function stake_tokens() {
     esac
 
     echo "Choose the RPC to use:"
-    echo "1. Use your own RPC"
+    echo "1. Use default RPC"
     echo "2. Use Grand Valley's RPC"
     read -p "Enter your choice (1/2): " RPC_CHOICE
 
@@ -251,7 +251,7 @@ function unstake_tokens() {
     esac
 
     echo "Choose the RPC to use:"
-    echo "1. Use your own RPC"
+    echo "1. Use default RPC"
     echo "2. Use Grand Valley's RPC"
     read -p "Enter your choice (1/2): " RPC_CHOICE
 
