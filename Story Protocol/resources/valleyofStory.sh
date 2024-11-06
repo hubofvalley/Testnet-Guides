@@ -113,8 +113,11 @@ function deploy_validator_node() {
 }
 
 function create_validator() {
-    read -p "Enter your private key: " PRIVATE_KEY
-    story validator create --stake 1000000000000000000 --private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt)
+    read -p "Enter your private key (or press Enter to use local private key): " PRIVATE_KEY
+    if [ -z "$PRIVATE_KEY" ]; then
+        PRIVATE_KEY=$(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt)
+    fi
+    story validator create --stake 1000000000000000000 --private-key $PRIVATE_KEY
     menu
 }
 
@@ -127,7 +130,8 @@ function query_balance() {
     echo -e "${CYAN}Select an option:${RESET}"
     echo "1. Query balance of your own EVM address"
     echo "2. Query balance of another EVM address"
-    read -p "Enter your choice (1 or 2): " choice
+    echo "3. Back"
+    read -p "Enter your choice (1, 2, or 3): " choice
 
     case $choice in
         1)
@@ -139,8 +143,12 @@ function query_balance() {
             echo -e "${GREEN}Querying balance of $evm_address...${RESET}"
             geth --exec "eth.getBalance('$evm_address')" attach $HOME/.story/geth/odyssey/geth.ipc
             ;;
+        3)
+            menu
+            ;;
         *)
-            echo -e "${RED}Invalid choice. Please enter 1 or 2.${RESET}"
+            echo -e "${RED}Invalid choice. Please enter 1, 2, or 3.${RESET}"
+            query_balance
             ;;
     esac
     menu
@@ -151,7 +159,8 @@ function stake_tokens() {
     echo "1. Delegate to Grand Valley"
     echo "2. Delegate to self"
     echo "3. Delegate to another validator"
-    read -p "Enter your choice (1/2/3): " CHOICE
+    echo "4. Back"
+    read -p "Enter your choice (1/2/3/4): " CHOICE
 
     case $CHOICE in
         1)
@@ -163,9 +172,12 @@ function stake_tokens() {
         3)
             read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
             ;;
+        4)
+            menu
+            ;;
         *)
             echo "Invalid choice. Please select a valid option."
-            return
+            stake_tokens
             ;;
     esac
 
@@ -190,7 +202,7 @@ function stake_tokens() {
         story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG -y
     else
         echo "Invalid choice. Please select a valid option."
-        return
+        stake_tokens
     fi
 
     menu
@@ -200,7 +212,8 @@ function unstake_tokens() {
     echo "Choose an option to unstake tokens:"
     echo "1. Unstake from self"
     echo "2. Unstake from another validator"
-    read -p "Enter your choice (1/2): " CHOICE
+    echo "3. Back"
+    read -p "Enter your choice (1/2/3): " CHOICE
 
     case $CHOICE in
         1)
@@ -209,9 +222,12 @@ function unstake_tokens() {
         2)
             read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
             ;;
+        3)
+            menu
+            ;;
         *)
             echo "Invalid choice. Please select a valid option."
-            return
+            unstake_tokens
             ;;
     esac
 
@@ -236,7 +252,7 @@ function unstake_tokens() {
         story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT $PRIVATE_KEY_FLAG -y
     else
         echo "Invalid choice. Please select a valid option."
-        return
+        unstake_tokens
     fi
 
     menu
@@ -299,7 +315,8 @@ function add_peers() {
     echo "Select an option:"
     echo "1. Add peers manually"
     echo "2. Use Grand Valley's peers"
-    read -p "Enter your choice (1 or 2): " choice
+    echo "3. Back"
+    read -p "Enter your choice (1, 2, or 3): " choice
 
     case $choice in
         1)
@@ -326,9 +343,12 @@ function add_peers() {
                 menu
             fi
             ;;
-        *)
-            echo "Invalid choice. Please enter 1 or 2."
+        3)
             menu
+            ;;
+        *)
+            echo "Invalid choice. Please enter 1, 2, or 3."
+            add_peers
             ;;
     esac
     echo "Now you can restart your consensus client"
