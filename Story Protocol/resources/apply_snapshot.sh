@@ -98,7 +98,7 @@ choose_itrocket_snapshot() {
 
 # Function to choose snapshot type for Josephtran
 choose_josephtran_snapshot() {
-    echo -e "${GREEN}Choose the type of snapshot for J•Node:${NC}"
+    echo -e "${GREEN}Choose the type of snapshot for Josephtran:${NC}"
     echo "1. Pruned"
     echo "2. Archive"
     read -p "Enter your choice: " snapshot_type_choice
