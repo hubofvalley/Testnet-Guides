@@ -77,6 +77,7 @@ echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
 echo "export STORY_CHAIN_ID="odyssey"" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
+
 # Define variables
 geth_file_name=geth-linux-amd64
 
@@ -301,8 +302,6 @@ function unstake_tokens() {
     menu
 }
 
-
-
 function export_evm_key() {
     echo -e "${CYAN}Query all of your current EVM key addresses including your EVM private key${RESET}"
     story validator export --evm-key-path $HOME/.story/story/config/private_key.txt --export-evm-key
@@ -459,6 +458,11 @@ function apply_snapshot() {
     menu
 }
 
+function show_endpoints() {
+    echo -e "$ENDPOINTS"
+    menu
+}
+
 # Menu
 function menu() {
     echo -e "${CYAN}Story Validator Node = Consensus Client Service + Execution Client Service (geth/story-geth)${RESET}"
@@ -487,12 +491,13 @@ function menu() {
     echo "   e. Unstake Tokens"
     echo "   f. Export EVM Key"
     echo "   g. Backup Validator Key (store it to $HOME directory)"
-    echo -e "${RED}3. Exit${RESET}"
+    echo -e "${GREEN}3. Show Grand Valley's Endpoints${RESET}"
+    echo -e "${RED}4. Exit${RESET}"
 
     echo -e "${GREEN}Let's Buidl Story Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
-    if [[ $OPTION =~ ^[1-2][a-p]$ ]]; then
+    if [[ $OPTION =~ ^[1-3][a-p]$ ]]; then
         MAIN_OPTION=${OPTION:0:1}
         SUB_OPTION=${OPTION:1:1}
     else
@@ -533,7 +538,8 @@ function menu() {
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
-        3) exit 0 ;;
+        3) show_endpoints ;;
+        4) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
 }
