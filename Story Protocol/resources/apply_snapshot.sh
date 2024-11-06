@@ -167,8 +167,8 @@ choose_endorphine_snapshot() {
             ;;
     esac
 
-    GETH_FILE_NAME=$(curl -s $SNAPSHOT_API_URL | grep -oP 'odyssey-geth_\d+\.tar\.lz4')
-    STORY_FILE_NAME=$(curl -s $SNAPSHOT_API_URL | grep -oP 'odyssey_\d+\.tar\.lz4')
+    GETH_FILE_NAME=$(curl -s $SNAPSHOT_API_URL | grep -v geth | grep -oP 'href=".*?\.tar\.lz4"' | awk -F '"' '{print $2}')
+    STORY_FILE_NAME=$(curl -s $SNAPSHOT_API_URL | grep geth | grep -oP 'href=".*?\.tar\.lz4"' | awk -F '"' '{print $2}')
     GETH_SNAPSHOT_URL="https://story-pruned-snapshots.endorphinestake.com/$GETH_FILE_NAME"
     STORY_SNAPSHOT_URL="https://story-pruned-snapshots.endorphinestake.com/$STORY_FILE_NAME"
 }
@@ -182,6 +182,14 @@ decompress_snapshots() {
 # Function to decompress snapshot for CroutonDigital and OriginStake
 decompress_crouton_originstake_snapshot() {
     lz4 -c -d $SNAPSHOT_FILE | tar -xv -C $HOME/.story
+}
+
+# Function to decompress Endorphine Stake snapshot
+decompress_endorphine_snapshot() {
+    lz4 -c -d $GETH_SNAPSHOT_FILE | tar -xv -C $HOME
+    lz4 -c -d $STORY_SNAPSHOT_FILE | tar -xv -C $HOME
+    mv $HOME/home/node_story/.story/story/data $HOME/.story/story/
+    mv $HOME/home/node_story/.story/geth/iliad/geth/chaindata $HOME/.story/geth/iliad/geth
 }
 
 # Function to prompt user to back or continue
@@ -327,13 +335,17 @@ main_script() {
     sudo rm -rf $HOME/.story/geth/odyssey/chaindata $HOME/.story/story/data
 
     # Download and decompress snapshots based on the provider
-    if [[ $provider_choice -eq 1 || $provider_choice -eq 2 || $provider_choice -eq 4 || $provider_choice -eq 6 ]]; then
+    if [[ $provider_choice -eq 1 || $provider_choice -eq 2 || $provider_choice -eq 4 ]]; then
         wget -O $GETH_SNAPSHOT_FILE $GETH_SNAPSHOT_URL
         wget -O $STORY_SNAPSHOT_FILE $STORY_SNAPSHOT_URL
         decompress_snapshots
     elif [[ $provider_choice -eq 3 || $provider_choice -eq 5 ]]; then
         wget -O $SNAPSHOT_FILE $SNAPSHOT_URL
         decompress_crouton_originstake_snapshot
+    elif [[ $provider_choice -eq 6 ]]; then
+        wget -O $GETH_SNAPSHOT_FILE $GETH_SNAPSHOT_URL
+        wget -O $STORY_SNAPSHOT_FILE $STORY_SNAPSHOT_URL
+        decompress_endorphine_snapshot
     fi
 
     # Change ownership of the .story directory
@@ -344,10 +356,12 @@ main_script() {
 
     if [[ $delete_choice == "y" || $delete_choice == "Y" ]]; then
         # Delete downloaded snapshot files
-        if [[ $provider_choice -eq 1 || $provider_choice -eq 2 || $provider_choice -eq 4 || $provider_choice -eq 6 ]]; then
+        if [[ $provider_choice -eq 1 || $provider_choice -eq 2 || $provider_choice -eq 4 ]]; then
             sudo rm -v $GETH_SNAPSHOT_FILE $STORY_SNAPSHOT_FILE
         elif [[ $provider_choice -eq 3 || $provider_choice -eq 5 ]]; then
             sudo rm -v $SNAPSHOT_FILE
+        elif [[ $provider_choice -eq 6 ]]; then
+            sudo rm -v $GETH_SNAPSHOT_FILE $STORY_SNAPSHOT_FILE
         fi
         echo -e "${GREEN}Downloaded snapshot files have been deleted.${NC}"
     else
