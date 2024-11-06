@@ -117,7 +117,7 @@ function create_validator() {
     if [ -z "$PRIVATE_KEY" ]; then
         PRIVATE_KEY=$(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt)
     fi
-    story validator create --stake 1000000000000000000 --private-key $PRIVATE_KEY
+    story validator create --stake 1000000000000000000 --private-key $PRIVATE_KEY --chain-id odyssey
     menu
 }
 
@@ -197,9 +197,9 @@ function stake_tokens() {
     fi
 
     if [ "$RPC_CHOICE" == "2" ]; then
-        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 -y
+        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG --chain-id odyssey --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 -y
     elif [ "$RPC_CHOICE" == "1" ]; then
-        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG -y
+        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG --chain-id odyssey -y
     else
         echo "Invalid choice. Please select a valid option."
         stake_tokens
@@ -247,9 +247,9 @@ function unstake_tokens() {
     fi
 
     if [ "$RPC_CHOICE" == "2" ]; then
-        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT $PRIVATE_KEY_FLAG --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 -y
+        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT $PRIVATE_KEY_FLAG --chain-id odyssey --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 -y
     elif [ "$RPC_CHOICE" == "1" ]; then
-        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT $PRIVATE_KEY_FLAG -y
+        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT $PRIVATE_KEY_FLAG --chain-id odyssey -y
     else
         echo "Invalid choice. Please select a valid option."
         unstake_tokens
