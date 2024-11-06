@@ -1,280 +1,497 @@
 #!/bin/bash
 
-# ANSI color codes
+# Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+CYAN='\033[0;36m'
+YELLOW='\033[0;33m'
+RESET='\033[0m'
 
-# Snapshot URLs
-MAND_PRUNED_GETH_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/geth_snapshot.lz4"
-MAND_PRUNED_STORY_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/story_snapshot.lz4"
-MAND_ARCHIVE_GETH_SNAPSHOT_URL="https://snapshots.mandragora.io/geth_snapshot.lz4"
-MAND_ARCHIVE_STORY_SNAPSHOT_URL="https://snapshots.mandragora.io/story_snapshot.lz4"
+LOGO="
+ __      __     _  _                        __    _____  _                      
+ \ \    / /    | || |                      / _|  / ____|| |                     
+  \ \  / /__ _ | || |  ___  _   _    ___  | |_  | (___  | |_  ___   _ __  _   _ 
+  _\ \/ // __ || || | / _ \| | | |  / _ \ |  _|  \___ \ | __|/ _ \ | '__|| | | |
+ | |\  /| (_| || || ||  __/| |_| | | (_) || |    ____) || |_| (_) || |   | |_| |
+ | |_\/  \__,_||_||_| \___| \__, |  \___/ |_|   |_____/  \__|\___/ |_|    \__, |
+ | '_ \ | | | |              __/ |                                         __/ |
+ | |_) || |_| |             |___/                                         |___/ 
+ |____/  \__, |                                                                 
+          __/ |                                                                 
+         |___/                                                                  
+ __                                   
+/__ __ __ __   _|   \  / __ | |  _    
+\_| | (_| | | (_|    \/ (_| | | (/_ \/
+                                    /
+"
 
-ITR_PRUNED_GETH_SNAPSHOT_URL="https://server-1.itrocket.net/testnet/story/geth_story_2024-11-05_304590_snap.tar.lz4"
-ITR_PRUNED_STORY_SNAPSHOT_URL="https://server-1.itrocket.net/testnet/story/story_2024-11-05_304590_snap.tar.lz4"
-ITR_ARCHIVE_GETH_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/story/geth_story_2024-11-05_303734_snap.tar.lz4"
-ITR_ARCHIVE_STORY_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/story/story_2024-11-05_303734_snap.tar.lz4"
+INTRO="
+Valley Of Story by Grand Valley
 
-CROUTON_SNAPSHOT_URL="https://storage.crouton.digital/testnet/story/snapshots/story_latest.tar.lz4"
+${GREEN}Story Validator Node System Requirements${RESET}
+${YELLOW}| Category  | Requirements     |
+| --------- | ---------------- |
+| CPU       | 8+ cores         |
+| RAM       | 32+ GB           |
+| Storage   | 500+ GB NVMe SSD |
+| Bandwidth | 100+ MBit/s      |${RESET}
 
-JOSEPHTRAN_PRUNED_GETH_SNAPSHOT_URL="https://story.josephtran.co/Geth_snapshot.lz4"
-JOSEPHTRAN_PRUNED_STORY_SNAPSHOT_URL="https://story.josephtran.co/Story_snapshot.lz4"
-JOSEPHTRAN_ARCHIVE_GETH_SNAPSHOT_URL="https://story.josephtran.co/archive_Geth_snapshot.lz4"
-JOSEPHTRAN_ARCHIVE_STORY_SNAPSHOT_URL="https://story.josephtran.co/archive_Story_snapshot.lz4"
+- consensus client service file name: ${CYAN}story.service${RESET}
+- geth service file name: ${CYAN}story-geth.service${RESET}
+- current chain: ${CYAN}odyssey${RESET}
+- current story node version: ${CYAN}v0.12.0${RESET}
+- current story-geth node version: ${CYAN}v0.10.0${RESET}
+"
 
-# Function to display the menu
-show_menu() {
-    echo -e "${GREEN}Choose a snapshot provider:${NC}"
-    echo "1. Mandragora"
-    echo "2. ITRocket"
-    echo "3. CroutonDigital"
-    echo "4. Josephtran"
-    echo "5. Exit"
-}
+ENDPOINTS="${GREEN}
+Grand Valley Story Protocol public endpoints:${RESET}
+- cosmos-rpc: ${BLUE}https://lightnode-rpc-story.grandvalleys.com${RESET}
+- evm-rpc: ${BLUE}https://lightnode-json-rpc-story.grandvalleys.com${RESET}
+- cosmos rest-api: ${BLUE}https://lightnode-api-story.grandvalleys.com${RESET}
+- cosmos ws: ${BLUE}wss://lightnode-rpc-story.grandvalleys.com/websocket${RESET}
+- evm ws: ${BLUE}wss://lightnode-wss-story.grandvalleys.com${RESET}
 
-# Function to check if a URL is available
-check_url() {
-    local url=$1
-    if curl --output /dev/null --silent --head --fail "$url"; then
-        echo -e "${GREEN}Available${NC}"
-    else
-        echo -e "${RED}Not available at the moment${NC}"
+${GREEN}Connect with Story Protocol:${RESET}
+- Official Website: ${BLUE}https://www.story.foundation${RESET}
+- X: ${BLUE}https://x.com/StoryProtocol${RESET}
+- Official Docs: ${BLUE}https://docs.story.foundation${RESET}
+
+${GREEN}Connect with Grand Valley:${RESET}
+- X: ${BLUE}https://x.com/bacvalley${RESET}
+- GitHub: ${BLUE}https://github.com/hubofvalley${RESET}
+- Email: ${BLUE}letsbuidltogether@grandvalleys.com${RESET}
+"
+
+# Display LOGO and wait for user input to continue
+echo -e "$LOGO"
+echo -e "\n${YELLOW}Press Enter to continue...${RESET}"
+read -r
+
+# Display INTRO section and wait for user input to continue
+echo -e "$INTRO"
+echo -e "$ENDPOINTS"
+echo -e "\n${YELLOW}Press Enter to continue${RESET}"
+read -r
+echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
+echo "export STORY_CHAIN_ID="odyssey"" >> $HOME/.bash_profile
+source $HOME/.bash_profile
+
+# Define variables
+geth_file_name=geth-linux-amd64
+
+# Function to update to a specific version
+update_geth_version() {
+    local version=$1
+    local download_url=$2
+
+    # Create directory and download the binary
+    cd $HOME
+    mkdir -p $HOME/$version
+    if ! wget -P $HOME/$version $download_url/$geth_file_name -O $HOME/$version/geth; then
+        echo -e "${RED}Failed to download the binary. Exiting.${RESET}"
+        exit 1
     fi
+
+    # Move the binary to the appropriate directory
+    sudo mv $HOME/$version/geth $HOME/go/bin/geth
+
+    # Set ownership and permissions
+    sudo chown -R $USER:$USER $HOME/go/bin/geth
+    sudo chmod +x $HOME/go/bin/geth
+
+    # Restart the service
+    sudo systemctl daemon-reload && \
+    sudo systemctl restart story-geth
 }
 
-# Function to choose snapshot type for Mandragora
-choose_mandragora_snapshot() {
-    echo -e "${GREEN}Choose the type of snapshot for Mandragora:${NC}"
-    echo "1. Pruned"
-    echo "2. Archive"
-    read -p "Enter your choice: " snapshot_type_choice
-
-    case $snapshot_type_choice in
-        1)
-            GETH_SNAPSHOT_URL=$MAND_PRUNED_GETH_SNAPSHOT_URL
-            STORY_SNAPSHOT_URL=$MAND_PRUNED_STORY_SNAPSHOT_URL
-            ;;
-        2)
-            GETH_SNAPSHOT_URL=$MAND_ARCHIVE_GETH_SNAPSHOT_URL
-            STORY_SNAPSHOT_URL=$MAND_ARCHIVE_STORY_SNAPSHOT_URL
-            ;;
-        *)
-            echo -e "${RED}Invalid choice. Exiting.${NC}"
-            exit 1
-            ;;
-    esac
+# Validator Node Functions
+function deploy_validator_node() {
+    echo -e "${CYAN}Deploying Validator Node...${RESET}"
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_validator_node_install_odyssey.sh)
+    menu
 }
 
-# Function to choose snapshot type for ITRocket
-choose_itrocket_snapshot() {
-    echo -e "${GREEN}Choose the type of snapshot for ITRocket:${NC}"
-    echo "1. Pruned"
-    echo "2. Archive"
-    read -p "Enter your choice: " snapshot_type_choice
-
-    case $snapshot_type_choice in
-        1)
-            GETH_SNAPSHOT_URL=$ITR_PRUNED_GETH_SNAPSHOT_URL
-            STORY_SNAPSHOT_URL=$ITR_PRUNED_STORY_SNAPSHOT_URL
-            ;;
-        2)
-            GETH_SNAPSHOT_URL=$ITR_ARCHIVE_GETH_SNAPSHOT_URL
-            STORY_SNAPSHOT_URL=$ITR_ARCHIVE_STORY_SNAPSHOT_URL
-            ;;
-        *)
-            echo -e "${RED}Invalid choice. Exiting.${NC}"
-            exit 1
-            ;;
-    esac
-}
-
-# Function to choose snapshot type for Josephtran
-choose_josephtran_snapshot() {
-    echo -e "${GREEN}Choose the type of snapshot for Josephtran:${NC}"
-    echo "1. Pruned"
-    echo "2. Archive"
-    read -p "Enter your choice: " snapshot_type_choice
-
-    case $snapshot_type_choice in
-        1)
-            GETH_SNAPSHOT_URL=$JOSEPHTRAN_PRUNED_GETH_SNAPSHOT_URL
-            STORY_SNAPSHOT_URL=$JOSEPHTRAN_PRUNED_STORY_SNAPSHOT_URL
-            ;;
-        2)
-            GETH_SNAPSHOT_URL=$JOSEPHTRAN_ARCHIVE_GETH_SNAPSHOT_URL
-            STORY_SNAPSHOT_URL=$JOSEPHTRAN_ARCHIVE_STORY_SNAPSHOT_URL
-            ;;
-        *)
-            echo -e "${RED}Invalid choice. Exiting.${NC}"
-            exit 1
-            ;;
-    esac
-}
-
-# Function to decompress snapshots for Mandragora, ITRocket, and Josephtran
-decompress_snapshots() {
-    lz4 -c -d $GETH_SNAPSHOT_FILE | tar -xv -C $HOME/.story/geth/odyssey/geth
-    lz4 -c -d $STORY_SNAPSHOT_FILE | tar -xv -C $HOME/.story/story
-}
-
-# Function to decompress snapshot for CroutonDigital
-decompress_crouton_snapshot() {
-    lz4 -c -d $CROUTON_SNAPSHOT_FILE | tar -xv -C $HOME/.story
-}
-
-# Function to prompt user to back or continue
-prompt_back_or_continue() {
-    read -p "Press Enter to continue or type 'back' to go back to the menu: " user_choice
-    if [[ $user_choice == "back" ]]; then
-        main_script
+function create_validator() {
+    read -p "Enter your private key (or press Enter to use local private key): " PRIVATE_KEY
+    if [ -z "$PRIVATE_KEY" ]; then
+        PRIVATE_KEY=$(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt)
     fi
+    story validator create --stake 1000000000000000000 --private-key $PRIVATE_KEY
+    menu
 }
 
-# Main script
-main_script() {
-    show_menu
-    read -p "Enter your choice: " provider_choice
+function query_validator_pub_key() {
+    story validator export | grep -oP 'Compressed Public Key \(base64\): \K.*'
+    menu
+}
 
-    provider_name=""
+function query_balance() {
+    echo -e "${CYAN}Select an option:${RESET}"
+    echo "1. Query balance of your own EVM address"
+    echo "2. Query balance of another EVM address"
+    echo "3. Back"
+    read -p "Enter your choice (1, 2, or 3): " choice
 
-    case $provider_choice in
+    case $choice in
         1)
-            provider_name="Mandragora"
-            echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
-
-            echo -e "${GREEN}Checking availability of Mandragora snapshots:${NC}"
-            echo -n "Pruned GETH Snapshot: "
-            check_url $MAND_PRUNED_GETH_SNAPSHOT_URL
-            echo -n "Pruned STORY Snapshot: "
-            check_url $MAND_PRUNED_STORY_SNAPSHOT_URL
-            echo -n "Archive GETH Snapshot: "
-            check_url $MAND_ARCHIVE_GETH_SNAPSHOT_URL
-            echo -n "Archive STORY Snapshot: "
-            check_url $MAND_ARCHIVE_STORY_SNAPSHOT_URL
-
-            prompt_back_or_continue
-
-            choose_mandragora_snapshot
-            GETH_SNAPSHOT_FILE="geth_snapshot.lz4"
-            STORY_SNAPSHOT_FILE="story_snapshot.lz4"
+            echo -e "${GREEN}Querying balance of your own EVM address...${RESET}"
+            geth --exec "eth.getBalance('$(story validator export | grep -oP '(?<=EVM Address: ).*')')" attach $HOME/.story/geth/odyssey/geth.ipc
             ;;
         2)
-            provider_name="ITRocket"
-            echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
-
-            echo -e "${GREEN}Checking availability of ITRocket snapshots:${NC}"
-            echo -n "Pruned GETH Snapshot: "
-            check_url $ITR_PRUNED_GETH_SNAPSHOT_URL
-            echo -n "Pruned STORY Snapshot: "
-            check_url $ITR_PRUNED_STORY_SNAPSHOT_URL
-            echo -n "Archive GETH Snapshot: "
-            check_url $ITR_ARCHIVE_GETH_SNAPSHOT_URL
-            echo -n "Archive STORY Snapshot: "
-            check_url $ITR_ARCHIVE_STORY_SNAPSHOT_URL
-
-            prompt_back_or_continue
-
-            choose_itrocket_snapshot
-            GETH_SNAPSHOT_FILE="geth_snapshot.tar.lz4"
-            STORY_SNAPSHOT_FILE="story_snapshot.tar.lz4"
+            read -p "Enter the EVM address to query: " evm_address
+            echo -e "${GREEN}Querying balance of $evm_address...${RESET}"
+            geth --exec "eth.getBalance('$evm_address')" attach $HOME/.story/geth/odyssey/geth.ipc
             ;;
         3)
-            provider_name="CroutonDigital"
-            echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
-
-            echo -e "${GREEN}Checking availability of CroutonDigital snapshot:${NC}"
-            echo -n "Archive Snapshot: "
-            check_url $CROUTON_SNAPSHOT_URL
-
-            prompt_back_or_continue
-
-            CROUTON_SNAPSHOT_FILE="story_latest.tar.lz4"
-            ;;
-        4)
-            provider_name="Josephtran"
-            echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
-
-            echo -e "${GREEN}Checking availability of Josephtran snapshots:${NC}"
-            echo -n "Pruned GETH Snapshot: "
-            check_url $JOSEPHTRAN_PRUNED_GETH_SNAPSHOT_URL
-            echo -n "Pruned STORY Snapshot: "
-            check_url $JOSEPHTRAN_PRUNED_STORY_SNAPSHOT_URL
-            echo -n "Archive GETH Snapshot: "
-            check_url $JOSEPHTRAN_ARCHIVE_GETH_SNAPSHOT_URL
-            echo -n "Archive STORY Snapshot: "
-            check_url $JOSEPHTRAN_ARCHIVE_STORY_SNAPSHOT_URL
-
-            prompt_back_or_continue
-
-            choose_josephtran_snapshot
-            GETH_SNAPSHOT_FILE="Geth_snapshot.lz4"
-            STORY_SNAPSHOT_FILE="Story_snapshot.lz4"
-            ;;
-        5)
-            echo -e "${GREEN}Exiting.${NC}"
-            exit 0
+            menu
             ;;
         *)
-            echo -e "${RED}Invalid choice. Exiting.${NC}"
-            exit 1
+            echo -e "${RED}Invalid choice. Please enter 1, 2, or 3.${RESET}"
+            query_balance
+            ;;
+    esac
+    menu
+}
+
+function stake_tokens() {
+    echo "Choose an option to delegate tokens:"
+    echo "1. Delegate to Grand Valley"
+    echo "2. Delegate to self"
+    echo "3. Delegate to another validator"
+    echo "4. Back"
+    read -p "Enter your choice (1/2/3/4): " CHOICE
+
+    case $CHOICE in
+        1)
+            VALIDATOR_PUBKEY="A2p1z6hM9IXltKaET6ny/wP0EPfIwBSPTkyeU135yroi"
+            ;;
+        2)
+            VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key \(base64\): \K.*')
+            ;;
+        3)
+            read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
+            ;;
+        4)
+            menu
+            ;;
+        *)
+            echo "Invalid choice. Please select a valid option."
+            stake_tokens
             ;;
     esac
 
-    # Remove upgrade-info.json
-    sudo rm -f $HOME/.story/story/data/upgrade-info.json
+    echo "Choose the RPC to use:"
+    echo "1. Use your own RPC"
+    echo "2. Use Grand Valley's RPC"
+    read -p "Enter your choice (1/2): " RPC_CHOICE
 
-    cd $HOME
+    read -p "Enter amount to stake: " AMOUNT
 
-    # Install required dependencies
-    sudo apt-get install wget lz4 -y
+    read -p "Enter private key (leave blank to use local private key): " PRIVATE_KEY
 
-    # Stop your story-geth and story nodes
-    sudo systemctl stop story-geth story
-
-    # Back up your validator state
-    sudo cp $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
-
-    # Delete previous geth chaindata and story data folders
-    sudo rm -rf $HOME/.story/geth/odyssey/chaindata $HOME/.story/story/data
-
-    # Download and decompress snapshots based on the provider
-    if [[ $provider_choice -eq 1 || $provider_choice -eq 2 || $provider_choice -eq 4 ]]; then
-        wget -O $GETH_SNAPSHOT_FILE $GETH_SNAPSHOT_URL
-        wget -O $STORY_SNAPSHOT_FILE $STORY_SNAPSHOT_URL
-        decompress_snapshots
-    elif [[ $provider_choice -eq 3 ]]; then
-        wget -O $CROUTON_SNAPSHOT_FILE $CROUTON_SNAPSHOT_URL
-        decompress_crouton_snapshot
-    fi
-
-    # Change ownership of the .story directory
-    sudo chown -R $USER:$USER $HOME/.story
-
-    # Ask the user if they want to delete the downloaded snapshot files
-    read -p "Do you want to delete the downloaded snapshot files? (y/n): " delete_choice
-
-    if [[ $delete_choice == "y" || $delete_choice == "Y" ]]; then
-        # Delete downloaded snapshot files
-        if [[ $provider_choice -eq 1 || $provider_choice -eq 2 || $provider_choice -eq 4 ]]; then
-            sudo rm -v $GETH_SNAPSHOT_FILE $STORY_SNAPSHOT_FILE
-        elif [[ $provider_choice -eq 3 ]]; then
-            sudo rm -v $CROUTON_SNAPSHOT_FILE
-        fi
-        echo -e "${GREEN}Downloaded snapshot files have been deleted.${NC}"
+    if [ -n "$PRIVATE_KEY" ]; then
+        PRIVATE_KEY_FLAG="--private-key $PRIVATE_KEY"
     else
-        echo -e "${GREEN}Downloaded snapshot files have been kept.${NC}"
+        PRIVATE_KEY_FLAG="--private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt)"
     fi
 
-    # Restore your validator state
-    sudo cp $HOME/.story/priv_validator_state.json.backup $HOME/.story/story/data/priv_validator_state.json
+    if [ "$RPC_CHOICE" == "2" ]; then
+        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 -y
+    elif [ "$RPC_CHOICE" == "1" ]; then
+        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG -y
+    else
+        echo "Invalid choice. Please select a valid option."
+        stake_tokens
+    fi
 
-    # Start your story-geth and story nodes
-    sudo systemctl restart story-geth story
-
-    echo -e "${GREEN}Snapshot setup completed successfully.${NC}"
+    menu
 }
 
-main_script
+function unstake_tokens() {
+    echo "Choose an option to unstake tokens:"
+    echo "1. Unstake from self"
+    echo "2. Unstake from another validator"
+    echo "3. Back"
+    read -p "Enter your choice (1/2/3): " CHOICE
+
+    case $CHOICE in
+        1)
+            VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key \(base64\): \K.*')
+            ;;
+        2)
+            read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
+            ;;
+        3)
+            menu
+            ;;
+        *)
+            echo "Invalid choice. Please select a valid option."
+            unstake_tokens
+            ;;
+    esac
+
+    echo "Choose the RPC to use:"
+    echo "1. Use your own RPC"
+    echo "2. Use Grand Valley's RPC"
+    read -p "Enter your choice (1/2): " RPC_CHOICE
+
+    read -p "Enter amount to unstake: " AMOUNT
+
+    read -p "Enter private key (leave blank to use local private key): " PRIVATE_KEY
+
+    if [ -n "$PRIVATE_KEY" ]; then
+        PRIVATE_KEY_FLAG="--private-key $PRIVATE_KEY"
+    else
+        PRIVATE_KEY_FLAG="--private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt)"
+    fi
+
+    if [ "$RPC_CHOICE" == "2" ]; then
+        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT $PRIVATE_KEY_FLAG --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 -y
+    elif [ "$RPC_CHOICE" == "1" ]; then
+        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT $PRIVATE_KEY_FLAG -y
+    else
+        echo "Invalid choice. Please select a valid option."
+        unstake_tokens
+    fi
+
+    menu
+}
+
+function export_evm_key() {
+    echo -e "${CYAN}Query all of your current EVM key addresses including your EVM private key${RESET}"
+    story validator export --evm-key-path $HOME/.story/story/config/private_key.txt --export-evm-key
+    cat $HOME/.story/story/config/private_key.txt
+    echo
+    menu
+}
+
+function delete_validator_node() {
+    sudo systemctl stop story story-geth
+    sudo systemctl disable story story-geth
+    sudo rm -rf /etc/systemd/system/story.service
+    sudo rm -rf /etc/systemd/system/story-geth.service
+    sudo rm -rf $HOME/.story
+    sed -i "/STORY_/d" $HOME/.bash_profile
+    echo -e "${RED}Story Validator node deleted successfully.${RESET}"
+    menu
+}
+
+function stop_services() {
+    sudo systemctl stop story story-geth
+    echo "Consensus client and Geth service stopped."
+    menu
+}
+
+function restart_services() {
+    sudo systemctl daemon-reload
+    sudo systemctl restart story story-geth
+    echo "Consensus client and Geth service restarted."
+    menu
+}
+
+function show_consensus_client_logs() {
+    sudo journalctl -u story -fn 100
+    menu
+}
+
+function show_geth_logs() {
+    sudo journalctl -u story-geth -fn 100
+    menu
+}
+
+function show_node_status() {
+    port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.story/story/config/config.toml") && curl "http://127.0.0.1:$port/status" | jq
+    story status
+    menu
+}
+
+function backup_validator_key() {
+    cp $HOME/.story/story/config/priv_validator_key.json $HOME/priv_validator_key.json
+    menu
+}
+
+function add_peers() {
+    echo "Select an option:"
+    echo "1. Add peers manually"
+    echo "2. Use Grand Valley's peers"
+    echo "3. Back"
+    read -p "Enter your choice (1, 2, or 3): " choice
+
+    case $choice in
+        1)
+            read -p "Enter peers (comma-separated): " peers
+            echo "You have entered the following peers: $peers"
+            read -p "Do you want to proceed? (yes/no): " confirm
+            if [[ $confirm == "yes" ]]; then
+                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.story/story/config/config.toml
+                echo "Peers added manually."
+            else
+                echo "Operation cancelled. Returning to menu."
+                menu
+            fi
+            ;;
+        2)
+            peers=$(curl -sS https://lightnode-rpc-story.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
+            echo "Grand Valley's peers: $peers"
+            read -p "Do you want to proceed? (yes/no): " confirm
+            if [[ $confirm == "yes" ]]; then
+                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.story/story/config/config.toml
+                echo "Grand Valley's peers added."
+            else
+                echo "Operation cancelled. Returning to menu."
+                menu
+            fi
+            ;;
+        3)
+            menu
+            ;;
+        *)
+            echo "Invalid choice. Please enter 1, 2, or 3."
+            add_peers
+            ;;
+    esac
+    echo "Now you can restart your consensus client"
+    menu
+}
+
+function update_consensus_client() {
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_update.sh)
+    menu
+}
+
+function update_geth() {
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story-geth_update.sh)
+    menu
+}
+
+# New functions for stopping and restarting individual services
+function stop_consensus_client() {
+    sudo systemctl stop story
+    echo "Consensus client service stopped."
+    menu
+}
+
+function stop_geth() {
+    sudo systemctl stop story-geth
+    echo "Geth service stopped."
+    menu
+}
+
+function restart_consensus_client() {
+    sudo systemctl daemon-reload
+    sudo systemctl restart story
+    echo "Consensus client service restarted."
+    menu
+}
+
+function restart_geth() {
+    sudo systemctl daemon-reload
+    sudo systemctl restart story-geth
+    echo "Geth service restarted."
+    menu
+}
+
+function show_all_logs() {
+    echo "Displaying both Consensus Client and Geth Logs:"
+    sudo journalctl -u story -u story-geth -fn 100
+    menu
+}
+
+function install_story_app() {
+    echo -e "${YELLOW}This option is only for those who want to execute the transactions without running the node.${RESET}"
+    mkdir -p story-v0.12.1
+    wget -O story-v0.12.1/story https://github.com/piplabs/story/releases/download/v0.12.1/story-linux-amd64
+    cp story-v0.12.1/story $HOME/go/bin/story
+    sudo chown -R $USER:$USER $HOME/go/bin/story
+    sudo chmod +x $HOME/go/bin/story
+    echo "story app installed successfully."
+    menu
+}
+
+function apply_snapshot() {
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/apply_snapshot.sh)
+    menu
+}
+
+# Menu
+function menu() {
+    echo -e "${CYAN}Story Validator Node = Consensus Client Service + Execution Client Service (geth/story-geth)${RESET}"
+    echo "Menu:"
+    echo -e "${GREEN}1. Node Interactions:${RESET}"
+    echo "   a. Deploy Validator Node"
+    echo "   b. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
+    echo "   c. Stop Validator Node"
+    echo "   d. Restart Validator Node"
+    echo "   e. Show Validator Node Status"
+    echo "   f. Add Peers"
+    echo "   g. Update Consensus Client Version"
+    echo "   h. Update Geth Version"
+    echo "   i. Stop Consensus Client Only"
+    echo "   j. Stop Geth Only"
+    echo "   k. Restart Consensus Client Only"
+    echo "   l. Restart Geth Only"
+    echo "   m. Show Consensus Client & Geth Logs Together"
+    echo "   n. Install Story App only (v0.12.1)(for executing transactions without running the node)"
+    echo "   o. Apply Snapshot"
+    echo -e "${GREEN}2. Validator/Key Interactions:${RESET}"
+    echo "   a. Create Validator"
+    echo "   b. Query Validator Public Key"
+    echo "   c. Query Balance"
+    echo "   d. Stake Tokens"
+    echo "   e. Unstake Tokens"
+    echo "   f. Export EVM Key"
+    echo "   g. Backup Validator Key (store it to $HOME directory)"
+    echo -e "${RED}3. Exit${RESET}"
+
+    echo -e "${GREEN}Let's Buidl Story Together - Grand Valley${RESET}"
+    read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
+
+    if [[ $OPTION =~ ^[1-2][a-p]$ ]]; then
+        MAIN_OPTION=${OPTION:0:1}
+        SUB_OPTION=${OPTION:1:1}
+    else
+        read -p "Choose a sub-option: " SUB_OPTION
+        MAIN_OPTION=$OPTION
+    fi
+
+    case $MAIN_OPTION in
+        1)
+            case $SUB_OPTION in
+                a) deploy_validator_node ;;
+                b) delete_validator_node ;;
+                c) stop_services ;;
+                d) restart_services ;;
+                e) show_node_status ;;
+                f) add_peers ;;
+                g) update_consensus_client ;;
+                h) update_geth ;;
+                i) stop_consensus_client ;;
+                j) stop_geth ;;
+                k) restart_consensus_client ;;
+                l) restart_geth ;;
+                m) show_all_logs ;;
+                n) install_story_app ;;
+                o) apply_snapshot ;;
+                *) echo "Invalid sub-option. Please try again." ;;
+            esac
+            ;;
+        2)
+            case $SUB_OPTION in
+                a) create_validator ;;
+                b) query_validator_pub_key ;;
+                c) query_balance ;;
+                d) stake_tokens ;;
+                e) unstake_tokens ;;
+                f) export_evm_key ;;
+                g) backup_validator_key ;;
+                *) echo "Invalid sub-option. Please try again." ;;
+            esac
+            ;;
+        3) exit 0 ;;
+        *) echo "Invalid option. Please try again." ;;
+    esac
+}
+
+# Start menu
+menu
