@@ -13,12 +13,17 @@ MAND_PRUNED_STORY_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/story_sna
 MAND_ARCHIVE_GETH_SNAPSHOT_URL="https://snapshots.mandragora.io/geth_snapshot.lz4"
 MAND_ARCHIVE_STORY_SNAPSHOT_URL="https://snapshots.mandragora.io/story_snapshot.lz4"
 
-ITR_PRUNED_GETH_SNAPSHOT_URL="https://server-1.itrocket.net/testnet/story/geth_story_2024-11-06_337616_snap.tar.lz4"
-ITR_PRUNED_STORY_SNAPSHOT_URL="https://server-1.itrocket.net/testnet/story/story_2024-11-06_337616_snap.tar.lz4"
-ITR_ARCHIVE_GETH_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/story/geth_story_2024-11-06_336776_snap.tar.lz4"
-ITR_ARCHIVE_STORY_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/story/story_2024-11-06_336776_snap.tar.lz4"
+ITR_PRUNED_GETH_SNAPSHOT_URL="https://server-1.itrocket.net/testnet/story/geth_story_2024-11-05_304590_snap.tar.lz4"
+ITR_PRUNED_STORY_SNAPSHOT_URL="https://server-1.itrocket.net/testnet/story/story_2024-11-05_304590_snap.tar.lz4"
+ITR_ARCHIVE_GETH_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/story/geth_story_2024-11-05_303734_snap.tar.lz4"
+ITR_ARCHIVE_STORY_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/story/story_2024-11-05_303734_snap.tar.lz4"
 
 CROUTON_SNAPSHOT_URL="https://storage.crouton.digital/testnet/story/snapshots/story_latest.tar.lz4"
+
+JOSEPHTRAN_PRUNED_GETH_SNAPSHOT_URL="https://story.josephtran.co/Geth_snapshot.lz4"
+JOSEPHTRAN_PRUNED_STORY_SNAPSHOT_URL="https://story.josephtran.co/Story_snapshot.lz4"
+JOSEPHTRAN_ARCHIVE_GETH_SNAPSHOT_URL="https://story.josephtran.co/archive_Geth_snapshot.lz4"
+JOSEPHTRAN_ARCHIVE_STORY_SNAPSHOT_URL="https://story.josephtran.co/archive_Story_snapshot.lz4"
 
 # Function to display the menu
 show_menu() {
@@ -26,7 +31,8 @@ show_menu() {
     echo "1. Mandragora"
     echo "2. ITRocket"
     echo "3. CroutonDigital"
-    echo "4. Exit"
+    echo "4. Josephtran"
+    echo "5. Exit"
 }
 
 # Function to check if a URL is available
@@ -85,7 +91,30 @@ choose_itrocket_snapshot() {
     esac
 }
 
-# Function to decompress snapshots for Mandragora and ITRocket
+# Function to choose snapshot type for Josephtran
+choose_josephtran_snapshot() {
+    echo -e "${GREEN}Choose the type of snapshot for Josephtran:${NC}"
+    echo "1. Pruned"
+    echo "2. Archive"
+    read -p "Enter your choice: " snapshot_type_choice
+
+    case $snapshot_type_choice in
+        1)
+            GETH_SNAPSHOT_URL=$JOSEPHTRAN_PRUNED_GETH_SNAPSHOT_URL
+            STORY_SNAPSHOT_URL=$JOSEPHTRAN_PRUNED_STORY_SNAPSHOT_URL
+            ;;
+        2)
+            GETH_SNAPSHOT_URL=$JOSEPHTRAN_ARCHIVE_GETH_SNAPSHOT_URL
+            STORY_SNAPSHOT_URL=$JOSEPHTRAN_ARCHIVE_STORY_SNAPSHOT_URL
+            ;;
+        *)
+            echo -e "${RED}Invalid choice. Exiting.${NC}"
+            exit 1
+            ;;
+    esac
+}
+
+# Function to decompress snapshots for Mandragora, ITRocket, and Josephtran
 decompress_snapshots() {
     lz4 -c -d $GETH_SNAPSHOT_FILE | tar -xv -C $HOME/.story/geth/odyssey/geth
     lz4 -c -d $STORY_SNAPSHOT_FILE | tar -xv -C $HOME/.story/story
@@ -167,6 +196,26 @@ main_script() {
             CROUTON_SNAPSHOT_FILE="story_latest.tar.lz4"
             ;;
         4)
+            provider_name="Josephtran"
+            echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
+
+            echo -e "${GREEN}Checking availability of Josephtran snapshots:${NC}"
+            echo -n "Pruned GETH Snapshot: "
+            check_url $JOSEPHTRAN_PRUNED_GETH_SNAPSHOT_URL
+            echo -n "Pruned STORY Snapshot: "
+            check_url $JOSEPHTRAN_PRUNED_STORY_SNAPSHOT_URL
+            echo -n "Archive GETH Snapshot: "
+            check_url $JOSEPHTRAN_ARCHIVE_GETH_SNAPSHOT_URL
+            echo -n "Archive STORY Snapshot: "
+            check_url $JOSEPHTRAN_ARCHIVE_STORY_SNAPSHOT_URL
+
+            prompt_back_or_continue
+
+            choose_josephtran_snapshot
+            GETH_SNAPSHOT_FILE="Geth_snapshot.lz4"
+            STORY_SNAPSHOT_FILE="Story_snapshot.lz4"
+            ;;
+        5)
             echo -e "${GREEN}Exiting.${NC}"
             exit 0
             ;;
@@ -194,7 +243,7 @@ main_script() {
     sudo rm -rf $HOME/.story/geth/odyssey/chaindata $HOME/.story/story/data
 
     # Download and decompress snapshots based on the provider
-    if [[ $provider_choice -eq 1 || $provider_choice -eq 2 ]]; then
+    if [[ $provider_choice -eq 1 || $provider_choice -eq 2 || $provider_choice -eq 4 ]]; then
         wget -O $GETH_SNAPSHOT_FILE $GETH_SNAPSHOT_URL
         wget -O $STORY_SNAPSHOT_FILE $STORY_SNAPSHOT_URL
         decompress_snapshots
@@ -211,7 +260,7 @@ main_script() {
 
     if [[ $delete_choice == "y" || $delete_choice == "Y" ]]; then
         # Delete downloaded snapshot files
-        if [[ $provider_choice -eq 1 || $provider_choice -eq 2 ]]; then
+        if [[ $provider_choice -eq 1 || $provider_choice -eq 2 || $provider_choice -eq 4 ]]; then
             sudo rm -v $GETH_SNAPSHOT_FILE $STORY_SNAPSHOT_FILE
         elif [[ $provider_choice -eq 3 ]]; then
             sudo rm -v $CROUTON_SNAPSHOT_FILE
