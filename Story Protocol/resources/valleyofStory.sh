@@ -113,8 +113,13 @@ function deploy_validator_node() {
 }
 
 function create_validator() {
-    sudo apt-get update
-    sudo apt-get install bc
+    # Check if bc is installed, if not, install it
+    if ! command -v bc &> /dev/null; then
+        echo "bc is not installed. Installing bc..."
+        sudo apt-get update
+        sudo apt-get install bc
+    fi
+
     read -p "Enter your private key (or press Enter to use local private key): " PRIVATE_KEY
     if [ -z "$PRIVATE_KEY" ]; then
         PRIVATE_KEY=$(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt)
@@ -173,8 +178,13 @@ function query_balance() {
 }
 
 function stake_tokens() {
-    sudo apt-get update
-    sudo apt-get install bc
+    # Check if bc is installed, if not, install it
+    if ! command -v bc &> /dev/null; then
+        echo "bc is not installed. Installing bc..."
+        sudo apt-get update
+        sudo apt-get install bc
+    fi
+
     echo "Choose an option to delegate tokens:"
     echo "1. Delegate to Grand Valley"
     echo "2. Delegate to self"
@@ -220,7 +230,7 @@ function stake_tokens() {
     fi
 
     if [ "$RPC_CHOICE" == "2" ]; then
-        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 --chain-id 1516 
+        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 --chain-id 1516
     elif [ "$RPC_CHOICE" == "1" ]; then
         story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG --chain-id 1516
     else
@@ -232,8 +242,13 @@ function stake_tokens() {
 }
 
 function unstake_tokens() {
-    sudo apt-get update
-    sudo apt-get install bc
+    # Check if bc is installed, if not, install it
+    if ! command -v bc &> /dev/null; then
+        echo "bc is not installed. Installing bc..."
+        sudo apt-get update
+        sudo apt-get install bc
+    fi
+
     echo "Choose an option to unstake tokens:"
     echo "1. Unstake from self"
     echo "2. Unstake from another validator"
@@ -275,9 +290,9 @@ function unstake_tokens() {
     fi
 
     if [ "$RPC_CHOICE" == "2" ]; then
-        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT $PRIVATE_KEY_FLAG --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 --chain-id 1516 
+        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT $PRIVATE_KEY_FLAG --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 --chain-id 1516
     elif [ "$RPC_CHOICE" == "1" ]; then
-        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT $PRIVATE_KEY_FLAG --chain-id 1516 
+        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT $PRIVATE_KEY_FLAG --chain-id 1516
     else
         echo "Invalid choice. Please select a valid option."
         unstake_tokens
@@ -285,6 +300,7 @@ function unstake_tokens() {
 
     menu
 }
+
 
 
 function export_evm_key() {
