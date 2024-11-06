@@ -217,6 +217,7 @@ main_script() {
             prompt_back_or_continue
 
             CROUTON_SNAPSHOT_FILE="story_latest.tar.lz4"
+            SNAPSHOT_URL=$CROUTON_SNAPSHOT_URL
             ;;
         4)
             provider_name="Josephtran"
@@ -252,6 +253,7 @@ main_script() {
 
             choose_originstake_snapshot
             SNAPSHOT_FILE=$FILE_NAME
+            SNAPSHOT_URL=$SNAPSHOT_URL
             ;;
         6)
             echo -e "${GREEN}Exiting.${NC}"
