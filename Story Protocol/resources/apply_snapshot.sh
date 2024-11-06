@@ -172,7 +172,7 @@ main_script() {
     case $provider_choice in
         1)
             provider_name="Mandragora"
-            echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
+            echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
 
             echo -e "${GREEN}Checking availability of Mandragora snapshots:${NC}"
             echo -n "Pruned GETH Snapshot: "
@@ -192,7 +192,7 @@ main_script() {
             ;;
         2)
             provider_name="ITRocket"
-            echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
+            echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
 
             echo -e "${GREEN}Checking availability of ITRocket snapshots:${NC}"
             echo -n "Pruned Snapshot: "
@@ -208,7 +208,7 @@ main_script() {
             ;;
         3)
             provider_name="CroutonDigital"
-            echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
+            echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
 
             echo -e "${GREEN}Checking availability of CroutonDigital snapshot:${NC}"
             echo -n "Archive Snapshot: "
@@ -221,7 +221,7 @@ main_script() {
             ;;
         4)
             provider_name="Josephtran"
-            echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
+            echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
 
             echo -e "${GREEN}Checking availability of Josephtran snapshots:${NC}"
             echo -n "Pruned GETH Snapshot: "
@@ -241,7 +241,7 @@ main_script() {
             ;;
         5)
             provider_name="OriginStake"
-            echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
+            echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
 
             echo -e "${GREEN}Checking availability of OriginStake snapshots:${NC}"
             echo -n "Pruned Snapshot: "
