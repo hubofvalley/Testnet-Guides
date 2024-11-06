@@ -329,6 +329,7 @@ function stop_services() {
 
 function restart_services() {
     sudo systemctl daemon-reload
+    sudo rm -f $HOME/.story/story/data/upgrade-info.json
     sudo systemctl restart story story-geth
     echo "Consensus client and Geth service restarted."
     menu
@@ -424,6 +425,7 @@ function stop_geth() {
 
 function restart_consensus_client() {
     sudo systemctl daemon-reload
+    sudo rm -f $HOME/.story/story/data/upgrade-info.json
     sudo systemctl restart story
     echo "Consensus client service restarted."
     menu
