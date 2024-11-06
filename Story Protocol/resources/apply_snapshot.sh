@@ -13,10 +13,8 @@ MAND_PRUNED_STORY_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/story_sna
 MAND_ARCHIVE_GETH_SNAPSHOT_URL="https://snapshots.mandragora.io/geth_snapshot.lz4"
 MAND_ARCHIVE_STORY_SNAPSHOT_URL="https://snapshots.mandragora.io/story_snapshot.lz4"
 
-ITR_PRUNED_GETH_SNAPSHOT_URL="https://server-3.itrocket.net/testnet/story/geth_story_2024-11-06_339765_snap.tar.lz4"
-ITR_PRUNED_STORY_SNAPSHOT_URL="https://server-3.itrocket.net/testnet/story/story_2024-11-06_339765_snap.tar.lz4"
-ITR_ARCHIVE_GETH_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/story/geth_story_2024-11-06_341511_snap.tar.lz4"
-ITR_ARCHIVE_STORY_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/story/story_2024-11-06_341511_snap.tar.lz4"
+ITR_PRUNED_API_URL="https://server-3.itrocket.net/testnet/story/.current_state.json"
+ITR_ARCHIVE_API_URL="https://server-5.itrocket.net/testnet/story/.current_state.json"
 
 CROUTON_SNAPSHOT_URL="https://storage.crouton.digital/testnet/story/snapshots/story_latest.tar.lz4"
 
@@ -81,18 +79,21 @@ choose_itrocket_snapshot() {
 
     case $snapshot_type_choice in
         1)
-            GETH_SNAPSHOT_URL=$ITR_PRUNED_GETH_SNAPSHOT_URL
-            STORY_SNAPSHOT_URL=$ITR_PRUNED_STORY_SNAPSHOT_URL
+            SNAPSHOT_API_URL=$ITR_PRUNED_API_URL
             ;;
         2)
-            GETH_SNAPSHOT_URL=$ITR_ARCHIVE_GETH_SNAPSHOT_URL
-            STORY_SNAPSHOT_URL=$ITR_ARCHIVE_STORY_SNAPSHOT_URL
+            SNAPSHOT_API_URL=$ITR_ARCHIVE_API_URL
             ;;
         *)
             echo -e "${RED}Invalid choice. Exiting.${NC}"
             exit 1
             ;;
     esac
+
+    FILE_NAME=$(curl -s $SNAPSHOT_API_URL | jq -r '.snapshot_name')
+    GETH_FILE_NAME=$(curl -s $SNAPSHOT_API_URL | jq -r '.snapshot_geth_name')
+    GETH_SNAPSHOT_URL="https://server-3.itrocket.net/testnet/story/$GETH_FILE_NAME"
+    STORY_SNAPSHOT_URL="https://server-3.itrocket.net/testnet/story/$FILE_NAME"
 }
 
 # Function to choose snapshot type for Josephtran
@@ -194,20 +195,16 @@ main_script() {
             echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
 
             echo -e "${GREEN}Checking availability of ITRocket snapshots:${NC}"
-            echo -n "Pruned GETH Snapshot: "
-            check_url $ITR_PRUNED_GETH_SNAPSHOT_URL
-            echo -n "Pruned STORY Snapshot: "
-            check_url $ITR_PRUNED_STORY_SNAPSHOT_URL
-            echo -n "Archive GETH Snapshot: "
-            check_url $ITR_ARCHIVE_GETH_SNAPSHOT_URL
-            echo -n "Archive STORY Snapshot: "
-            check_url $ITR_ARCHIVE_STORY_SNAPSHOT_URL
+            echo -n "Pruned Snapshot: "
+            check_url $ITR_PRUNED_API_URL
+            echo -n "Archive Snapshot: "
+            check_url $ITR_ARCHIVE_API_URL
 
             prompt_back_or_continue
 
             choose_itrocket_snapshot
-            GETH_SNAPSHOT_FILE="geth_snapshot.tar.lz4"
-            STORY_SNAPSHOT_FILE="story_snapshot.tar.lz4"
+            GETH_SNAPSHOT_FILE=$GETH_FILE_NAME
+            STORY_SNAPSHOT_FILE=$FILE_NAME
             ;;
         3)
             provider_name="CroutonDigital"
