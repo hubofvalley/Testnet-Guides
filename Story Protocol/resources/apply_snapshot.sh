@@ -26,9 +26,6 @@ JOSEPHTRAN_ARCHIVE_STORY_SNAPSHOT_URL="https://story.josephtran.co/archive_Story
 ORIGINSTAKE_PRUNED_API_URL="https://snapshot.originstake.com/story_snapshot_metadata.json"
 ORIGINSTAKE_ARCHIVE_API_URL="https://snapshot.originstake.com/full/story_full_snapshot_metadata.json"
 
-ENDORPHINE_PRUNED_API_URL="https://story-pruned-snapshots.endorphinestake.com"
-ENDORPHINE_ARCHIVE_API_URL="https://story-snapshots.endorphinestake.com/"
-
 # Function to display the menu
 show_menu() {
     echo -e "${GREEN}Choose a snapshot provider:${NC}"
@@ -37,8 +34,7 @@ show_menu() {
     echo "3. CroutonDigital"
     echo "4. Josephtran (J•Node)"
     echo "5. OriginStake"
-    echo "6. Endorphine Stake"
-    echo "7. Exit"
+    echo "6. Exit"
 }
 
 # Function to check if a URL is available
@@ -147,33 +143,7 @@ choose_originstake_snapshot() {
     SNAPSHOT_URL="https://snapshot.originstake.com/$FILE_NAME"
 }
 
-# Function to choose snapshot type for Endorphine Stake
-choose_endorphine_snapshot() {
-    echo -e "${GREEN}Choose the type of snapshot for Endorphine Stake:${NC}"
-    echo "1. Pruned"
-    echo "2. Archive"
-    read -p "Enter your choice: " snapshot_type_choice
-
-    case $snapshot_type_choice in
-        1)
-            SNAPSHOT_API_URL=$ENDORPHINE_PRUNED_API_URL
-            ;;
-        2)
-            SNAPSHOT_API_URL=$ENDORPHINE_ARCHIVE_API_URL
-            ;;
-        *)
-            echo -e "${RED}Invalid choice. Exiting.${NC}"
-            exit 1
-            ;;
-    esac
-
-    GETH_FILE_NAME=$(curl -s $SNAPSHOT_API_URL | grep -v geth | grep -oP 'href=".*?\.tar\.lz4"' | awk -F '"' '{print $2}')
-    STORY_FILE_NAME=$(curl -s $SNAPSHOT_API_URL | grep geth | grep -oP 'href=".*?\.tar\.lz4"' | awk -F '"' '{print $2}')
-    GETH_SNAPSHOT_URL="https://story-pruned-snapshots.endorphinestake.com/$GETH_FILE_NAME"
-    STORY_SNAPSHOT_URL="https://story-pruned-snapshots.endorphinestake.com/$STORY_FILE_NAME"
-}
-
-# Function to decompress snapshots for Mandragora, ITRocket, Josephtran, and Endorphine Stake
+# Function to decompress snapshots for Mandragora, ITRocket, and Josephtran
 decompress_snapshots() {
     lz4 -c -d $GETH_SNAPSHOT_FILE | tar -xv -C $HOME/.story/geth/odyssey/geth
     lz4 -c -d $STORY_SNAPSHOT_FILE | tar -xv -C $HOME/.story/story
@@ -182,14 +152,6 @@ decompress_snapshots() {
 # Function to decompress snapshot for CroutonDigital and OriginStake
 decompress_crouton_originstake_snapshot() {
     lz4 -c -d $SNAPSHOT_FILE | tar -xv -C $HOME/.story
-}
-
-# Function to decompress Endorphine Stake snapshot
-decompress_endorphine_snapshot() {
-    lz4 -c -d $GETH_SNAPSHOT_FILE | tar -xv -C $HOME
-    lz4 -c -d $STORY_SNAPSHOT_FILE | tar -xv -C $HOME
-    mv $HOME/home/node_story/.story/story/data $HOME/.story/story/
-    mv $HOME/home/node_story/.story/geth/iliad/geth/chaindata $HOME/.story/geth/iliad/geth
 }
 
 # Function to prompt user to back or continue
@@ -292,22 +254,6 @@ main_script() {
             SNAPSHOT_FILE=$FILE_NAME
             ;;
         6)
-            provider_name="Endorphine Stake"
-            echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
-
-            echo -e "${GREEN}Checking availability of Endorphine Stake snapshots:${NC}"
-            echo -n "Pruned Snapshot: "
-            check_url $ENDORPHINE_PRUNED_API_URL
-            echo -n "Archive Snapshot: "
-            check_url $ENDORPHINE_ARCHIVE_API_URL
-
-            prompt_back_or_continue
-
-            choose_endorphine_snapshot
-            GETH_SNAPSHOT_FILE=$GETH_FILE_NAME
-            STORY_SNAPSHOT_FILE=$STORY_FILE_NAME
-            ;;
-        7)
             echo -e "${GREEN}Exiting.${NC}"
             exit 0
             ;;
@@ -342,10 +288,6 @@ main_script() {
     elif [[ $provider_choice -eq 3 || $provider_choice -eq 5 ]]; then
         wget -O $SNAPSHOT_FILE $SNAPSHOT_URL
         decompress_crouton_originstake_snapshot
-    elif [[ $provider_choice -eq 6 ]]; then
-        wget -O $GETH_SNAPSHOT_FILE $GETH_SNAPSHOT_URL
-        wget -O $STORY_SNAPSHOT_FILE $STORY_SNAPSHOT_URL
-        decompress_endorphine_snapshot
     fi
 
     # Change ownership of the .story directory
@@ -360,8 +302,6 @@ main_script() {
             sudo rm -v $GETH_SNAPSHOT_FILE $STORY_SNAPSHOT_FILE
         elif [[ $provider_choice -eq 3 || $provider_choice -eq 5 ]]; then
             sudo rm -v $SNAPSHOT_FILE
-        elif [[ $provider_choice -eq 6 ]]; then
-            sudo rm -v $GETH_SNAPSHOT_FILE $STORY_SNAPSHOT_FILE
         fi
         echo -e "${GREEN}Downloaded snapshot files have been deleted.${NC}"
     else
