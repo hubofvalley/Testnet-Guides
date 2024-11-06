@@ -195,10 +195,10 @@ function stake_tokens() {
 
     case $CHOICE in
         1)
-            VALIDATOR_PUBKEY="A2p1z6hM9IXltKaET6ny/wP0EPfIwBSPTkyeU135yroi"
+            VALIDATOR_PUBKEY="036a75cfa84cf485e5b4a6844fa9f2ff03f410f7c8c0148f4e4c9e535df9caba22"
             ;;
         2)
-            VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key \(base64\): \K.*')
+            VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key \(hex\): \K.*')
             ;;
         3)
             read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
@@ -258,7 +258,7 @@ function unstake_tokens() {
 
     case $CHOICE in
         1)
-            VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key \(base64\): \K.*')
+            VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key \(hex\): \K.*')
             ;;
         2)
             read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
