@@ -31,7 +31,7 @@ show_menu() {
     echo "1. Mandragora"
     echo "2. ITRocket"
     echo "3. CroutonDigital"
-    echo "4. Josephtran"
+    echo "4. Josephtran (J•Node)"
     echo "5. Exit"
 }
 
