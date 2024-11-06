@@ -113,6 +113,8 @@ function deploy_validator_node() {
 }
 
 function create_validator() {
+    sudo apt-get update
+    sudo apt-get install bc
     read -p "Enter your private key (or press Enter to use local private key): " PRIVATE_KEY
     if [ -z "$PRIVATE_KEY" ]; then
         PRIVATE_KEY=$(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt)
@@ -171,6 +173,8 @@ function query_balance() {
 }
 
 function stake_tokens() {
+    sudo apt-get update
+    sudo apt-get install bc
     echo "Choose an option to delegate tokens:"
     echo "1. Delegate to Grand Valley"
     echo "2. Delegate to self"
@@ -228,6 +232,8 @@ function stake_tokens() {
 }
 
 function unstake_tokens() {
+    sudo apt-get update
+    sudo apt-get install bc
     echo "Choose an option to unstake tokens:"
     echo "1. Unstake from self"
     echo "2. Unstake from another validator"
