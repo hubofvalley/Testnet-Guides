@@ -96,124 +96,138 @@ decompress_crouton_snapshot() {
     lz4 -c -d $CROUTON_SNAPSHOT_FILE | tar -xv -C $HOME/.story
 }
 
-# Main script
-show_menu
-read -p "Enter your choice: " provider_choice
-
-provider_name=""
-
-case $provider_choice in
-    1)
-        provider_name="Mandragora"
-        echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
-
-        echo -e "${GREEN}Checking availability of Mandragora snapshots:${NC}"
-        echo -n "Pruned GETH Snapshot: "
-        check_url $MAND_PRUNED_GETH_SNAPSHOT_URL
-        echo -n "Pruned STORY Snapshot: "
-        check_url $MAND_PRUNED_STORY_SNAPSHOT_URL
-        echo -n "Archive GETH Snapshot: "
-        check_url $MAND_ARCHIVE_GETH_SNAPSHOT_URL
-        echo -n "Archive STORY Snapshot: "
-        check_url $MAND_ARCHIVE_STORY_SNAPSHOT_URL
-
-        read -p "Press Enter to continue..."
-
-        choose_mandragora_snapshot
-        GETH_SNAPSHOT_FILE="geth_snapshot.lz4"
-        STORY_SNAPSHOT_FILE="story_snapshot.lz4"
-        ;;
-    2)
-        provider_name="ITRocket"
-        echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
-
-        echo -e "${GREEN}Checking availability of ITRocket snapshots:${NC}"
-        echo -n "Pruned GETH Snapshot: "
-        check_url $ITR_PRUNED_GETH_SNAPSHOT_URL
-        echo -n "Pruned STORY Snapshot: "
-        check_url $ITR_PRUNED_STORY_SNAPSHOT_URL
-        echo -n "Archive GETH Snapshot: "
-        check_url $ITR_ARCHIVE_GETH_SNAPSHOT_URL
-        echo -n "Archive STORY Snapshot: "
-        check_url $ITR_ARCHIVE_STORY_SNAPSHOT_URL
-
-        read -p "Press Enter to continue..."
-
-        choose_itrocket_snapshot
-        GETH_SNAPSHOT_FILE="geth_snapshot.tar.lz4"
-        STORY_SNAPSHOT_FILE="story_snapshot.tar.lz4"
-        ;;
-    3)
-        provider_name="CroutonDigital"
-        echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
-
-        echo -e "${GREEN}Checking availability of CroutonDigital snapshot:${NC}"
-        echo -n "Archive Snapshot: "
-        check_url $CROUTON_SNAPSHOT_URL
-
-        read -p "Press Enter to continue..."
-
-        CROUTON_SNAPSHOT_FILE="story_latest.tar.lz4"
-        ;;
-    4)
-        echo -e "${GREEN}Exiting.${NC}"
-        exit 0
-        ;;
-    *)
-        echo -e "${RED}Invalid choice. Exiting.${NC}"
-        exit 1
-        ;;
-esac
-
-# Remove upgrade-info.json
-sudo rm -f $HOME/.story/story/data/upgrade-info.json
-
-cd $HOME
-
-# Install required dependencies
-sudo apt-get install wget lz4 -y
-
-# Stop your story-geth and story nodes
-sudo systemctl stop story-geth story
-
-# Back up your validator state
-sudo cp $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
-
-# Delete previous geth chaindata and story data folders
-sudo rm -rf $HOME/.story/geth/odyssey/chaindata $HOME/.story/story/data
-
-# Download and decompress snapshots based on the provider
-if [[ $provider_choice -eq 1 || $provider_choice -eq 2 ]]; then
-    wget -O $GETH_SNAPSHOT_FILE $GETH_SNAPSHOT_URL
-    wget -O $STORY_SNAPSHOT_FILE $STORY_SNAPSHOT_URL
-    decompress_snapshots
-elif [[ $provider_choice -eq 3 ]]; then
-    wget -O $CROUTON_SNAPSHOT_FILE $CROUTON_SNAPSHOT_URL
-    decompress_crouton_snapshot
-fi
-
-# Change ownership of the .story directory
-sudo chown -R $USER:$USER $HOME/.story
-
-# Ask the user if they want to delete the downloaded snapshot files
-read -p "Do you want to delete the downloaded snapshot files? (y/n): " delete_choice
-
-if [[ $delete_choice == "y" || $delete_choice == "Y" ]]; then
-    # Delete downloaded snapshot files
-    if [[ $provider_choice -eq 1 || $provider_choice -eq 2 ]]; then
-        sudo rm -v $GETH_SNAPSHOT_FILE $STORY_SNAPSHOT_FILE
-    elif [[ $provider_choice -eq 3 ]]; then
-        sudo rm -v $CROUTON_SNAPSHOT_FILE
+# Function to prompt user to back or continue
+prompt_back_or_continue() {
+    read -p "Press Enter to continue or type 'back' to go back to the menu: " user_choice
+    if [[ $user_choice == "back" ]]; then
+        show_menu
+        read -p "Enter your choice: " provider_choice
+        main_script
     fi
-    echo -e "${GREEN}Downloaded snapshot files have been deleted.${NC}"
-else
-    echo -e "${GREEN}Downloaded snapshot files have been kept.${NC}"
-fi
+}
 
-# Restore your validator state
-sudo cp $HOME/.story/priv_validator_state.json.backup $HOME/.story/story/data/priv_validator_state.json
+# Main script
+main_script() {
+    show_menu
+    read -p "Enter your choice: " provider_choice
 
-# Start your story-geth and story nodes
-sudo systemctl restart story-geth story
+    provider_name=""
 
-echo -e "${GREEN}Snapshot setup completed successfully.${NC}"
+    case $provider_choice in
+        1)
+            provider_name="Mandragora"
+            echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
+
+            echo -e "${GREEN}Checking availability of Mandragora snapshots:${NC}"
+            echo -n "Pruned GETH Snapshot: "
+            check_url $MAND_PRUNED_GETH_SNAPSHOT_URL
+            echo -n "Pruned STORY Snapshot: "
+            check_url $MAND_PRUNED_STORY_SNAPSHOT_URL
+            echo -n "Archive GETH Snapshot: "
+            check_url $MAND_ARCHIVE_GETH_SNAPSHOT_URL
+            echo -n "Archive STORY Snapshot: "
+            check_url $MAND_ARCHIVE_STORY_SNAPSHOT_URL
+
+            prompt_back_or_continue
+
+            choose_mandragora_snapshot
+            GETH_SNAPSHOT_FILE="geth_snapshot.lz4"
+            STORY_SNAPSHOT_FILE="story_snapshot.lz4"
+            ;;
+        2)
+            provider_name="ITRocket"
+            echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
+
+            echo -e "${GREEN}Checking availability of ITRocket snapshots:${NC}"
+            echo -n "Pruned GETH Snapshot: "
+            check_url $ITR_PRUNED_GETH_SNAPSHOT_URL
+            echo -n "Pruned STORY Snapshot: "
+            check_url $ITR_PRUNED_STORY_SNAPSHOT_URL
+            echo -n "Archive GETH Snapshot: "
+            check_url $ITR_ARCHIVE_GETH_SNAPSHOT_URL
+            echo -n "Archive STORY Snapshot: "
+            check_url $ITR_ARCHIVE_STORY_SNAPSHOT_URL
+
+            prompt_back_or_continue
+
+            choose_itrocket_snapshot
+            GETH_SNAPSHOT_FILE="geth_snapshot.tar.lz4"
+            STORY_SNAPSHOT_FILE="story_snapshot.tar.lz4"
+            ;;
+        3)
+            provider_name="CroutonDigital"
+            echo -e "Grand Valley extends its gratitude to ${GREEN}$provider_name${NC} for providing snapshot support."
+
+            echo -e "${GREEN}Checking availability of CroutonDigital snapshot:${NC}"
+            echo -n "Archive Snapshot: "
+            check_url $CROUTON_SNAPSHOT_URL
+
+            prompt_back_or_continue
+
+            CROUTON_SNAPSHOT_FILE="story_latest.tar.lz4"
+            ;;
+        4)
+            echo -e "${GREEN}Exiting.${NC}"
+            exit 0
+            ;;
+        *)
+            echo -e "${RED}Invalid choice. Exiting.${NC}"
+            exit 1
+            ;;
+    esac
+
+    # Remove upgrade-info.json
+    sudo rm -f $HOME/.story/story/data/upgrade-info.json
+
+    cd $HOME
+
+    # Install required dependencies
+    sudo apt-get install wget lz4 -y
+
+    # Stop your story-geth and story nodes
+    sudo systemctl stop story-geth story
+
+    # Back up your validator state
+    sudo cp $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
+
+    # Delete previous geth chaindata and story data folders
+    sudo rm -rf $HOME/.story/geth/odyssey/chaindata $HOME/.story/story/data
+
+    # Download and decompress snapshots based on the provider
+    if [[ $provider_choice -eq 1 || $provider_choice -eq 2 ]]; then
+        wget -O $GETH_SNAPSHOT_FILE $GETH_SNAPSHOT_URL
+        wget -O $STORY_SNAPSHOT_FILE $STORY_SNAPSHOT_URL
+        decompress_snapshots
+    elif [[ $provider_choice -eq 3 ]]; then
+        wget -O $CROUTON_SNAPSHOT_FILE $CROUTON_SNAPSHOT_URL
+        decompress_crouton_snapshot
+    fi
+
+    # Change ownership of the .story directory
+    sudo chown -R $USER:$USER $HOME/.story
+
+    # Ask the user if they want to delete the downloaded snapshot files
+    read -p "Do you want to delete the downloaded snapshot files? (y/n): " delete_choice
+
+    if [[ $delete_choice == "y" || $delete_choice == "Y" ]]; then
+        # Delete downloaded snapshot files
+        if [[ $provider_choice -eq 1 || $provider_choice -eq 2 ]]; then
+            sudo rm -v $GETH_SNAPSHOT_FILE $STORY_SNAPSHOT_FILE
+        elif [[ $provider_choice -eq 3 ]]; then
+            sudo rm -v $CROUTON_SNAPSHOT_FILE
+        fi
+        echo -e "${GREEN}Downloaded snapshot files have been deleted.${NC}"
+    else
+        echo -e "${GREEN}Downloaded snapshot files have been kept.${NC}"
+    fi
+
+    # Restore your validator state
+    sudo cp $HOME/.story/priv_validator_state.json.backup $HOME/.story/story/data/priv_validator_state.json
+
+    # Start your story-geth and story nodes
+    sudo systemctl restart story-geth story
+
+    echo -e "${GREEN}Snapshot setup completed successfully.${NC}"
+}
+
+main_script
