@@ -546,3 +546,7 @@ function menu() {
         5) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
+}
+
+# Call the menu function to start the script
+menu
