@@ -19,8 +19,8 @@ init_cosmovisor() {
         exit 1
     fi
 
-    mkdir -p $HOME/.story/story/cosmovisor/upgrades
-    mkdir -p $HOME/.story/story/cosmovisor/backup
+    mkdir -p $HOME/.0gchain/cosmovisor/upgrades
+    mkdir -p $HOME/.0gchain/cosmovisor/backup
 }
 
 # Install and initialize cosmovisor
@@ -30,7 +30,7 @@ init_cosmovisor
 # Define variables
 input1=$(which cosmovisor)
 input2=$(find $HOME -type d -name "story")
-input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
+input3=$(find $HOME/.0gchain/cosmovisor -type d -name "backup")
 
 # Check if cosmovisor is installed
 if [ -z "$input1" ]; then
@@ -59,21 +59,19 @@ source $HOME/.bash_profile
 # Create or update the systemd service file
 cat <<EOF | sudo tee /etc/systemd/system/story.service
 [Unit]
-Description=Cosmovisor Story Node
+Description=Cosmovisor 0G Node
 After=network.target
 
 [Service]
 User=$USER
 Type=simple
-WorkingDirectory=$HOME/.story/story
-ExecStart=$input1 run start
+WorkingDirectory=$HOME/.0gchain
+ExecStart=$input1 run start --log_output_console
 StandardOutput=journal
 StandardError=journal
 Restart=on-failure
-RestartSec=5
-LimitNOFILE=65536
-LimitNPROC=65536
-Environment="DAEMON_NAME=story"
+LimitNOFILE=65535
+Environment="DAEMON_NAME=0gchaind"
 Environment="DAEMON_HOME=$input2"
 Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=true"
 Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
@@ -86,6 +84,6 @@ EOF
 
 # Reload and Restart systemd to apply changes
 sudo systemctl daemon-reload
-sudo systemctl restart story
+sudo systemctl restart 0gchaind
 
 echo "Cosmovisor migration completed successfully."
