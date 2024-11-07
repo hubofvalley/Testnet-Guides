@@ -401,8 +401,8 @@ function add_peers() {
 
 function update_consensus_client() {
     echo "Choose an option:"
-    echo "1. Migrate to Cosmovisor"
-    echo "2. Update Consensus Client Version"
+    echo "1. Migrate to Cosmovisor only"
+    echo "2. Update Consensus Client Version (includes Cosmovisor migration and deployment)"
     echo "3. Back"
     read -p "Enter your choice (1/2/3): " choice
 
