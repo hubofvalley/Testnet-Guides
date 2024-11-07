@@ -77,7 +77,6 @@ echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
 echo "export STORY_CHAIN_ID="odyssey"" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
-
 # Define variables
 geth_file_name=geth-linux-amd64
 
@@ -462,6 +461,8 @@ function apply_snapshot() {
 
 function show_endpoints() {
     echo -e "$ENDPOINTS"
+    echo -e "\n${YELLOW}Press Enter to continue${RESET}"
+    read -r
     menu
 }
 
@@ -503,7 +504,6 @@ function menu() {
         MAIN_OPTION=${OPTION:0:1}
         SUB_OPTION=${OPTION:1:1}
     else
-        read -p "Choose a sub-option: " SUB_OPTION
         MAIN_OPTION=$OPTION
     fi
 
