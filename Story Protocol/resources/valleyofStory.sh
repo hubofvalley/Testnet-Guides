@@ -487,7 +487,7 @@ function show_endpoints() {
     menu
 }
 
-# Menu
+# Menu function
 function menu() {
     echo -e "${CYAN}Story Validator Node = Consensus Client Service + Execution Client Service (geth/story-geth)${RESET}"
     echo "Menu:"
@@ -526,6 +526,9 @@ function menu() {
         SUB_OPTION=${OPTION:1:1}
     else
         MAIN_OPTION=$OPTION
+        if [[ $MAIN_OPTION =~ ^[1-3]$ ]]; then
+            read -p "Choose a sub-option (e.g., a): " SUB_OPTION
+        fi
     fi
 
     case $MAIN_OPTION in
