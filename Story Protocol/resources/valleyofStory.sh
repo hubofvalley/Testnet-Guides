@@ -476,7 +476,7 @@ function menu() {
     echo "   d. Restart Validator Node"
     echo "   e. Show Validator Node Status"
     echo "   f. Add Peers"
-    echo "   g. Update Consensus Client Version"
+    echo "   g. Update Consensus Client Version (using Cosmovisor)"
     echo "   h. Update Geth Version"
     echo "   i. Stop Consensus Client Only"
     echo "   j. Stop Geth Only"
