@@ -145,7 +145,7 @@ function create_validator() {
 }
 
 function query_validator_pub_key() {
-    story validator export | grep -oP 'Compressed Public Key $hex$: \K.*'
+    story validator export | grep -oP 'Compressed Public Key \(hex\): \K[0-9a-fA-F]+'
     menu
 }
 
@@ -197,7 +197,7 @@ function stake_tokens() {
             VALIDATOR_PUBKEY="036a75cfa84cf485e5b4a6844fa9f2ff03f410f7c8c0148f4e4c9e535df9caba22"
             ;;
         2)
-            VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key $hex$: \K.*')
+            VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key \(hex\): \K[0-9a-fA-F]+')
             ;;
         3)
             read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
@@ -257,7 +257,7 @@ function unstake_tokens() {
 
     case $CHOICE in
         1)
-            VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key $hex$: \K.*')
+            VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key \(hex\): \K[0-9a-fA-F]+')
             ;;
         2)
             read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
