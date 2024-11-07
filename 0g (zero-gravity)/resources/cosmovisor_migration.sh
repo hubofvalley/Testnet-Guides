@@ -101,9 +101,6 @@ Environment="UNSAFE_SKIP_BACKUP=true"
 WantedBy=multi-user.target
 EOF
 
-# Reload the systemd daemon to apply the changes
-sudo systemctl daemon-reload
-
 # Reload and Restart systemd to apply changes
 sudo systemctl daemon-reload
 sudo systemctl restart "$SERVICE_FILE_NAME"
