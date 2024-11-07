@@ -439,6 +439,8 @@ function restart_storage_kv() {
 # Show Grand Valley's Endpoints
 function show_endpoints() {
     echo -e "$ENDPOINTS"
+    echo -e "\n${YELLOW}Press Enter to continue${RESET}"
+    read -r
     menu
 }
 
