@@ -23,13 +23,9 @@ init_cosmovisor() {
     mkdir -p $HOME/.story/story/cosmovisor/backup
 }
 
-# Ask the user if cosmovisor is installed
-read -p "Do you have cosmovisor installed? (y/n): " cosmovisor_installed
-
-if [ "$cosmovisor_installed" != "y" ]; then
-    install_cosmovisor
-    init_cosmovisor
-fi
+# Install and initialize cosmovisor
+install_cosmovisor
+init_cosmovisor
 
 # Define variables
 input1=$(which cosmovisor)
@@ -71,7 +67,7 @@ After=network.target
 User=$USER
 Type=simple
 WorkingDirectory=$HOME/.story/story
-ExecStart=$input1 run run
+ExecStart=$input1 run start
 StandardOutput=journal
 StandardError=journal
 Restart=on-failure
