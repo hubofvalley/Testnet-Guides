@@ -492,7 +492,7 @@ function menu() {
     echo -e "${CYAN}Story Validator Node = Consensus Client Service + Execution Client Service (geth/story-geth)${RESET}"
     echo "Menu:"
     echo -e "${GREEN}1. Node Interactions:${RESET}"
-    echo "   a. Deploy Validator Node"
+    echo "   a. Deploy Validator Node (includes Cosmovisor deployment)"
     echo "   b. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
     echo "   c. Stop Validator Node"
     echo "   d. Restart Validator Node"
