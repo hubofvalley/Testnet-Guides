@@ -525,10 +525,9 @@ function menu() {
         MAIN_OPTION=${OPTION:0:1}
         SUB_OPTION=${OPTION:1:1}
     else
-        read -p "Choose a sub-option: " SUB_OPTION
         MAIN_OPTION=$OPTION
-        if [[ $MAIN_OPTION =~ ^[1-3]$ ]]; then
-            read -p "Choose a sub-option (e.g., a): " SUB_OPTION
+        if [[ $MAIN_OPTION =~ ^[1-2]$ ]]; then
+            read -p "Choose a sub-option: " SUB_OPTION
         fi
     fi
 
