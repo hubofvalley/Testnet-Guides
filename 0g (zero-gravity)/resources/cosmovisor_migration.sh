@@ -56,8 +56,27 @@ echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
 echo "export DAEMON_DATA_BACKUP_DIR=$input3" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
-# Create or update the systemd service file
-cat <<EOF | sudo tee /etc/systemd/system/story.service
+# Define the service file name
+SERVICE_FILE_NAME=$1
+
+# Check if the service file name is provided and is either 0gchaind.service or 0gd.service
+if [[ -z "$SERVICE_FILE_NAME" || ("$SERVICE_FILE_NAME" != "0gchaind.service" && "$SERVICE_FILE_NAME" != "0gd.service") ]]; then
+  echo "Usage: $0 <service_file_name>"
+  echo "Service file name must be either 0gchaind.service or 0gd.service"
+  exit 1
+fi
+
+# Define the service file path
+SERVICE_FILE_PATH="/etc/systemd/system/$SERVICE_FILE_NAME"
+
+# Check if the service file exists
+if [[ ! -f "$SERVICE_FILE_PATH" ]]; then
+  echo "Service file $SERVICE_FILE_PATH does not exist."
+  exit 1
+fi
+
+# Update the service file
+cat <<EOF | sudo tee "$SERVICE_FILE_PATH"
 [Unit]
 Description=Cosmovisor 0G Node
 After=network.target
@@ -82,8 +101,11 @@ Environment="UNSAFE_SKIP_BACKUP=true"
 WantedBy=multi-user.target
 EOF
 
+# Reload the systemd daemon to apply the changes
+sudo systemctl daemon-reload
+
 # Reload and Restart systemd to apply changes
 sudo systemctl daemon-reload
-sudo systemctl restart 0gchaind
+sudo systemctl restart "$SERVICE_FILE_NAME"
 
 echo "Cosmovisor migration completed successfully."
