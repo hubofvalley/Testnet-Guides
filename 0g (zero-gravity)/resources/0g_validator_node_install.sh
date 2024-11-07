@@ -3,6 +3,9 @@
 # Prompt user for moniker and port number
 read -p "Enter your moniker: " MONIKER
 read -p "Enter your custom port number (leave empty to use default: 26): " OG_PORT
+if [ -z "$OG_PORT" ]; then
+    OG_PORT=26
+fi
 read -p "Enter your wallet name: " WALLET
 
 
