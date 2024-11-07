@@ -544,7 +544,7 @@ function menu() {
             ;;
         4) show_endpoints ;;
         5) exit 0 ;;
-        *) echo "Invalid option. Please try again." ;;
+o "Invalid sub-option. Please try again." ;;
     esac
 }
 
