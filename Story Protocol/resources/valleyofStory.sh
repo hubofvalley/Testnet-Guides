@@ -64,41 +64,41 @@ ${GREEN}Connect with Grand Valley:${RESET}
 "
 
 # Display LOGO and wait for user input to continue
-echo -e "$LOGO"
-echo -e "\n${YELLOW}Press Enter to continue...${RESET}"
+echo -e "\$LOGO"
+echo -e "\n\${YELLOW}Press Enter to continue...\${RESET}"
 read -r
 
 # Display INTRO section and wait for user input to continue
-echo -e "$INTRO"
-echo -e "$ENDPOINTS"
-echo -e "\n${YELLOW}Press Enter to continue${RESET}"
+echo -e "\$INTRO"
+echo -e "\$ENDPOINTS"
+echo -e "\n\${YELLOW}Press Enter to continue\${RESET}"
 read -r
-echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
-echo "export STORY_CHAIN_ID="odyssey"" >> $HOME/.bash_profile
-source $HOME/.bash_profile
+echo 'export PATH=\$PATH:/usr/local/go/bin:\$HOME/go/bin' >> ~/.bash_profile
+echo "export STORY_CHAIN_ID="odyssey"" >> \$HOME/.bash_profile
+source \$HOME/.bash_profile
 
 # Define variables
 geth_file_name=geth-linux-amd64
 
 # Function to update to a specific version
 update_geth_version() {
-    local version=$1
-    local download_url=$2
+    local version=\$1
+    local download_url=\$2
 
     # Create directory and download the binary
-    cd $HOME
-    mkdir -p $HOME/$version
-    if ! wget -P $HOME/$version $download_url/$geth_file_name -O $HOME/$version/geth; then
-        echo -e "${RED}Failed to download the binary. Exiting.${RESET}"
+    cd \$HOME
+    mkdir -p \$HOME/\$version
+    if ! wget -P \$HOME/\$version \$download_url/\$geth_file_name -O \$HOME/$version/geth; then
+        echo -e "${RED}Failed to download the binary. Exiting.\${RESET}"
         exit 1
     fi
 
     # Move the binary to the appropriate directory
-    sudo mv $HOME/$version/geth $HOME/go/bin/geth
+    sudo mv \$HOME/\$version/geth \$HOME/go/bin/geth
 
     # Set ownership and permissions
-    sudo chown -R $USER:$USER $HOME/go/bin/geth
-    sudo chmod +x $HOME/go/bin/geth
+    sudo chown -R \$USER:\$USER \$HOME/go/bin/geth
+    sudo chmod +x \$HOME/go/bin/geth
 
     # Restart the service
     sudo systemctl daemon-reload && \
@@ -107,7 +107,7 @@ update_geth_version() {
 
 # Validator Node Functions
 function deploy_validator_node() {
-    echo -e "${CYAN}Deploying Validator Node...${RESET}"
+    echo -e "\${CYAN}Deploying Validator Node...\${RESET}"
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_validator_node_install_odyssey.sh)
     menu
 }
@@ -122,7 +122,7 @@ function create_validator() {
 
     read -p "Enter your private key (or press Enter to use local private key): " PRIVATE_KEY
     if [ -z "$PRIVATE_KEY" ]; then
-        PRIVATE_KEY=$(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt)
+        PRIVATE_KEY=$(grep -oP '(?<=PRIVATE_KEY=).*' \$HOME/.story/story/config/private_key.txt)
     fi
 
     read -p "Enter the moniker for your validator: " MONIKER
@@ -131,26 +131,26 @@ function create_validator() {
 
     # Convert IP to the required format (assuming 1 IP = 10^18 units)
     MIN_STAKE=1024
-    if [ "$STAKE_IP" -lt "$MIN_STAKE" ]; then
+    if [ "\$STAKE_IP" -lt "\$MIN_STAKE" ]; then
         echo "The stake amount is below the minimum requirement of 1024 IP."
         menu
         return
     fi
 
     # Convert the stake from IP to the required unit format
-    STAKE=$(echo "$STAKE_IP * 10^18" | bc)
+    STAKE=\$(echo "\$STAKE_IP * 10^18" | bc)
 
-    story validator create --stake "$STAKE" --moniker "$MONIKER" --private-key "$PRIVATE_KEY" --chain-id 1516
+    story validator create --stake "\$STAKE" --moniker "\$MONIKER" --private-key "\$PRIVATE_KEY" --chain-id 1516
     menu
 }
 
 function query_validator_pub_key() {
-    story validator export | grep -oP 'Compressed Public Key \(hex\): \K.*'
+    story validator export | grep -oP 'Compressed Public Key $hex$: \K.*'
     menu
 }
 
 function query_balance() {
-    echo -e "${CYAN}Select an option:${RESET}"
+    echo -e "\${CYAN}Select an option:\${RESET}"
     echo "1. Query balance of your own EVM address"
     echo "2. Query balance of another EVM address"
     echo "3. Back"
@@ -164,13 +164,13 @@ function query_balance() {
         2)
             read -p "Enter the EVM address to query: " evm_address
             echo -e "${GREEN}Querying balance of $evm_address...${RESET}"
-            geth --exec "eth.getBalance('$evm_address')" attach $HOME/.story/geth/odyssey/geth.ipc
+            geth --exec "eth.getBalance('\$evm_address')" attach $HOME/.story/geth/odyssey/geth.ipc
             ;;
         3)
             menu
             ;;
         *)
-            echo -e "${RED}Invalid choice. Please enter 1, 2, or 3.${RESET}"
+            echo -e "${RED}Invalid choice. Please enter 1, 2, or 3.\${RESET}"
             query_balance
             ;;
     esac
@@ -197,7 +197,7 @@ function stake_tokens() {
             VALIDATOR_PUBKEY="036a75cfa84cf485e5b4a6844fa9f2ff03f410f7c8c0148f4e4c9e535df9caba22"
             ;;
         2)
-            VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key \(hex\): \K.*')
+            VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key $hex$: \K.*')
             ;;
         3)
             read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
@@ -219,20 +219,20 @@ function stake_tokens() {
     read -p "Enter the amount to stake in IP (e.g., 1024 for 1024 IP, minimum requirement is 1024 IP): " AMOUNT_IP
 
     # Convert IP to the required format (assuming 1 IP = 10^18 units)
-    AMOUNT=$(echo "$AMOUNT_IP * 10^18" | bc)
+    AMOUNT=\$(echo "\$AMOUNT_IP * 10^18" | bc)
 
     read -p "Enter private key (leave blank to use local private key): " PRIVATE_KEY
 
-    if [ -n "$PRIVATE_KEY" ]; then
+    if [ -n "\$PRIVATE_KEY" ]; then
         PRIVATE_KEY_FLAG="--private-key $PRIVATE_KEY"
     else
-        PRIVATE_KEY_FLAG="--private-key $(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt)"
+        PRIVATE_KEY_FLAG="--private-key $(grep -oP '(?<=PRIVATE_KEY=).*' \$HOME/.story/story/config/private_key.txt)"
     fi
 
-    if [ "$RPC_CHOICE" == "2" ]; then
-        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 --chain-id 1516
-    elif [ "$RPC_CHOICE" == "1" ]; then
-        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG --chain-id 1516
+    if [ "\$RPC_CHOICE" == "2" ]; then
+        story validator stake --validator-pubkey \$VALIDATOR_PUBKEY --stake \$AMOUNT \$PRIVATE_KEY_FLAG --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 --chain-id 1516
+    elif [ "\$RPC_CHOICE" == "1" ]; then
+        story validator stake --validator-pubkey \$VALIDATOR_PUBKEY --stake \$AMOUNT \$PRIVATE_KEY_FLAG --chain-id 1516
     else
         echo "Invalid choice. Please select a valid option."
         stake_tokens
@@ -257,7 +257,7 @@ function unstake_tokens() {
 
     case $CHOICE in
         1)
-            VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key \(hex\): \K.*')
+            VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key $hex$: \K.*')
             ;;
         2)
             read -p "Enter validator pubkey: " VALIDATOR_PUBKEY
@@ -400,12 +400,33 @@ function add_peers() {
 }
 
 function update_consensus_client() {
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_update.sh)
-    menu
+    echo "Choose an option:"
+    echo "1. Migrate to Cosmovisor"
+    echo "2. Update Consensus Client Version"
+    echo "3. Back"
+    read -p "Enter your choice (1/2/3): " choice
+
+    case $choice in
+        1)
+            migrate_to_cosmovisor
+            ;;
+        2)
+            bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_update.sh)
+            menu
+            ;;
+        3)
+            menu
+            ;;
+        *)
+            echo "Invalid choice. Please select a valid option."
+            update_consensus_client
+            ;;
+    esac
 }
 
-function update_geth() {
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story-geth_update.sh)
+# Function to migrate to Cosmovisor
+function migrate_to_cosmovisor() {
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/cosmovisor_migration.sh)
     menu
 }
 
@@ -477,7 +498,7 @@ function menu() {
     echo "   d. Restart Validator Node"
     echo "   e. Show Validator Node Status"
     echo "   f. Add Peers"
-    echo "   g. Update Consensus Client Version (using Cosmovisor)"
+    echo "   g. Manage Consensus Client (Migrate to Cosmovisor or Update Version)"
     echo "   h. Update Geth Version"
     echo "   i. Stop Consensus Client Only"
     echo "   j. Stop Geth Only"
