@@ -472,12 +472,12 @@ copy all of the contents of the ![priv_validator_key.json](https://img.shields.i
 0gchaind tx staking delegate $(0gchaind keys show $WALLET --bech val -a) 1000000ua0gi --from $WALLET --chain-id zgtendermint_16600-2 --gas auto --gas-adjustment 1.4 -y
 ```
 
-#### delegate to <a href="https://explorer.grandvalleys.com/0g-chain%20testnet/staking/0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4"><img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/e8704cc4-2319-4a21-9138-0264e75e3a82" alt="GRAND VALLEY" width="50" height="50">
+#### delegate to <a href="https://explorer.grandvalleys.com/0g-chain%20testnet/staking/0gvaloper1gela3jtnmen0dmj2q5p0pne5y45ftshzs053x3"><img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/e8704cc4-2319-4a21-9138-0264e75e3a82" alt="GRAND VALLEY" width="50" height="50">
 
 </a>
 
 ```bash
-0gchaind tx staking delegate 0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4 1000000ua0gi --from $WALLET --chain-id zgtendermint_16600-2 --gas auto --gas-adjustment 1.4 -y
+0gchaind tx staking delegate 0gvaloper1gela3jtnmen0dmj2q5p0pne5y45ftshzs053x3 1000000ua0gi --from $WALLET --chain-id zgtendermint_16600-2 --gas auto --gas-adjustment 1.4 -y
 ```
 
 ## delete the node
