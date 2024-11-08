@@ -77,32 +77,11 @@ echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
 echo "export STORY_CHAIN_ID="odyssey"" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
-# Define variables
-geth_file_name=geth-linux-amd64
-
 # Function to update to a specific version
-function update_geth() {
-    local version=$1
-    local download_url=$2
-
-    # Create directory and download the binary
-    cd $HOME
-    mkdir -p $HOME/$version
-    if ! wget -P $HOME/$version $download_url/$geth_file_name -O $HOME/$version/geth; then
-        echo -e "${RED}Failed to download the binary. Exiting.${RESET}"
-        exit 1
-    fi
-
-    # Move the binary to the appropriate directory
-    sudo mv $HOME/$version/geth $HOME/go/bin/geth
-
-    # Set ownership and permissions
-    sudo chown -R $USER:$USER $HOME/go/bin/geth
-    sudo chmod +x $HOME/go/bin/geth
-
-    # Restart the service
-    sudo systemctl daemon-reload && \
-    sudo systemctl restart story-geth
+function deploy_validator_node() {
+    echo -e "${CYAN}Deploying Validator Node...${RESET}"
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story-geth_update.sh)
+    menu
 }
 
 # Validator Node Functions
