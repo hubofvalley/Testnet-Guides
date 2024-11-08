@@ -78,8 +78,7 @@ echo "export STORY_CHAIN_ID="odyssey"" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
 # Function to update to a specific version
-function deploy_validator_node() {
-    echo -e "${CYAN}Deploying Validator Node...${RESET}"
+function update_geth() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story-geth_update.sh)
     menu
 }
