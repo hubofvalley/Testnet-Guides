@@ -81,7 +81,7 @@ source $HOME/.bash_profile
 geth_file_name=geth-linux-amd64
 
 # Function to update to a specific version
-update_geth() {
+function update_geth() {
     local version=$1
     local download_url=$2
 
