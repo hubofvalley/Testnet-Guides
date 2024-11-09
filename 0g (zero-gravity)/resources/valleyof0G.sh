@@ -91,8 +91,8 @@ function detect_service_file() {
   elif [[ -f "/etc/systemd/system/0gd.service" ]]; then
     SERVICE_FILE_NAME="0gd.service"
   else
-    echo "No valid service file found (0gchaind.service or 0gd.service)."
-    exit 1
+    SERVICE_FILE_NAME="Not found"
+    echo -e "${RED}No valid service file found (0gchaind.service or 0gd.service). Continuing without setting a service file name.${RESET}"
   fi
 }
 
