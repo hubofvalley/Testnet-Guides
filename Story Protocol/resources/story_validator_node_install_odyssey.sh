@@ -12,7 +12,8 @@ echo "$LOGO"
 # Stop and remove existing Story node
 sudo systemctl daemon-reload
 sudo systemctl stop story story-geth
-sudo systemctl disable story story-geth
+sudo systemctl disable story
+sudo systemctl disable story-geth
 sudo rm -rf /etc/systemd/system/story.service
 sudo rm -rf /etc/systemd/system/story-geth.service
 sudo rm -r story
