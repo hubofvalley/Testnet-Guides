@@ -94,9 +94,24 @@ echo -e "$INTRO"
 echo -e "$ENDPOINTS"
 echo -e "${YELLOW}\nPress Enter to continue${RESET}"
 read -r
+detect_service_file
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
 echo "export OG_CHAIN_ID="zgtendermint_16600-2"" >> $HOME/.bash_profile
+echo "export SERVICE_FILE_NAME=\"$SERVICE_FILE_NAME\"" >> ~/.bash_profile
+echo -e "${YELLOW}Current service file name: $SERVICE_FILE_NAME${RESET}"
 source $HOME/.bash_profile
+
+# Function to detect the service file name
+function detect_service_file() {
+  if [[ -f "/etc/systemd/system/0gchaind.service" ]]; then
+    SERVICE_FILE_NAME="0gchaind.service"
+  elif [[ -f "/etc/systemd/system/0gd.service" ]]; then
+    SERVICE_FILE_NAME="0gd.service"
+  else
+    echo "No valid service file found (0gchaind.service or 0gd.service)."
+    exit 1
+  fi
+}
 
 # Validator Node Functions
 function deploy_validator_node() {
@@ -278,9 +293,9 @@ function create_wallet() {
 }
 
 function delete_validator_node() {
-    sudo systemctl stop 0gchaind
-    sudo systemctl disable 0gchaind
-    sudo rm -rf /etc/systemd/system/0gchaind.service
+    sudo systemctl stop $SERVICE_FILE_NAME
+    sudo systemctl disable $SERVICE_FILE_NAME
+    sudo rm -rf /etc/systemd/system/$SERVICE_FILE_NAME
     sudo rm -r 0g-chain
     sudo rm -rf $HOME/.0gchain
     sed -i "/OG_/d" $HOME/.bash_profile
@@ -289,7 +304,7 @@ function delete_validator_node() {
 }
 
 function show_validator_logs() {
-    sudo journalctl -u 0gchaind -fn 100
+    sudo journalctl -u $SERVICE_FILE_NAME -fn 100
     menu
 }
 
@@ -299,13 +314,13 @@ function show_node_status() {
 }
 
 function stop_validator_node() {
-    sudo systemctl stop 0gchaind
+    sudo systemctl stop $SERVICE_FILE_NAME
     menu
 }
 
 function restart_validator_node() {
     sudo systemctl daemon-reload
-    sudo systemctl restart 0gchaind
+    sudo systemctl restart $SERVICE_FILE_NAME
     menu
 }
 
