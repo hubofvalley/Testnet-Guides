@@ -163,6 +163,11 @@ Environment="UNSAFE_SKIP_BACKUP=true"
 WantedBy=multi-user.target
 EOF
 
+# Store service file name
+detect_service_file
+echo "export SERVICE_FILE_NAME=\"$SERVICE_FILE_NAME\"" >> ~/.bash_profile
+source $HOME/.bash_profile
+
 # 20. start the node
 sudo systemctl daemon-reload && \
 sudo systemctl enable 0gchaind && \
