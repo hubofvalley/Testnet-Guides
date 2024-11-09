@@ -403,7 +403,11 @@ function update_consensus_client() {
 }
 
 # Function to migrate to Cosmovisor
+
 function migrate_to_cosmovisor() {
+    echo "The service file for your current validator node will be updated to match Grand Valley's current configuration."
+    echo "Press Enter to continue..."
+    read -r
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/cosmovisor_migration.sh)
     menu
 }
@@ -471,20 +475,20 @@ function menu() {
     echo "Menu:"
     echo -e "${GREEN}1. Node Interactions:${RESET}"
     echo "   a. Deploy Validator Node (includes Cosmovisor deployment)"
-    echo "   b. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
-    echo "   c. Stop Validator Node"
-    echo "   d. Restart Validator Node"
-    echo "   e. Show Validator Node Status"
-    echo "   f. Add Peers"
-    echo "   g. Manage Consensus Client (Migrate to Cosmovisor or Update Version)"
-    echo "   h. Update Geth Version"
+    echo "   b. Manage Consensus Client (Migrate to Cosmovisor or Update Version)"
+    echo "   c. Apply Snapshot"
+    echo "   d. Add Peers"
+    echo "   e. Update Geth Version"
+    echo "   f. Show Validator Node Status"
+    echo "   g. Show Consensus Client & Geth Logs Together"
+    echo "   h. Stop Validator Node"
     echo "   i. Stop Consensus Client Only"
     echo "   j. Stop Geth Only"
-    echo "   k. Restart Consensus Client Only"
-    echo "   l. Restart Geth Only"
-    echo "   m. Show Consensus Client & Geth Logs Together"
-    echo "   n. Install Story App only (v0.12.1)(for executing transactions without running the node)"
-    echo "   o. Apply Snapshot"
+    echo "   k. Restart Validator Node"
+    echo "   l. Restart Consensus Client Only"
+    echo "   m. Restart Geth Only"
+    echo "   n. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
+    echo "   o. Install Story App only (v0.12.1)(for executing transactions without running the node)"
     echo -e "${GREEN}2. Validator/Key Interactions:${RESET}"
     echo "   a. Create Validator"
     echo "   b. Query Validator Public Key"
@@ -499,7 +503,7 @@ function menu() {
     echo -e "${GREEN}Let's Buidl Story Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
-    if [[ $OPTION =~ ^[1-2][a-r]$ ]]; then
+    if [[ $OPTION =~ ^[1-2][a-o]$ ]]; then
         MAIN_OPTION=${OPTION:0:1}
         SUB_OPTION=${OPTION:1:1}
     else
@@ -513,20 +517,20 @@ function menu() {
         1)
             case $SUB_OPTION in
                 a) deploy_validator_node ;;
-                b) delete_validator_node ;;
-                c) stop_services ;;
-                d) restart_services ;;
-                e) show_node_status ;;
-                f) add_peers ;;
-                g) update_consensus_client ;;
-                h) update_geth ;;
+                b) manage_consensus_client ;;
+                c) apply_snapshot ;;
+                d) add_peers ;;
+                e) update_geth ;;
+                f) show_node_status ;;
+                g) show_all_logs ;;
+                h) stop_validator_node ;;
                 i) stop_consensus_client ;;
                 j) stop_geth ;;
-                k) restart_consensus_client ;;
-                l) restart_geth ;;
-                m) show_all_logs ;;
-                n) install_story_app ;;
-                o) apply_snapshot ;;
+                k) restart_validator_node ;;
+                l) restart_consensus_client ;;
+                m) restart_geth ;;
+                n) delete_validator_node ;;
+                o) install_story_app ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;

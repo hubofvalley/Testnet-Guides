@@ -119,11 +119,16 @@ function deploy_validator_node() {
     menu
 }
 
-function migrate_validator_node() {
-    echo "Your current validator node service file will be adjusted to the current Grand Valley's config."
+function migrate_to_cosmovisor() {
+    echo "The service file for your current validator node will be updated to match Grand Valley's current configuration."
     echo "Press Enter to continue..."
     read -r
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/cosmovisor_migration.sh)
+    menu
+}
+
+function apply_snapshot() {
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/apply_snapshot.sh)
     menu
 }
 
@@ -465,22 +470,23 @@ function menu() {
     echo -e "${GREEN}1. Validator Node${RESET}"
     echo "    a. Deploy Validator Node"
     echo "    b. Migrate Validator Node to Cosmovisor"
-    echo "    c. Create Validator"
-    echo "    d. Query Balance"
-    echo "    e. Send Transaction"
-    echo "    f. Stake Tokens"
-    echo "    g. Unstake Tokens"
-    echo "    h. Export EVM Private Key"
+    echo "    c. Apply Snapshot"
+    echo "    d. Add Peers"
+    echo "    e. Show Node Status"
+    echo "    f. Show Validator Logs"
+    echo "    g. Create Validator"
+    echo "    h. Create Wallet"
     echo "    i. Restore Wallet"
-    echo "    j. Create Wallet"
-    echo "    k. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE U DID THIS)"
-    echo "    l. Show Validator Logs"
-    echo "    m. Show Node Status"
-    echo "    n. Stop Validator Node"
-    echo "    o. Restart Validator Node"
-    echo "    p. Add Peers"
-    echo "    q. Backup Validator Key (store it to $HOME directory)"
-    echo "    r. Install 0gchain App only (v0.4.0)(for executing transactions without running the node)"
+    echo "    j. Query Balance"
+    echo "    k. Send Transaction"
+    echo "    l. Stake Tokens"
+    echo "    m. Unstake Tokens"
+    echo "    n. Export EVM Private Key"
+    echo "    o. Backup Validator Key (store it to $HOME directory)"
+    echo "    p. Stop Validator Node"
+    echo "    q. Restart Validator Node"
+    echo "    r. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
+    echo "    s. Install 0gchain App only (v0.4.0)(for executing transactions without running the node)"
     echo -e "${GREEN}2. Storage Node${RESET}"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
@@ -503,7 +509,7 @@ function menu() {
     echo -e "${GREEN}Let's Buidl 0G Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
-    if [[ $OPTION =~ ^[1-3][a-r]$ ]]; then
+    if [[ $OPTION =~ ^[1-3][a-s]$ ]]; then
         MAIN_OPTION=${OPTION:0:1}
         SUB_OPTION=${OPTION:1:1}
     else
@@ -517,23 +523,24 @@ function menu() {
         1)
             case $SUB_OPTION in
                 a) deploy_validator_node ;;
-                b) migrate_validator_node ;;
-                c) create_validator ;;
-                d) query_balance ;;
-                e) send_transaction ;;
-                f) stake_tokens ;;
-                g) unstake_tokens ;;
-                h) export_evm_private_key ;;
+                b) migrate_to_cosmovisor ;;
+                c) apply_snapshot ;;
+                d) add_peers ;;
+                e) show_node_status ;;
+                f) show_validator_logs ;;
+                g) create_validator ;;
+                h) create_wallet ;;
                 i) restore_wallet ;;
-                j) create_wallet ;;
-                k) delete_validator_node ;;
-                l) show_validator_logs ;;
-                m) show_node_status ;;
-                n) stop_validator_node ;;
-                o) restart_validator_node ;;
-                p) add_peers ;;
-                q) backup_validator_key ;;
-                r) install_0gchain_app ;;
+                j) query_balance ;;
+                k) send_transaction ;;
+                l) stake_tokens ;;
+                m) unstake_tokens ;;
+                n) export_evm_private_key ;;
+                o) backup_validator_key ;;
+                p) stop_validator_node ;;
+                q) restart_validator_node ;;
+                r) delete_validator_node ;;
+                s) install_0gchain_app ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
