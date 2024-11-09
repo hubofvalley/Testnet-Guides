@@ -468,7 +468,7 @@ function show_endpoints() {
 function menu() {
     echo "Menu:"
     echo -e "${GREEN}1. Validator Node${RESET}"
-    echo "    a. Deploy Validator Node"
+    echo "    a. Deploy/re-Deploy Validator Node (includes Cosmovisor deployment)"
     echo "    b. Migrate Validator Node to Cosmovisor"
     echo "    c. Apply Snapshot"
     echo "    d. Add Peers"

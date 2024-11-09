@@ -17,6 +17,17 @@ if [ -z "$STORY_PORT" ]; then
 fi
 read -p "Do you want to enable the indexer? (yes/no): " ENABLE_INDEXER
 
+# Stop and remove existing Story node
+sudo systemctl daemon-reload
+sudo systemctl stop story story-geth
+sudo systemctl disable story story-geth
+sudo rm -rf /etc/systemd/system/story.service
+sudo rm -rf /etc/systemd/system/story-geth.service
+sudo rm -r story
+sudo rm -r story-geth
+sudo rm -rf $HOME/.story
+sed -i "/STORY_/d" $HOME/.bash_profile
+
 # 1. Install dependencies for building from source
 sudo apt update -y && sudo apt upgrade -y
 sudo apt install -y curl git jq build-essential gcc unzip wget lz4 openssl libssl-dev pkg-config protobuf-compiler clang cmake llvm llvm-dev

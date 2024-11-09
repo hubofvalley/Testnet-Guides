@@ -474,7 +474,7 @@ function menu() {
     echo -e "${CYAN}Story Validator Node = Consensus Client Service + Execution Client Service (geth/story-geth)${RESET}"
     echo "Menu:"
     echo -e "${GREEN}1. Node Interactions:${RESET}"
-    echo "   a. Deploy Validator Node (includes Cosmovisor deployment)"
+    echo "   a. Deploy/re-Deploy Validator Node (includes Cosmovisor deployment)"
     echo "   b. Manage Consensus Client (Migrate to Cosmovisor or Update Version)"
     echo "   c. Apply Snapshot"
     echo "   d. Add Peers"
