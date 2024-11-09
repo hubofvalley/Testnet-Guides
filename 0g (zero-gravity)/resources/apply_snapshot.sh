@@ -149,7 +149,7 @@ main_script() {
     sudo cp $HOME/.0gchain/priv_validator_state.json.backup $HOME/.0gchain/data/priv_validator_state.json
 
     # Migrate to Cosmovisor
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0G%20Protocol/resources/cosmovisor_migration.sh)
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/cosmovisor_migration.sh)
 
     # Start your 0gchain nodes
     sudo systemctl restart $SERVICE_FILE_NAME
