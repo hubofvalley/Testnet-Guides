@@ -8,7 +8,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Snapshot URLs
-ITR_PRUNED_SNAPSHOT_URL="https://server-5.itrocket.net/testnet/og/og_2024-11-09_1868204_snap.tar.lz4"
+ITR_API_URL="https://server-5.itrocket.net/testnet/og/.current_state.json"
 JOSEPHTRAN_PRUNED_SNAPSHOT_URL="https://josephtran.co/light_0gchain_snapshot.lz4"
 JOSEPHTRAN_ARCHIVE_SNAPSHOT_URL="https://josephtran.co/0gchain_snapshot.lz4"
 
@@ -28,6 +28,26 @@ check_url() {
     else
         echo -e "${RED}Not available at the moment${NC}"
     fi
+}
+
+# Function to choose snapshot type for ITRocket
+choose_itrocket_snapshot() {
+    echo -e "${GREEN}Choose the type of snapshot for ITRocket:${NC}"
+    echo "1. Pruned"
+    read -p "Enter your choice: " snapshot_type_choice
+
+    case $snapshot_type_choice in
+        1)
+            SNAPSHOT_API_URL=$ITR_API_URL
+            ;;
+        *)
+            echo -e "${RED}Invalid choice. Exiting.${NC}"
+            exit 1
+            ;;
+    esac
+
+    FILE_NAME=$(curl -s $SNAPSHOT_API_URL | jq -r '.snapshot_name')
+    SNAPSHOT_URL="https://server-5.itrocket.net/testnet/og/$FILE_NAME"
 }
 
 # Function to choose snapshot type for Josephtran
@@ -78,12 +98,12 @@ main_script() {
 
             echo -e "${GREEN}Checking availability of ITRocket snapshot:${NC}"
             echo -n "Pruned Snapshot: "
-            check_url $ITR_PRUNED_SNAPSHOT_URL
+            check_url $ITR_API_URL
 
             prompt_back_or_continue
 
-            SNAPSHOT_URL=$ITR_PRUNED_SNAPSHOT_URL
-            SNAPSHOT_FILE="og_2024-11-09_1868204_snap.tar.lz4"
+            choose_itrocket_snapshot
+            SNAPSHOT_FILE=$FILE_NAME
             ;;
         2)
             provider_name="Josephtran"
