@@ -110,7 +110,6 @@ detect_service_file
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
 echo "export OG_CHAIN_ID="zgtendermint_16600-2"" >> $HOME/.bash_profile
 echo "export SERVICE_FILE_NAME=\"$SERVICE_FILE_NAME\"" >> ~/.bash_profile
-echo -e "${YELLOW}Current service file name: $SERVICE_FILE_NAME${RESET}"
 source $HOME/.bash_profile
 
 # Validator Node Functions
