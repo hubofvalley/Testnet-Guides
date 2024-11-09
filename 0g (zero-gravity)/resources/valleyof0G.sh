@@ -84,6 +84,18 @@ ${GREEN}Connect with Grand Valley:${RESET}
 - Email: ${BLUE}letsbuidltogether@grandvalleys.com${RESET}
 "
 
+# Function to detect the service file name
+function detect_service_file() {
+  if [[ -f "/etc/systemd/system/0gchaind.service" ]]; then
+    SERVICE_FILE_NAME="0gchaind.service"
+  elif [[ -f "/etc/systemd/system/0gd.service" ]]; then
+    SERVICE_FILE_NAME="0gd.service"
+  else
+    echo "No valid service file found (0gchaind.service or 0gd.service)."
+    exit 1
+  fi
+}
+
 # Display LOGO and wait for user input to continue
 echo -e "$LOGO"
 echo -e "${YELLOW}\nPress Enter to continue...${RESET}"
@@ -100,18 +112,6 @@ echo "export OG_CHAIN_ID="zgtendermint_16600-2"" >> $HOME/.bash_profile
 echo "export SERVICE_FILE_NAME=\"$SERVICE_FILE_NAME\"" >> ~/.bash_profile
 echo -e "${YELLOW}Current service file name: $SERVICE_FILE_NAME${RESET}"
 source $HOME/.bash_profile
-
-# Function to detect the service file name
-function detect_service_file() {
-  if [[ -f "/etc/systemd/system/0gchaind.service" ]]; then
-    SERVICE_FILE_NAME="0gchaind.service"
-  elif [[ -f "/etc/systemd/system/0gd.service" ]]; then
-    SERVICE_FILE_NAME="0gd.service"
-  else
-    echo "No valid service file found (0gchaind.service or 0gd.service)."
-    exit 1
-  fi
-}
 
 # Validator Node Functions
 function deploy_validator_node() {
