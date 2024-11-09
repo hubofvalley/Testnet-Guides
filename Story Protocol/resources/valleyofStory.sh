@@ -298,13 +298,13 @@ function delete_validator_node() {
     menu
 }
 
-function stop_services() {
+function stop_validator_node() {
     sudo systemctl stop story story-geth
     echo "Consensus client and Geth service stopped."
     menu
 }
 
-function restart_services() {
+function restart_validator_node() {
     sudo systemctl daemon-reload
     sudo rm -f $HOME/.story/story/data/upgrade-info.json
     sudo systemctl restart story story-geth
