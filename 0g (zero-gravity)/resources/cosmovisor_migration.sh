@@ -57,7 +57,7 @@ echo "export DAEMON_DATA_BACKUP_DIR=$input3" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
 # Update the service file
-cat <<EOF | sudo tee "$SERVICE_FILE_PATH"
+cat <<EOF | sudo tee "/etc/systemd/system/$SERVICE_FILE_NAME"
 [Unit]
 Description=Cosmovisor 0G Node
 After=network.target
