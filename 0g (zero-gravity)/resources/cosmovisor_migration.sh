@@ -13,8 +13,8 @@ install_cosmovisor() {
 init_cosmovisor() {
     echo "Initializing cosmovisor..."
 
-    # Initialize cosmovisor with the current story binary
-    if ! cosmovisor init $HOME/go/bin/story; then
+    # Initialize cosmovisor with the current 0gchain binary
+    if ! cosmovisor init $HOME/go/bin/0gchaind; then
         echo "Failed to initialize cosmovisor. Exiting."
         exit 1
     fi
@@ -29,7 +29,7 @@ init_cosmovisor
 
 # Define variables
 input1=$(which cosmovisor)
-input2=$(find $HOME -type d -name "story")
+input2=$(find $HOME -type d -name ".0gchain")
 input3=$(find $HOME/.0gchain/cosmovisor -type d -name "backup")
 
 # Check if cosmovisor is installed
@@ -38,9 +38,9 @@ if [ -z "$input1" ]; then
     exit 1
 fi
 
-# Check if story directory exists
+# Check if 0gchain directory exists
 if [ -z "$input2" ]; then
-    echo "Story directory not found. Please ensure it exists."
+    echo "0Gchain directory not found. Please ensure it exists."
     exit 1
 fi
 
@@ -51,7 +51,7 @@ if [ -z "$input3" ]; then
 fi
 
 # Export environment variables
-echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
+echo "export DAEMON_NAME=0gchaind" >> $HOME/.bash_profile
 echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
 echo "export DAEMON_DATA_BACKUP_DIR=$input3" >> $HOME/.bash_profile
 source $HOME/.bash_profile
