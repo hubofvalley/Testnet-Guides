@@ -123,8 +123,7 @@ With Public Testnet, 0G’s docs and code become public. Check them out below! -
 ## Valley Of 0G. 0G tools created by Grand Valley
 
 ![image](https://github.com/user-attachments/assets/359b0d17-e451-42d7-8bc3-88c7fcf28355)
-
-![image](https://github.com/user-attachments/assets/31162ac7-67c1-48e5-99ae-fab849a9e6b0)
+![image](https://github.com/user-attachments/assets/0ede01d5-caba-4df0-93d0-ffe5802785aa)
 
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/valleyof0G.sh)
