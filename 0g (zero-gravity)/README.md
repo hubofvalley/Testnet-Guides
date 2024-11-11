@@ -126,7 +126,7 @@ With Public Testnet, 0G’s docs and code become public. Check them out below! -
 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/valleyof0G.sh)
 ```
 
-**Valley of 0G** by Grand Valley is a robust infrastructure solution supporting the **0G project**, a decentralized network aimed at scalable, reliable data and transaction processing.
+**Valley of 0G** by Grand Valley is a robust infrastructure solution supporting **0G**, a decentralized network aimed at scalable, reliable data and transaction processing.
 
 ### Key Features of Valley of 0G
 
