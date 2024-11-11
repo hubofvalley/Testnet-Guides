@@ -153,9 +153,6 @@ Run the following command to install Valley of Story:
 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/valleyofStory.sh)
 ```
 
-**Valley of Story** by Grand Valley is an all-in-one infrastructure solution providing powerful tools for efficient node management and validator interactions within the Story Protocol network.
-Valley Of Story is designed to provide node runners in the Story Protocol ecosystem with an accessible, powerful set of tools for node management and validator interaction, all within a single, streamlined interface.
-
 ### Key Features of Valley of Story
 
 #### 1. Node Interactions
