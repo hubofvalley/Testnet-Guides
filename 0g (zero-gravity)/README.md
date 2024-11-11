@@ -15,7 +15,11 @@
   - [Grand Valley's 0G public endpoints:](#grand-valleys-0g-public-endpoints)
   - [Valley Of 0G. 0G tools created by Grand Valley](#valley-of-0g-0g-tools-created-by-grand-valley)
     - [Key Features of Valley of 0G](#key-features-of-valley-of-0g)
-    - [In short, Valley of 0G is a streamlined solution for supporting blockchain infrastructure, making decentralized applications easier to scale and manage.](#in-short-valley-of-0g-is-a-streamlined-solution-for-supporting-blockchain-infrastructure-making-decentralized-applications-easier-to-scale-and-manage)
+      - [1. Validator Nodes](#1-validator-nodes)
+      - [2. Storage Nodes](#2-storage-nodes)
+      - [3. Key-Value Storage Nodes](#3-key-value-storage-nodes)
+      - [4. Automation \& Ease of Management](#4-automation--ease-of-management)
+      - [5. Community-Focused Accessibility](#5-community-focused-accessibility)
   - [0G Validator Node Deployment Guide With Cosmovisor](#0g-validator-node-deployment-guide-with-cosmovisor)
     - [**System Requirements**](#system-requirements)
   - [Validator Node Manual installation](#validator-node-manual-installation)
@@ -126,27 +130,27 @@ With Public Testnet, 0G’s docs and code become public. Check them out below! -
 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/valleyof0G.sh)
 ```
 
-**Valley of 0G** by Grand Valley is a robust infrastructure solution supporting **0G**, a decentralized network aimed at scalable, reliable data and transaction processing.
-
 ### Key Features of Valley of 0G
 
-1. **Validator Nodes**: High-performance nodes for validating transactions and securing the 0G network, using hardware optimized for consistency and speed.
+#### 1. Validator Nodes
 
-2. **Storage Nodes**: Decentralized storage solutions that keep 0G network data available and accessible, built on fast NVMe SSDs for quick read/write operations.
+- **High-Performance Validation**: Deploy powerful validator nodes to secure the 0G network, optimized for transaction consistency and processing speed.
 
-3. **Key-Value Storage Nodes**: Specialized nodes for real-time data access and rapid responses in applications that rely on streaming and structured data within the 0G network.
+#### 2. Storage Nodes
 
-4. **Automation & Ease of Management**: Scripts to automate deployment, updates, and maintenance make managing nodes efficient and straightforward.
+- **Decentralized Data Storage**: Use fast NVMe SSDs for storing 0G network data, ensuring data remains accessible and reliable within a decentralized infrastructure.
 
-5. **Community-Focused Accessibility**: Public endpoints and social channels make it easy for users and developers to connect, access resources, and stay engaged with the 0G project.
+#### 3. Key-Value Storage Nodes
 
-In summary, Valley of 0G supports the growth and security of the 0G network by offering flexible, powerful node infrastructure that simplifies decentralized application scaling and data reliability.
+- **Specialized Data Handling**: Operate nodes focused on key-value data storage to support real-time access and structured data needs within 0G, ideal for applications requiring rapid data retrieval and streaming.
 
-4. **Automated Management**: Easy-to-use deployment scripts that handle setup, updates, and maintenance, helping operators keep their nodes secure, up-to-date, and running smoothly.
+#### 4. Automation & Ease of Management
 
-5. **Community and Accessibility**: Valley of 0G offers public endpoints and active community support, allowing developers and users to connect easily and stay engaged with the network.
+- **Automated Node Management**: Utilize scripts for efficient deployment, updates, and maintenance, making node management straightforward and minimizing manual effort.
 
-### In short, Valley of 0G is a streamlined solution for supporting blockchain infrastructure, making decentralized applications easier to scale and manage.
+#### 5. Community-Focused Accessibility
+
+- **Public Endpoints and Support**: Benefit from open endpoints and active social channels that enable developers and users to connect, access resources, and participate in the 0G community.
 
 ## 0G Validator Node Deployment Guide With Cosmovisor
 

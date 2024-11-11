@@ -17,8 +17,13 @@
   - [Example Use Case](#example-use-case)
   - [Conclusion](#conclusion)
   - [Grand Valley's Story Protocol public endpoints:](#grand-valleys-story-protocol-public-endpoints)
-  - [Valley Of Story. Story Protocol tools created by Grand Valley](#valley-of-story-story-protocol-tools-created-by-grand-valley)
-    - [Key Features of Valley Of Story](#key-features-of-valley-of-story)
+  - [Valley Of Story: Story Protocol Tools Created by Grand Valley](#valley-of-story-story-protocol-tools-created-by-grand-valley)
+    - [Installation](#installation)
+    - [Key Features of Valley of Story](#key-features-of-valley-of-story)
+      - [1. Node Interactions](#1-node-interactions)
+      - [2. Validator and Key Interactions](#2-validator-and-key-interactions)
+      - [3. Snapshot Application](#3-snapshot-application)
+      - [4. Story App Installation](#4-story-app-installation)
   - [Story Node Deployment Guide With Cosmovisor](#story-node-deployment-guide-with-cosmovisor)
     - [**System Requirements**](#system-requirements)
   - [Validator Manual installation](#validator-manual-installation)
@@ -133,44 +138,49 @@ With Public Testnet, Story's docs and code become public. Check them out below!
 - cosmos ws: `wss://lightnode-rpc-story.grandvalleys.com/websocket`
 - evm ws: `wss://lightnode-wss-story.grandvalleys.com`
 
-## Valley Of Story. Story Protocol tools created by Grand Valley
+## Valley Of Story: Story Protocol Tools Created by Grand Valley
 
-![image](https://github.com/user-attachments/assets/5110da6d-4ec2-492d-86ea-887b34b279b4)
+![Valley of Story Image 1](https://github.com/user-attachments/assets/5110da6d-4ec2-492d-86ea-887b34b279b4)
+![Valley of Story Image 2](https://github.com/user-attachments/assets/537ca1db-1a0c-4908-a733-3f45872dc8ca)
 
-![image](https://github.com/user-attachments/assets/537ca1db-1a0c-4908-a733-3f45872dc8ca)
+Valley of Story by Grand Valley is an all-in-one infrastructure solution providing powerful tools for efficient node management and validator interactions within the Story Protocol network. Designed for node runners in the Story Protocol ecosystem, Valley of Story offers an accessible, streamlined interface to manage nodes, maintain network participation, and perform validator functions effectively.
+
+### Installation
+
+Run the following command to install Valley of Story:
 
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/valleyofStory.sh)
 ```
 
-### Key Features of Valley Of Story
-
-1. **Node Interactions**:
-
-   - **Deploy and Manage Validator Nodes**: Easily deploy a new validator node or remove an existing one. Important! Make sure to back up critical files (seed phrases, private keys, `priv_validator_key.json`) before deletion.
-   - **Node Control**: Start, stop, or restart the validator node as needed.
-   - **Node Status**: View the current operational status of the validator node.
-   - **Peer Management**: Add peers to ensure efficient communication and stability within the network.
-   - **Client Updates**: Update both the Consensus Client and Geth (Execution Client) versions to maintain node compatibility and performance.
-   - **Targeted Controls**: Stop or restart only specific services, such as the Consensus Client or Geth, for fine-tuned management.
-   - **Logging**: Access combined logs for both Consensus Client and Geth, streamlining troubleshooting and monitoring.
-
-2. **Validator and Key Interactions**:
-
-   - **Validator Setup**: Create a validator to participate in consensus and network security.
-   - **Key Management**: Export EVM private keys and back up the validator key to prevent any potential data loss.
-   - **Stake and Unstake Tokens**: Stake tokens to secure the network or unstake them as needed, along with querying the validator's public key and account balance.
-
-3. **Snapshot Application**:
-
-   - Apply the latest snapshot to speed up the node setup process, allowing quick synchronization with the network.
-
-4. **Story App Installation**:
-   - Install the Story app without running the node, enabling users to execute transactions or interact with the network directly from the command line (version v0.12.1).
-
+**Valley of Story** by Grand Valley is an all-in-one infrastructure solution providing powerful tools for efficient node management and validator interactions within the Story Protocol network.
 Valley Of Story is designed to provide node runners in the Story Protocol ecosystem with an accessible, powerful set of tools for node management and validator interaction, all within a single, streamlined interface.
 
-**Valley of Story** by Grand Valley is a robust infrastructure solution supporting Story Protocol, a decentralized network aimed at scalable, reliable data and transaction processing.
+### Key Features of Valley of Story
+
+#### 1. Node Interactions
+
+- **Deploy and Manage Validator Nodes**: Deploy new validator nodes or remove existing ones. **Important!** Always back up critical files (e.g., seed phrases, private keys, `priv_validator_key.json`) before deletion.
+- **Node Control**: Start, stop, or restart validator nodes as needed.
+- **Node Status**: Monitor the current operational status of the validator node.
+- **Peer Management**: Add peers to enhance network stability and communication.
+- **Client Updates**: Update Consensus Client and Geth (Execution Client) to ensure compatibility and performance.
+- **Targeted Controls**: Stop or restart specific services, such as the Consensus Client or Geth, for more granular control.
+- **Logging**: Access unified logs for both Consensus Client and Geth, aiding in troubleshooting and monitoring.
+
+#### 2. Validator and Key Interactions
+
+- **Validator Setup**: Create a validator to engage in network consensus and security.
+- **Key Management**: Export EVM private keys and back up validator keys to prevent data loss.
+- **Stake and Unstake Tokens**: Stake tokens to support network security or unstake them as required. Also, query validator public keys and account balances.
+
+#### 3. Snapshot Application
+
+- Quickly synchronize with the network by applying the latest snapshot, expediting node setup.
+
+#### 4. Story App Installation
+
+- Install the Story app (v0.12.1) for command-line transactions and network interactions without running a full node.
 
 ## Story Node Deployment Guide With Cosmovisor
 
