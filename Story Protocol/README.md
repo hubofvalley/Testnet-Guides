@@ -143,7 +143,7 @@ With Public Testnet, Story's docs and code become public. Check them out below!
 ![Valley of Story Image 1](https://github.com/user-attachments/assets/5110da6d-4ec2-492d-86ea-887b34b279b4)
 ![Valley of Story Image 2](https://github.com/user-attachments/assets/537ca1db-1a0c-4908-a733-3f45872dc8ca)
 
-Valley of Story by Grand Valley is an all-in-one infrastructure solution providing powerful tools for efficient node management and validator interactions within the Story Protocol network. Designed for node runners in the Story Protocol ecosystem, Valley of Story offers an accessible, streamlined interface to manage nodes, maintain network participation, and perform validator functions effectively.
+**Valley of Story** by Grand Valley is an all-in-one infrastructure solution providing powerful tools for efficient node management and validator interactions within the **Story Protocol** network. Designed for node runners in the **Story Protocol** ecosystem, **Valley of Story** offers an accessible, streamlined interface to manage nodes, maintain network participation, and perform validator functions effectively.
 
 ### Installation
 
