@@ -302,11 +302,11 @@ main_script() {
             echo -e "${GREEN}Checking availability of ITRocket snapshots:${NC}"
             echo -n "Pruned Snapshot (Server 1): "
             check_url $ITR_PRUNED_API_URL_1
-            echo -n "Archive Snapshot (Server 1): "
+            echo -n "Archive Snapshot (Server 8): "
             check_url $ITR_ARCHIVE_API_URL_1
-            echo -n "Pruned Snapshot (Server 2): "
+            echo -n "Pruned Snapshot (Server 3): "
             check_url $ITR_PRUNED_API_URL_2
-            echo -n "Archive Snapshot (Server 2): "
+            echo -n "Archive Snapshot (Server 5): "
             check_url $ITR_ARCHIVE_API_URL_2
 
             prompt_back_or_continue
