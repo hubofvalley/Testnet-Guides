@@ -57,37 +57,14 @@ display_snapshot_details() {
     local api_url=$1
     local snapshot_info=$(curl -s $api_url)
     local snapshot_height=$(echo $snapshot_info | jq -r '.snapshot_height')
-    local snapshot_time=$(echo $snapshot_info | jq -r '.snapshot_taken_at')
     local story_size=$(echo $snapshot_info | jq -r '.story_size')
     local geth_size=$(echo $snapshot_info | jq -r '.geth_size')
     local snapshot_size=$(echo $snapshot_info | jq -r '.snapshot_size')
     local geth_snapshot_size=$(echo $snapshot_info | jq -r '.geth_snapshot_size')
     local size=$(echo $snapshot_info | jq -r '.size')
-    local sleep_duration=$(echo $snapshot_info | jq -r '.updated_every')
 
     if [[ -z $snapshot_height ]]; then
         snapshot_height=$(echo $snapshot_info | jq -r '.height')
-        snapshot_time=$(echo $snapshot_info | jq -r '.time')
-        sleep_duration=$(echo $snapshot_info | jq -r '.sleep_duration')
-    fi
-
-    if [[ -z $snapshot_time ]]; then
-        echo -e "${RED}Invalid snapshot time.${NC}"
-        return
-    fi
-
-    local current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-    local time_diff=$(($(date -d "$current_time" +%s) - $(date -d "$snapshot_time" +%s)))
-    local hours=$((time_diff / 3600))
-    local minutes=$(( (time_diff % 3600) / 60 ))
-    local seconds=$((time_diff % 60))
-
-    if [[ $hours -gt 0 ]]; then
-        last_update="${hours}h ago"
-    elif [[ $minutes -gt 0 ]]; then
-        last_update="${minutes}m ago"
-    else
-        last_update="${seconds}s ago"
     fi
 
     if [[ -n $story_size && -n $geth_size ]]; then
@@ -99,9 +76,7 @@ display_snapshot_details() {
     fi
 
     echo -e "${GREEN}Snapshot Height:${NC} $snapshot_height"
-    echo -e "${GREEN}Snapshot Time:${NC} $snapshot_time"
     echo -e "${GREEN}Snapshot Size:${NC} $total_size GB"
-    echo -e "${GREEN}Last Updated:${NC} $last_update"
 }
 
 # Function to choose snapshot type for Mandragora
