@@ -60,7 +60,7 @@ display_snapshot_details() {
     local snapshot_height=$(echo $snapshot_info | jq -r '.snapshot_height')
 
     if [[ -z $snapshot_height ]]; then
-        snapshot_height=$(echo $snapshot_info | jq -r '.height')
+        snapshot_height=$(echo $snapshot_info | grep -oP '"snapshot_height":\s*\K\d+')
     fi
 
     echo -e "${GREEN}Snapshot Height:${NC} $snapshot_height"
