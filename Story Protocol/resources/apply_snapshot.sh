@@ -57,10 +57,12 @@ check_url() {
 display_snapshot_details() {
     local api_url=$1
     local snapshot_info=$(curl -s $api_url)
-    local snapshot_height=$(echo $snapshot_info | jq -r '.snapshot_height')
+    local snapshot_height
 
-    if [[ -z $snapshot_height ]]; then
-        snapshot_height=$(echo $snapshot_info | grep -oP '"snapshot_height":\s*\K\d+')
+    if echo "$snapshot_info" | jq -e '.snapshot_height' > /dev/null 2>&1; then
+        snapshot_height=$(echo "$snapshot_info" | jq -r '.snapshot_height')
+    else
+        snapshot_height=$(echo "$snapshot_info" | grep -oP '"snapshot_height":\s*\K\d+')
     fi
 
     echo -e "${GREEN}Snapshot Height:${NC} $snapshot_height"
