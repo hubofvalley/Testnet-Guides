@@ -58,16 +58,22 @@ display_snapshot_details() {
     local snapshot_info=$(curl -s $api_url)
     local snapshot_height=$(echo $snapshot_info | jq -r '.snapshot_height')
     local snapshot_time=$(echo $snapshot_info | jq -r '.snapshot_taken_at')
-    local snapshot_size=$(echo $snapshot_info | jq -r '.story_size')
-    local geth_snapshot_size=$(echo $snapshot_info | jq -r '.geth_size')
+    local story_size=$(echo $snapshot_info | jq -r '.story_size')
+    local geth_size=$(echo $snapshot_info | jq -r '.geth_size')
+    local snapshot_size=$(echo $snapshot_info | jq -r '.snapshot_size')
+    local geth_snapshot_size=$(echo $snapshot_info | jq -r '.geth_snapshot_size')
+    local size=$(echo $snapshot_info | jq -r '.size')
     local sleep_duration=$(echo $snapshot_info | jq -r '.updated_every')
 
     if [[ -z $snapshot_height ]]; then
         snapshot_height=$(echo $snapshot_info | jq -r '.height')
         snapshot_time=$(echo $snapshot_info | jq -r '.time')
-        snapshot_size=$(echo $snapshot_info | jq -r '.size')
-        geth_snapshot_size=$(echo $snapshot_info | jq -r '.geth_snapshot_size')
         sleep_duration=$(echo $snapshot_info | jq -r '.sleep_duration')
+    fi
+
+    if [[ -z $snapshot_time ]]; then
+        echo -e "${RED}Invalid snapshot time.${NC}"
+        return
     fi
 
     local current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
@@ -84,10 +90,17 @@ display_snapshot_details() {
         last_update="${seconds}s ago"
     fi
 
+    if [[ -n $story_size && -n $geth_size ]]; then
+        total_size=$(echo "$story_size + $geth_size" | bc)
+    elif [[ -n $snapshot_size && -n $geth_snapshot_size ]]; then
+        total_size=$(echo "$snapshot_size + $geth_snapshot_size" | bc)
+    elif [[ -n $size ]]; then
+        total_size=$size
+    fi
+
     echo -e "${GREEN}Snapshot Height:${NC} $snapshot_height"
     echo -e "${GREEN}Snapshot Time:${NC} $snapshot_time"
-    echo -e "${GREEN}Snapshot Size:${NC} $snapshot_size GB"
-    echo -e "${GREEN}GETH Snapshot Size:${NC} $geth_snapshot_size GB"
+    echo -e "${GREEN}Snapshot Size:${NC} $total_size GB"
     echo -e "${GREEN}Last Updated:${NC} $last_update"
 }
 
@@ -112,6 +125,8 @@ choose_mandragora_snapshot() {
     esac
 
     display_snapshot_details $SNAPSHOT_API_URL
+
+    prompt_back_or_continue
 
     GETH_SNAPSHOT_URL=$MAND_PRUNED_GETH_SNAPSHOT_URL
     STORY_SNAPSHOT_URL=$MAND_PRUNED_STORY_SNAPSHOT_URL
@@ -185,6 +200,8 @@ choose_itrocket_snapshot() {
             ;;
     esac
 
+    prompt_back_or_continue
+
     FILE_NAME=$(curl -s $SNAPSHOT_API_URL | jq -r '.snapshot_name')
     GETH_FILE_NAME=$(curl -s $SNAPSHOT_API_URL | jq -r '.snapshot_geth_name')
     GETH_SNAPSHOT_URL="https://server-3.itrocket.net/testnet/story/$GETH_FILE_NAME"
@@ -212,6 +229,8 @@ choose_josephtran_snapshot() {
             exit 1
             ;;
     esac
+
+    prompt_back_or_continue
 }
 
 # Function to choose snapshot type for OriginStake
@@ -235,6 +254,8 @@ choose_originstake_snapshot() {
     esac
 
     display_snapshot_details $SNAPSHOT_API_URL
+
+    prompt_back_or_continue
 
     FILE_NAME=$(curl -s $SNAPSHOT_API_URL | jq -r '.name')
     SNAPSHOT_URL="https://snapshot.originstake.com/$FILE_NAME"
