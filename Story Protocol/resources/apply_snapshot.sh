@@ -17,9 +17,9 @@ MAND_PRUNED_API_URL="https://snapshots2.mandragora.io/story/info.json"
 MAND_ARCHIVE_API_URL="https://snapshots.mandragora.io/info.json"
 
 ITR_PRUNED_API_URL_1="https://server-1.itrocket.net/testnet/story/.current_state.json"
-ITR_ARCHIVE_API_URL_1="https://server-8.itrocket.net/testnet/story/.current_state.json"
+ITR_ARCHIVE_API_URL_1="https://server-5.itrocket.net/testnet/story/.current_state.json"
 ITR_PRUNED_API_URL_2="https://server-3.itrocket.net/testnet/story/.current_state.json"
-ITR_ARCHIVE_API_URL_2="https://server-5.itrocket.net/testnet/story/.current_state.json"
+ITR_ARCHIVE_API_URL_2="https://server-8.itrocket.net/testnet/story/.current_state.json"
 
 CROUTON_SNAPSHOT_URL="https://storage.crouton.digital/testnet/story/snapshots/story_latest.tar.lz4"
 
@@ -302,11 +302,11 @@ main_script() {
             echo -e "${GREEN}Checking availability of ITRocket snapshots:${NC}"
             echo -n "Pruned Snapshot (Server 1): "
             check_url $ITR_PRUNED_API_URL_1
-            echo -n "Archive Snapshot (Server 8): "
-            check_url $ITR_ARCHIVE_API_URL_1
             echo -n "Pruned Snapshot (Server 3): "
             check_url $ITR_PRUNED_API_URL_2
             echo -n "Archive Snapshot (Server 5): "
+            check_url $ITR_ARCHIVE_API_URL_1
+            echo -n "Archive Snapshot (Server 8): "
             check_url $ITR_ARCHIVE_API_URL_2
 
             prompt_back_or_continue
