@@ -13,6 +13,9 @@ MAND_PRUNED_STORY_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/story_sna
 MAND_ARCHIVE_GETH_SNAPSHOT_URL="https://snapshots.mandragora.io/geth_snapshot.lz4"
 MAND_ARCHIVE_STORY_SNAPSHOT_URL="https://snapshots.mandragora.io/story_snapshot.lz4"
 
+MAND_PRUNED_API_URL="https://snapshots2.mandragora.io/info.json"
+MAND_ARCHIVE_API_URL="https://snapshots.mandragora.io/info.json"
+
 ITR_PRUNED_API_URL_1="https://server-1.itrocket.net/testnet/story/.current_state.json"
 ITR_ARCHIVE_API_URL_1="https://server-8.itrocket.net/testnet/story/.current_state.json"
 ITR_PRUNED_API_URL_2="https://server-3.itrocket.net/testnet/story/.current_state.json"
@@ -54,12 +57,38 @@ display_snapshot_details() {
     local api_url=$1
     local snapshot_info=$(curl -s $api_url)
     local snapshot_height=$(echo $snapshot_info | jq -r '.snapshot_height')
-    local snapshot_time=$(echo $snapshot_info | jq -r '.snapshot_block_time')
-    local sleep_duration=$(echo $snapshot_info | jq -r '.sleep_duration')
+    local snapshot_time=$(echo $snapshot_info | jq -r '.snapshot_taken_at')
+    local snapshot_size=$(echo $snapshot_info | jq -r '.story_size')
+    local geth_snapshot_size=$(echo $snapshot_info | jq -r '.geth_size')
+    local sleep_duration=$(echo $snapshot_info | jq -r '.updated_every')
+
+    if [[ -z $snapshot_height ]]; then
+        snapshot_height=$(echo $snapshot_info | jq -r '.height')
+        snapshot_time=$(echo $snapshot_info | jq -r '.time')
+        snapshot_size=$(echo $snapshot_info | jq -r '.size')
+        geth_snapshot_size=$(echo $snapshot_info | jq -r '.geth_snapshot_size')
+        sleep_duration=$(echo $snapshot_info | jq -r '.sleep_duration')
+    fi
+
+    local current_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+    local time_diff=$(($(date -d "$current_time" +%s) - $(date -d "$snapshot_time" +%s)))
+    local hours=$((time_diff / 3600))
+    local minutes=$(( (time_diff % 3600) / 60 ))
+    local seconds=$((time_diff % 60))
+
+    if [[ $hours -gt 0 ]]; then
+        last_update="${hours}h ago"
+    elif [[ $minutes -gt 0 ]]; then
+        last_update="${minutes}m ago"
+    else
+        last_update="${seconds}s ago"
+    fi
 
     echo -e "${GREEN}Snapshot Height:${NC} $snapshot_height"
     echo -e "${GREEN}Snapshot Time:${NC} $snapshot_time"
-    echo -e "${GREEN}Last Updated:${NC} $sleep_duration ago"
+    echo -e "${GREEN}Snapshot Size:${NC} $snapshot_size GB"
+    echo -e "${GREEN}GETH Snapshot Size:${NC} $geth_snapshot_size GB"
+    echo -e "${GREEN}Last Updated:${NC} $last_update"
 }
 
 # Function to choose snapshot type for Mandragora
@@ -71,18 +100,21 @@ choose_mandragora_snapshot() {
 
     case $snapshot_type_choice in
         1)
-            GETH_SNAPSHOT_URL=$MAND_PRUNED_GETH_SNAPSHOT_URL
-            STORY_SNAPSHOT_URL=$MAND_PRUNED_STORY_SNAPSHOT_URL
+            SNAPSHOT_API_URL=$MAND_PRUNED_API_URL
             ;;
         2)
-            GETH_SNAPSHOT_URL=$MAND_ARCHIVE_GETH_SNAPSHOT_URL
-            STORY_SNAPSHOT_URL=$MAND_ARCHIVE_STORY_SNAPSHOT_URL
+            SNAPSHOT_API_URL=$MAND_ARCHIVE_API_URL
             ;;
         *)
             echo -e "${RED}Invalid choice. Exiting.${NC}"
             exit 1
             ;;
     esac
+
+    display_snapshot_details $SNAPSHOT_API_URL
+
+    GETH_SNAPSHOT_URL=$MAND_PRUNED_GETH_SNAPSHOT_URL
+    STORY_SNAPSHOT_URL=$MAND_PRUNED_STORY_SNAPSHOT_URL
 }
 
 # Function to choose snapshot type for ITRocket
