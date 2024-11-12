@@ -13,7 +13,7 @@ MAND_PRUNED_STORY_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/story_sna
 MAND_ARCHIVE_GETH_SNAPSHOT_URL="https://snapshots.mandragora.io/geth_snapshot.lz4"
 MAND_ARCHIVE_STORY_SNAPSHOT_URL="https://snapshots.mandragora.io/story_snapshot.lz4"
 
-MAND_PRUNED_API_URL="https://snapshots2.mandragora.io/info.json"
+MAND_PRUNED_API_URL="https://snapshots2.mandragora.io//story/info.json"
 MAND_ARCHIVE_API_URL="https://snapshots.mandragora.io/info.json"
 
 ITR_PRUNED_API_URL_1="https://server-1.itrocket.net/testnet/story/.current_state.json"
