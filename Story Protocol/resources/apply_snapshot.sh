@@ -94,6 +94,14 @@ choose_itrocket_snapshot() {
 
     case $snapshot_type_choice in
         1)
+            echo -e "${GREEN}Checking availability and details of Pruned snapshots:${NC}"
+            echo -n "Pruned Snapshot (Server 1): "
+            check_url $ITR_PRUNED_API_URL_1
+            display_snapshot_details $ITR_PRUNED_API_URL_1
+            echo -n "Pruned Snapshot (Server 2): "
+            check_url $ITR_PRUNED_API_URL_2
+            display_snapshot_details $ITR_PRUNED_API_URL_2
+
             echo -e "${GREEN}Choose the server for Pruned snapshot:${NC}"
             echo "1. Server 1"
             echo "2. Server 2"
@@ -113,6 +121,14 @@ choose_itrocket_snapshot() {
             esac
             ;;
         2)
+            echo -e "${GREEN}Checking availability and details of Archive snapshots:${NC}"
+            echo -n "Archive Snapshot (Server 1): "
+            check_url $ITR_ARCHIVE_API_URL_1
+            display_snapshot_details $ITR_ARCHIVE_API_URL_1
+            echo -n "Archive Snapshot (Server 2): "
+            check_url $ITR_ARCHIVE_API_URL_2
+            display_snapshot_details $ITR_ARCHIVE_API_URL_2
+
             echo -e "${GREEN}Choose the server for Archive snapshot:${NC}"
             echo "1. Server 1"
             echo "2. Server 2"
@@ -136,8 +152,6 @@ choose_itrocket_snapshot() {
             exit 1
             ;;
     esac
-
-    display_snapshot_details $SNAPSHOT_API_URL
 
     FILE_NAME=$(curl -s $SNAPSHOT_API_URL | jq -r '.snapshot_name')
     GETH_FILE_NAME=$(curl -s $SNAPSHOT_API_URL | jq -r '.snapshot_geth_name')
