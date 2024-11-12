@@ -44,11 +44,11 @@ show_menu() {
 
 # Function to check if a URL is available
 check_url() {
-    local url=\\$1
+    local url=$1
     if curl --output /dev/null --silent --head --fail "$url"; then
-        echo -e "${GREEN}Available\${NC}"
+        echo -e "${GREEN}Available${NC}"
     else
-        echo -e "${RED}Not available at the moment\${NC}"
+        echo -e "${RED}Not available at the moment${NC}"
     fi
 }
 
@@ -56,68 +56,68 @@ check_url() {
 display_snapshot_details() {
     local api_url=$1
     local snapshot_info=$(curl -s $api_url)
-    local snapshot_height=$(echo \\$snapshot_info | jq -r '.snapshot_height')
+    local snapshot_height=$(echo $snapshot_info | jq -r '.snapshot_height')
 
     if [[ -z $snapshot_height ]]; then
         snapshot_height=$(echo $snapshot_info | jq -r '.height')
     fi
 
-    echo -e "${GREEN}Snapshot Height:\\${NC} \\$snapshot_height"
+    echo -e "${GREEN}Snapshot Height:${NC} $snapshot_height"
 }
 
 # Function to choose snapshot type for Mandragora
 choose_mandragora_snapshot() {
-    echo -e "\\${GREEN}Choose the type of snapshot for Mandragora:\\${NC}"
-    echo "1. Pruned"
-    echo "2. Archive"
-    read -p "Enter your choice: " snapshot_type_choice
-
-    case \\$snapshot_type_choice in
-        1)
-            SNAPSHOT_API_URL=\\$MAND_PRUNED_API_URL
-            ;;
-        2)
-            SNAPSHOT_API_URL=$MAND_ARCHIVE_API_URL
-            ;;
-        *)
-            echo -e "${RED}Invalid choice. Exiting.\\${NC}"
-            exit 1
-            ;;
-    esac
-
-    display_snapshot_details \\$SNAPSHOT_API_URL
-
-    prompt_back_or_continue
-
-    GETH_SNAPSHOT_URL=\\$MAND_PRUNED_GETH_SNAPSHOT_URL
-    STORY_SNAPSHOT_URL=\\$MAND_PRUNED_STORY_SNAPSHOT_URL
-}
-
-# Function to choose snapshot type for ITRocket
-choose_itrocket_snapshot() {
-    echo -e "\\${GREEN}Choose the type of snapshot for ITRocket:\\${NC}"
+    echo -e "${GREEN}Choose the type of snapshot for Mandragora:${NC}"
     echo "1. Pruned"
     echo "2. Archive"
     read -p "Enter your choice: " snapshot_type_choice
 
     case $snapshot_type_choice in
         1)
-            echo -e "${GREEN}Checking availability and details of Pruned snapshots:\\${NC}"
+            SNAPSHOT_API_URL=$MAND_PRUNED_API_URL
+            ;;
+        2)
+            SNAPSHOT_API_URL=$MAND_ARCHIVE_API_URL
+            ;;
+        *)
+            echo -e "${RED}Invalid choice. Exiting.${NC}"
+            exit 1
+            ;;
+    esac
+
+    display_snapshot_details $SNAPSHOT_API_URL
+
+    prompt_back_or_continue
+
+    GETH_SNAPSHOT_URL=$MAND_PRUNED_GETH_SNAPSHOT_URL
+    STORY_SNAPSHOT_URL=$MAND_PRUNED_STORY_SNAPSHOT_URL
+}
+
+# Function to choose snapshot type for ITRocket
+choose_itrocket_snapshot() {
+    echo -e "${GREEN}Choose the type of snapshot for ITRocket:${NC}"
+    echo "1. Pruned"
+    echo "2. Archive"
+    read -p "Enter your choice: " snapshot_type_choice
+
+    case $snapshot_type_choice in
+        1)
+            echo -e "${GREEN}Checking availability and details of Pruned snapshots:${NC}"
             echo -n "Pruned Snapshot (Server 1): "
-            check_url \\$ITR_PRUNED_API_URL_1
-            display_snapshot_details \\$ITR_PRUNED_API_URL_1
+            check_url $ITR_PRUNED_API_URL_1
+            display_snapshot_details $ITR_PRUNED_API_URL_1
             echo -n "Pruned Snapshot (Server 2): "
-            check_url \\$ITR_PRUNED_API_URL_2
+            check_url $ITR_PRUNED_API_URL_2
             display_snapshot_details $ITR_PRUNED_API_URL_2
 
-            echo -e "${GREEN}Choose the server for Pruned snapshot:\\${NC}"
+            echo -e "${GREEN}Choose the server for Pruned snapshot:${NC}"
             echo "1. Server 1"
             echo "2. Server 2"
             read -p "Enter your choice: " server_choice
 
-            case \\$server_choice in
+            case $server_choice in
                 1)
-                    SNAPSHOT_API_URL=\\$ITR_PRUNED_API_URL_1
+                    SNAPSHOT_API_URL=$ITR_PRUNED_API_URL_1
                     ;;
                 2)
                     SNAPSHOT_API_URL=$ITR_PRUNED_API_URL_2
@@ -129,13 +129,14 @@ choose_itrocket_snapshot() {
             esac
             ;;
         2)
-            echo -e "${GREEN}Checking availability and details of Archive snapshots:\\${NC}"
+            echo -e "${GREEN}Checking availability and details of Archive snapshots:${NC}"
             echo -n "Archive Snapshot (Server 1): "
-            check_url \\$ITR_ARCHIVE_API_URL_1
-            display_snapshot_details \\$ITR_ARCHIVE_API_URL_1
+            check_url $ITR_ARCHIVE_API_URL_1
+            display_snapshot_details $ITR_ARCHIVE_API_URL_1
             echo -n "Archive Snapshot (Server 2): "
-            check_url \\$ITR_ARCHIVE_API_URL_2
-            display_snapshot_details \\$ITR_
+            check_url $ITR_ARCHIVE_API_URL_2
+            display_snapshot_details $ITR_ARCHIVE_API_URL_2
+
             echo -e "${GREEN}Choose the server for Archive snapshot:${NC}"
             echo "1. Server 1"
             echo "2. Server 2"
