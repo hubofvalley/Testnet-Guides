@@ -377,7 +377,7 @@ function add_peers() {
     menu
 }
 
-function update_consensus_client() {
+function manage_consensus_client() {
     echo "Choose an option:"
     echo "1. Migrate to Cosmovisor only"
     echo "2. Update Consensus Client Version (includes Cosmovisor migration and deployment)"
