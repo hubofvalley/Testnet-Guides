@@ -122,7 +122,7 @@ choose_itrocket_snapshot() {
             if [[ $? -eq 0 ]]; then
                 display_snapshot_details $ITR_PRUNED_API_URL_1
             fi
-            echo -n "Pruned Snapshot (Server 2): "
+            echo -n "Pruned Snapshot (Server 3): "
             check_url $ITR_PRUNED_API_URL_2
             if [[ $? -eq 0 ]]; then
                 display_snapshot_details $ITR_PRUNED_API_URL_2
@@ -130,15 +130,17 @@ choose_itrocket_snapshot() {
 
             echo -e "${GREEN}Choose the server for Pruned snapshot:${NC}"
             echo "1. Server 1"
-            echo "2. Server 2"
+            echo "2. Server 3"
             read -p "Enter your choice: " server_choice
 
             case $server_choice in
                 1)
                     SNAPSHOT_API_URL=$ITR_PRUNED_API_URL_1
+                    SERVER_BASE_URL="https://server-1.itrocket.net/testnet/story/"
                     ;;
                 2)
                     SNAPSHOT_API_URL=$ITR_PRUNED_API_URL_2
+                    SERVER_BASE_URL="https://server-3.itrocket.net/testnet/story/"
                     ;;
                 *)
                     echo -e "${RED}Invalid choice. Exiting.${NC}"
@@ -148,28 +150,30 @@ choose_itrocket_snapshot() {
             ;;
         2)
             echo -e "${GREEN}Checking availability and details of Archive snapshots:${NC}"
-            echo -n "Archive Snapshot (Server 1): "
+            echo -n "Archive Snapshot (Server 5): "
             check_url $ITR_ARCHIVE_API_URL_1
             if [[ $? -eq 0 ]]; then
                 display_snapshot_details $ITR_ARCHIVE_API_URL_1
             fi
-            echo -n "Archive Snapshot (Server 2): "
+            echo -n "Archive Snapshot (Server 8): "
             check_url $ITR_ARCHIVE_API_URL_2
             if [[ $? -eq 0 ]]; then
                 display_snapshot_details $ITR_ARCHIVE_API_URL_2
             fi
 
             echo -e "${GREEN}Choose the server for Archive snapshot:${NC}"
-            echo "1. Server 1"
-            echo "2. Server 2"
+            echo "1. Server 5"
+            echo "2. Server 8"
             read -p "Enter your choice: " server_choice
 
             case $server_choice in
                 1)
                     SNAPSHOT_API_URL=$ITR_ARCHIVE_API_URL_1
+                    SERVER_BASE_URL="https://server-5.itrocket.net/testnet/story/"
                     ;;
                 2)
                     SNAPSHOT_API_URL=$ITR_ARCHIVE_API_URL_2
+                    SERVER_BASE_URL="https://server-8.itrocket.net/testnet/story/"
                     ;;
                 *)
                     echo -e "${RED}Invalid choice. Exiting.${NC}"
@@ -187,8 +191,8 @@ choose_itrocket_snapshot() {
 
     FILE_NAME=$(curl -s $SNAPSHOT_API_URL | jq -r '.snapshot_name')
     GETH_FILE_NAME=$(curl -s $SNAPSHOT_API_URL | jq -r '.snapshot_geth_name')
-    GETH_SNAPSHOT_URL="https://server-3.itrocket.net/testnet/story/$GETH_FILE_NAME"
-    STORY_SNAPSHOT_URL="https://server-3.itrocket.net/testnet/story/$FILE_NAME"
+    GETH_SNAPSHOT_URL="$SERVER_BASE_URL$GETH_FILE_NAME"
+    STORY_SNAPSHOT_URL="$SERVER_BASE_URL$FILE_NAME"
 }
 
 # Function to choose snapshot type for Josephtran
