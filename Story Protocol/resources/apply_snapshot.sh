@@ -49,6 +49,7 @@ check_url() {
         echo -e "${GREEN}Available${NC}"
     else
         echo -e "${RED}Not available at the moment${NC}"
+        return 1
     fi
 }
 
@@ -105,10 +106,14 @@ choose_itrocket_snapshot() {
             echo -e "${GREEN}Checking availability and details of Pruned snapshots:${NC}"
             echo -n "Pruned Snapshot (Server 1): "
             check_url $ITR_PRUNED_API_URL_1
-            display_snapshot_details $ITR_PRUNED_API_URL_1
+            if [[ $? -eq 0 ]]; then
+                display_snapshot_details $ITR_PRUNED_API_URL_1
+            fi
             echo -n "Pruned Snapshot (Server 2): "
             check_url $ITR_PRUNED_API_URL_2
-            display_snapshot_details $ITR_PRUNED_API_URL_2
+            if [[ $? -eq 0 ]]; then
+                display_snapshot_details $ITR_PRUNED_API_URL_2
+            fi
 
             echo -e "${GREEN}Choose the server for Pruned snapshot:${NC}"
             echo "1. Server 1"
@@ -132,10 +137,14 @@ choose_itrocket_snapshot() {
             echo -e "${GREEN}Checking availability and details of Archive snapshots:${NC}"
             echo -n "Archive Snapshot (Server 1): "
             check_url $ITR_ARCHIVE_API_URL_1
-            display_snapshot_details $ITR_ARCHIVE_API_URL_1
+            if [[ $? -eq 0 ]]; then
+                display_snapshot_details $ITR_ARCHIVE_API_URL_1
+            fi
             echo -n "Archive Snapshot (Server 2): "
             check_url $ITR_ARCHIVE_API_URL_2
-            display_snapshot_details $ITR_ARCHIVE_API_URL_2
+            if [[ $? -eq 0 ]]; then
+                display_snapshot_details $ITR_ARCHIVE_API_URL_2
+            fi
 
             echo -e "${GREEN}Choose the server for Archive snapshot:${NC}"
             echo "1. Server 1"
