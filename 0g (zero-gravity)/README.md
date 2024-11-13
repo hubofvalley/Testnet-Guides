@@ -206,13 +206,13 @@ ENTER YOUR MONIKER & YOUR PREFERRED PORT NUMBER
 
 ```bash
 read -p "Enter your moniker: " MONIKER && echo "Current moniker: $MONIKER"
-read -p "Enter your 2 digits custom port: (leave empty to use default: 26) " OG_PORT && echo "Current port number: ${OG_PORT:-26}"
+read -p "Enter your 2 digits custom port: (leave empty to use default: 26) " 0G_PORT && echo "Current port number: ${0G_PORT:-26}"
 read -p "Enter your wallet name: " WALLET && echo "Current wallet name: $WALLET"
 
 echo "export WALLET=\"$WALLET\"" >> $HOME/.bash_profile
 echo "export MONIKER=\"$MONIKER\"" >> $HOME/.bash_profile
 echo "export OG_CHAIN_ID=\"zgtendermint_16600-2\"" >> $HOME/.bash_profile
-echo "export OG_PORT=\"${OG_PORT:-26}\"" >> $HOME/.bash_profile
+echo "export 0G_PORT=\"${0G_PORT:-26}\"" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 ```
 
@@ -231,7 +231,7 @@ make install
 cd $HOME
 0gchaind init $MONIKER --chain-id $OG_CHAIN_ID
 0gchaind config chain-id $OG_CHAIN_ID
-0gchaind config node tcp://localhost:${OG_PORT}657
+0gchaind config node tcp://localhost:${0G_PORT}657
 0gchaind config keyring-backend os
 ```
 
@@ -247,7 +247,7 @@ wget https://github.com/0glabs/0g-chain/releases/download/v0.2.3/genesis.json -O
 ```bash
 sed -i.bak -e "/^\[p2p\]/,/^$/ s%laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${0G_PORT}656\"%g;
 s%prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${0G_PORT}660\"%g;
-s%proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${OG_PORT}658\"%g;
+s%proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${0G_PORT}658\"%g;
 s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://127.0.0.1:${0G_PORT}657\"%g;
 s%^pprof_laddr = \"localhost:26060\"%pprof_laddr = \"localhost:${0G_PORT}060\"%g" $HOME/.0gchain/config/config.toml
 ```
@@ -281,7 +281,7 @@ sed -i \
 
 ```bash
 sed -i \
-   -e "s/laddr = \"tcp:\/\/127.0.0.1:${OG_PORT}657\"/laddr = \"tcp:\/\/0.0.0.0:${OG_PORT}657\"/" \
+   -e "s/laddr = \"tcp:\/\/127.0.0.1:${0G_PORT}657\"/laddr = \"tcp:\/\/0.0.0.0:${0G_PORT}657\"/" \
    $HOME/.0gchain/config/config.toml
 ```
 
