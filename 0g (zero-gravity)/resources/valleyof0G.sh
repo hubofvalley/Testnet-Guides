@@ -109,7 +109,7 @@ read -r
 sudo systemctl daemon-reload
 detect_service_file
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
-echo "export 0G_CHAIN_ID="zgtendermint_16600-2"" >> $HOME/.bash_profile
+echo "export OG_CHAIN_ID="zgtendermint_16600-2"" >> $HOME/.bash_profile
 echo "export SERVICE_FILE_NAME=\"$SERVICE_FILE_NAME\"" >> ~/.bash_profile
 source $HOME/.bash_profile
 
@@ -154,7 +154,7 @@ function create_validator() {
     --amount=1000000ua0gi \
     --pubkey=$(0gchaind tendermint show-validator) \
     --moniker=$MONIKER \
-    --chain-id=$0G_CHAIN_ID \
+    --chain-id=$OG_CHAIN_ID \
     --commission-rate=0.10 \
     --commission-max-rate=0.20 \
     --commission-max-change-rate=0.01 \
@@ -171,7 +171,7 @@ function create_validator() {
 
 function query_balance() {
     read -p "Enter wallet address: " WALLET_ADDRESS
-    0gchaind query bank balances $WALLET_ADDRESS --chain-id $0G_CHAIN_ID
+    0gchaind query bank balances $WALLET_ADDRESS --chain-id $OG_CHAIN_ID
     menu
 }
 
@@ -179,7 +179,7 @@ function send_transaction() {
     read -p "Enter sender wallet name: " SENDER_WALLET
     read -p "Enter recipient wallet address: " RECIPIENT_ADDRESS
     read -p "Enter amount to send: " AMOUNT
-    0gchaind tx bank send $SENDER_WALLET $RECIPIENT_ADDRESS ${AMOUNT}ua0gi --chain-id $0G_CHAIN_ID --gas auto --gas-adjustment 1.4 -y
+    0gchaind tx bank send $SENDER_WALLET $RECIPIENT_ADDRESS ${AMOUNT}ua0gi --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.4 -y
     menu
 }
 
@@ -215,26 +215,26 @@ function stake_tokens() {
         1)
             read -p "Enter amount to stake: " AMOUNT
             if [ "$RPC_CHOICE" == "grandvalley" ]; then
-                0gchaind tx staking delegate 0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4 ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $0G_CHAIN_ID --gas auto --gas-adjustment 1.4 --node https://lightnode-rpc-0g.grandvalleys.com:443 -y
+                0gchaind tx staking delegate 0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4 ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.4 --node https://lightnode-rpc-0g.grandvalleys.com:443 -y
             else
-                0gchaind tx staking delegate 0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4 ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $0G_CHAIN_ID --gas auto --gas-adjustment 1.4 -y
+                0gchaind tx staking delegate 0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4 ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.4 -y
             fi
             ;;
         2)
             read -p "Enter amount to stake: " AMOUNT
             if [ "$RPC_CHOICE" == "grandvalley" ]; then
-                0gchaind tx staking delegate $(0gchaind keys show $WALLET_NAME --bech val -a) ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $0G_CHAIN_ID --gas auto --gas-adjustment 1.4 --node https://lightnode-rpc-0g.grandvalleys.com:443 -y
+                0gchaind tx staking delegate $(0gchaind keys show $WALLET_NAME --bech val -a) ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.4 --node https://lightnode-rpc-0g.grandvalleys.com:443 -y
             else
-                0gchaind tx staking delegate $(0gchaind keys show $WALLET_NAME --bech val -a) ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $0G_CHAIN_ID --gas auto --gas-adjustment 1.4 -y
+                0gchaind tx staking delegate $(0gchaind keys show $WALLET_NAME --bech val -a) ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.4 -y
             fi
             ;;
         3)
             read -p "Enter validator address: " VALIDATOR_ADDRESS
             read -p "Enter amount to stake: " AMOUNT
             if [ "$RPC_CHOICE" == "grandvalley" ]; then
-                0gchaind tx staking delegate $VALIDATOR_ADDRESS ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $0G_CHAIN_ID --gas auto --gas-adjustment 1.4 --node https://lightnode-rpc-0g.grandvalleys.com:443 -y
+                0gchaind tx staking delegate $VALIDATOR_ADDRESS ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.4 --node https://lightnode-rpc-0g.grandvalleys.com:443 -y
             else
-                0gchaind tx staking delegate $VALIDATOR_ADDRESS ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $0G_CHAIN_ID --gas auto --gas-adjustment 1.4 -y
+                0gchaind tx staking delegate $VALIDATOR_ADDRESS ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.4 -y
             fi
             ;;
         *)
@@ -271,9 +271,9 @@ function unstake_tokens() {
     read -p "Do you want to use your own RPC or Grand Valley's RPC? (own/grandvalley): " RPC_CHOICE
 
     if [ "$RPC_CHOICE" == "grandvalley" ]; then
-        0gchaind tx staking unbond $VALIDATOR_ADDRESS ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $0G_CHAIN_ID --gas auto --gas-adjustment 1.4 --node https://lightnode-rpc-0g.grandvalleys.com:443 -y
+        0gchaind tx staking unbond $VALIDATOR_ADDRESS ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.4 --node https://lightnode-rpc-0g.grandvalleys.com:443 -y
     else
-        0gchaind tx staking unbond $VALIDATOR_ADDRESS ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $0G_CHAIN_ID --gas auto --gas-adjustment 1.4 -y
+        0gchaind tx staking unbond $VALIDATOR_ADDRESS ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.4 -y
     fi
 
     menu
