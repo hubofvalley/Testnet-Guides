@@ -44,6 +44,28 @@ ${YELLOW}| Category  | Requirements     |
 - current story-geth node version: ${CYAN}v0.10.0${RESET}
 "
 
+PRIVACY_SAFETY_STATEMENT="
+${YELLOW}Privacy and Safety Statement${RESET}
+
+${GREEN}No User Data Stored Externally${RESET}
+- This script does not store any user data externally. All operations are performed locally on your machine.
+
+${GREEN}No Phishing Links${RESET}
+- This script does not contain any phishing links. All URLs and commands are provided for legitimate purposes related to Namada validator node operations.
+
+${GREEN}Security Best Practices${RESET}
+- Always verify the integrity of the script and its source.
+- Ensure you are running the script in a secure environment.
+- Be cautious when entering sensitive information such as wallet names and addresses.
+
+${GREEN}Disclaimer${RESET}
+- The authors of this script are not responsible for any misuse or damage caused by the use of this script.
+- Use this script at your own risk.
+
+${GREEN}Contact${RESET}
+- If you have any concerns or questions, please contact us at letsbuidltogether@grandvalleys.com.
+"
+
 ENDPOINTS="${GREEN}
 Grand Valley Story Protocol public endpoints:${RESET}
 - cosmos-rpc: ${BLUE}https://lightnode-rpc-story.grandvalleys.com${RESET}
@@ -65,6 +87,7 @@ ${GREEN}Connect with Grand Valley:${RESET}
 
 # Display LOGO and wait for user input to continue
 echo -e "$LOGO"
+echo -e "$PRIVACY_SAFETY_STATEMENT"
 echo -e "\n${YELLOW}Press Enter to continue...${RESET}"
 read -r
 

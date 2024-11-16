@@ -67,6 +67,28 @@ storage kvs current binary version: ${CYAN}v1.2.2${RESET}
 ------------------------------------------------------------------
 "
 
+PRIVACY_SAFETY_STATEMENT="
+${YELLOW}Privacy and Safety Statement${RESET}
+
+${GREEN}No User Data Stored Externally${RESET}
+- This script does not store any user data externally. All operations are performed locally on your machine.
+
+${GREEN}No Phishing Links${RESET}
+- This script does not contain any phishing links. All URLs and commands are provided for legitimate purposes related to Namada validator node operations.
+
+${GREEN}Security Best Practices${RESET}
+- Always verify the integrity of the script and its source.
+- Ensure you are running the script in a secure environment.
+- Be cautious when entering sensitive information such as wallet names and addresses.
+
+${GREEN}Disclaimer${RESET}
+- The authors of this script are not responsible for any misuse or damage caused by the use of this script.
+- Use this script at your own risk.
+
+${GREEN}Contact${RESET}
+- If you have any concerns or questions, please contact us at letsbuidltogether@grandvalleys.com.
+"
+
 ENDPOINTS="${GREEN}
 Grand Valley 0G public endpoints:${RESET}
 - cosmos-rpc: ${BLUE}https://lightnode-rpc-0g.grandvalleys.com${RESET}
@@ -98,7 +120,8 @@ function detect_service_file() {
 
 # Display LOGO and wait for user input to continue
 echo -e "$LOGO"
-echo -e "${YELLOW}\nPress Enter to continue...${RESET}"
+echo -e "$PRIVACY_SAFETY_STATEMENT"
+echo -e "\n${YELLOW}Press Enter to continue...${RESET}"
 read -r
 
 # Display INTRO section and wait for user input to continue
