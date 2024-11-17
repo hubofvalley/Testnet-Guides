@@ -506,38 +506,39 @@ function menu() {
     echo "    m. Unstake Tokens"
     echo "    n. Export EVM Private Key"
     echo "    o. Backup Validator Key (store it to $HOME directory)"
-    echo "    p. Stop Validator Node"
-    echo "    q. Restart Validator Node"
-    echo "    r. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
-    echo "    s. Install 0gchain App only (v0.4.0)(for executing transactions without running the node)"
+    echo "    p. Install 0gchain App only (v0.4.0)(for executing transactions without running the node)"
     echo -e "${GREEN}2. Storage Node${RESET}"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
-    echo "    c. Delete Storage Node"
-    echo "    d. Change Storage Node"
-    echo "    e. Show Storage Node Logs"
-    echo "    f. Show Storage Node Status"
-    echo "    g. Stop Storage Node"
-    echo "    h. Restart Storage Node"
+    echo "    c. Change Storage Node"
+    echo "    d. Show Storage Node Logs"
+    echo "    e. Show Storage Node Status"
     echo -e "${GREEN}3. Storage KV${RESET}"
     echo "    a. Deploy Storage KV"
     echo "    b. Show Storage KV Logs"
     echo "    c. Update Storage KV"
-    echo "    d. Delete Storage KV"
-    echo "    e. Stop Storage KV"
-    echo "    f. Restart Storage KV"
-    echo -e "${GREEN}4. Show Grand Valley's Endpoints${RESET}"
-    echo -e "${RED}5. Exit${RESET}"
+    echo -e "${GREEN}4. Node Management${RESET}"
+    echo "    a. Stop Validator Node"
+    echo "    b. Restart Validator Node"
+    echo "    c. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
+    echo "    d. Stop Storage Node"
+    echo "    e. Restart Storage Node"
+    echo "    f. Delete Storage Node"
+    echo "    g. Stop Storage KV"
+    echo "    h. Restart Storage KV"
+    echo "    i. Delete Storage KV"
+    echo -e "${GREEN}5. Show Grand Valley's Endpoints${RESET}"
+    echo -e "${RED}6. Exit${RESET}"
 
     echo -e "${GREEN}Let's Buidl 0G Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
-    if [[ $OPTION =~ ^[1-3][a-s]$ ]]; then
+    if [[ $OPTION =~ ^[1-4][a-i]$ ]]; then
         MAIN_OPTION=${OPTION:0:1}
         SUB_OPTION=${OPTION:1:1}
     else
         MAIN_OPTION=$OPTION
-        if [[ $MAIN_OPTION =~ ^[1-3]$ ]]; then
+        if [[ $MAIN_OPTION =~ ^[1-4]$ ]]; then
             read -p "Choose a sub-option: " SUB_OPTION
         fi
     fi
@@ -560,10 +561,7 @@ function menu() {
                 m) unstake_tokens ;;
                 n) export_evm_private_key ;;
                 o) backup_validator_key ;;
-                p) stop_validator_node ;;
-                q) restart_validator_node ;;
-                r) delete_validator_node ;;
-                s) install_0gchain_app ;;
+                p) install_0gchain_app ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
@@ -571,12 +569,9 @@ function menu() {
             case $SUB_OPTION in
                 a) deploy_storage_node ;;
                 b) update_storage_node ;;
-                c) delete_storage_node ;;
-                d) change_storage_node ;;
-                e) show_storage_logs ;;
-                f) show_storage_status ;;
-                g) stop_storage_node ;;
-                h) restart_storage_node ;;
+                c) change_storage_node ;;
+                d) show_storage_logs ;;
+                e) show_storage_status ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
@@ -585,14 +580,25 @@ function menu() {
                 a) deploy_storage_kv ;;
                 b) show_storage_kv_logs ;;
                 c) update_storage_kv ;;
-                d) delete_storage_kv ;;
-                e) stop_storage_kv ;;
-                f) restart_storage_kv ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
-        4) show_endpoints ;;
-        5) exit 0 ;;
+        4)
+            case $SUB_OPTION in
+                a) stop_validator_node ;;
+                b) restart_validator_node ;;
+                c) delete_validator_node ;;
+                d) stop_storage_node ;;
+                e) restart_storage_node ;;
+                f) delete_storage_node ;;
+                g) stop_storage_kv ;;
+                h) restart_storage_kv ;;
+                i) delete_storage_kv ;;
+                *) echo "Invalid sub-option. Please try again." ;;
+            esac
+            ;;
+        5) show_endpoints ;;
+        6) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
 }

@@ -9,19 +9,19 @@ YELLOW='\033[0;33m'
 RESET='\033[0m'
 
 LOGO="
- __      __     _  _                        __    _____  _                      
- \ \    / /    | || |                      / _|  / ____|| |                     
-  \ \  / /__ _ | || |  ___  _   _    ___  | |_  | (___  | |_  ___   _ __  _   _ 
+ __      __     _  _                        __    _____  _
+ \ \    / /    | || |                      / _|  / ____|| |
+  \ \  / /__ _ | || |  ___  _   _    ___  | |_  | (___  | |_  ___   _ __  _   _
   _\ \/ // __ || || | / _ \| | | |  / _ \ |  _|  \___ \ | __|/ _ \ | '__|| | | |
  | |\  /| (_| || || ||  __/| |_| | | (_) || |    ____) || |_| (_) || |   | |_| |
  | |_\/  \__,_||_||_| \___| \__, |  \___/ |_|   |_____/  \__|\___/ |_|    \__, |
  | '_ \ | | | |              __/ |                                         __/ |
  | |_) || |_| |             |___/                                         |___/
- |____/  \__, |                                                                 
-          __/ |                                                                 
-         |___/                                                                  
- __                                   
-/__ __ __ __   _|   \  / __ | |  _    
+ |____/  \__, |
+          __/ |
+         |___/
+ __
+/__ __ __ __   _|   \  / __ | |  _
 \_| | (_| | | (_|    \/ (_| | | (/_ \/
                                     /
 "
@@ -504,14 +504,7 @@ function menu() {
     echo "   e. Update Geth Version"
     echo "   f. Show Validator Node Status"
     echo "   g. Show Consensus Client & Geth Logs Together"
-    echo "   h. Stop Validator Node"
-    echo "   i. Stop Consensus Client Only"
-    echo "   j. Stop Geth Only"
-    echo "   k. Restart Validator Node"
-    echo "   l. Restart Consensus Client Only"
-    echo "   m. Restart Geth Only"
-    echo "   n. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
-    echo "   o. Install Story App only (v0.12.1)(for executing transactions without running the node)"
+    echo "   h. Install Story App only (v0.12.1)(for executing transactions without running the node)"
     echo -e "${GREEN}2. Validator/Key Interactions:${RESET}"
     echo "   a. Create Validator"
     echo "   b. Query Validator Public Key"
@@ -520,18 +513,26 @@ function menu() {
     echo "   e. Unstake Tokens"
     echo "   f. Export EVM Key"
     echo "   g. Backup Validator Key (store it to $HOME directory)"
-    echo -e "${GREEN}3. Show Grand Valley's Endpoints${RESET}"
-    echo -e "${RED}4. Exit${RESET}"
+    echo -e "${GREEN}3. Node Management:${RESET}"
+    echo "   a. Stop Validator Node"
+    echo "   b. Stop Consensus Client Only"
+    echo "   c. Stop Geth Only"
+    echo "   d. Restart Validator Node"
+    echo "   e. Restart Consensus Client Only"
+    echo "   f. Restart Geth Only"
+    echo "   g. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
+    echo -e "${GREEN}4. Show Grand Valley's Endpoints${RESET}"
+    echo -e "${RED}5. Exit${RESET}"
 
     echo -e "${GREEN}Let's Buidl Story Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
-    if [[ $OPTION =~ ^[1-2][a-o]$ ]]; then
+    if [[ $OPTION =~ ^[1-3][a-g]$ ]]; then
         MAIN_OPTION=${OPTION:0:1}
         SUB_OPTION=${OPTION:1:1}
     else
         MAIN_OPTION=$OPTION
-        if [[ $MAIN_OPTION =~ ^[1-2]$ ]]; then
+        if [[ $MAIN_OPTION =~ ^[1-3]$ ]]; then
             read -p "Choose a sub-option: " SUB_OPTION
         fi
     fi
@@ -546,14 +547,7 @@ function menu() {
                 e) update_geth ;;
                 f) show_node_status ;;
                 g) show_all_logs ;;
-                h) stop_validator_node ;;
-                i) stop_consensus_client ;;
-                j) stop_geth ;;
-                k) restart_validator_node ;;
-                l) restart_consensus_client ;;
-                m) restart_geth ;;
-                n) delete_validator_node ;;
-                o) install_story_app ;;
+                h) install_story_app ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
@@ -569,8 +563,20 @@ function menu() {
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
-        3) show_endpoints ;;
-        4) exit 0 ;;
+        3)
+            case $SUB_OPTION in
+                a) stop_validator_node ;;
+                b) stop_consensus_client ;;
+                c) stop_geth ;;
+                d) restart_validator_node ;;
+                e) restart_consensus_client ;;
+                f) restart_geth ;;
+                g) delete_validator_node ;;
+                *) echo "Invalid sub-option. Please try again." ;;
+            esac
+            ;;
+        4) show_endpoints ;;
+        5) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
 }
