@@ -30,6 +30,24 @@ check_url() {
     fi
 }
 
+# Function to display snapshot details
+display_snapshot_details() {
+    local api_url=$1
+    local snapshot_info=$(curl -s $api_url)
+    local snapshot_height=$(echo "$snapshot_info" | jq -r '.snapshot_height')
+
+    echo -e "${GREEN}Snapshot Height:${NC} $snapshot_height"
+
+    # Get the real-time block height
+    realtime_block_height=$(curl -s -X POST "https://lightnode-json-rpc-0g.grandvalleys.com" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
+
+    # Calculate the difference
+    block_difference=$((realtime_block_height - snapshot_height))
+
+    echo -e "${GREEN}Real-time Block Height:${NC} $realtime_block_height"
+    echo -e "${GREEN}Block Difference:${NC} $block_difference"
+}
+
 # Function to choose snapshot type for ITRocket
 choose_itrocket_snapshot() {
     echo -e "${GREEN}Choose the type of snapshot for ITRocket:${NC}"
@@ -48,6 +66,14 @@ choose_itrocket_snapshot() {
 
     FILE_NAME=$(curl -s $SNAPSHOT_API_URL | jq -r '.snapshot_name')
     SNAPSHOT_URL="https://server-5.itrocket.net/testnet/og/$FILE_NAME"
+
+    echo -e "${GREEN}Checking availability of ITRocket snapshot:${NC}"
+    echo -n "Pruned Snapshot: "
+    check_url $ITR_API_URL
+
+    prompt_back_or_continue
+
+    display_snapshot_details $ITR_API_URL
 }
 
 # Function to choose snapshot type for Josephtran
@@ -95,12 +121,6 @@ main_script() {
         1)
             provider_name="ITRocket"
             echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
-
-            echo -e "${GREEN}Checking availability of ITRocket snapshot:${NC}"
-            echo -n "Pruned Snapshot: "
-            check_url $ITR_API_URL
-
-            prompt_back_or_continue
 
             choose_itrocket_snapshot
             SNAPSHOT_FILE=$FILE_NAME
