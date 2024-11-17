@@ -77,6 +77,7 @@ fi
 
 ### 1. Stop storage kv
 sudo systemctl stop zgskv
+sudo rm -r $HOME/0g-storage-kv/run/db
 
 ### 2. Update node
 cd $HOME/0g-storage-kv
