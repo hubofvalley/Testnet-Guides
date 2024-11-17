@@ -533,7 +533,7 @@ function menu() {
     echo -e "${GREEN}Let's Buidl 0G Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
-    if [[ $OPTION =~ ^[1-4][a-i]$ ]]; then
+    if [[ $OPTION =~ ^[1-4][a-p]$ ]]; then
         MAIN_OPTION=${OPTION:0:1}
         SUB_OPTION=${OPTION:1:1}
     else
