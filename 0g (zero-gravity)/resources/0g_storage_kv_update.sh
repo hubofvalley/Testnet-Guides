@@ -82,7 +82,7 @@ sudo systemctl stop zgskv
 cd $HOME/0g-storage-kv
 git stash
 git fetch --all --tags
-git checkout e7c737901d8953d6b73857dc8d7fb1740a416c5d
+git checkout 99c91d95a1d664ffdc9700ef492a00bd76c9c5d1
 git submodule update --init
 
 ### 3. Build the latest binary
