@@ -71,9 +71,9 @@ choose_itrocket_snapshot() {
     echo -n "Pruned Snapshot: "
     check_url $ITR_API_URL
 
-    prompt_back_or_continue
-
     display_snapshot_details $ITR_API_URL
+
+    prompt_back_or_continue
 }
 
 # Function to choose snapshot type for Josephtran
