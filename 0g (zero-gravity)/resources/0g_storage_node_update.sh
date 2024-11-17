@@ -70,7 +70,7 @@ sudo rm -r $HOME/0g-storage-node/run/db
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout f4d5228234258ef4c9f8b2b83d80911fa38a6db9
+git checkout ce2b97f3c1436e6c09a0b555037fc986afa36d9d
 git submodule update --init
 
 # Build the latest binary
