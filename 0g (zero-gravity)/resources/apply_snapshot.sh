@@ -50,6 +50,12 @@ display_snapshot_details() {
 
 # Function to choose snapshot type for ITRocket
 choose_itrocket_snapshot() {
+    echo -e "${GREEN}Checking availability of ITRocket snapshot:${NC}"
+    echo -n "Pruned Snapshot: "
+    check_url $ITR_API_URL
+
+    prompt_back_or_continue
+
     echo -e "${GREEN}Choose the type of snapshot for ITRocket:${NC}"
     echo "1. Pruned"
     read -p "Enter your choice: " snapshot_type_choice
@@ -66,10 +72,6 @@ choose_itrocket_snapshot() {
 
     FILE_NAME=$(curl -s $SNAPSHOT_API_URL | jq -r '.snapshot_name')
     SNAPSHOT_URL="https://server-5.itrocket.net/testnet/og/$FILE_NAME"
-
-    echo -e "${GREEN}Checking availability of ITRocket snapshot:${NC}"
-    echo -n "Pruned Snapshot: "
-    check_url $ITR_API_URL
 
     display_snapshot_details $ITR_API_URL
 
