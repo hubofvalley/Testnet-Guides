@@ -9,6 +9,14 @@ LOGO="
 
 echo "$LOGO"
 
+# Prompt user for moniker and port number
+read -p "Enter your moniker: " MONIKER
+read -p "Enter your custom port number (leave empty to use default: 26): " OG_PORT
+if [ -z "$OG_PORT" ]; then
+    OG_PORT=26
+fi
+read -p "Enter your wallet name: " WALLET
+
 # Stop and remove existing 0G node
 sudo systemctl daemon-reload
 sudo systemctl stop 0gchaind 0gd
@@ -19,14 +27,6 @@ sudo rm -rf /etc/systemd/system/0gd.service
 sudo rm -r 0g-chain
 sudo rm -rf $HOME/.0gchain
 sed -i "/OG_/d" $HOME/.bash_profile
-
-# Prompt user for moniker and port number
-read -p "Enter your moniker: " MONIKER
-read -p "Enter your custom port number (leave empty to use default: 26): " OG_PORT
-if [ -z "$OG_PORT" ]; then
-    OG_PORT=26
-fi
-read -p "Enter your wallet name: " WALLET
 
 # 1. Install dependencies for building from source
 sudo apt update -y && sudo apt upgrade -y && \

@@ -9,6 +9,14 @@ LOGO="
 
 echo "$LOGO"
 
+# Prompt for MONIKER, STORY_PORT, and Indexer option
+read -p "Enter your moniker: " MONIKER
+read -p "Enter your preferred port number: (leave empty to use default: 26)" STORY_PORT
+if [ -z "$STORY_PORT" ]; then
+    STORY_PORT=26
+fi
+read -p "Do you want to enable the indexer? (yes/no): " ENABLE_INDEXER
+
 # Stop and remove existing Story node
 sudo systemctl daemon-reload
 sudo systemctl stop story story-geth
@@ -20,14 +28,6 @@ sudo rm -r story
 sudo rm -r story-geth
 sudo rm -rf $HOME/.story
 sed -i "/STORY_/d" $HOME/.bash_profile
-
-# Prompt for MONIKER, STORY_PORT, and Indexer option
-read -p "Enter your moniker: " MONIKER
-read -p "Enter your preferred port number: (leave empty to use default: 26)" STORY_PORT
-if [ -z "$STORY_PORT" ]; then
-    STORY_PORT=26
-fi
-read -p "Do you want to enable the indexer? (yes/no): " ENABLE_INDEXER
 
 # 1. Install dependencies for building from source
 sudo apt update -y && sudo apt upgrade -y
