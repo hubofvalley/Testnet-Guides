@@ -136,12 +136,15 @@ update_version() {
 # Menu for selecting the version
 echo "Choose the version to update to:"
 echo "a. v0.12.1 (Upgrade height: 322000)"
-echo "Note: There are currently no versions available after v0.12.1."
+echo "b. v0.13.0 (Upgrade height: 858000)"
 read -p "Enter the letter corresponding to the version: " choice
 
 case $choice in
     a)
         update_version "v0.12.1" "https://github.com/piplabs/story/releases/download/v0.12.1" 322000
+        ;;
+    b)
+        update_version "v0.13.0" "https://github.com/piplabs/story/releases/download/v0.13.0" 858000
         ;;
     *)
         echo "Invalid choice. Exiting."
