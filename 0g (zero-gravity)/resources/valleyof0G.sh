@@ -94,6 +94,7 @@ Grand Valley 0G public endpoints:${RESET}
 - cosmos-rpc: ${BLUE}https://lightnode-rpc-0g.grandvalleys.com${RESET}
 - evm-rpc: ${BLUE}https://lightnode-json-rpc-0g.grandvalleys.com${RESET}
 - cosmos rest-api: ${BLUE}https://lightnode-api-0g.grandvalleys.com${RESET}
+- Grand Valley Explorer: ${BLUE}https://explorer.grandvalleys.com/${RESET}
 
 ${GREEN}Connect with Zero Gravity (0G):${RESET}
 - Official Website: ${BLUE}https://0g.ai/${RESET}
