@@ -51,7 +51,7 @@ ${YELLOW}| Category  | Requirements                   |
 | Storage   | 500GB / 1TB NVMe SSD           |
 | Bandwidth | 100 MBps for Download / Upload |${RESET}
 
-storage node current binary version: ${CYAN}v0.7.3${RESET}
+storage node current binary version: ${CYAN}v0.7.5${RESET}
 
 ------------------------------------------------------------------
 
@@ -533,7 +533,7 @@ function menu() {
     echo -e "${GREEN}Let's Buidl 0G Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
-    if [[ $OPTION =~ ^[1-6][a-z]$ ]]; then
+    if [[ $OPTION =~ ^[1-5][a-z]$ ]]; then
         MAIN_OPTION=${OPTION:0:1}
         SUB_OPTION=${OPTION:1:1}
     else
