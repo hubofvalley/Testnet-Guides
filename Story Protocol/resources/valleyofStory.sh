@@ -322,7 +322,6 @@ function delete_validator_node() {
 }
 
 function stop_validator_node() {
-    sudo rm -f $HOME/.story/story/data/upgrade-info.json
     sudo systemctl stop story story-geth
     echo "Consensus client and Geth service stopped."
     menu
@@ -330,7 +329,6 @@ function stop_validator_node() {
 
 function restart_validator_node() {
     sudo systemctl daemon-reload
-    sudo rm -f $HOME/.story/story/data/upgrade-info.json
     sudo systemctl restart story story-geth
     echo "Consensus client and Geth service restarted."
     menu
@@ -438,7 +436,6 @@ function migrate_to_cosmovisor() {
 
 # New functions for stopping and restarting individual services
 function stop_consensus_client() {
-    sudo rm -f $HOME/.story/story/data/upgrade-info.json
     sudo systemctl stop story
     echo "Consensus client service stopped."
     menu
@@ -452,7 +449,6 @@ function stop_geth() {
 
 function restart_consensus_client() {
     sudo systemctl daemon-reload
-    sudo rm -f $HOME/.story/story/data/upgrade-info.json
     sudo systemctl restart story
     echo "Consensus client service restarted."
     menu
