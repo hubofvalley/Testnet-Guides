@@ -92,7 +92,7 @@ LimitNOFILE=65536
 LimitNPROC=65536
 Environment="DAEMON_NAME=story"
 Environment="DAEMON_HOME=$input2"
-Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=true"
+Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=false"
 Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
 Environment="DAEMON_DATA_BACKUP_DIR=$input3"
 Environment="UNSAFE_SKIP_BACKUP=true"
