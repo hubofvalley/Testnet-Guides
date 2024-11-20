@@ -46,7 +46,7 @@ case $choice in
     # Placeholder for future versions
     # Uncomment and add new versions here
     a)
-         update_version "v0.10.1" "https://github.com/piplabs/story-geth/releases/download/v0.10.1/geth-linux-amd64"
+         update_version "v0.10.1" "https://github.com/piplabs/story-geth/releases/download/v0.10.1"
          ;;
     *)
         echo "Invalid choice. Exiting."
