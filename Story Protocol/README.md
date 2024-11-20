@@ -60,6 +60,7 @@
       - [delegate to ](#delegate-to-)
   - [delete the node](#delete-the-node)
   - [upgrade consensus client version to `v0.12.1` at height `322000`](#upgrade-consensus-client-version-to-v0121-at-height-322000)
+  - [upgrade consensus client version to `v0.13.0` at height `858000`](#upgrade-consensus-client-version-to-v0130-at-height-858000)
 - [let's buidl together](#lets-buidl-together)
 
 # Story Protocol
@@ -484,12 +485,12 @@ echo "export DAEMON_DATA_BACKUP_DIR=$input3" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
 # Create directory and download the binary
-mkdir -p $HOME/v0.12.1
-cd $HOME/v0.12.1 && \
+mkdir -p $HOME/story-v0.12.1
+cd $HOME/story-v0.12.1 && \
 wget https://github.com/piplabs/story/releases/download/v0.12.1/$story_file_name
 
 # Move the binary to the appropriate directory
-sudo cp $HOME/v0.12.1/$story_file_name $HOME/go/bin/story
+sudo cp $HOME/story-v0.12.1/$story_file_name $HOME/go/bin/story
 
 # Set ownership and permissions
 sudo chown -R $USER:$USER $HOME/.story && \
@@ -497,7 +498,39 @@ sudo chown -R $USER:$USER $HOME/go/bin/story && \
 sudo rm $HOME/.story/story/data/upgrade-info.json
 
 # Add the upgrade to cosmovisor
-cosmovisor add-upgrade v0.12.1 $HOME/v0.12.1/$story_file_name --upgrade-height 322000 --force
+cosmovisor add-upgrade v0.12.1 $HOME/story-v0.12.1/$story_file_name --upgrade-height 322000 --force
+```
+
+## upgrade consensus client version to `v0.13.0` at height `858000`
+
+```bash
+# Define variables
+input1=$(which cosmovisor)
+input2=$(find $HOME -type d -name "story")
+input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
+story_file_name=story-linux-amd64
+
+# Export environment variables
+echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
+echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
+echo "export DAEMON_DATA_BACKUP_DIR=$input3" >> $HOME/.bash_profile
+source $HOME/.bash_profile
+
+# Create directory and download the binary
+mkdir -p $HOME/story-v0.13.0
+cd $HOME/story-v0.13.0 && \
+wget https://github.com/piplabs/story/releases/download/v0.13.0/$story_file_name
+
+# Move the binary to the appropriate directory
+sudo cp $HOME/story-v0.13.0/$story_file_name $HOME/go/bin/story
+
+# Set ownership and permissions
+sudo chown -R $USER:$USER $HOME/.story && \
+sudo chown -R $USER:$USER $HOME/go/bin/story && \
+sudo rm $HOME/.story/story/data/upgrade-info.json
+
+# Add the upgrade to cosmovisor
+cosmovisor add-upgrade v0.13.0 $HOME/story-v0.13.0/$story_file_name --upgrade-height 322000 --force
 ```
 
 # let's buidl together
