@@ -37,7 +37,7 @@ echo "There are currently no versions available."
 
 # Placeholder for future versions
 # Uncomment and add new versions here
-# echo "a. v0.9.4"
+echo "a. v0.10.1"
 # echo "b. v0.9.5"
 
 read -p "Enter the letter corresponding to the version: " choice
@@ -45,12 +45,9 @@ read -p "Enter the letter corresponding to the version: " choice
 case $choice in
     # Placeholder for future versions
     # Uncomment and add new versions here
-    # a)
-    #     update_version "v0.9.4" "https://github.com/piplabs/story-geth/releases/download/v0.9.4"
-    #     ;;
-    # b)
-    #     update_version "v0.9.5" "https://github.com/piplabs/story-geth/releases/download/v0.9.5"
-    #     ;;
+    a)
+         update_version "v0.10.1" "https://github.com/piplabs/story-geth/releases/download/v0.10.1/geth-linux-amd64"
+         ;;
     *)
         echo "Invalid choice. Exiting."
         exit 1
