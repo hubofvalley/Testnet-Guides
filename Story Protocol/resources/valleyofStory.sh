@@ -96,7 +96,6 @@ echo -e "$INTRO"
 echo -e "$ENDPOINTS"
 echo -e "\n${YELLOW}Press Enter to continue${RESET}"
 read -r
-sudo systemctl daemon-reload
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
 echo "export STORY_CHAIN_ID="odyssey"" >> ~/.bash_profile
 echo "export DAEMON_NAME=story" >> ~/.bash_profile
@@ -526,6 +525,9 @@ function menu() {
     echo -e "${GREEN}4. Show Grand Valley's Endpoints${RESET}"
     echo -e "${RED}5. Exit${RESET}"
 
+    echo -e "${YELLOW}Please run the following command to apply the changes after exiting the script:${RESET}"
+    echo -e "${GREEN}source ~/.bash_profile${RESET}"
+    echo -e "${YELLOW}This ensures the environment variables are set in your current bash session.${RESET}"
     echo -e "${GREEN}Let's Buidl Story Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 

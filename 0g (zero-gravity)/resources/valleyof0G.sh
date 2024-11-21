@@ -131,7 +131,6 @@ echo -e "$ENDPOINTS"
 echo -e "${YELLOW}\nPress Enter to continue${RESET}"
 read -r
 detect_service_file
-sudo systemctl daemon-reload
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
 echo "export OG_CHAIN_ID="zgtendermint_16600-2"" >> $HOME/.bash_profile
 echo "export SERVICE_FILE_NAME=\"$SERVICE_FILE_NAME\"" >> ~/.bash_profile
@@ -534,6 +533,9 @@ function menu() {
     echo -e "${GREEN}5. Show Grand Valley's Endpoints${RESET}"
     echo -e "${RED}6. Exit${RESET}"
 
+    echo -e "${YELLOW}Please run the following command to apply the changes after exiting the script:${RESET}"
+    echo -e "${GREEN}source ~/.bash_profile${RESET}"
+    echo -e "${YELLOW}This ensures the environment variables are set in your current bash session.${RESET}"
     echo -e "${GREEN}Let's Buidl 0G Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
