@@ -124,7 +124,7 @@ With Public Testnet, 0G’s docs and code become public. Check them out below! -
 ## Valley Of 0G. 0G tools created by Grand Valley
 
 ![image](https://github.com/user-attachments/assets/359b0d17-e451-42d7-8bc3-88c7fcf28355)
-![image](https://github.com/user-attachments/assets/0ede01d5-caba-4df0-93d0-ffe5802785aa)
+![image](https://github.com/user-attachments/assets/3bbb47a8-3b2c-489c-a1b4-f026959543f8)
 
 **Valley of 0G** by Grand Valley is an all-in-one solution for managing nodes within the **0G** decentralized AI network. It provides easy tools to deploy, monitor, and maintain validator and storage nodes, making it simple to manage AI-focused infrastructure. Designed for scalability and performance, **Valley of 0G** helps efficiently manage data and resources, all within a community-driven environment with public support and endpoints.
 
