@@ -98,6 +98,9 @@ echo -e "\n${YELLOW}Press Enter to continue${RESET}"
 read -r
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
 echo "export STORY_CHAIN_ID="odyssey"" >> $HOME/.bash_profile
+input1=$(which cosmovisor)
+input2=$(find $HOME -type d -name "story")
+input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
 source $HOME/.bash_profile
 
 # Function to update to a specific version
