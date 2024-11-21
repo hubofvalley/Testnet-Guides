@@ -96,6 +96,7 @@ echo -e "$INTRO"
 echo -e "$ENDPOINTS"
 echo -e "\n${YELLOW}Press Enter to continue${RESET}"
 read -r
+sudo systemctl daemon-reload
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
 echo "export STORY_CHAIN_ID="odyssey"" >> ~/.bash_profile
 echo "export DAEMON_NAME=story" >> ~/.bash_profile

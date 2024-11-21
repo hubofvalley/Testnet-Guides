@@ -131,6 +131,7 @@ echo -e "$ENDPOINTS"
 echo -e "${YELLOW}\nPress Enter to continue${RESET}"
 read -r
 detect_service_file
+sudo systemctl daemon-reload
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
 echo "export OG_CHAIN_ID="zgtendermint_16600-2"" >> $HOME/.bash_profile
 echo "export SERVICE_FILE_NAME=\"$SERVICE_FILE_NAME\"" >> ~/.bash_profile
