@@ -97,13 +97,10 @@ echo -e "$ENDPOINTS"
 echo -e "\n${YELLOW}Press Enter to continue${RESET}"
 read -r
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
-echo "export STORY_CHAIN_ID="odyssey"" >> $HOME/.bash_profile
-input1=$(which cosmovisor)
-input2=$(find $HOME -type d -name "story")
-input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
-echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
-echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
-echo "export DAEMON_DATA_BACKUP_DIR=$input3" >> $HOME/.bash_profile
+echo "export STORY_CHAIN_ID="odyssey"" >> ~/.bash_profile
+echo "export DAEMON_NAME=story" >> ~/.bash_profile
+echo "export DAEMON_HOME=$(find $HOME -type d -name "story")" >> ~/.bash_profile
+echo "export DAEMON_DATA_BACKUP_DIR=$(find $HOME -type d -name "story")" >> ~/.bash_profile
 source $HOME/.bash_profile
 
 # Function to update to a specific version
