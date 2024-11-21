@@ -59,6 +59,7 @@
       - [self delegate](#self-delegate)
       - [delegate to ](#delegate-to-)
   - [delete the node](#delete-the-node)
+  - [upgrade story-geth version to `v0.10.1`](#upgrade-story-geth-version-to-v0101)
   - [upgrade consensus client version to `v0.12.1` at height `322000`](#upgrade-consensus-client-version-to-v0121-at-height-322000)
   - [upgrade consensus client version to `v0.13.0` at height `858000`](#upgrade-consensus-client-version-to-v0130-at-height-858000)
 - [let's buidl together](#lets-buidl-together)
@@ -468,6 +469,38 @@ sudo rm -rf /etc/systemd/system/story-geth.service /etc/systemd/system/story.ser
 sudo rm -r .story
 sed -i "/STORY_/d" $HOME/.bash_profile
 ```
+
+## upgrade story-geth version to `v0.10.1`
+
+```bash
+# Define variables
+geth_file_name=geth-linux-amd64
+```
+
+```bash
+# Create directory and download the binary
+mkdir -p $HOME/story-geth-v0.10.1
+cd $HOME/story-geth-v0.10.1 && \
+wget https://github.com/piplabs/story-geth/releases/download/v0.10.1/$geth_file_name -O geth
+```
+
+```bash
+# Move the binary to the appropriate directory
+sudo mv $HOME/story-geth-v0.10.1/geth $HOME/go/bin/geth
+```
+
+```bash
+# Set ownership and permissions
+sudo chown -R $USER:$USER $HOME/go/bin/geth
+sudo chmod +x $HOME/go/bin/geth
+```
+
+```bash
+# Restart the service
+sudo systemctl daemon-reload && \
+sudo systemctl restart story-geth
+```
+
 
 ## upgrade consensus client version to `v0.12.1` at height `322000`
 
