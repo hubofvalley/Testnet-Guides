@@ -142,8 +142,6 @@ echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
 echo "export DAEMON_DATA_BACKUP_DIR=$input3" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
-source $HOME/.bash_profile
-
 # Validator Node Functions
 function deploy_validator_node() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_validator_node_install.sh)
