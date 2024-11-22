@@ -136,9 +136,9 @@ update_version() {
 # Function to perform batch update
 batch_update_version() {
     local version1="v0.12.1"
-    local version2="v0.13.1"
+    local version2="v0.13.0"
     local download_url1="https://github.com/piplabs/story/releases/download/v0.12.1"
-    local download_url2="https://github.com/piplabs/story/releases/download/v0.13.1"
+    local download_url2="https://github.com/piplabs/story/releases/download/v0.13.0"
     local upgrade_height1=322000
     local upgrade_height2=858000
 
