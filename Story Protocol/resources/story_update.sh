@@ -175,7 +175,7 @@ batch_update_version() {
 echo "Choose the version to update to:"
 echo "a. v0.12.1 (Upgrade height: 322000)"
 echo "b. v0.13.0 (Upgrade height: 858000)"
-echo "c. Batch update (v0.12.1 at block height 322000 and v0.13.1 at block height 858000)"
+echo "c. Batch update (v0.12.1 at block height 322000 and v0.13.0 at block height 858000)"
 read -p "Enter the letter corresponding to the version: " choice
 
 case $choice in
