@@ -59,7 +59,7 @@
       - [self delegate](#self-delegate)
       - [delegate to ](#delegate-to-)
   - [delete the node](#delete-the-node)
-  - [upgrade story-geth version to `v0.10.1`](#upgrade-story-geth-version-to-v0101)
+  - [upgrade story-geth version to `v0.10.1` (just if u still use the previous version)](#upgrade-story-geth-version-to-v0101-just-if-u-still-use-the-previous-version)
   - [upgrade consensus client version to `v0.12.1` at height `322000`](#upgrade-consensus-client-version-to-v0121-at-height-322000)
   - [upgrade consensus client version to `v0.13.0` at height `858000`](#upgrade-consensus-client-version-to-v0130-at-height-858000)
 - [let's buidl together](#lets-buidl-together)
@@ -470,7 +470,7 @@ sudo rm -r .story
 sed -i "/STORY_/d" $HOME/.bash_profile
 ```
 
-## upgrade story-geth version to `v0.10.1`
+## upgrade story-geth version to `v0.10.1` (just if u still use the previous version)
 
 ```bash
 # Define variables
