@@ -133,10 +133,49 @@ update_version() {
     fi
 }
 
+# Function to perform batch update
+batch_update_version() {
+    local version1="v0.12.1"
+    local version2="v0.13.1"
+    local download_url1="https://github.com/piplabs/story/releases/download/v0.12.1"
+    local download_url2="https://github.com/piplabs/story/releases/download/v0.13.1"
+    local upgrade_height1=322000
+    local upgrade_height2=858000
+
+    # Create directories and download the binaries
+    cd $HOME
+    mkdir -p $HOME/story-$version1
+    mkdir -p $HOME/story-$version2
+    if ! wget -P $HOME/story-$version1 $download_url1/$story_file_name -O $HOME/story-$version1/story; then
+        echo "Failed to download the binary for $version1. Exiting."
+        exit 1
+    fi
+    if ! wget -P $HOME/story-$version2 $download_url2/$story_file_name -O $HOME/story-$version2/story; then
+        echo "Failed to download the binary for $version2. Exiting."
+        exit 1
+    fi
+
+    # Set ownership and permissions
+    sudo chown -R $USER:$USER $HOME/.story && \
+    sudo chown -R $USER:$USER $HOME/story-$version1/story && \
+    sudo chown -R $USER:$USER $HOME/story-$version2/story && \
+    sudo rm -f $HOME/.story/story/data/upgrade-info.json
+
+    # Add the batch upgrade to cosmovisor
+    if ! cosmovisor add-batch-upgrade --upgrade-list $version1:$HOME/story-$version1/story:$upgrade_height1,$version2:$HOME/story-$version2/story:$upgrade_height2; then
+        echo "Failed to add batch upgrade to cosmovisor. Exiting."
+        exit 1
+    fi
+
+    # Move the latest version to the go directory
+    sudo cp $HOME/story-$version2/story $HOME/go/bin/story
+}
+
 # Menu for selecting the version
 echo "Choose the version to update to:"
 echo "a. v0.12.1 (Upgrade height: 322000)"
 echo "b. v0.13.0 (Upgrade height: 858000)"
+echo "c. Batch update (v0.12.1 at block height 322000 and v0.13.1 at block height 858000)"
 read -p "Enter the letter corresponding to the version: " choice
 
 case $choice in
@@ -145,6 +184,9 @@ case $choice in
         ;;
     b)
         update_version "v0.13.0" "https://github.com/piplabs/story/releases/download/v0.13.0" 858000
+        ;;
+    c)
+        batch_update_version
         ;;
     *)
         echo "Invalid choice. Exiting."
