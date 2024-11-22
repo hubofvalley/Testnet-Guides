@@ -57,8 +57,8 @@ cd $HOME
 # Geth binary
 mkdir -p story-geth-v0.10.0
 wget -O story-geth-v0.10.0/geth-linux-amd64 https://github.com/piplabs/story-geth/releases/download/v0.10.0/geth-linux-amd64
-story_file__name=geth-linux-amd64
-cp story-geth-v0.10.0/$story_file__name $HOME/go/bin/geth
+geth_file_name=geth-linux-amd64
+cp story-geth-v0.10.0/$geth_file_name $HOME/go/bin/geth
 sudo chown -R $USER:$USER $HOME/go/bin/geth
 sudo chmod +x $HOME/go/bin/geth
 

@@ -195,7 +195,7 @@ bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main
 - service file name: `story.service` `story-geth.service`
 - current chain: `odyssey`
 - current story node version: `v0.12.0`
-- current story-geth node version: `v0.10.0`
+- current story-geth node version: `v0.10.1`
 
 ## Validator Manual installation
 
@@ -244,10 +244,10 @@ source $HOME/.bash_profile
 cd $HOME
 
 # geth binary
-mkdir -p story-geth-v0.10.0
-wget -O story-geth-v0.10.0/geth-linux-amd64 https://github.com/piplabs/story-geth/releases/download/v0.10.0/geth-linux-amd64
-story_file__name=geth-linux-amd64
-cp story-geth-v0.10.0/$story_file__name $HOME/go/bin/geth
+mkdir -p story-geth-v0.10.1
+wget -O story-geth-v0.10.1/geth-linux-amd64 https://github.com/piplabs/story-geth/releases/download/v0.10.1/geth-linux-amd64
+geth_file_name=geth-linux-amd64
+cp story-geth-v0.10.1/$geth_file_name $HOME/go/bin/geth
 sudo chown -R $USER:$USER $HOME/go/bin/geth
 sudo chmod +x $HOME/go/bin/geth
 
