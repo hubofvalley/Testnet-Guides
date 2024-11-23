@@ -55,10 +55,10 @@ source $HOME/.bash_profile
 cd $HOME
 
 # Geth binary
-mkdir -p story-geth-v0.10.1
-wget -O story-geth-v0.10.1/geth-linux-amd64 https://github.com/piplabs/story-geth/releases/download/v0.10.1/geth-linux-amd64
-geth_file_name=geth-linux-amd64
-cp story-geth-v0.10.1/$geth_file_name $HOME/go/bin/geth
+mkdir -p story-geth-v0.10.0
+wget -O story-geth-v0.10.0/geth-linux-amd64 https://github.com/piplabs/story-geth/releases/download/v0.10.0/geth-linux-amd64
+story_file__name=geth-linux-amd64
+cp story-geth-v0.10.0/$story_file__name $HOME/go/bin/geth
 sudo chown -R $USER:$USER $HOME/go/bin/geth
 sudo chmod +x $HOME/go/bin/geth
 
@@ -120,16 +120,16 @@ echo "Backup directory: $input3"
 # 13. Create systemd service files for the consensus and Geth clients
 
 # Consensus service file
-sudo tee /etc/systemd/system/story.service > /dev/null <<EOF
+sudo tee /etc/systemd/system/story.service <<EOF
 [Unit]
 Description=Cosmovisor Story Node
 After=network.target
 
 [Service]
-User=$USER
+User=${USER}
 Type=simple
-WorkingDirectory=$HOME/.story/story
-ExecStart=$input1 run run
+WorkingDirectory=${HOME}/.story/story
+ExecStart=${input1} run run
 StandardOutput=journal
 StandardError=journal
 Restart=on-failure
@@ -137,10 +137,10 @@ RestartSec=5
 LimitNOFILE=65536
 LimitNPROC=65536
 Environment="DAEMON_NAME=story"
-Environment="DAEMON_HOME=$input2"
+Environment="DAEMON_HOME=${input2}"
 Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=false"
 Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
-Environment="DAEMON_DATA_BACKUP_DIR=$input3"
+Environment="DAEMON_DATA_BACKUP_DIR=${input3}"
 Environment="UNSAFE_SKIP_BACKUP=true"
 
 [Install]
