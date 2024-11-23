@@ -100,7 +100,7 @@ echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
 echo "export STORY_CHAIN_ID="odyssey"" >> ~/.bash_profile
 echo "export DAEMON_NAME=story" >> ~/.bash_profile
 echo "export DAEMON_HOME=$(find "$HOME/.story" -type d -name "story" -print -quit)" >> ~/.bash_profile
-echo "export DAEMON_DATA_BACKUP_DIR=$(find $HOME/.story/story/cosmovisor -type d -name "backup")" >> ~/.bash_profile
+echo "export DAEMON_DATA_BACKUP_DIR=$(find "$HOME/.story/story/cosmovisor" -type d -name "backup" -print -quit)" >> ~/.bash_profile
 source $HOME/.bash_profile
 
 # Function to update to a specific version

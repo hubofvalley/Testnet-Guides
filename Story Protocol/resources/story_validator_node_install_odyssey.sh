@@ -108,7 +108,7 @@ mkdir -p $HOME/.story/story/cosmovisor/backup
 # 12. Define Cosmovisor paths for the consensus client
 input1=$(which cosmovisor)
 input2=$(find "$HOME/.story" -type d -name "story" -print -quit)
-input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
+input3=$(find "$HOME/.story/story/cosmovisor" -type d -name "backup" -print -quit)
 echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
 echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
 echo "export DAEMON_DATA_BACKUP_DIR=$input3" >> $HOME/.bash_profile
