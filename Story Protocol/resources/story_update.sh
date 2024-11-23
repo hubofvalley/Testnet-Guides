@@ -74,16 +74,16 @@ echo "export DAEMON_DATA_BACKUP_DIR=$input3" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
 # Create or update the systemd service file
-cat <<EOF | sudo tee /etc/systemd/system/story.service
+sudo tee /etc/systemd/system/story.service <<EOF
 [Unit]
 Description=Cosmovisor Story Node
 After=network.target
 
 [Service]
-User=$USER
+User=${USER}
 Type=simple
-WorkingDirectory=$HOME/.story/story
-ExecStart=$input1 run run
+WorkingDirectory=${HOME}/.story/story
+ExecStart=${input1} run run
 StandardOutput=journal
 StandardError=journal
 Restart=on-failure
@@ -91,10 +91,10 @@ RestartSec=5
 LimitNOFILE=65536
 LimitNPROC=65536
 Environment="DAEMON_NAME=story"
-Environment="DAEMON_HOME=$input2"
+Environment="DAEMON_HOME=${input2}"
 Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=false"
 Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
-Environment="DAEMON_DATA_BACKUP_DIR=$input3"
+Environment="DAEMON_DATA_BACKUP_DIR=${input3}"
 Environment="UNSAFE_SKIP_BACKUP=true"
 
 [Install]
