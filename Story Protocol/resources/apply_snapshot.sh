@@ -292,27 +292,13 @@ get_current_version() {
 
 # Function to suggest update based on snapshot block height
 suggest_update() {
-    local snapshot_height=$1
     local current_version=$(get_current_version)
 
-    if [[ $snapshot_height -ge 0 && $snapshot_height -le 321999 ]]; then
-        required_version="v0.12.0"
-    elif [[ $snapshot_height -ge 322000 && $snapshot_height -le 857999 ]]; then
-        required_version="v0.12.1"
-    elif [[ $snapshot_height -ge 858000 ]]; then
-        required_version="v0.13.0"
-    fi
-
-    if [[ $current_version == $required_version ]]; then
-        echo -e "${GREEN}Your current version $current_version is the required version for the snapshot block height $snapshot_height.${NC}"
+    if [[ $current_version == "v0.12.1" ]]; then
+        echo -e "${GREEN}Your current version $current_version is the required version for the snapshot.${NC}"
     else
-        echo -e "${YELLOW}Your current version $current_version is not the required version for the snapshot block height $snapshot_height.${NC}"
-        echo -e "${YELLOW}You need to update to version $required_version.${NC}"
-        if [[ $required_version == "v0.12.1" ]]; then
-            echo -e "${YELLOW}Choose option 'a' at the further consensus client update prompt.${NC}"
-        elif [[ $required_version == "v0.13.0" ]]; then
-            echo -e "${YELLOW}Choose option 'b' at the further consensus client update prompt.${NC}"
-        fi
+        echo -e "${YELLOW}Your current version $current_version is not the required version for the snapshot.${NC}"
+        echo -e "${YELLOW}You need to update to version v0.12.1.${NC}"
         read -p "Do you want to update now? (y/n): " update_choice
         if [[ $update_choice == "y" || $update_choice == "Y" ]]; then
             bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_update.sh)
@@ -351,8 +337,7 @@ main_script() {
             STORY_SNAPSHOT_FILE="story_snapshot.lz4"
 
             # Suggest update based on snapshot block height
-            snapshot_height=$(curl -s $SNAPSHOT_API_URL | grep -oP '"snapshot_height":\s*\K\d+')
-            suggest_update $snapshot_height
+            suggest_update
 
             # Ask the user if they want to delete the downloaded snapshot files
             read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
@@ -378,8 +363,7 @@ main_script() {
             STORY_SNAPSHOT_FILE=$FILE_NAME
 
             # Suggest update based on snapshot block height
-            snapshot_height=$(curl -s $SNAPSHOT_API_URL | jq -r '.snapshot_height')
-            suggest_update $snapshot_height
+            suggest_update
 
             # Ask the user if they want to delete the downloaded snapshot files
             read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
@@ -398,7 +382,7 @@ main_script() {
             SNAPSHOT_URL=$CROUTON_SNAPSHOT_URL
 
             # Suggest update based on snapshot block height
-            suggest_update 322000  # Assuming block height suitable for v0.12.1
+            suggest_update
 
             # Ask the user if they want to delete the downloaded snapshot files
             read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
@@ -424,7 +408,7 @@ main_script() {
             STORY_SNAPSHOT_FILE="Story_snapshot.lz4"
 
             # Suggest update based on snapshot block height
-            suggest_update 322000  # Assuming block height suitable for v0.12.1
+            suggest_update
 
             # Ask the user if they want to delete the downloaded snapshot files
             read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
@@ -446,8 +430,7 @@ main_script() {
             SNAPSHOT_URL=$SNAPSHOT_URL
 
             # Suggest update based on snapshot block height
-            snapshot_height=$(curl -s $SNAPSHOT_API_URL | jq -r '.height')
-            suggest_update $snapshot_height
+            suggest_update
 
             # Ask the user if they want to delete the downloaded snapshot files
             read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
