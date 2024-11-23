@@ -297,16 +297,16 @@ suggest_update() {
 
     if [[ $snapshot_height -ge 0 && $snapshot_height -le 321999 ]]; then
         required_version="v0.12.0"
-    elif [[ $snapshot_height -ge 322000 && $snapshot_height -le 858000 ]]; then
+    elif [[ $snapshot_height -ge 322000 && $snapshot_height -le 857999 ]]; then
         required_version="v0.12.1"
     elif [[ $snapshot_height -ge 858000 ]]; then
         required_version="v0.13.1"
     fi
 
     if [[ $current_version == $required_version ]]; then
-        echo -e "${GREEN}Your current version $current_version is up to date for the snapshot block height $snapshot_height.${NC}"
+        echo -e "${GREEN}Your current version $current_version is the required version for the snapshot block height $snapshot_height.${NC}"
     else
-        echo -e "${YELLOW}Your current version $current_version is not up to date for the snapshot block height $snapshot_height.${NC}"
+        echo -e "${YELLOW}Your current version $current_version is not the required version for the snapshot block height $snapshot_height.${NC}"
         echo -e "${YELLOW}You need to update to version $required_version.${NC}"
         if [[ $required_version == "v0.12.1" ]]; then
             echo -e "${YELLOW}Choose option 'a' at the further consensus client update prompt.${NC}"
@@ -318,6 +318,8 @@ suggest_update() {
             bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_update.sh)
         fi
     fi
+
+    prompt_back_or_continue
 }
 
 # Main script
