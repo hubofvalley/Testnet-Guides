@@ -347,6 +347,10 @@ main_script() {
             choose_mandragora_snapshot
             GETH_SNAPSHOT_FILE="geth_snapshot.lz4"
             STORY_SNAPSHOT_FILE="story_snapshot.lz4"
+
+            # Suggest update based on snapshot block height
+            snapshot_height=$(curl -s $SNAPSHOT_API_URL | jq -r '.height')
+            suggest_update $snapshot_height
             ;;
         2)
             provider_name="ITRocket"
@@ -367,6 +371,10 @@ main_script() {
             choose_itrocket_snapshot
             GETH_SNAPSHOT_FILE=$GETH_FILE_NAME
             STORY_SNAPSHOT_FILE=$FILE_NAME
+
+            # Suggest update based on snapshot block height
+            snapshot_height=$(curl -s $SNAPSHOT_API_URL | jq -r '.height')
+            suggest_update $snapshot_height
             ;;
         3)
             provider_name="CroutonDigital"
@@ -380,6 +388,9 @@ main_script() {
 
             CROUTON_SNAPSHOT_FILE="story_latest.tar.lz4"
             SNAPSHOT_URL=$CROUTON_SNAPSHOT_URL
+
+            # Suggest update based on snapshot block height
+            suggest_update 322000  # Assuming block height suitable for v0.12.1
             ;;
         4)
             provider_name="Josephtran"
@@ -400,6 +411,9 @@ main_script() {
             choose_josephtran_snapshot
             GETH_SNAPSHOT_FILE="Geth_snapshot.lz4"
             STORY_SNAPSHOT_FILE="Story_snapshot.lz4"
+
+            # Suggest update based on snapshot block height
+            suggest_update 322000  # Assuming block height suitable for v0.12.1
             ;;
         5)
             provider_name="OriginStake"
@@ -416,6 +430,10 @@ main_script() {
             choose_originstake_snapshot
             SNAPSHOT_FILE=$FILE_NAME
             SNAPSHOT_URL=$SNAPSHOT_URL
+
+            # Suggest update based on snapshot block height
+            snapshot_height=$(curl -s $SNAPSHOT_API_URL | jq -r '.height')
+            suggest_update $snapshot_height
             ;;
         6)
             echo -e "${GREEN}Exiting.${NC}"
@@ -474,14 +492,6 @@ main_script() {
 
     # Restore your validator state
     sudo cp $HOME/.story/priv_validator_state.json.backup $HOME/.story/story/data/priv_validator_state.json
-
-    # Suggest update based on snapshot block height
-    if [[ $provider_choice -eq 1 || $provider_choice -eq 2 || $provider_choice -eq 5 ]]; then
-        snapshot_height=$(curl -s $SNAPSHOT_API_URL | jq -r '.height')
-        suggest_update $snapshot_height
-    elif [[ $provider_choice -eq 3 || $provider_choice -eq 4 ]]; then
-        suggest_update 322000  # Assuming block height suitable for v0.12.1
-    fi
 
     # Start your story-geth and story nodes
     sudo systemctl restart story-geth story
