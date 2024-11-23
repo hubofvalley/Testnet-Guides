@@ -267,6 +267,59 @@ prompt_back_or_continue() {
     fi
 }
 
+# Function to check if cosmovisor is installed
+check_cosmovisor() {
+    if command -v cosmovisor &> /dev/null; then
+        echo -e "${GREEN}Cosmovisor is installed.${NC}"
+        return 0
+    else
+        echo -e "${RED}Cosmovisor is not installed.${NC}"
+        return 1
+    fi
+}
+
+# Function to get the current version of the consensus client
+get_current_version() {
+    if check_cosmovisor; then
+        version_output=$(cosmovisor version)
+        current_version=$(echo "$version_output" | grep -oP 'v[0-9]+\.[0-9]+\.[0-9]+(?:-[a-z]+)?')
+    else
+        echo -e "${RED}Cosmovisor is not installed. Cannot check the version.${NC}"
+        exit 1
+    fi
+    echo $current_version
+}
+
+# Function to suggest update based on snapshot block height
+suggest_update() {
+    local snapshot_height=$1
+    local current_version=$(get_current_version)
+
+    if [[ $snapshot_height -ge 0 && $snapshot_height -le 321999 ]]; then
+        required_version="v0.12.0"
+    elif [[ $snapshot_height -ge 322000 && $snapshot_height -le 858000 ]]; then
+        required_version="v0.12.1"
+    elif [[ $snapshot_height -ge 858000 ]]; then
+        required_version="v0.13.1"
+    fi
+
+    if [[ $current_version == $required_version ]]; then
+        echo -e "${GREEN}Your current version $current_version is up to date for the snapshot block height $snapshot_height.${NC}"
+    else
+        echo -e "${YELLOW}Your current version $current_version is not up to date for the snapshot block height $snapshot_height.${NC}"
+        echo -e "${YELLOW}You need to update to version $required_version.${NC}"
+        if [[ $required_version == "v0.12.1" ]]; then
+            echo -e "${YELLOW}Choose option 'a' at the further consensus client update prompt.${NC}"
+        elif [[ $required_version == "v0.13.1" ]]; then
+            echo -e "${YELLOW}Choose option 'b' at the further consensus client update prompt.${NC}"
+        fi
+        read -p "Do you want to update now? (y/n): " update_choice
+        if [[ $update_choice == "y" || $update_choice == "Y" ]]; then
+            bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_update.sh)
+        fi
+    fi
+}
+
 # Main script
 main_script() {
     show_menu
@@ -405,7 +458,7 @@ main_script() {
     sudo chown -R $USER:$USER $HOME/.story
 
     # Ask the user if they want to delete the downloaded snapshot files
-    read -p "Do you want to delete the downloaded snapshot files? (y/n): " delete_choice
+    read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
 
     if [[ $delete_choice == "y" || $delete_choice == "Y" ]]; then
         # Delete downloaded snapshot files
@@ -422,8 +475,13 @@ main_script() {
     # Restore your validator state
     sudo cp $HOME/.story/priv_validator_state.json.backup $HOME/.story/story/data/priv_validator_state.json
 
-    # Update version
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_update.sh)
+    # Suggest update based on snapshot block height
+    if [[ $provider_choice -eq 1 || $provider_choice -eq 2 || $provider_choice -eq 5 ]]; then
+        snapshot_height=$(curl -s $SNAPSHOT_API_URL | jq -r '.height')
+        suggest_update $snapshot_height
+    elif [[ $provider_choice -eq 3 || $provider_choice -eq 4 ]]; then
+        suggest_update 322000  # Assuming block height suitable for v0.12.1
+    fi
 
     # Start your story-geth and story nodes
     sudo systemctl restart story-geth story
