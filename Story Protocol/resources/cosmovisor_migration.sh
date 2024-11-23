@@ -24,6 +24,7 @@ init_cosmovisor() {
 }
 
 # Install and initialize cosmovisor
+sudo rm -r $HOME/.story/story/data/upgrade-info.json
 install_cosmovisor
 init_cosmovisor
 

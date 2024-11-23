@@ -24,6 +24,7 @@ init_cosmovisor() {
     cp story-v0.12.0/$story_file__name $HOME/go/bin/story
     sudo chown -R $USER:$USER $HOME/go/bin/story
     sudo chmod +x $HOME/go/bin/story
+    sudo rm -r $HOME/.story/story/data/upgrade-info.json
 
     # Initialize cosmovisor
     if ! cosmovisor init $HOME/go/bin/story; then
