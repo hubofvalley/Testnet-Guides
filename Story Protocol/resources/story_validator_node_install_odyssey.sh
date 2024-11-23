@@ -120,7 +120,7 @@ echo "Backup directory: $input3"
 # 13. Create systemd service files for the consensus and Geth clients
 
 # Consensus service file
-sudo tee /etc/systemd/system/story.service <<EOF
+sudo tee /etc/systemd/system/story.service > /dev/null <<EOF
 [Unit]
 Description=Cosmovisor Story Node
 After=network.target

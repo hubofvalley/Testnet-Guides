@@ -74,7 +74,7 @@ echo "export DAEMON_DATA_BACKUP_DIR=$input3" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
 # Create or update the systemd service file
-sudo tee /etc/systemd/system/story.service <<EOF
+sudo tee /etc/systemd/system/story.service > /dev/null <<EOF
 [Unit]
 Description=Cosmovisor Story Node
 After=network.target
