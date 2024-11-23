@@ -351,6 +351,9 @@ main_script() {
             # Suggest update based on snapshot block height
             snapshot_height=$(curl -s $SNAPSHOT_API_URL | grep -oP '"snapshot_height":\s*\K\d+')
             suggest_update $snapshot_height
+
+            # Ask the user if they want to delete the downloaded snapshot files
+            read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
             ;;
         2)
             provider_name="ITRocket"
@@ -375,6 +378,9 @@ main_script() {
             # Suggest update based on snapshot block height
             snapshot_height=$(curl -s $SNAPSHOT_API_URL | jq -r '.snapshot_height')
             suggest_update $snapshot_height
+
+            # Ask the user if they want to delete the downloaded snapshot files
+            read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
             ;;
         3)
             provider_name="CroutonDigital"
@@ -391,6 +397,9 @@ main_script() {
 
             # Suggest update based on snapshot block height
             suggest_update 322000  # Assuming block height suitable for v0.12.1
+
+            # Ask the user if they want to delete the downloaded snapshot files
+            read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
             ;;
         4)
             provider_name="Josephtran"
@@ -414,6 +423,9 @@ main_script() {
 
             # Suggest update based on snapshot block height
             suggest_update 322000  # Assuming block height suitable for v0.12.1
+
+            # Ask the user if they want to delete the downloaded snapshot files
+            read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
             ;;
         5)
             provider_name="OriginStake"
@@ -434,6 +446,9 @@ main_script() {
             # Suggest update based on snapshot block height
             snapshot_height=$(curl -s $SNAPSHOT_API_URL | jq -r '.height')
             suggest_update $snapshot_height
+
+            # Ask the user if they want to delete the downloaded snapshot files
+            read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
             ;;
         6)
             echo -e "${GREEN}Exiting.${NC}"
@@ -475,11 +490,8 @@ main_script() {
     # Change ownership of the .story directory
     sudo chown -R $USER:$USER $HOME/.story
 
-    # Ask the user if they want to delete the downloaded snapshot files
-    read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
-
+    # Delete downloaded snapshot files if the user chose to do so
     if [[ $delete_choice == "y" || $delete_choice == "Y" ]]; then
-        # Delete downloaded snapshot files
         if [[ $provider_choice -eq 1 || $provider_choice -eq 2 || $provider_choice -eq 4 ]]; then
             sudo rm -v $GETH_SNAPSHOT_FILE $STORY_SNAPSHOT_FILE
         elif [[ $provider_choice -eq 3 || $provider_choice -eq 5 ]]; then
