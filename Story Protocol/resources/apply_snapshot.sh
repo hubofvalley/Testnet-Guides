@@ -349,7 +349,7 @@ main_script() {
             STORY_SNAPSHOT_FILE="story_snapshot.lz4"
 
             # Suggest update based on snapshot block height
-            snapshot_height=$(curl -s $SNAPSHOT_API_URL | jq -r '.height')
+            snapshot_height=$(curl -s $SNAPSHOT_API_URL | grep -oP '"snapshot_height":\s*\K\d+')
             suggest_update $snapshot_height
             ;;
         2)
@@ -373,7 +373,7 @@ main_script() {
             STORY_SNAPSHOT_FILE=$FILE_NAME
 
             # Suggest update based on snapshot block height
-            snapshot_height=$(curl -s $SNAPSHOT_API_URL | jq -r '.height')
+            snapshot_height=$(curl -s $SNAPSHOT_API_URL | jq -r '.snapshot_height')
             suggest_update $snapshot_height
             ;;
         3)
