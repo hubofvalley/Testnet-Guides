@@ -99,7 +99,7 @@ PRIVATE_KEY=$(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_k
 
 # 11. Initialize Cosmovisor
 echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
-echo "export DAEMON_HOME=$(find $HOME -type d -name "story")" >> $HOME/.bash_profile
+echo "export DAEMON_HOME=$(find "$HOME/.story" -type d -name "story" -print -quit)" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 cosmovisor init $HOME/go/bin/story
 mkdir -p $HOME/.story/story/cosmovisor/upgrades
@@ -107,7 +107,7 @@ mkdir -p $HOME/.story/story/cosmovisor/backup
 
 # 12. Define Cosmovisor paths for the consensus client
 input1=$(which cosmovisor)
-input2=$(find $HOME -type d -name "story")
+input2=$(find "$HOME/.story" -type d -name "story" -print -quit)
 input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
 echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
 echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile

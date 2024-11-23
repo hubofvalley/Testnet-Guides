@@ -29,7 +29,7 @@ init_cosmovisor
 
 # Define variables
 input1=$(which cosmovisor)
-input2=$(find $HOME -type d -name "story")
+input2=$(find "$HOME/.story" -type d -name "story" -print -quit)
 input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
 
 # Check if cosmovisor is installed
