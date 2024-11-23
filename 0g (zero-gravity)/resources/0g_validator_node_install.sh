@@ -147,16 +147,16 @@ After=network.target
 User=$USER
 Type=simple
 WorkingDirectory=$HOME/.0gchain
-ExecStart=$input1 run start --log_output_console
+ExecStart=${input1} run start --log_output_console
 StandardOutput=journal
 StandardError=journal
 Restart=on-failure
 LimitNOFILE=65535
 Environment="DAEMON_NAME=0gchaind"
-Environment="DAEMON_HOME=$input2"
+Environment="DAEMON_HOME=${input2}"
 Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=true"
 Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
-Environment="DAEMON_DATA_BACKUP_DIR=$input3"
+Environment="DAEMON_DATA_BACKUP_DIR=${input3}"
 Environment="UNSAFE_SKIP_BACKUP=true"
 
 [Install]
