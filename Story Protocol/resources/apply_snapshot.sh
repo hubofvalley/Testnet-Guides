@@ -300,7 +300,7 @@ suggest_update() {
     elif [[ $snapshot_height -ge 322000 && $snapshot_height -le 857999 ]]; then
         required_version="v0.12.1"
     elif [[ $snapshot_height -ge 858000 ]]; then
-        required_version="v0.13.1"
+        required_version="v0.13.0"
     fi
 
     if [[ $current_version == $required_version ]]; then
@@ -310,7 +310,7 @@ suggest_update() {
         echo -e "${YELLOW}You need to update to version $required_version.${NC}"
         if [[ $required_version == "v0.12.1" ]]; then
             echo -e "${YELLOW}Choose option 'a' at the further consensus client update prompt.${NC}"
-        elif [[ $required_version == "v0.13.1" ]]; then
+        elif [[ $required_version == "v0.13.0" ]]; then
             echo -e "${YELLOW}Choose option 'b' at the further consensus client update prompt.${NC}"
         fi
         read -p "Do you want to update now? (y/n): " update_choice
