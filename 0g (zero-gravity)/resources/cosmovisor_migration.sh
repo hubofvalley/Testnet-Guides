@@ -29,8 +29,8 @@ init_cosmovisor
 
 # Define variables
 input1=$(which cosmovisor)
-input2=$(find $HOME -type d -name ".0gchain")
-input3=$(find $HOME/.0gchain/cosmovisor -type d -name "backup")
+input2=$(find $HOME -type d -name ".0gchain" -print -quit)
+input3=$(find "$HOME/.0gchain/cosmovisor" -type d -name "backup" -print -quit)
 
 # Check if cosmovisor is installed
 if [ -z "$input1" ]; then

@@ -119,7 +119,7 @@ sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.0gchain/config/config.tom
 
 # 17. initialize cosmovisor
 echo "export DAEMON_NAME=0gchaind" >> $HOME/.bash_profile
-echo "export DAEMON_HOME=$(find $HOME -type d -name ".0gchain")" >> $HOME/.bash_profile
+echo "export DAEMON_HOME=$(find $HOME -type d -name ".0gchain" -print -quit)" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 cosmovisor init $HOME/go/bin/0gchaind && \
 mkdir -p $HOME/.0gchain/cosmovisor/upgrades && \
@@ -127,11 +127,11 @@ mkdir -p $HOME/.0gchain/cosmovisor/backup
 
 # 18. define the path of cosmovisor
 input1=$(which cosmovisor)
-input2=$(find $HOME -type d -name ".0gchain")
-input3=$(find $HOME/.0gchain/cosmovisor -type d -name "backup")
+input2=$(find $HOME -type d -name ".0gchain" -print -quit)
+input3=$(find "$HOME/.0gchain/cosmovisor" -type d -name "backup" -print -quit)
 echo "export DAEMON_NAME=0gchaind" >> $HOME/.bash_profile
 echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
-echo "export DAEMON_DATA_BACKUP_DIR=$(find $HOME/.0gchain/cosmovisor -type d -name "backup")" >> $HOME/.bash_profile
+echo "export DAEMON_DATA_BACKUP_DIR=$(find "$HOME/.0gchain/cosmovisor" -type d -name "backup" -print -quit)" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 echo "input1. $input1"
 echo "input2. $input2"
