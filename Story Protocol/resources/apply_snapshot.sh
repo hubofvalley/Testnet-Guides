@@ -299,7 +299,7 @@ suggest_update() {
 
     if [[ $snapshot_height -ge 0 && $snapshot_height -le 321999 ]]; then
         required_version="v0.12.0"
-    elif [[ $snapshot_height -ge 322000 && $snapshot_height -le 858000 ]]; then
+    elif [[ $snapshot_height -ge 322000 && $snapshot_height -le 857999 ]]; then
         required_version="v0.12.1"
     elif [[ $snapshot_height -ge 858000 ]]; then
         required_version="v0.13.0"
