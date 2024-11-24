@@ -473,7 +473,7 @@ main_script() {
     sudo systemctl stop story-geth story
 
     # Back up your validator state
-    sudo cp $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
+    sudo mv $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
 
     # Delete previous geth chaindata and story data folders
     sudo rm -rf $HOME/.story/geth/odyssey/chaindata $HOME/.story/story/data

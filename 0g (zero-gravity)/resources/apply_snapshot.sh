@@ -164,7 +164,7 @@ main_script() {
     sudo systemctl stop $SERVICE_FILE_NAME
 
     # Back up your validator state
-    sudo cp $HOME/.0gchain/data/priv_validator_state.json $HOME/.0gchain/priv_validator_state.json.backup
+    sudo mv $HOME/.0gchain/data/priv_validator_state.json $HOME/.0gchain/priv_validator_state.json.backup
 
     # Delete previous 0gchain data folders
     sudo rm -rf $HOME/.0gchain/data
