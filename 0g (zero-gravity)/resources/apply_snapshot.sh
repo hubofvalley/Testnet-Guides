@@ -164,7 +164,7 @@ main_script() {
     sudo systemctl stop $SERVICE_FILE_NAME
 
     # Back up your validator state
-    sudo mv $HOME/.0gchain/data/priv_validator_state.json $HOME/.0gchain/priv_validator_state.json.backup
+    mv $HOME/.0gchain/data/priv_validator_state.json $HOME/.0gchain/priv_validator_state.json.backup
 
     # Delete previous 0gchain data folders
     sudo rm -rf $HOME/.0gchain/data
@@ -188,7 +188,7 @@ main_script() {
     fi
 
     # Restore your validator state
-    sudo cp $HOME/.0gchain/priv_validator_state.json.backup $HOME/.0gchain/data/priv_validator_state.json
+    cp $HOME/.0gchain/priv_validator_state.json.backup $HOME/.0gchain/data/priv_validator_state.json
 
     # Migrate to Cosmovisor
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/cosmovisor_migration.sh)
