@@ -179,7 +179,7 @@ bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main
 
 #### 4. Story App Installation
 
-- Install the Story app (v0.12.1) for command-line transactions and network interactions without running a full node.
+- Install the Story app for command-line transactions and network interactions without running a full node.
 
 ## Story Node Deployment Guide With Cosmovisor
 
