@@ -163,12 +163,12 @@ function query_balance() {
     case $choice in
         1)
             echo -e "${GREEN}Querying balance of your own EVM address...${RESET}"
-            geth --exec "eth.getBalance('$(story validator export | grep -oP '(?<=EVM Address: ).*')')" attach $HOME/.story/geth/odyssey/geth.ipc
+            geth --exec "(parseFloat(eth.getBalance('$(story validator export | grep -oP '(?<=EVM Address: ).*')') / 1e18).toFixed(2)) + ' IP'" attach $HOME/.story/geth/odyssey/geth.ipc
             ;;
         2)
             read -p "Enter the EVM address to query: " evm_address
             echo -e "${GREEN}Querying balance of $evm_address...${RESET}"
-            geth --exec "eth.getBalance('$evm_address')" attach $HOME/.story/geth/odyssey/geth.ipc
+            geth --exec "(parseFloat(eth.getBalance('$evm_address') / 1e18).toFixed(2)) + ' IP'" attach ~/.story/geth/odyssey/geth.ipc
             ;;
         3)
             menu
