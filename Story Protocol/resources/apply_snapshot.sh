@@ -311,7 +311,7 @@ suggest_update() {
         echo -e "${YELLOW}If an update is required, choose option 'b' at the consensus client update prompt.${NC}"
     fi
 
-    read -p "Do you want to update now? (y/n): " update_choice
+    read -p "Do you want to update the consensus client version? (y/n): " update_choice
 }
 
 # Main script
