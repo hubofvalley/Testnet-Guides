@@ -303,7 +303,7 @@ get_current_version() {
 # Function to suggest update based on snapshot block height
 suggest_update() {
     local snapshot_height=$1
-    local current_version=$(get_current_version)
+    local current_version=$(echo "$version_output" | grep -oP 'v[0-9]+\.[0-9]+\.[0-9]+(?:-[a-z]+)?')
 
     echo -e "${YELLOW}Current consensus client version: $current_version${NC}"
 
