@@ -28,6 +28,9 @@ JOSEPHTRAN_PRUNED_STORY_SNAPSHOT_URL="https://story.josephtran.co/Story_snapshot
 JOSEPHTRAN_ARCHIVE_GETH_SNAPSHOT_URL="https://story.josephtran.co/archive_Geth_snapshot.lz4"
 JOSEPHTRAN_ARCHIVE_STORY_SNAPSHOT_URL="https://story.josephtran.co/archive_Story_snapshot.lz4"
 
+JOSEPHTRAN_PRUNED_API_URL="https://story.josephtran.co/prune_snapshot_info.json"
+JOSEPHTRAN_ARCHIVE_API_URL="https://story.josephtran.co/archive_snapshot_info.json"
+
 ORIGINSTAKE_PRUNED_API_URL="https://snapshot.originstake.com/story_snapshot_metadata.json"
 ORIGINSTAKE_ARCHIVE_API_URL="https://snapshot.originstake.com/full/story_full_snapshot_metadata.json"
 
@@ -63,6 +66,8 @@ display_snapshot_details() {
         snapshot_height=$(echo "$snapshot_info" | grep -oP '"snapshot_height":\s*\K\d+')
     elif [[ $api_url == *"originstake"* ]]; then
         snapshot_height=$(echo "$snapshot_info" | jq -r '.height')
+    elif [[ $api_url == *"josephtran"* ]]; then
+        snapshot_height=$(echo "$snapshot_info" | grep -oP '"block_height":\s*\K\d+')
     else
         snapshot_height=$(echo "$snapshot_info" | jq -r '.snapshot_height')
     fi
@@ -204,12 +209,10 @@ choose_josephtran_snapshot() {
 
     case $snapshot_type_choice in
         1)
-            GETH_SNAPSHOT_URL=$JOSEPHTRAN_PRUNED_GETH_SNAPSHOT_URL
-            STORY_SNAPSHOT_URL=$JOSEPHTRAN_PRUNED_STORY_SNAPSHOT_URL
+            SNAPSHOT_API_URL=$JOSEPHTRAN_PRUNED_API_URL
             ;;
         2)
-            GETH_SNAPSHOT_URL=$JOSEPHTRAN_ARCHIVE_GETH_SNAPSHOT_URL
-            STORY_SNAPSHOT_URL=$JOSEPHTRAN_ARCHIVE_STORY_SNAPSHOT_URL
+            SNAPSHOT_API_URL=$JOSEPHTRAN_ARCHIVE_API_URL
             ;;
         *)
             echo -e "${RED}Invalid choice. Exiting.${NC}"
@@ -217,7 +220,12 @@ choose_josephtran_snapshot() {
             ;;
     esac
 
+    display_snapshot_details $SNAPSHOT_API_URL
+
     prompt_back_or_continue
+
+    GETH_SNAPSHOT_URL=$JOSEPHTRAN_PRUNED_GETH_SNAPSHOT_URL
+    STORY_SNAPSHOT_URL=$JOSEPHTRAN_PRUNED_STORY_SNAPSHOT_URL
 }
 
 # Function to choose snapshot type for OriginStake
@@ -423,7 +431,8 @@ main_script() {
             STORY_SNAPSHOT_FILE="Story_snapshot.lz4"
 
             # Suggest update based on snapshot block height
-            suggest_update 322000  # Assuming block height suitable for v0.12.1
+            snapshot_height=$(curl -s $SNAPSHOT_API_URL | grep -oP '"block_height":\s*\K\d+')
+            suggest_update $snapshot_height
 
             # Ask the user if they want to delete the downloaded snapshot files
             read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
@@ -473,7 +482,7 @@ main_script() {
     sudo systemctl stop story-geth story
 
     # Back up your validator state
-    sudo cp $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
+    mv $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
 
     # Delete previous geth chaindata and story data folders
     sudo rm -rf $HOME/.story/geth/odyssey/chaindata $HOME/.story/story/data
@@ -504,7 +513,7 @@ main_script() {
     fi
 
     # Restore your validator state
-    sudo cp $HOME/.story/priv_validator_state.json.backup $HOME/.story/story/data/priv_validator_state.json
+    cp $HOME/.story/priv_validator_state.json.backup $HOME/.story/story/data/priv_validator_state.json
 
     # Start your story-geth and story nodes
     sudo systemctl restart story-geth story
