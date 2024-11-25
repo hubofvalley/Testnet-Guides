@@ -291,7 +291,7 @@ check_cosmovisor() {
 # Function to get the current version of the consensus client
 get_current_version() {
     if check_cosmovisor; then
-        version_output=$(cosmovisor version)
+        version_output=$(cosmovisor version 2>&1 | grep -oP 'v[0-9]+(\.[0-9]+)*(-[a-zA-Z0-9]+)?')
         current_version=$(echo "$version_output" | grep -oP 'v[0-9]+\.[0-9]+\.[0-9]+(?:-[a-z]+)?')
     else
         echo -e "${RED}Cosmovisor is not installed. Cannot check the version.${NC}"
