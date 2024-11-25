@@ -94,9 +94,13 @@ choose_mandragora_snapshot() {
     case $snapshot_type_choice in
         1)
             SNAPSHOT_API_URL=$MAND_PRUNED_API_URL
+            GETH_SNAPSHOT_URL=$MAND_PRUNED_GETH_SNAPSHOT_URL
+            STORY_SNAPSHOT_URL=$MAND_PRUNED_STORY_SNAPSHOT_URL
             ;;
         2)
             SNAPSHOT_API_URL=$MAND_ARCHIVE_API_URL
+            GETH_SNAPSHOT_URL=$MAND_ARCHIVE_GETH_SNAPSHOT_URL
+            STORY_SNAPSHOT_URL=$MAND_ARCHIVE_STORY_SNAPSHOT_URL
             ;;
         *)
             echo -e "${RED}Invalid choice. Exiting.${NC}"
@@ -107,9 +111,6 @@ choose_mandragora_snapshot() {
     display_snapshot_details $SNAPSHOT_API_URL
 
     prompt_back_or_continue
-
-    GETH_SNAPSHOT_URL=$MAND_PRUNED_GETH_SNAPSHOT_URL
-    STORY_SNAPSHOT_URL=$MAND_PRUNED_STORY_SNAPSHOT_URL
 }
 
 # Function to choose snapshot type for ITRocket
@@ -210,9 +211,13 @@ choose_josephtran_snapshot() {
     case $snapshot_type_choice in
         1)
             SNAPSHOT_API_URL=$JOSEPHTRAN_PRUNED_API_URL
+            GETH_SNAPSHOT_URL=$JOSEPHTRAN_PRUNED_GETH_SNAPSHOT_URL
+            STORY_SNAPSHOT_URL=$JOSEPHTRAN_PRUNED_STORY_SNAPSHOT_URL
             ;;
         2)
             SNAPSHOT_API_URL=$JOSEPHTRAN_ARCHIVE_API_URL
+            GETH_SNAPSHOT_URL=$JOSEPHTRAN_ARCHIVE_GETH_SNAPSHOT_URL
+            STORY_SNAPSHOT_URL=$JOSEPHTRAN_ARCHIVE_STORY_SNAPSHOT_URL
             ;;
         *)
             echo -e "${RED}Invalid choice. Exiting.${NC}"
@@ -223,9 +228,6 @@ choose_josephtran_snapshot() {
     display_snapshot_details $SNAPSHOT_API_URL
 
     prompt_back_or_continue
-
-    GETH_SNAPSHOT_URL=$JOSEPHTRAN_PRUNED_GETH_SNAPSHOT_URL
-    STORY_SNAPSHOT_URL=$JOSEPHTRAN_PRUNED_STORY_SNAPSHOT_URL
 }
 
 # Function to choose snapshot type for OriginStake
