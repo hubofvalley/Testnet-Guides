@@ -288,22 +288,10 @@ check_cosmovisor() {
     fi
 }
 
-# Function to get the current version of the consensus client
-get_current_version() {
-    if check_cosmovisor; then
-        version_output=$(cosmovisor version 2>&1 | grep -oP 'v[0-9]+(\.[0-9]+)*(-[a-zA-Z0-9]+)?')
-        current_version=$(echo "$version_output" | grep -oP 'v[0-9]+\.[0-9]+\.[0-9]+(?:-[a-z]+)?')
-    else
-        echo -e "${RED}Cosmovisor is not installed. Cannot check the version.${NC}"
-        exit 1
-    fi
-    echo $current_version
-}
-
 # Function to suggest update based on snapshot block height
 suggest_update() {
     local snapshot_height=$1
-    local current_version=$(cosmovisor version 2>&1 | grep -oP 'v[0-9]+(\.[0-9]+)*(-[a-zA-Z0-9]+)?')
+    current_version=$(cosmovisor version 2>&1 | grep -oP 'v[0-9]+(\.[0-9]+)*(-[a-zA-Z0-9]+)?')
 
     echo -e "${YELLOW}Current consensus client version: $current_version${NC}"
 
