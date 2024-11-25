@@ -291,7 +291,7 @@ check_cosmovisor() {
 # Function to suggest update based on snapshot block height
 suggest_update() {
     local snapshot_height=$1
-    current_version=$(cosmovisor version 2>&1 | grep -oP 'v[0-9]+(\.[0-9]+)*(-[a-zA-Z0-9]+)?')
+    current_version=$(cosmovisor version 2>&1 | grep -oP 'v0\.[0-9]+(\.[0-9]+)*-(stable|unstable)')
 
     echo -e "${YELLOW}Current consensus client version: $current_version${NC}"
 
