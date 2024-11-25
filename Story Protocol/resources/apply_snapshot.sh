@@ -296,11 +296,11 @@ suggest_update() {
     echo -e "${YELLOW}Current consensus client version: $current_version${NC}"
 
     if [[ $snapshot_height -ge 0 && $snapshot_height -le 321999 ]]; then
-        required_version="v0.12.0"
+        required_version="v0.12.0-stable"
     elif [[ $snapshot_height -ge 322000 && $snapshot_height -le 857999 ]]; then
-        required_version="v0.12.1"
+        required_version="v0.12.1-stable"
     elif [[ $snapshot_height -ge 858000 ]]; then
-        required_version="v0.13.0"
+        required_version="v0.13.0-stable"
     fi
 
     echo -e "${YELLOW}Required version for snapshot block height $snapshot_height: $required_version${NC}"
