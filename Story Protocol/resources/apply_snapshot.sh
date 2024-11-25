@@ -305,9 +305,9 @@ suggest_update() {
 
     echo -e "${YELLOW}Required version for snapshot block height $snapshot_height: $required_version${NC}"
 
-    if [[ $required_version == "v0.12.1" ]]; then
+    if [[ $required_version == "v0.12.1-stable" ]]; then
         echo -e "${YELLOW}If an update is required, choose option 'a' at the consensus client update prompt.${NC}"
-    elif [[ $required_version == "v0.13.0" ]]; then
+    elif [[ $required_version == "v0.13.0-stable" ]]; then
         echo -e "${YELLOW}If an update is required, choose option 'b' at the consensus client update prompt.${NC}"
     fi
 
