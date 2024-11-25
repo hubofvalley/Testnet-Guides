@@ -472,9 +472,6 @@ main_script() {
             ;;
     esac
 
-    # Remove upgrade-info.json
-    sudo rm -f $HOME/.story/story/data/upgrade-info.json
-
     cd $HOME
 
     # Install required dependencies
