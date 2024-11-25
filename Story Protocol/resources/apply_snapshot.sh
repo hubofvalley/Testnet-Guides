@@ -326,6 +326,13 @@ suggest_update() {
     read -p "Do you want to update now? (y/n): " update_choice
     if [[ $update_choice == "y" || $update_choice == "Y" ]]; then
         bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_update.sh)
+
+        # Move the required version to the genesis folder
+        if [[ $required_version == "v0.12.1" ]]; then
+            cp "$HOME/.story/story/cosmovisor/upgrades/v0.12.1/bin/story" "$HOME/.story/story/cosmovisor/genesis/bin/story"
+        elif [[ $required_version == "v0.13.0" ]]; then
+            cp "$HOME/.story/story/cosmovisor/upgrades/v0.13.0/bin/story" "$HOME/.story/story/cosmovisor/genesis/bin/story"
+        fi
     fi
 
     prompt_back_or_continue
