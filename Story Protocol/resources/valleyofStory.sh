@@ -68,21 +68,21 @@ ${GREEN}Contact${RESET}
 
 ENDPOINTS="${GREEN}
 Grand Valley Story Protocol public endpoints:${RESET}
-- cosmos-rpc: ${BLUE}https://lightnode-rpc-story.grandvalleys.com${RESET}
+- cosmos-rpc: \e]8;;https://lightnode-rpc-story.grandvalleys.com\a${BLUE}https://lightnode-rpc-story.grandvalleys.com\e]8;;\a${RESET}
 - evm-rpc: ${BLUE}https://lightnode-json-rpc-story.grandvalleys.com${RESET}
 - cosmos rest-api: ${BLUE}https://lightnode-api-story.grandvalleys.com${RESET}
 - cosmos ws: ${BLUE}wss://lightnode-rpc-story.grandvalleys.com/websocket${RESET}
 - evm ws: ${BLUE}wss://lightnode-wss-story.grandvalleys.com${RESET}
 
 ${GREEN}Connect with Story Protocol:${RESET}
-- Official Website: ${BLUE}https://www.story.foundation${RESET}
-- X: ${BLUE}https://x.com/StoryProtocol${RESET}
-- Official Docs: ${BLUE}https://docs.story.foundation${RESET}
+- Official Website: \e]8;;https://www.story.foundation\a${BLUE}https://www.story.foundation\e]8;;\a${RESET}
+- X: \e]8;;https://x.com/StoryProtocol\a${BLUE}https://x.com/StoryProtocol\e]8;;\a${RESET}
+- Official Docs: \e]8;;https://docs.story.foundation\a${BLUE}https://docs.story.foundation\e]8;;\a${RESET}
 
 ${GREEN}Connect with Grand Valley:${RESET}
-- X: ${BLUE}https://x.com/bacvalley${RESET}
-- GitHub: ${BLUE}https://github.com/hubofvalley${RESET}
-- Email: ${BLUE}letsbuidltogether@grandvalleys.com${RESET}
+- X: \e]8;;https://x.com/bacvalley\a${BLUE}https://x.com/bacvalley\e]8;;\a${RESET}
+- GitHub: \e]8;;https://github.com/hubofvalley\a${BLUE}https://github.com/hubofvalley\e]8;;\a${RESET}
+- Email: \e]8;;mailto:letsbuidltogether@grandvalleys.com\a${BLUE}letsbuidltogether@grandvalleys.com\e]8;;\a${RESET}
 "
 
 # Display LOGO and wait for user input to continue
