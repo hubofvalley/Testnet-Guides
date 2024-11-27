@@ -62,9 +62,9 @@ sudo chown -R $USER:$USER $HOME/go/bin/geth
 sudo chmod +x $HOME/go/bin/geth
 
 # Consensus client binary
-mkdir -p story-v0.12.0
-wget -p $HOME/story-v0.12.0 https://github.com/piplabs/story/releases/download/v0.12.0/story-linux-amd64 -O $HOME/story-v0.12.0/story
-cp story-v0.12.0/story $HOME/go/bin/story
+mkdir -p story-v0.13.0
+wget -p $HOME/story-v0.13.0 https://github.com/piplabs/story/releases/download/v0.13.0/story-linux-amd64 -O $HOME/story-v0.13.0/story
+cp story-v0.13.0/story $HOME/go/bin/story
 sudo chown -R $USER:$USER $HOME/go/bin/story
 sudo chmod +x $HOME/go/bin/story
 
