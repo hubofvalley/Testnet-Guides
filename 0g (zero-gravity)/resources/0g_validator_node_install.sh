@@ -68,7 +68,8 @@ cd $HOME
 sed -i.bak -e "s%laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${OG_PORT}656\"%;
 s%prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${OG_PORT}660\"%;
 s%proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${OG_PORT}658\"%;
-s%laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://0.0.0.0:${OG_PORT}657\"%" $HOME/.0gchain/config/config.toml
+s%laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://0.0.0.0:${OG_PORT}657\"%:
+s%^pprof_laddr = \"localhost:26060\"%pprof_laddr = \"localhost:${0G_PORT}060\"%g" $HOME/.0gchain/config/config.toml
 
 # 8. download genesis.json
 sudo rm $HOME/.0gchain/config/genesis.json && \
@@ -120,8 +121,13 @@ sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.0gchain/config/config.tom
 echo "export DAEMON_NAME=0gchaind" >> $HOME/.bash_profile
 echo "export DAEMON_HOME=$(find $HOME -type d -name ".0gchain" -print -quit)" >> $HOME/.bash_profile
 source $HOME/.bash_profile
-cosmovisor init $HOME/go/bin/0gchaind && \
-mkdir -p $HOME/.0gchain/cosmovisor/upgrades && \
+cosmovisor init $HOME/go/bin/0gchaind
+cd $HOME/go/bin/
+sudo rm -r $HOME/go/bin/0gchaind
+ln -s $HOME/.0gchain/cosmovisor/current/bin/0gchaind 0gchaind
+sudo chown -R $USER:$USER $HOME/go/bin/0gchaind
+sudo chmod +x $HOME/go/bin/0gchaind
+mkdir -p $HOME/.0gchain/cosmovisor/upgrades
 mkdir -p $HOME/.0gchain/cosmovisor/backup
 
 # 18. define the path of cosmovisor
