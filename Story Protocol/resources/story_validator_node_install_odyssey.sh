@@ -24,8 +24,8 @@ sudo systemctl disable story
 sudo systemctl disable story-geth
 sudo rm -rf /etc/systemd/system/story.service
 sudo rm -rf /etc/systemd/system/story-geth.service
-sudo rm -r story
-sudo rm -r story-geth
+sudo rm -r $HOME/go/bin/story
+sudo rm -r $HOME/go/bin/story-geth
 sudo rm -rf $HOME/.story
 sed -i "/STORY_/d" $HOME/.bash_profile
 

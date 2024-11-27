@@ -318,6 +318,8 @@ function delete_validator_node() {
     sudo systemctl disable story story-geth
     sudo rm -rf /etc/systemd/system/story.service
     sudo rm -rf /etc/systemd/system/story-geth.service
+    sudo rm -r $HOME/go/bin/story
+    sudo rm -r $HOME/go/bin/story-geth
     sudo rm -rf $HOME/.story
     sed -i "/STORY_/d" $HOME/.bash_profile
     echo -e "${RED}Story Validator node deleted successfully.${RESET}"
