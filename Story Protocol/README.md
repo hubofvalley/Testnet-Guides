@@ -36,7 +36,7 @@
     - [7. set custom ports in config.toml file](#7-set-custom-ports-in-configtoml-file)
     - [8. add peers to the config.toml](#8-add-peers-to-the-configtoml)
     - [9. enable indexer (optional) (if u want to run a full node follow this step)](#9-enable-indexer-optional-if-u-want-to-run-a-full-node-follow-this-step)
-    - [10. init cosmovisor](#10-init-cosmovisor)
+    - [10. initialize Cosmovisor and create a symlink to the latest consensus client version in the Go directory](#10-initialize-cosmovisor-and-create-a-symlink-to-the-latest-consensus-client-version-in-the-go-directory)
     - [11. define the path of cosmovisor for being used in the consensus client](#11-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client)
       - [save the results, they'll be used in the next step](#save-the-results-theyll-be-used-in-the-next-step)
       - [this is an example of the result](#this-is-an-example-of-the-result)
@@ -269,10 +269,10 @@ story init --network $STORY_CHAIN_ID --moniker $MONIKER
 ### 7. set custom ports in config.toml file
 
 ```bash
-sed -i.bak -e "/^\[p2p\]/,/^$/ s%laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${STORY_PORT}656\"%g;
-s%prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${STORY_PORT}660\"%g;
-s%proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${STORY_PORT}658\"%g;
-s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://0.0.0.0:${STORY_PORT}657\"%g" $HOME/.story/story/config/config.toml
+sed -i.bak -e "s%laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${STORY_PORT}656\"%;
+s%prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${STORY_PORT}660\"%;
+s%proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${STORY_PORT}658\"%;
+s%laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://0.0.0.0:${STORY_PORT}657\"%" $HOME/.story/story/config/config.toml
 ```
 
 ### 8. add peers to the config.toml
@@ -289,14 +289,19 @@ echo $peers
 sed -i -e 's/^indexer = "null"/indexer = "kv"/' $HOME/.story/story/config/config.toml
 ```
 
-### 10. init cosmovisor
+### 10. initialize Cosmovisor and create a symlink to the latest consensus client version in the Go directory
 
 ```bash
 echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
-echo "export DAEMON_HOME=$(find $HOME -type d -name "story")" >> $HOME/.bash_profile
+echo "export DAEMON_HOME=$(find "$HOME/.story" -type d -name "story" -print -quit)" >> $HOME/.bash_profile
 source $HOME/.bash_profile
-cosmovisor init $HOME/go/bin/story && \
-mkdir -p $HOME/.story/story/cosmovisor/upgrades && \
+cosmovisor init $HOME/go/bin/story
+cd $HOME/go/bin/
+sudo rm -r $HOME/go/bin/story
+ln -s $HOME/.story/story/cosmovisor/current/bin/story story
+sudo chown -R $USER:$USER $HOME/go/bin/story
+sudo chmod +x $HOME/go/bin/story
+mkdir -p $HOME/.story/story/cosmovisor/upgrades
 mkdir -p $HOME/.story/story/cosmovisor/backup
 ```
 
