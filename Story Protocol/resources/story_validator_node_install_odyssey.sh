@@ -80,7 +80,7 @@ s%prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${STORY_PORT}6
 s%proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${STORY_PORT}658\"%;
 s%laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://127.0.0.1:${STORY_PORT}657\"%" $HOME/.story/story/config/config.toml
 
-sed -i.bak -e "s%engine-endpoint = \"http://localhost:8551\"s%engine-endpoint = \"http://localhost:${STORY_PORT}51\"%;
+sed -i.bak -e "s%engine-endpoint = \"http://localhost:8551\"s%engine-endpoint = \"http://localhost:${STORY_PORT}551\"%;
 s%api-address = \"127.0.0.1:1317\"%api-address = \"127.0.0.1:${STORY_PORT}317\"%" $HOME/.story/story/config/story.toml
 
 # 8. Add peers to the config.toml
