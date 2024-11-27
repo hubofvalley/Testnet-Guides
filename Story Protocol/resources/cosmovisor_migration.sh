@@ -19,6 +19,11 @@ init_cosmovisor() {
         exit 1
     fi
 
+    cd $HOME/go/bin/
+    sudo rm -r $HOME/go/bin/story
+    ln -s $HOME/.story/story/cosmovisor/current/bin/story story
+    sudo chown -R $USER:$USER $HOME/go/bin/story
+    sudo chmod +x $HOME/go/bin/story
     mkdir -p $HOME/.story/story/cosmovisor/upgrades
     mkdir -p $HOME/.story/story/cosmovisor/backup
 }

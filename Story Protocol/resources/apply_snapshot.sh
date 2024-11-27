@@ -462,6 +462,7 @@ main_script() {
 
     # Stop your story-geth and story nodes
     sudo systemctl stop story-geth story
+    sudo systemctl disable story-geth story
 
     # Back up your validator state
     mv $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
@@ -503,6 +504,7 @@ main_script() {
     fi
 
     # Start your story-geth and story nodes
+    sudo systemctl enable story-geth story
     sudo systemctl restart story-geth story
 
     echo -e "${GREEN}Snapshot setup completed successfully.${NC}"

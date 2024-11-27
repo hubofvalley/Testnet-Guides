@@ -162,6 +162,7 @@ main_script() {
 
     # Stop your 0gchain nodes
     sudo systemctl stop $SERVICE_FILE_NAME
+    sudo systemctl disable $SERVICE_FILE_NAME
 
     # Back up your validator state
     mv $HOME/.0gchain/data/priv_validator_state.json $HOME/.0gchain/priv_validator_state.json.backup
@@ -194,6 +195,7 @@ main_script() {
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/cosmovisor_migration.sh)
 
     # Start your 0gchain nodes
+    sudo systemctl enable $SERVICE_FILE_NAME
     sudo systemctl restart $SERVICE_FILE_NAME
 
     echo -e "${GREEN}Snapshot setup completed successfully.${NC}"

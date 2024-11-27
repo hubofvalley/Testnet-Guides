@@ -15,23 +15,23 @@ init_cosmovisor() {
 
     # Download genesis story version
     mkdir -p story-v0.12.0
-    if ! wget -O story-v0.12.0/story-linux-amd64 https://github.com/piplabs/story/releases/download/v0.12.0/story-linux-amd64; then
+    if ! wget -p $HOME/story-v0.12.0 https://github.com/piplabs/story/releases/download/v0.12.0/story-linux-amd64 -O $HOME/story-v0.12.0/story; then
         echo "Failed to download the genesis binary. Exiting."
         exit 1
     fi
 
-    story_file__name=story-linux-amd64
-    cp story-v0.12.0/$story_file__name $HOME/go/bin/story
-    sudo chown -R $USER:$USER $HOME/go/bin/story
-    sudo chmod +x $HOME/go/bin/story
-    sudo rm -r $HOME/.story/story/data/upgrade-info.json
-
     # Initialize cosmovisor
-    if ! cosmovisor init $HOME/go/bin/story; then
+    if ! cosmovisor init $HOME/story-v0.12.0/story; then
         echo "Failed to initialize cosmovisor. Exiting."
         exit 1
     fi
 
+    cd $HOME/go/bin/
+    sudo rm -r story
+    ln -s $HOME/.story/story/cosmovisor/current/bin/story story
+    sudo chown -R $USER:$USER $HOME/go/bin/story
+    sudo chmod +x $HOME/go/bin/story
+    sudo rm -r $HOME/.story/story/data/upgrade-info.json
     mkdir -p $HOME/.story/story/cosmovisor/upgrades
     mkdir -p $HOME/.story/story/cosmovisor/backup
 }

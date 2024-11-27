@@ -57,16 +57,14 @@ cd $HOME
 # Geth binary
 mkdir -p story-geth-v0.10.1
 wget -O story-geth-v0.10.1/geth-linux-amd64 https://github.com/piplabs/story-geth/releases/download/v0.10.1/geth-linux-amd64
-story_file__name=geth-linux-amd64
-cp story-geth-v0.10.1/$story_file__name $HOME/go/bin/geth
+cp story-geth-v0.10.1/geth-linux-amd64 $HOME/go/bin/geth
 sudo chown -R $USER:$USER $HOME/go/bin/geth
 sudo chmod +x $HOME/go/bin/geth
 
 # Consensus client binary
 mkdir -p story-v0.12.0
-wget -O story-v0.12.0/story-linux-amd64 https://github.com/piplabs/story/releases/download/v0.12.0/story-linux-amd64
-story_file__name=story-linux-amd64
-cp story-v0.12.0/$story_file__name $HOME/go/bin/story
+wget -p $HOME/story-v0.12.0 https://github.com/piplabs/story/releases/download/v0.12.0/story-linux-amd64 -O $HOME/story-v0.12.0/story
+cp story-v0.12.0/story $HOME/go/bin/story
 sudo chown -R $USER:$USER $HOME/go/bin/story
 sudo chmod +x $HOME/go/bin/story
 
@@ -97,11 +95,16 @@ fi
 story validator export --evm-key-path $HOME/.story/story/config/private_key.txt --export-evm-key
 PRIVATE_KEY=$(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt)
 
-# 11. Initialize Cosmovisor
+# 11. Initialize Cosmovisor and create a symlink to the latest consensus client version in the Go directory
 echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
 echo "export DAEMON_HOME=$(find "$HOME/.story" -type d -name "story" -print -quit)" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 cosmovisor init $HOME/go/bin/story
+cd $HOME/go/bin/
+sudo rm -r $HOME/go/bin/story
+ln -s $HOME/.story/story/cosmovisor/current/bin/story story
+sudo chown -R $USER:$USER $HOME/go/bin/story
+sudo chmod +x $HOME/go/bin/story
 mkdir -p $HOME/.story/story/cosmovisor/upgrades
 mkdir -p $HOME/.story/story/cosmovisor/backup
 
