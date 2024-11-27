@@ -46,6 +46,9 @@ go version
 go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 
 # 4. Set environment variables
+export MONIKER=$MONIKER
+export STORY_CHAIN_ID="odyssey"
+export STORY_PORT=$STORY_PORT
 echo "export MONIKER=\"$MONIKER\"" >> $HOME/.bash_profile
 echo "export STORY_CHAIN_ID=\"odyssey\"" >> $HOME/.bash_profile
 echo "export STORY_PORT=\"$STORY_PORT\"" >> $HOME/.bash_profile
@@ -71,14 +74,11 @@ sudo chmod +x $HOME/go/bin/story
 # 6. Initialize the app
 story init --network $STORY_CHAIN_ID --moniker $MONIKER
 
-# 7. Set custom ports in config.toml and story.toml
+# 7. Set custom ports in config.toml
 sed -i.bak -e "s%laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${STORY_PORT}656\"%;
 s%prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${STORY_PORT}660\"%;
 s%proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${STORY_PORT}658\"%;
 s%laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://127.0.0.1:${STORY_PORT}657\"%" $HOME/.story/story/config/config.toml
-
-sed -i.bak -e "s%engine-endpoint = \"http://localhost:8551\"%laddr = \"engine-endpoint = \"http://localhost:${STORY_PORT}51\"%;
-s%api-address = \"127.0.0.1:1317\"%api-address = \"127.0.0.1:${STORY_PORT}317\"%" $HOME/.story/story/config/story.toml
 
 # 8. Add peers to the config.toml
 peers=$(curl -sS https://lightnode-rpc-story.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
@@ -110,6 +110,7 @@ sudo chown -R $USER:$USER $HOME/go/bin/story
 sudo chmod +x $HOME/go/bin/story
 mkdir -p $HOME/.story/story/cosmovisor/upgrades
 mkdir -p $HOME/.story/story/cosmovisor/backup
+cd $HOME
 
 # 12. Define Cosmovisor paths for the consensus client
 input1=$(which cosmovisor)

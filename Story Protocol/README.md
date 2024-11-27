@@ -303,21 +303,22 @@ sudo chown -R $USER:$USER $HOME/go/bin/story
 sudo chmod +x $HOME/go/bin/story
 mkdir -p $HOME/.story/story/cosmovisor/upgrades
 mkdir -p $HOME/.story/story/cosmovisor/backup
+cd $HOME
 ```
 
 ### 11. define the path of cosmovisor for being used in the consensus client
 
 ```bash
 input1=$(which cosmovisor)
-input2=$(find $HOME -type d -name "story")
-input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
+input2=$(find "$HOME/.story" -type d -name "story" -print -quit)
+input3=$(find "$HOME/.story/story/cosmovisor" -type d -name "backup" -print -quit)
 echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
 echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
-echo "export DAEMON_DATA_BACKUP_DIR=$(find $HOME/.story/story/cosmovisor -type d -name "backup")" >> $HOME/.bash_profile
+echo "export DAEMON_DATA_BACKUP_DIR=$input3" >> $HOME/.bash_profile
 source $HOME/.bash_profile
-echo "input1. $input1"
-echo "input2. $input2"
-echo "input3. $input3"
+echo "Cosmovisor path: $input1"
+echo "Story home: $input2"
+echo "Backup directory: $input3"
 ```
 
 #### save the results, they'll be used in the next step
