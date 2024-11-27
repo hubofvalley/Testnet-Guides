@@ -150,7 +150,7 @@ function create_validator() {
 
 function query_validator_pub_key() {
     story validator export | grep -oP 'Compressed Public Key \(hex\): \K[0-9a-fA-F]+'
-    echo -e "\n${YELLOW}That's your Validator Public Key or Compressed Public Key (hex) address. Press Enter to go back to menu...${RESET}"
+    echo -e "\n${YELLOW}That's your Validator Public Key or Compressed Public Key (hex) address. Press Enter to go back to main menu...${RESET}"
     read -r
     menu
 }
@@ -180,7 +180,7 @@ function query_balance() {
             query_balance
             ;;
     esac
-    echo -e "\n${YELLOW}Press Enter to go back to menu...${RESET}"
+    echo -e "\n${YELLOW}Press Enter to go back to main menu...${RESET}"
     read -r
     menu
 }
@@ -347,7 +347,7 @@ function restart_validator_node() {
 function show_node_status() {
     port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.story/story/config/config.toml") && curl "http://127.0.0.1:$port/status" | jq
     story status
-    echo -e "\n${YELLOW}Press Enter to continue${RESET}"
+    echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
     read -r
     menu
 }

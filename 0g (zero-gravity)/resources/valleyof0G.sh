@@ -198,6 +198,8 @@ function create_validator() {
 function query_balance() {
     read -p "Enter wallet address: " WALLET_ADDRESS
     0gchaind query bank balances $WALLET_ADDRESS --chain-id $OG_CHAIN_ID
+    echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
+    read -r
     menu
 }
 
@@ -308,6 +310,8 @@ function unstake_tokens() {
 function export_evm_private_key() {
     read -p "Enter wallet name: " WALLET_NAME
     0gchaind keys unsafe-export-eth-key $WALLET_NAME
+    echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
+    read -r
     menu
 }
 
@@ -341,6 +345,8 @@ function show_validator_logs() {
 
 function show_node_status() {
     0gchaind status | jq
+    echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
+    read -r
     menu
 }
 
@@ -357,6 +363,7 @@ function restart_validator_node() {
 
 function backup_validator_key() {
     cp $HOME/.0gchain/config/priv_validator_key.json $HOME/priv_validator_key.json
+    echo -e "\n${YELLOW}Your priv_vaidator_key.json file has been copied to $HOME${RESET}"
     menu
 }
 
@@ -432,6 +439,8 @@ function show_storage_logs() {
 
 function show_storage_status() {
     curl -X POST http://localhost:5678 -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"zgs_getStatus","params":[],"id":1}'  | jq
+    echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
+    read -r
     menu
 }
 
@@ -485,7 +494,7 @@ function restart_storage_kv() {
 # Show Grand Valley's Endpoints
 function show_endpoints() {
     echo -e "$ENDPOINTS"
-    echo -e "\n${YELLOW}Press Enter to continue${RESET}"
+    echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
     read -r
     menu
 }
