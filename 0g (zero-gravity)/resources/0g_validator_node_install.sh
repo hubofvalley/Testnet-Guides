@@ -45,6 +45,9 @@ source ~/.bash_profile && go version
 go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 
 # 4. set vars
+export MONIKER=$MONIKER
+export OG_CHAIN_ID="zgtendermint_16600-2"
+export OG_PORT=$OG_PORT
 echo "export WALLET="$WALLET"" >> $HOME/.bash_profile
 echo "export MONIKER="$MONIKER"" >> $HOME/.bash_profile
 echo "export OG_CHAIN_ID="zgtendermint_16600-2"" >> $HOME/.bash_profile
