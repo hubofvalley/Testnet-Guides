@@ -150,6 +150,8 @@ function create_validator() {
 
 function query_validator_pub_key() {
     story validator export | grep -oP 'Compressed Public Key \(hex\): \K[0-9a-fA-F]+'
+    echo -e "\n${YELLOW}That's your Validator Public Key or Compressed Public Key (hex) address. Press Enter to go back to menu...${RESET}"
+    read -r
     menu
 }
 
@@ -178,6 +180,8 @@ function query_balance() {
             query_balance
             ;;
     esac
+    echo -e "\n${YELLOW}Press Enter to go back to menu...${RESET}"
+    read -r
     menu
 }
 
@@ -309,7 +313,8 @@ function export_evm_key() {
     echo -e "${CYAN}Query all of your current EVM key addresses including your EVM private key${RESET}"
     story validator export --evm-key-path $HOME/.story/story/config/private_key.txt --export-evm-key
     cat $HOME/.story/story/config/private_key.txt
-    echo
+    echo -e "\n${YELLOW}Press Enter to continue${RESET}"
+    read -r
     menu
 }
 
@@ -322,7 +327,7 @@ function delete_validator_node() {
     sudo rm -r $HOME/go/bin/story-geth
     sudo rm -rf $HOME/.story
     sed -i "/STORY_/d" $HOME/.bash_profile
-    echo -e "${RED}Story Validator node deleted successfully.${RESET}"
+    echo -e "\n${RED}Story Validator node deleted successfully.${RESET}"
     menu
 }
 
@@ -335,28 +340,21 @@ function stop_validator_node() {
 function restart_validator_node() {
     sudo systemctl daemon-reload
     sudo systemctl restart story story-geth
-    echo "Consensus client and Geth service restarted."
-    menu
-}
-
-function show_consensus_client_logs() {
-    sudo journalctl -u story -fn 100
-    menu
-}
-
-function show_geth_logs() {
-    sudo journalctl -u story-geth -fn 100
+    echo -e "\n${GREEN}Consensus client and Geth service restarted.${RESET}"
     menu
 }
 
 function show_node_status() {
     port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.story/story/config/config.toml") && curl "http://127.0.0.1:$port/status" | jq
     story status
+    echo -e "\n${YELLOW}Press Enter to continue${RESET}"
+    read -r
     menu
 }
 
 function backup_validator_key() {
     cp $HOME/.story/story/config/priv_validator_key.json $HOME/priv_validator_key.json
+    echo -e "\n${YELLOW}Your priv_vaidator_key.json file has been copied to $HOME${RESET}"
     menu
 }
 
@@ -400,7 +398,7 @@ function add_peers() {
             add_peers
             ;;
     esac
-    echo "Now you can restart your consensus client"
+    echo -e "\n${YELLOW}Now you can restart your consensus client${RESET}"
     menu
 }
 
@@ -433,7 +431,7 @@ function manage_consensus_client() {
 
 function migrate_to_cosmovisor() {
     echo "The service file for your current validator node will be updated to match Grand Valley's current configuration."
-    echo "Press Enter to continue..."
+    echo -e "${YELLOW}Press Enter to continue${RESET}"
     read -r
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/cosmovisor_migration.sh)
     menu
@@ -479,7 +477,7 @@ function install_story_app() {
     cp story-v0.13.0/story $HOME/go/bin/story
     sudo chown -R $USER:$USER $HOME/go/bin/story
     sudo chmod +x $HOME/go/bin/story
-    echo "story app installed successfully."
+    echo -e "${YELLOW}story app installed successfully${RESET}"
     menu
 }
 
