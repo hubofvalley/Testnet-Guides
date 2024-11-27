@@ -471,7 +471,9 @@ story validator stake --private-key <your private key> --stake 10240000000000000
 sudo systemctl stop story-geth story
 sudo systemctl disable story-geth story
 sudo rm -rf /etc/systemd/system/story-geth.service /etc/systemd/system/story.service
-sudo rm -r .story
+sudo rm -rf $HOME/.story
+sudo rm -r $HOME/go/bin/story
+sudo rm -r $HOME/go/bin/story-geth $HOME/go/bin/geth
 sed -i "/STORY_/d" $HOME/.bash_profile
 ```
 
