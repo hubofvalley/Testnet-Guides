@@ -77,8 +77,8 @@ s%prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${STORY_PORT}6
 s%proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${STORY_PORT}658\"%;
 s%laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://0.0.0.0:${STORY_PORT}657\"%" $HOME/.story/story/config/config.toml
 
-sed -i.bak -e "s%engine-endpoint = \"http://localhost:8551\"%laddr = \"engine-endpoint = \"http://localhost:${STORY_PORT}51\"%;
-s%api-address = \"127.0.0.1:1317\"%api-address = \"127.0.0.1:${STORY_PORT}17\"%" $HOME/.story/story/config/story.toml
+sed -i.bak -e "s%engine-endpoint = \"http://localhost:8551\"%laddr = \"engine-endpoint = \"http://localhost:${STORY_PORT}551\"%;
+s%api-address = \"127.0.0.1:1317\"%api-address = \"127.0.0.1:${STORY_PORT}317\"%" $HOME/.story/story/config/story.toml
 
 # 8. Add peers to the config.toml
 peers=$(curl -sS https://lightnode-rpc-story.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
