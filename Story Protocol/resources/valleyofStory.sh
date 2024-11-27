@@ -474,9 +474,9 @@ function show_all_logs() {
 
 function install_story_app() {
     echo -e "${YELLOW}This option is only for those who want to execute the transactions without running the node.${RESET}"
-    mkdir -p story-v0.12.1
-    wget -O story-v0.12.1/story https://github.com/piplabs/story/releases/download/v0.12.1/story-linux-amd64
-    cp story-v0.12.1/story $HOME/go/bin/story
+    mkdir -p story-v0.13.0
+    wget -O story-v0.13.0/story https://github.com/piplabs/story/releases/download/v0.13.0/story-linux-amd64
+    cp story-v0.13.0/story $HOME/go/bin/story
     sudo chown -R $USER:$USER $HOME/go/bin/story
     sudo chmod +x $HOME/go/bin/story
     echo "story app installed successfully."
@@ -507,7 +507,7 @@ function menu() {
     echo "   e. Update Geth Version"
     echo "   f. Show Validator Node Status"
     echo "   g. Show Consensus Client & Geth Logs Together"
-    echo "   h. Install Story App only (v0.12.1)(for executing transactions without running the node)"
+    echo "   h. Install Story App only (v0.13.0)(for executing transactions without running the node)"
     echo -e "${GREEN}2. Validator/Key Interactions:${RESET}"
     echo "   a. Create Validator"
     echo "   b. Query Validator Public Key"
