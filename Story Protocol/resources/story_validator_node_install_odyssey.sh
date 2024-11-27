@@ -77,7 +77,7 @@ s%prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${STORY_PORT}6
 s%proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${STORY_PORT}658\"%;
 s%laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://0.0.0.0:${STORY_PORT}657\"%" $HOME/.story/story/config/config.toml
 
-sed -i.bak -e "s%engine-endpoint = \"http://localhost:8551\"%laddr = \"engine-endpoint = \"http://localhost:${STORY_PORT}551\"%;
+sed -i.bak -e "s%engine-endpoint = \"http://localhost:8551\"%laddr = \"engine-endpoint = \"http://localhost:${STORY_PORT}51\"%;
 s%api-address = \"127.0.0.1:1317\"%api-address = \"127.0.0.1:${STORY_PORT}317\"%" $HOME/.story/story/config/story.toml
 
 # 8. Add peers to the config.toml
@@ -161,7 +161,7 @@ After=network-online.target
 
 [Service]
 User=$USER
-ExecStart=$(which geth) --odyssey --syncmode full --http --http.api eth,net,web3,engine --http.vhosts '*' --http.addr 0.0.0.0 --http.port ${STORY_PORT}545 --ws --ws.api eth,web3,net,txpool --ws.addr 0.0.0.0 --ws.port ${STORY_PORT}546 --authrpc.port ${STORY_PORT}551
+ExecStart=$(which geth) --odyssey --syncmode full --http --http.api eth,net,web3,engine --http.vhosts '*' --http.addr 0.0.0.0 --http.port ${STORY_PORT}45 --ws --ws.api eth,web3,net,txpool --ws.addr 0.0.0.0 --ws.port ${STORY_PORT}46 --authrpc.port ${STORY_PORT}51
 StandardOutput=journal
 StandardError=journal
 Restart=on-failure
