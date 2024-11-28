@@ -585,7 +585,7 @@ function show_guidelines() {
     echo -e "${GREEN}Show Guidelines:${RESET}"
     echo "   Displays these guidelines."
     echo "      - Guide: Use this option to view the guidelines on how to use the tool effectively."
-    echo -e "\n${YELLOW}Press Enter to continue${RESET}"
+    echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
     read -r
     menu
 }
