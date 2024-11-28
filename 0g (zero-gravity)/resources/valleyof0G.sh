@@ -561,7 +561,7 @@ function show_guidelines() {
     echo "   c. Delete Validator Node: Deletes the validator node. Ensure you backup your seeds phrase/EVM-private key and priv_validator_key.json before doing this."
     echo -e "${GREEN}Show Grand Valley's Endpoints:${RESET}"
     echo "   Displays Grand Valley's public endpoints."
-    echo -e "${GREEN}Show Guidelines:\${RESET}"
+    echo -e "${GREEN}Show Guidelines:${RESET}"
     echo "   Displays these guidelines."
     echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
     read -r
