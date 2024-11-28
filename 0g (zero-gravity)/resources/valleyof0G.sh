@@ -608,8 +608,8 @@ function menu() {
     echo "    g. Stop Storage KV"
     echo "    h. Restart Storage KV"
     echo "    i. Delete Storage KV"
-    echo -e "${YELLOW}5. Show Grand Valley's Endpoints${RESET}"
-    echo -e "${GREEN}6. Show Guidelines${RESET}"
+    echo -e "${GREEN}5. Show Grand Valley's Endpoints${RESET}"
+    echo -e "${YELLOW}6. Show Guidelines${RESET}"
     echo -e "${RED}7. Exit${RESET}"
 
     echo -e "${YELLOW}Please run the following command to apply the changes after exiting the script:${RESET}"
