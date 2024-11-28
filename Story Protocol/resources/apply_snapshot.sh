@@ -389,7 +389,7 @@ main_script() {
 
             prompt_back_or_continue
 
-            CROUTON_SNAPSHOT_FILE="story_latest.tar.lz4"
+            SNAPSHOT_FILE="story_latest.tar.lz4"
             SNAPSHOT_URL=$CROUTON_SNAPSHOT_URL
 
             # Display snapshot details
