@@ -22,6 +22,7 @@ ITR_PRUNED_API_URL_2="https://server-3.itrocket.net/testnet/story/.current_state
 ITR_ARCHIVE_API_URL_2="https://server-8.itrocket.net/testnet/story/.current_state.json"
 
 CROUTON_SNAPSHOT_URL="https://storage.crouton.digital/testnet/story/snapshots/story_latest.tar.lz4"
+CROUTON_API_URL="https://storage.crouton.digital/testnet/story/snapshots/block_status.json"
 
 JOSEPHTRAN_PRUNED_GETH_SNAPSHOT_URL="https://story.josephtran.co/Geth_snapshot.lz4"
 JOSEPHTRAN_PRUNED_STORY_SNAPSHOT_URL="https://story.josephtran.co/Story_snapshot.lz4"
@@ -68,6 +69,8 @@ display_snapshot_details() {
         snapshot_height=$(echo "$snapshot_info" | jq -r '.height')
     elif [[ $api_url == *"josephtran"* ]]; then
         snapshot_height=$(echo "$snapshot_info" | grep -oP '"block_height":\s*\K\d+')
+    elif [[ $api_url == *"crouton"* ]]; then
+        snapshot_height=$(echo "$snapshot_info" | grep -oP '"latest_block_height":\s*"\K\d+')
     else
         snapshot_height=$(echo "$snapshot_info" | jq -r '.snapshot_height')
     fi
@@ -389,8 +392,12 @@ main_script() {
             CROUTON_SNAPSHOT_FILE="story_latest.tar.lz4"
             SNAPSHOT_URL=$CROUTON_SNAPSHOT_URL
 
+            # Display snapshot details
+            display_snapshot_details $CROUTON_API_URL
+
             # Suggest update based on snapshot block height
-            suggest_update 858000  # Assuming block height suitable for v0.13.0
+            snapshot_height=$(curl -s $CROUTON_API_URL | grep -oP '"latest_block_height":\s*"\K\d+')
+            suggest_update $snapshot_height
 
             # Ask the user if they want to delete the downloaded snapshot files
             read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
