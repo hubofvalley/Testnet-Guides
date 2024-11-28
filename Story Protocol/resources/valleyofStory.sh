@@ -470,6 +470,18 @@ function show_all_logs() {
     menu
 }
 
+function show_consensus_client_logs() {
+    echo "Displaying Consensus Client Logs:"
+    sudo journalctl -u story -fn 100
+    menu
+}
+
+function show_geth_logs() {
+    echo "Displaying Geth Logs:"
+    sudo journalctl -u story-geth -fn 100
+    menu
+}
+
 function install_story_app() {
     echo -e "${YELLOW}This option is only for those who want to execute the transactions without running the node.${RESET}"
     mkdir -p story-v0.13.0
@@ -505,7 +517,9 @@ function menu() {
     echo "   e. Update Geth Version"
     echo "   f. Show Validator Node Status"
     echo "   g. Show Consensus Client & Geth Logs Together"
-    echo "   h. Install Story App only (v0.13.0)(for executing transactions without running the node)"
+    echo "   h. Show Consensus Client Logs "
+    echo "   i. Show Geth Logs"
+    echo "   j. Install Story App only (v0.13.0)(for executing transactions without running the node)"
     echo -e "${GREEN}2. Validator/Key Interactions:${RESET}"
     echo "   a. Create Validator"
     echo "   b. Query Validator Public Key"
@@ -551,7 +565,9 @@ function menu() {
                 e) update_geth ;;
                 f) show_node_status ;;
                 g) show_all_logs ;;
-                h) install_story_app ;;
+                h) show_consensus_client_logs ;;
+                i) show_geth_logs ;;
+                j) install_story_app ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
