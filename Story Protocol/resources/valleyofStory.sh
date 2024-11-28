@@ -505,6 +505,91 @@ function show_endpoints() {
     menu
 }
 
+function show_guidelines() {
+    echo -e "${CYAN}Guidelines on How to Use the Valley Of Story${RESET}"
+    echo -e "${YELLOW}This tool is designed to help you manage your Story Validator Node. Below are the guidelines on how to use it effectively:${RESET}"
+    echo -e "${GREEN}1. Navigating the Menu${RESET}"
+    echo "   - The menu is divided into several sections: Node Interactions, Validator/Key Interactions, Node Management, Show Grand Valley's Endpoints, and Guidelines."
+    echo "   - To select an option, you can either:"
+    echo "     a. Enter the corresponding number followed by the letter (e.g., 1a for Deploy/re-Deploy Validator Node)."
+    echo "     b. Enter the number, press Enter, and then enter the letter (e.g., 1 then a)."
+    echo "   - For sub-options, you will be prompted to enter the letter corresponding to your choice."
+    echo -e "${GREEN}2. Entering Choices${RESET}"
+    echo "   - For any prompt that has choices, you only need to enter the numbering (1, 2, 3, etc.) or the letter (a, b, c, etc.)."
+    echo "   - For yes/no prompts, enter 'yes' for yes and 'no' for no."
+    echo "   - For y/n prompts, enter 'y' for yes and 'n' for no."
+    echo -e "${GREEN}3. Running Commands${RESET}"
+    echo "   - After selecting an option, the script will execute the corresponding commands."
+    echo "   - Ensure you have the necessary permissions and dependencies installed for the commands to run successfully."
+    echo -e "${GREEN}4. Exiting the Script${RESET}"
+    echo "   - To exit the script, select option 6 from the main menu."
+    echo "   - Remember to run 'source ~/.bash_profile' after exiting to apply any changes made to environment variables."
+    echo -e "${GREEN}5. Additional Tips${RESET}"
+    echo "   - Always backup your keys and important data before performing operations like deleting the node."
+    echo "   - Regularly update your node to the latest version to ensure compatibility and security."
+    echo -e "${GREEN}6. Option Descriptions and Guides${RESET}"
+    echo -e "${GREEN}Node Interactions:${RESET}"
+    echo "   a. Deploy/re-Deploy Validator Node: Deploys or re-deploys the validator node, including Cosmovisor deployment."
+    echo "      - Guide: This option will download and install the necessary components to set up your validator node. Ensure you have the required system specifications."
+    echo "   b. Manage Consensus Client: Allows you to migrate to Cosmovisor or update the consensus client version."
+    echo "      - Guide: Use this option to update your consensus client to the latest version or migrate to Cosmovisor for better management."
+    echo "   c. Apply Snapshot: Applies a snapshot to the node."
+    echo "      - Guide: This option will apply a snapshot to your node, which can significantly speed up the syncing process."
+    echo "   d. Add Peers: Adds peers to the node, either manually or using Grand Valley's peers."
+    echo "      - Guide: Use this option to add peers to your node. You can either enter peers manually or use Grand Valley's peers for better connectivity."
+    echo "   e. Update Geth Version: Updates the Geth version."
+    echo "      - Guide: This option will update your Geth client to the latest version. Ensure you have a stable internet connection."
+    echo "   f. Show Validator Node Status: Displays the status of the validator node."
+    echo "      - Guide: Use this option to check the current status of your validator node. It will display relevant information about your node's health."
+    echo "   g. Show Consensus Client & Geth Logs Together: Displays logs for both the consensus client and Geth."
+    echo "      - Guide: This option will show the logs for both the consensus client and Geth, helping you diagnose any issues."
+    echo "   h. Show Consensus Client Logs: Displays logs for the consensus client."
+    echo "      - Guide: Use this option to view the logs specifically for the consensus client."
+    echo "   i. Show Geth Logs: Displays logs for Geth."
+    echo "      - Guide: This option will show the logs specifically for Geth."
+    echo "   j. Install Story App only: Installs the Story app (v0.13.0) for executing transactions without running the node."
+    echo "      - Guide: Use this option to install the Story app if you only need to execute transactions without running a full node."
+    echo -e "${GREEN}Validator/Key Interactions:${RESET}"
+    echo "   a. Create Validator: Creates a new validator."
+    echo "      - Guide: This option will guide you through creating a new validator. You will need to provide details such as the moniker and staking amount."
+    echo "   b. Query Validator Public Key: Queries the validator public key."
+    echo "      - Guide: Use this option to retrieve the public key of your validator. This key is essential for staking and other operations."
+    echo "   c. Query Balance: Queries the balance of an EVM address."
+    echo "      - Guide: This option will show the balance of a specified EVM address. You can choose to query your own address or another address."
+    echo "   d. Stake Tokens: Stakes tokens to a validator."
+    echo "      - Guide: Use this option to stake tokens to a validator. You can choose to stake to Grand Valley, yourself, or another validator."
+    echo "   e. Unstake Tokens: Unstakes tokens from a validator."
+    echo "      - Guide: This option will help you unstake tokens from a validator. You can choose to unstake from yourself or another validator."
+    echo "   f. Export EVM Key: Exports the EVM key."
+    echo "      - Guide: Use this option to export your EVM key. This key is crucial for managing your EVM address."
+    echo "   g. Backup Validator Key: Backs up the validator key to the $HOME directory."
+    echo "      - Guide: This option will backup your validator key to your home directory. Ensure you keep this key secure."
+    echo -e "${GREEN}Node Management:${RESET}"
+    echo "   a. Stop Validator Node: Stops the validator node."
+    echo "      - Guide: Use this option to stop your validator node. This will halt both the consensus client and Geth services."
+    echo "   b. Stop Consensus Client Only: Stops the consensus client."
+    echo "      - Guide: This option will stop only the consensus client service."
+    echo "   c. Stop Geth Only: Stops Geth."
+    echo "      - Guide: Use this option to stop only the Geth service."
+    echo "   d. Restart Validator Node: Restarts the validator node."
+    echo "      - Guide: This option will restart your validator node, including both the consensus client and Geth services."
+    echo "   e. Restart Consensus Client Only: Restarts the consensus client."
+    echo "      - Guide: Use this option to restart only the consensus client service."
+    echo "   f. Restart Geth Only: Restarts Geth."
+    echo "      - Guide: This option will restart only the Geth service."
+    echo "   g. Delete Validator Node: Deletes the validator node. Ensure you backup your seeds phrase/EVM-private key and priv_validator_key.json before doing this."
+    echo "      - Guide: Use this option to delete your validator node. Make sure to backup all important data before proceeding."
+    echo -e "${GREEN}Show Grand Valley's Endpoints:${RESET}"
+    echo "   Displays Grand Valley's public endpoints."
+    echo "      - Guide: This option will show you the public endpoints provided by Grand Valley. These endpoints can be used for various operations."
+    echo -e "${GREEN}Show Guidelines:${RESET}"
+    echo "   Displays these guidelines."
+    echo "      - Guide: Use this option to view the guidelines on how to use the tool effectively."
+    echo -e "\n${YELLOW}Press Enter to continue${RESET}"
+    read -r
+    menu
+}
+
 # Menu function
 function menu() {
     echo -e "${CYAN}Story Validator Node = Consensus Client Service + Execution Client Service (geth/story-geth)${RESET}"
@@ -537,7 +622,8 @@ function menu() {
     echo "   f. Restart Geth Only"
     echo "   g. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
     echo -e "${GREEN}4. Show Grand Valley's Endpoints${RESET}"
-    echo -e "${RED}5. Exit${RESET}"
+    echo -e "${GREEN}5. Show Guidelines${RESET}"
+    echo -e "${RED}6. Exit${RESET}"
 
     echo -e "${YELLOW}Please run the following command to apply the changes after exiting the script:${RESET}"
     echo -e "${GREEN}source ~/.bash_profile${RESET}"
@@ -545,12 +631,12 @@ function menu() {
     echo -e "${GREEN}Let's Buidl Story Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
-    if [[ $OPTION =~ ^[1-5][a-z]$ ]]; then
+    if [[ $OPTION =~ ^[1-6][a-z]$ ]]; then
         MAIN_OPTION=${OPTION:0:1}
         SUB_OPTION=${OPTION:1:1}
     else
         MAIN_OPTION=$OPTION
-        if [[ $MAIN_OPTION =~ ^[1-4]$ ]]; then
+        if [[ $MAIN_OPTION =~ ^[1-5]$ ]]; then
             read -p "Choose a sub-option: " SUB_OPTION
         fi
     fi
@@ -596,7 +682,8 @@ function menu() {
             esac
             ;;
         4) show_endpoints ;;
-        5) exit 0 ;;
+        5) show_guidelines ;;
+        6) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
 }
