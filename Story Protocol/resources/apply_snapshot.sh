@@ -390,7 +390,7 @@ main_script() {
             SNAPSHOT_URL=$CROUTON_SNAPSHOT_URL
 
             # Suggest update based on snapshot block height
-            suggest_update 322000  # Assuming block height suitable for v0.12.1
+            suggest_update 858000  # Assuming block height suitable for v0.13.0
 
             # Ask the user if they want to delete the downloaded snapshot files
             read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
