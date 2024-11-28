@@ -568,16 +568,49 @@ function show_guidelines() {
     menu
 }
 
-# Option to show guidelines in the main menu
+# Menu function
 function menu() {
     echo "Menu:"
-    echo -e "${GREEN}1. 0G Validator Nodes${RESET}"
-    echo -e "${GREEN}2. Storage Nodes${RESET}"
-    echo -e "${GREEN}3. Storage KVs${RESET}"
+    echo -e "${GREEN}1. Validator Node${RESET}"
+    echo "    a. Deploy/re-Deploy Validator Node (includes Cosmovisor deployment)"
+    echo "    b. Migrate Validator Node to Cosmovisor"
+    echo "    c. Apply Snapshot"
+    echo "    d. Add Peers"
+    echo "    e. Show Node Status"
+    echo "    f. Show Validator Logs"
+    echo "    g. Create Validator"
+    echo "    h. Create Wallet"
+    echo "    i. Restore Wallet"
+    echo "    j. Query Balance"
+    echo "    k. Send Transaction"
+    echo "    l. Stake Tokens"
+    echo "    m. Unstake Tokens"
+    echo "    n. Export EVM Private Key"
+    echo "    o. Backup Validator Key (store it to $HOME directory)"
+    echo "    p. Install 0gchain App only (v0.4.0)(for executing transactions without running the node)"
+    echo -e "${GREEN}2. Storage Node${RESET}"
+    echo "    a. Deploy Storage Node"
+    echo "    b. Update Storage Node"
+    echo "    c. Change Storage Node"
+    echo "    d. Show Storage Node Logs"
+    echo "    e. Show Storage Node Status"
+    echo -e "${GREEN}3. Storage KV${RESET}"
+    echo "    a. Deploy Storage KV"
+    echo "    b. Show Storage KV Logs"
+    echo "    c. Update Storage KV"
     echo -e "${GREEN}4. Node Management${RESET}"
-    echo -e "${GREEN}5. Show Grand Valley's Endpoints${RESET}"
-    echo -e "${RED}6. Exit${RESET}"
-    echo -e "${YELLOW}7. Show Guidelines${RESET}"
+    echo "    a. Stop Validator Node"
+    echo "    b. Restart Validator Node"
+    echo "    c. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
+    echo "    d. Stop Storage Node"
+    echo "    e. Restart Storage Node"
+    echo "    f. Delete Storage Node"
+    echo "    g. Stop Storage KV"
+    echo "    h. Restart Storage KV"
+    echo "    i. Delete Storage KV"
+    echo -e "${YELLOW}5. Show Grand Valley's Endpoints${RESET}"
+    echo -e "${GREEN}6. Show Guidelines${RESET}"
+    echo -e "${RED}7. Exit${RESET}"
 
     echo -e "${YELLOW}Please run the following command to apply the changes after exiting the script:${RESET}"
     echo -e "${GREEN}source ~/.bash_profile${RESET}"
@@ -589,34 +622,72 @@ function menu() {
         MAIN_OPTION=${OPTION:0:1}
         SUB_OPTION=${OPTION:1:1}
     else
-        MAIN_OPTION=\$OPTION
-        if [[ $MAIN_OPTION =~ ^[1-7]$ ]]; then
+        MAIN_OPTION=$OPTION
+        if [[ $MAIN_OPTION =~ ^[1-4]$ ]]; then
             read -p "Choose a sub-option: " SUB_OPTION
         fi
     fi
 
-    case \$MAIN_OPTION in
+    case $MAIN_OPTION in
         1)
-            case \$SUB_OPTION in
-                7) show_guidelines ;;
+            case $SUB_OPTION in
+                a) deploy_validator_node ;;
+                b) migrate_to_cosmovisor ;;
+                c) apply_snapshot ;;
+                d) add_peers ;;
+                e) show_node_status ;;
+                f) show_validator_logs ;;
+                g) create_validator ;;
+                h) create_wallet ;;
+                i) restore_wallet ;;
+                j) query_balance ;;
+                k) send_transaction ;;
+                l) stake_tokens ;;
+                m) unstake_tokens ;;
+                n) export_evm_private_key ;;
+                o) backup_validator_key ;;
+                p) install_0gchain_app ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
         2)
-            # Storage Node options go here
+            case $SUB_OPTION in
+                a) deploy_storage_node ;;
+                b) update_storage_node ;;
+                c) change_storage_node ;;
+                d) show_storage_logs ;;
+                e) show_storage_status ;;
+                *) echo "Invalid sub-option. Please try again." ;;
+            esac
             ;;
         3)
-            # Storage KV options go here
+            case $SUB_OPTION in
+                a) deploy_storage_kv ;;
+                b) show_storage_kv_logs ;;
+                c) update_storage_kv ;;
+                *) echo "Invalid sub-option. Please try again." ;;
+            esac
             ;;
         4)
-            # Node Management options go here
+            case $SUB_OPTION in
+                a) stop_validator_node ;;
+                b) restart_validator_node ;;
+                c) delete_validator_node ;;
+                d) stop_storage_node ;;
+                e) restart_storage_node ;;
+                f) delete_storage_node ;;
+                g) stop_storage_kv ;;
+                h) restart_storage_kv ;;
+                i) delete_storage_kv ;;
+                *) echo "Invalid sub-option. Please try again." ;;
+            esac
             ;;
         5) show_endpoints ;;
-        6) exit 0 ;;
-        7) show_guidelines ;;
+        6) show_guidelines ;;
+        7) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
 }
 
-# Start menu
+# Call the menu function to start the script
 menu

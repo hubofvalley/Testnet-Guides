@@ -622,7 +622,7 @@ function menu() {
     echo "   f. Restart Geth Only"
     echo "   g. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
     echo -e "${GREEN}4. Show Grand Valley's Endpoints${RESET}"
-    echo -e "${GREEN}5. Show Guidelines${RESET}"
+    echo -e "${YELLOW}5. Show Guidelines${RESET}"
     echo -e "${RED}6. Exit${RESET}"
 
     echo -e "${YELLOW}Please run the following command to apply the changes after exiting the script:${RESET}"
