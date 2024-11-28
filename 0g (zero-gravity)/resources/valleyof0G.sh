@@ -563,7 +563,7 @@ function show_guidelines() {
     echo "   Displays Grand Valley's public endpoints."
     echo -e "${GREEN}Show Guidelines:\${RESET}"
     echo "   Displays these guidelines."
-    echo -e "\n\${YELLOW}Press Enter to continue\${RESET}"
+    echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
     read -r
     menu
 }
