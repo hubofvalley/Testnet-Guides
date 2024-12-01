@@ -64,6 +64,7 @@ read -p "Choose contract type (turbo/standard): " CONTRACT_TYPE
 
 # Stop the storage node
 sudo systemctl stop zgs
+sudo rm -r $HOME/0g-storage-node/run/db
 
 # Update the node
 cd $HOME/0g-storage-node
