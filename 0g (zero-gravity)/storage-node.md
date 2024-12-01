@@ -17,17 +17,18 @@
     - [10. start the node](#10-start-the-node)
     - [11. show logs by date](#11-show-logs-by-date)
     - [delete storage node](#delete-storage-node)
-  - [update the storage node to v0.6.0 (in case you're still in the previous version)](#update-the-storage-node-to-v060-in-case-youre-still-in-the-previous-version)
+  - [update the storage node to v0.8.0 (in case you're still in the previous version)](#update-the-storage-node-to-v080-in-case-youre-still-in-the-previous-version)
     - [1. stop storage node](#1-stop-storage-node)
     - [2. update node](#2-update-node)
     - [3. build the latest binary](#3-build-the-latest-binary)
     - [4. set vars](#4-set-vars-1)
     - [5. store your private key in variable:](#5-store-your-private-key-in-variable)
-    - [6. update node configuration](#6-update-node-configuration)
+    - [6. delete current version's db](#6-delete-current-versions-db)
+    - [7. update node configuration](#7-update-node-configuration)
       - [TURBO CONTRACT](#turbo-contract-1)
       - [STANDARD CONTRACT](#standard-contract-1)
-    - [7. restart the node](#7-restart-the-node)
-    - [8. show the logs](#8-show-the-logs)
+    - [8. restart the node](#8-restart-the-node)
+    - [9. show the logs](#9-show-the-logs)
 - [CONTINUE TO STORAGE KV](#continue-to-storage-kv)
 - [let's buidl together](#lets-buidl-together)
 
@@ -42,7 +43,7 @@
 | Storage   | 500GB / 1TB NVMe SSD           |
 | Bandwidth | 100 MBps for Download / Upload |
 
-guide's current binary version: `v0.6.1`
+guide's current binary version: `v0.8.0`
 
 ### 1. Install dependencies for building from source
 
@@ -119,7 +120,7 @@ git clone -b v0.8.0 https://github.com/0glabs/0g-storage-node.git
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 27366a5
+git checkout f4d5228234258ef4c9f8b2b83d80911fa38a6db9
 git submodule update --init
 ```
 
@@ -245,7 +246,7 @@ sudo rm /etc/systemd/system/zgs.service
 sudo rm -rf $HOME/0g-storage-node
 ```
 
-## update the storage node to v0.6.0 (in case you're still in the previous version)
+## update the storage node to v0.8.0 (in case you're still in the previous version)
 
 ### 1. stop storage node
 
@@ -303,7 +304,13 @@ echo -e "\n\033[31mCHECK YOUR STORAGE NODE VARIABLES\033[0m\nZGS_LOG_SYNC_BLOCK:
 read -p "Enter your private key: " PRIVATE_KEY && echo "private key: $PRIVATE_KEY"
 ```
 
-### 6. update node configuration
+### 6. delete current version's db
+
+```bash
+sudo rm -r $HOME/0g-storage-node/run/db
+```
+
+### 7. update node configuration
 
 #### TURBO CONTRACT
 
@@ -328,7 +335,7 @@ s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAI
 " $HOME/0g-storage-node/run/config-testnet.toml
 ```
 
-### 7. restart the node
+### 8. restart the node
 
 ```bash
 sudo systemctl daemon-reload && \
@@ -336,7 +343,7 @@ sudo systemctl restart zgs && \
 sudo systemctl status zgs
 ```
 
-### 8. show the logs
+### 9. show the logs
 
 - full logs command
 
