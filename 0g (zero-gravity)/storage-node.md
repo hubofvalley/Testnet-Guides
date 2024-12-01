@@ -115,11 +115,11 @@ curl -s -X POST $BLOCKCHAIN_RPC_ENDPOINT -H "Content-Type: application/json" -d 
 
 ```bash
 cd $HOME
-git clone -b v0.6.1 https://github.com/0glabs/0g-storage-node.git
+git clone -b v0.8.0 https://github.com/0glabs/0g-storage-node.git
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout f4d5228234258ef4c9f8b2b83d80911fa38a6db9
+git checkout 27366a5
 git submodule update --init
 ```
 
