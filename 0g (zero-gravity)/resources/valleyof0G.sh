@@ -547,7 +547,7 @@ function show_guidelines() {
     echo "   n. Export EVM Private Key: Exports the EVM private key."
     echo "   o. Backup Validator Key: Backs up the validator key to the $HOME directory."
     echo "   p. Install 0gchain App only: Installs the 0gchain app (v0.4.0) for executing transactions without running the node."
-    echo -e "${GREEN}Validator/Key Interactions:\${RESET}"
+    echo -e "${GREEN}Validator/Key Interactions:${RESET}"
     echo "   a. Create Validator"
     echo "   b. Query Validator Public Key"
     echo "   c. Query Balance"
