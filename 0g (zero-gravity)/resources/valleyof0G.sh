@@ -570,7 +570,8 @@ function show_guidelines() {
 
 # Menu function
 function menu() {
-    echo "Menu:"
+    echo -e "${CYAN}Valley Of 0G${RESET}"
+    echo "Main Menu:"
     echo -e "${GREEN}1. Validator Node${RESET}"
     echo "    a. Deploy/re-Deploy Validator Node (includes Cosmovisor deployment)"
     echo "    b. Migrate Validator Node to Cosmovisor"

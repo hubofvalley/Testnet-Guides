@@ -592,8 +592,9 @@ function show_guidelines() {
 
 # Menu function
 function menu() {
+    echo -e "${CYAN}Valley Of Story${RESET}"
     echo -e "${CYAN}Story Validator Node = Consensus Client Service + Execution Client Service (geth/story-geth)${RESET}"
-    echo "Menu:"
+    echo "Main Menu:"
     echo -e "${GREEN}1. Node Interactions:${RESET}"
     echo "   a. Deploy/re-Deploy Validator Node (includes Cosmovisor deployment)"
     echo "   b. Manage Consensus Client (Migrate to Cosmovisor or Update Version)"
