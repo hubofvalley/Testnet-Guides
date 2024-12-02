@@ -613,7 +613,7 @@ function menu() {
     echo -e "${YELLOW}6. Show Guidelines${RESET}"
     echo -e "${RED}7. Exit${RESET}"
 
-    echo -e "${YELLOW}Please run the following command to apply the changes after exiting the script:${RESET}"
+    echo -e "\n${YELLOW}Please run the following command to apply the changes after exiting the script:${RESET}"
     echo -e "${GREEN}source ~/.bash_profile${RESET}"
     echo -e "${YELLOW}This ensures the environment variables are set in your current bash session.${RESET}"
     echo -e "${GREEN}Let's Buidl 0G Together - Grand Valley${RESET}"
