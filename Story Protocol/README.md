@@ -17,7 +17,7 @@
   - [Example Use Case](#example-use-case)
   - [Conclusion](#conclusion)
   - [Grand Valley's Story Protocol public endpoints:](#grand-valleys-story-protocol-public-endpoints)
-  - [Valley Of Story: Story Protocol Tools Created by Grand Valley](#valley-of-story-story-protocol-tools-created-by-grand-valley)
+  - [Valley of Story: Story Protocol Tools Created by Grand Valley](#valley-of-story-story-protocol-tools-created-by-grand-valley)
     - [Installation](#installation)
     - [Key Features of Valley of Story](#key-features-of-valley-of-story)
       - [1. Node Interactions](#1-node-interactions)
@@ -140,7 +140,7 @@ With Public Testnet, Story's docs and code become public. Check them out below!
 - cosmos ws: `wss://lightnode-rpc-story.grandvalleys.com/websocket`
 - evm ws: `wss://lightnode-wss-story.grandvalleys.com`
 
-## Valley Of Story: Story Protocol Tools Created by Grand Valley
+## Valley of Story: Story Protocol Tools Created by Grand Valley
 
 ![Valley of Story Image 1](https://github.com/user-attachments/assets/5110da6d-4ec2-492d-86ea-887b34b279b4)
 ![image](https://github.com/user-attachments/assets/ba8cc713-307f-4440-b146-a6a79856a4c5)

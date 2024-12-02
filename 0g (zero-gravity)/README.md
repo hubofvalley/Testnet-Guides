@@ -13,7 +13,7 @@
   - [0G solving target](#0g-solving-target)
   - [Conclusion](#conclusion)
   - [Grand Valley's 0G public endpoints:](#grand-valleys-0g-public-endpoints)
-  - [Valley Of 0G. 0G tools created by Grand Valley](#valley-of-0g-0g-tools-created-by-grand-valley)
+  - [Valley of 0G. 0G tools created by Grand Valley](#valley-of-0g-0g-tools-created-by-grand-valley)
     - [Installation](#installation)
     - [Key Features of Valley of 0G](#key-features-of-valley-of-0g)
       - [1. Validator Nodes](#1-validator-nodes)
@@ -121,7 +121,7 @@ With Public Testnet, 0G’s docs and code become public. Check them out below! -
 - json-rpc: `https://lightnode-json-rpc-0g.grandvalleys.com`
 - cosmos rest-api: `https://lightnode-api-0g.grandvalleys.com`
 
-## Valley Of 0G. 0G tools created by Grand Valley
+## Valley of 0G. 0G tools created by Grand Valley
 
 ![image](https://github.com/user-attachments/assets/359b0d17-e451-42d7-8bc3-88c7fcf28355)
 ![image](https://github.com/user-attachments/assets/3bbb47a8-3b2c-489c-a1b4-f026959543f8)

@@ -27,7 +27,7 @@ LOGO="
 "
 
 INTRO="
-Valley Of Story by Grand Valley
+Valley of Story by Grand Valley
 
 ${GREEN}Story Validator Node System Requirements${RESET}
 ${YELLOW}| Category  | Requirements     |
@@ -506,7 +506,7 @@ function show_endpoints() {
 }
 
 function show_guidelines() {
-    echo -e "${CYAN}Guidelines on How to Use the Valley Of Story${RESET}"
+    echo -e "${CYAN}Guidelines on How to Use the Valley of Story${RESET}"
     echo -e "${YELLOW}This tool is designed to help you manage your Story Validator Node. Below are the guidelines on how to use it effectively:${RESET}"
     echo -e "${GREEN}1. Navigating the Menu${RESET}"
     echo "   - The menu is divided into several sections: Node Interactions, Validator/Key Interactions, Node Management, Show Grand Valley's Endpoints, and Guidelines."
@@ -592,7 +592,7 @@ function show_guidelines() {
 
 # Menu function
 function menu() {
-    echo -e "${CYAN}Valley Of Story${RESET}"
+    echo -e "${CYAN}Valley of Story${RESET}"
     echo -e "${CYAN}Story Validator Node = Consensus Client Service + Execution Client Service (geth/story-geth)${RESET}"
     echo "Main Menu:"
     echo -e "${GREEN}1. Node Interactions:${RESET}"
