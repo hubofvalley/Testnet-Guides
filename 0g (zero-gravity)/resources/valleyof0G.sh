@@ -571,6 +571,14 @@ function show_guidelines() {
 
 # Menu function
 function menu() {
+    if [[ -f "/etc/systemd/system/0gchaind.service" ]]; then
+    SERVICE_FILE_NAME="0gchaind.service"
+    elif [[ -f "/etc/systemd/system/0gd.service" ]]; then
+    SERVICE_FILE_NAME="0gd.service"
+    else
+    SERVICE_FILE_NAME="Not found"
+    echo -e "${RED}No valid service file found (0gchaind.service or 0gd.service). Continuing without setting a service file name.${RESET}"
+    fi
     echo -e "${CYAN}Valley of 0G${RESET}"
     echo "Main Menu:"
     echo -e "${GREEN}1. Validator Node${RESET}"
