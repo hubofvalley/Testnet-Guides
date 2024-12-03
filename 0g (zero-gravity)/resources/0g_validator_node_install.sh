@@ -177,6 +177,18 @@ Environment="UNSAFE_SKIP_BACKUP=true"
 WantedBy=multi-user.target
 EOF
 
+# Function to detect the service file name
+function detect_service_file() {
+  if [[ -f "/etc/systemd/system/0gchaind.service" ]]; then
+    SERVICE_FILE_NAME="0gchaind.service"
+  elif [[ -f "/etc/systemd/system/0gd.service" ]]; then
+    SERVICE_FILE_NAME="0gd.service"
+  else
+    SERVICE_FILE_NAME="Not found"
+    echo -e "${RED}No valid service file found (0gchaind.service or 0gd.service). Continuing without setting a service file name.${RESET}"
+  fi
+}
+
 # Store service file name
 detect_service_file
 echo "export SERVICE_FILE_NAME=\"$SERVICE_FILE_NAME\"" >> ~/.bash_profile
