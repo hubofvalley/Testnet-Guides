@@ -207,13 +207,13 @@ ENTER YOUR MONIKER & YOUR PREFERRED PORT NUMBER
 
 ```bash
 read -p "Enter your moniker: " MONIKER && echo "Current moniker: $MONIKER"
-read -p "Enter your 2 digits custom port: (leave empty to use default: 26) " 0G_PORT && echo "Current port number: ${0G_PORT:-26}"
+read -p "Enter your 2 digits custom port: (leave empty to use default: 26) " OG_PORT && echo "Current port number: ${OG_PORT:-26}"
 read -p "Enter your wallet name: " WALLET && echo "Current wallet name: $WALLET"
 
 echo "export WALLET=\"$WALLET\"" >> $HOME/.bash_profile
 echo "export MONIKER=\"$MONIKER\"" >> $HOME/.bash_profile
 echo "export OG_CHAIN_ID=\"zgtendermint_16600-2\"" >> $HOME/.bash_profile
-echo "export 0G_PORT=\"${0G_PORT:-26}\"" >> $HOME/.bash_profile
+echo "export OG_PORT=\"${OG_PORT:-26}\"" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 ```
 
@@ -232,7 +232,7 @@ make install
 cd $HOME
 0gchaind init $MONIKER --chain-id $OG_CHAIN_ID
 0gchaind config chain-id $OG_CHAIN_ID
-0gchaind config node tcp://localhost:${0G_PORT}657
+0gchaind config node tcp://localhost:${OG_PORT}657
 0gchaind config keyring-backend os
 ```
 
