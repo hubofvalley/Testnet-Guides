@@ -310,7 +310,6 @@ sed -i \
 
 ```bash
 sed -i \
-   -e '/^\[api\]/,/^\[/ s/^address = .*/address = "tcp:\/\/0.0.0.0:${OG_PORT}317"/' \
    -e '/^\[api\]/,/^\[/ s/^enable = .*/enable = true/' \
    $HOME/.0gchain/config/app.toml
 ```
