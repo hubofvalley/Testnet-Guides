@@ -30,24 +30,25 @@
     - [4. set vars](#4-set-vars)
     - [5. download binary](#5-download-binary)
     - [6. config and init app](#6-config-and-init-app)
-    - [7. download genesis.json](#7-download-genesisjson)
-    - [8. set custom ports in config.toml file](#8-set-custom-ports-in-configtoml-file)
-    - [9. add seeds to the config.toml](#9-add-seeds-to-the-configtoml)
-    - [10. add peers to the config.toml](#10-add-peers-to-the-configtoml)
-    - [11. configure pruning to save storage (optional) (if u want to run a full node, skip this step)](#11-configure-pruning-to-save-storage-optional-if-u-want-to-run-a-full-node-skip-this-step)
-    - [12. open rpc endpoints](#12-open-rpc-endpoints)
-    - [13. open json-rpc endpoints (required for running the storage node and storage kv)](#13-open-json-rpc-endpoints-required-for-running-the-storage-node-and-storage-kv)
-    - [14. open api endpoints](#14-open-api-endpoints)
-    - [15. set minimum gas price and enable prometheus](#15-set-minimum-gas-price-and-enable-prometheus)
-    - [16. disable indexer (optional) (if u want to run a full node, skip this step)](#16-disable-indexer-optional-if-u-want-to-run-a-full-node-skip-this-step)
-    - [17. initialize cosmovisor](#17-initialize-cosmovisor)
-    - [18. define the path of cosmovisor](#18-define-the-path-of-cosmovisor)
+    - [7. set custom ports in config.toml file](#7-set-custom-ports-in-configtoml-file)
+    - [8. Set custom ports in app.toml file](#8-set-custom-ports-in-apptoml-file)
+    - [9. Download genesis.json](#9-download-genesisjson)
+    - [10. Add seeds to the config.toml](#10-add-seeds-to-the-configtoml)
+    - [11. Add peers to the config.toml](#11-add-peers-to-the-configtoml)
+    - [12. Configure pruning to save storage (optional) (if you want to run a full node, skip this step)](#12-configure-pruning-to-save-storage-optional-if-you-want-to-run-a-full-node-skip-this-step)
+    - [13. Open rpc endpoints](#13-open-rpc-endpoints)
+    - [14. Open json-rpc endpoints (required for running the storage node and storage kv)](#14-open-json-rpc-endpoints-required-for-running-the-storage-node-and-storage-kv)
+    - [15. Open api endpoints](#15-open-api-endpoints)
+    - [16. set minimum gas price and enable prometheus](#16-set-minimum-gas-price-and-enable-prometheus)
+    - [17. disable indexer (optional) (if u want to run a full node, skip this step)](#17-disable-indexer-optional-if-u-want-to-run-a-full-node-skip-this-step)
+    - [18. initialize cosmovisor](#18-initialize-cosmovisor)
+    - [19. define the path of cosmovisor](#19-define-the-path-of-cosmovisor)
       - [save the results, they'll be used in the next step](#save-the-results-theyll-be-used-in-the-next-step)
       - [this is an example of the result](#this-is-an-example-of-the-result)
-    - [19. create service file](#19-create-service-file)
-    - [20. start the node](#20-start-the-node)
+    - [20. create service file](#20-create-service-file)
+    - [21. start the node](#21-start-the-node)
     - [this is an example of the node is running well](#this-is-an-example-of-the-node-is-running-well)
-    - [21. check node version](#21-check-node-version)
+    - [22. check node version](#22-check-node-version)
   - [you can use any snapshots and no need to manually update the node version](#you-can-use-any-snapshots-and-no-need-to-manually-update-the-node-version)
   - [Validator and key Commands](#validator-and-key-commands)
     - [1. create wallet](#1-create-wallet)
@@ -235,31 +236,42 @@ cd $HOME
 0gchaind config keyring-backend os
 ```
 
-### 7. download genesis.json
+### 7. set custom ports in config.toml file
+
+```bash
+sed -i.bak -e "s%laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${OG_PORT}656\"%" \
+-e "s%prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${OG_PORT}660\"%" \
+-e "s%proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${OG_PORT}658\"%" \
+-e "s%laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://0.0.0.0:${OG_PORT}657\"%" \
+-e "s%^pprof_laddr = \"localhost:26060\"%pprof_laddr = \"localhost:${OG_PORT}060\"%" \
+$HOME/.0gchain/config/config.toml
+```
+
+### 8. Set custom ports in app.toml file
+
+```bash
+sed -i.bak -e "s%address = \"127.0.0.1:8545\"%address = \"127.0.0.1:${OG_PORT}545\"%" \
+-e "s%ws-address = \"127.0.0.1:8546\"%ws-address = \"127.0.0.1:${OG_PORT}546\"%" \
+-e "/^\[api\]/,/^\[/ s%^address = .*%address = \"tcp://127.0.0.1:${OG_PORT}317\"%" \
+-e "s%metrics-address = \"127.0.0.1:6065\"%metrics-address = \"127.0.0.1:${OG_PORT}065\"%" \
+$HOME/.0gchain/config/app.toml
+```
+
+### 9. Download genesis.json
 
 ```bash
 sudo rm $HOME/.0gchain/config/genesis.json && \
 wget https://github.com/0glabs/0g-chain/releases/download/v0.2.3/genesis.json -O $HOME/.0gchain/config/genesis.json
 ```
 
-### 8. set custom ports in config.toml file
-
-```bash
-sed -i.bak -e "s%laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${OG_PORT}656\"%;
-s%prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${OG_PORT}660\"%;
-s%proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${OG_PORT}658\"%;
-s%laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://0.0.0.0:${OG_PORT}657\"%:
-s%^pprof_laddr = \"localhost:26060\"%pprof_laddr = \"localhost:${0G_PORT}060\"%g" $HOME/.0gchain/config/config.toml
-```
-
-### 9. add seeds to the config.toml
+### 10. Add seeds to the config.toml
 
 ```bash
 SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de28667725a4fef26cdc7f9452cc34b16d@54.176.175.48:26656,e9b4bc203197b62cc7e6a80a64742e752f4210d5@54.193.250.204:26656,68b9145889e7576b652ca68d985826abd46ad660@18.166.164.232:26656,8f21742ea5487da6e0697ba7d7b36961d3599567@og-testnet-seed.itrocket.net:47656" && \
 sed -i.bak -e "s/^seeds *=.*/seeds = \"${SEEDS}\"/" $HOME/.0gchain/config/config.toml
 ```
 
-### 10. add peers to the config.toml
+### 11. Add peers to the config.toml
 
 ```bash
 peers=$(curl -sS https://lightnode-rpc-0g.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
@@ -267,7 +279,7 @@ echo $peers
 sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchain/config/config.toml
 ```
 
-### 11. configure pruning to save storage (optional) (if u want to run a full node, skip this step)
+### 12. Configure pruning to save storage (optional) (if you want to run a full node, skip this step)
 
 ```bash
 sed -i \
@@ -277,48 +289,48 @@ sed -i \
    "$HOME/.0gchain/config/app.toml"
 ```
 
-### 12. open rpc endpoints
+### 13. Open rpc endpoints
 
 ```bash
 sed -i \
-   -e "s/laddr = \"tcp:\/\/127.0.0.1:${0G_PORT}657\"/laddr = \"tcp:\/\/0.0.0.0:${0G_PORT}657\"/" \
+   -e "s/laddr = \"tcp:\/\/127.0.0.1:${OG_PORT}657\"/laddr = \"tcp:\/\/0.0.0.0:${OG_PORT}657\"/" \
    $HOME/.0gchain/config/config.toml
 ```
 
-### 13. open json-rpc endpoints (required for running the storage node and storage kv)
+### 14. Open json-rpc endpoints (required for running the storage node and storage kv)
 
 ```bash
 sed -i \
-   -e 's/address = "127.0.0.1:8545"/address = "0.0.0.0:8545"/' \
+   -e 's/address = "127.0.0.1:${OG_PORT}545"/address = "0.0.0.0:${OG_PORT}545"/' \
    -e 's|^api = ".*"|api = "eth,txpool,personal,net,debug,web3"|' \
    -e 's/logs-cap = 10000/logs-cap = 20000/' \
    -e 's/block-range-cap = 10000/block-range-cap = 20000/' \
    $HOME/.0gchain/config/app.toml
 ```
 
-### 14. open api endpoints
+### 15. Open api endpoints
 
 ```bash
 sed -i \
-   -e '/^\[api\]/,/^\[/ s/^address = .*/address = "tcp:\/\/0.0.0.0:1317"/' \
+   -e '/^\[api\]/,/^\[/ s/^address = .*/address = "tcp:\/\/0.0.0.0:${OG_PORT}317"/' \
    -e '/^\[api\]/,/^\[/ s/^enable = .*/enable = true/' \
    $HOME/.0gchain/config/app.toml
 ```
 
-### 15. set minimum gas price and enable prometheus
+### 16. set minimum gas price and enable prometheus
 
 ```bash
 sed -i "s/^minimum-gas-prices *=.*/minimum-gas-prices = \"0ua0gi\"/" $HOME/.0gchain/config/app.toml
 sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.0gchain/config/config.toml
 ```
 
-### 16. disable indexer (optional) (if u want to run a full node, skip this step)
+### 17. disable indexer (optional) (if u want to run a full node, skip this step)
 
 ```bash
 sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.0gchain/config/config.toml
 ```
 
-### 17. initialize cosmovisor
+### 18. initialize cosmovisor
 
 ```bash
 echo "export DAEMON_NAME=0gchaind" >> $HOME/.bash_profile
@@ -334,7 +346,7 @@ mkdir -p $HOME/.0gchain/cosmovisor/upgrades
 mkdir -p $HOME/.0gchain/cosmovisor/backup
 ```
 
-### 18. define the path of cosmovisor
+### 19. define the path of cosmovisor
 
 ```bash
 input1=$(which cosmovisor)
@@ -355,7 +367,7 @@ echo "input3. $input3"
 
 ![image](https://github.com/user-attachments/assets/af974b3d-f195-406f-9f97-c5b7c30cc88f)
 
-### 19. create service file
+### 20. create service file
 
 ```bash
 sudo tee /etc/systemd/system/0gchaind.service > /dev/null <<EOF
@@ -382,7 +394,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### 20. start the node
+### 21. start the node
 
 ```bash
 sudo systemctl daemon-reload && \
@@ -395,7 +407,7 @@ sudo journalctl -u 0gchaind -fn 100
 
 ![alt text](resources/image.png)
 
-### 21. check node version
+### 22. check node version
 
 ```bash
 cosmovisor run version
