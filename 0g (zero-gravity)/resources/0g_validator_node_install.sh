@@ -79,7 +79,7 @@ $HOME/.0gchain/config/config.toml
 # 8. Set custom ports in app.toml file
 sed -i.bak -e "s%address = \"127.0.0.1:8545\"%address = \"127.0.0.1:${OG_PORT}545\"%" \
 -e "s%ws-address = \"127.0.0.1:8546\"%ws-address = \"127.0.0.1:${OG_PORT}546\"%" \
--e "/^\[api\]/,/^\[/ s%^address = .*%address = \"tcp://127.0.0.1:${OG_PORT}317\"%" \
+-e "/^\[api\]/,/^\[/ s%^address = .*%address = \"tcp://0.0.0.0:${OG_PORT}317\"%" \
 -e "s%metrics-address = \"127.0.0.1:6065\"%metrics-address = \"127.0.0.1:${OG_PORT}065\"%" \
 $HOME/.0gchain/config/app.toml
 
