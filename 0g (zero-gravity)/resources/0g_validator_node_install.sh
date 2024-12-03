@@ -76,11 +76,10 @@ s%laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://0.0.0.0:${OG_PORT}657\"%;
 s%^pprof_laddr = \"localhost:26060\"%pprof_laddr = \"localhost:${OG_PORT}060\"%" $HOME/.0gchain/config/config.toml
 
 # 8. Set custom ports in app.toml file
-sed -i.bak \
 sed -i.bak -e "s%address = \"tcp://0.0.0.0:1317\"%address = \"tcp://0.0.0.0:${OG_PORT}317\"%;
 s%address = \"127.0.0.1:8545\"%address = \"127.0.0.1:${OG_PORT}545\"%;
 s%ws-address = \"127.0.0.1:8546\"%ws-address = \"127.0.0.1:${OG_PORT}546\"%;
-s%metrics-address = \"127.0.0.1:8065\"%metrics-address = \"127.0.0.1:${OG_PORT}065\"%" $HOME/.0gchain/config/app.toml
+s%metrics-address = \"127.0.0.1:6065\"%metrics-address = \"127.0.0.1:${OG_PORT}065\"%" $HOME/.0gchain/config/app.toml
 
 # 9. Download genesis.json
 sudo rm $HOME/.0gchain/config/genesis.json && \
@@ -117,7 +116,6 @@ sed -i \
 
 # 15. Open api endpoints
 sed -i \
-   -e '/^\[api\]/,/^\[/ s/^address = .*/address = "tcp:\/\/0.0.0.0:${OG_PORT}317"/' \
    -e '/^\[api\]/,/^\[/ s/^enable = .*/enable = true/' \
    $HOME/.0gchain/config/app.toml
 
