@@ -74,51 +74,51 @@ s%proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${OG_PORT}
 s%laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://0.0.0.0:${OG_PORT}657\"%:
 s%^pprof_laddr = \"localhost:26060\"%pprof_laddr = \"localhost:${0G_PORT}060\"%g" $HOME/.0gchain/config/config.toml
 
-# 8. set custom ports in app.toml file
-sed -i.bak -e "s%address = \"127.0.0.1:8545\"%address = \"0.0.0.0:${OG_PORT}545\"%" \
--e "/^\[api\]/,/^\[/ s/^address = .*/address = \"tcp:\/\/0.0.0.0:${OG_PORT}317\"/" \
+# 8. Set custom ports in app.toml file
+sed -i.bak -e "s%address = \"127.0.0.1:8545\"%address = \"127.0.0.1:${OG_PORT}545\"%" \
 -e "s%ws-address = \"127.0.0.1:8546\"%ws-address = \"127.0.0.1:${OG_PORT}546\"%" \
+-e "/^\[api\]/,/^\[/ s/^address = .*/address = \"tcp:\/\/127.0.0.1:${OG_PORT}317\"/" \
+-e "s%metrics-address = \"127.0.0.1:6065\"%metrics-address = \"127.0.0.1:${OG_PORT}065\"%" \
 $HOME/.0gchain/config/app.toml
 
-# 9. download genesis.json
+# 9. Download genesis.json
 sudo rm $HOME/.0gchain/config/genesis.json && \
 wget https://github.com/0glabs/0g-chain/releases/download/v0.2.3/genesis.json -O $HOME/.0gchain/config/genesis.json
 
-# 10. add seeds to the config.toml
+# 10. Add seeds to the config.toml
 SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de28667725a4fef26cdc7f9452cc34b16d@54.176.175.48:26656,e9b4bc203197b62cc7e6a80a64742e752f4210d5@54.193.250.204:26656,68b9145889e7576b652ca68d985826abd46ad660@18.166.164.232:26656,8f21742ea5487da6e0697ba7d7b36961d3599567@og-testnet-seed.itrocket.net:47656" && \
 sed -i.bak -e "s/^seeds *=.*/seeds = \"${SEEDS}\"/" $HOME/.0gchain/config/config.toml
 
-# 11. add peers to the config.toml
+# 11. Add peers to the config.toml
 peers=$(curl -sS https://lightnode-rpc-0g.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
 echo $peers
 sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchain/config/config.toml
 
-# 12. configure pruning to save storage (optional) (if you want to run a full node, skip this step)
+# 12. Configure pruning to save storage (optional) (if you want to run a full node, skip this step)
 sed -i \
    -e "s/^pruning *=.*/pruning = \"custom\"/" \
    -e "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"100\"/" \
    -e "s/^pruning-interval *=.*/pruning-interval = \"50\"/" \
    "$HOME/.0gchain/config/app.toml"
 
-# 13. open rpc endpoints
+# 13. Open rpc endpoints
 sed -i \
    -e "s/laddr = \"tcp:\/\/127.0.0.1:${OG_PORT}657\"/laddr = \"tcp:\/\/0.0.0.0:${OG_PORT}657\"/" \
    $HOME/.0gchain/config/config.toml
 
-# 14. open json-rpc endpoints (required for running the storage node and storage kv)
+# 14. Open json-rpc endpoints (required for running the storage node and storage kv)
 sed -i \
-   -e "s/address = \"127.0.0.1:${OG_PORT}545\"/address = \"0.0.0.0:${OG_PORT}545\"/" \
+   -e 's/address = "127.0.0.1:${OG_PORT}545"/address = "0.0.0.0:${OG_PORT}545"/' \
    -e 's|^api = ".*"|api = "eth,txpool,personal,net,debug,web3"|' \
    -e 's/logs-cap = 10000/logs-cap = 20000/' \
    -e 's/block-range-cap = 10000/block-range-cap = 20000/' \
    $HOME/.0gchain/config/app.toml
 
-# 15. open api endpoints
+# 15. Open api endpoints
 sed -i \
    -e '/^\[api\]/,/^\[/ s/^address = .*/address = "tcp:\/\/0.0.0.0:${OG_PORT}317"/' \
    -e '/^\[api\]/,/^\[/ s/^enable = .*/enable = true/' \
    $HOME/.0gchain/config/app.toml
-
 
 # 16. set minimum gas price and enable prometheus
 sed -i "s/^minimum-gas-prices *=.*/minimum-gas-prices = \"0ua0gi\"/" $HOME/.0gchain/config/app.toml
