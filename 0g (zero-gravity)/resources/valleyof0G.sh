@@ -332,7 +332,7 @@ function delete_validator_node() {
     sudo systemctl disable $SERVICE_FILE_NAME
     sudo rm -rf /etc/systemd/system/$SERVICE_FILE_NAME
     sudo rm -r 0g-chain
-    sudo rm -r $HOME/go/bin/0gchaind
+    sudo rm $HOME/go/bin/0gchaind
     sudo rm -rf $HOME/.0gchain
     sed -i "/OG_/d" $HOME/.bash_profile
     echo "Validator node deleted successfully."
