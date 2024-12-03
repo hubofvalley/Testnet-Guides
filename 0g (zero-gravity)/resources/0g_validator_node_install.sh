@@ -25,6 +25,7 @@ sudo systemctl disable 0gd
 sudo rm -rf /etc/systemd/system/0gchaind.service
 sudo rm -rf /etc/systemd/system/0gd.service
 sudo rm -r 0g-chain
+sudo rm -r $HOME/go/bin/0gchaind
 sudo rm -rf $HOME/.0gchain
 sed -i "/OG_/d" $HOME/.bash_profile
 
