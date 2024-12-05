@@ -152,6 +152,9 @@ main_script() {
             ;;
     esac
 
+    # Ask the user if they want to delete the downloaded snapshot files
+    read -p "Do you want to delete the downloaded snapshot files? (y/n): " delete_choice
+
     # Remove upgrade-info.json
     sudo rm -f $HOME/.0gchain/data/upgrade-info.json
 
@@ -176,9 +179,6 @@ main_script() {
 
     # Change ownership of the .0gchain directory
     sudo chown -R $USER:$USER $HOME/.0gchain
-
-    # Ask the user if they want to delete the downloaded snapshot files
-    read -p "Do you want to delete the downloaded snapshot files? (y/n): " delete_choice
 
     if [[ $delete_choice == "y" || $delete_choice == "Y" ]]; then
         # Delete downloaded snapshot files
