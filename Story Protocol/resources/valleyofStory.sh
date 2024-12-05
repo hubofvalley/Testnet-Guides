@@ -560,8 +560,6 @@ function show_guidelines() {
     echo "      - Guide: This option will help you unstake tokens from a validator. You can choose to unstake from yourself or another validator."
     echo "   f. Export EVM Key: Exports the EVM key."
     echo "      - Guide: Use this option to export your EVM key. This key is crucial for managing your EVM address."
-    echo "   g. Backup Validator Key: Backs up the validator key to the $HOME directory."
-    echo "      - Guide: This option will backup your validator key to your home directory. Ensure you keep this key secure."
     echo -e "${GREEN}Node Management:${RESET}"
     echo "   a. Stop Validator Node: Stops the validator node."
     echo "      - Guide: Use this option to stop your validator node. This will halt both the consensus client and Geth services."
@@ -575,7 +573,9 @@ function show_guidelines() {
     echo "      - Guide: Use this option to restart only the consensus client service."
     echo "   f. Restart Geth Only: Restarts Geth."
     echo "      - Guide: This option will restart only the Geth service."
-    echo "   g. Delete Validator Node: Deletes the validator node. Ensure you backup your seeds phrase/EVM-private key and priv_validator_key.json before doing this."
+    echo "   g. Backup Validator Key: Backs up the validator key to the $HOME directory."
+    echo "      - Guide: This option will backup your validator key to your home directory. Ensure you keep this key secure."
+    echo "   h. Delete Validator Node: Deletes the validator node. Ensure you backup your seeds phrase/EVM-private key and priv_validator_key.json before doing this."
     echo "      - Guide: Use this option to delete your validator node. Make sure to backup all important data before proceeding."
     echo -e "${GREEN}Install Story App only: Installs the Story app (v0.13.1) for executing transactions without running the node.${RESET}"
     echo "      - Guide: Use this option to install the Story app if you only need to execute transactions without running a full node."
@@ -612,7 +612,6 @@ function menu() {
     echo "   d. Stake Tokens"
     echo "   e. Unstake Tokens"
     echo "   f. Export EVM Key"
-    echo "   g. Backup Validator Key (store it to $HOME directory)"
     echo -e "${GREEN}3. Node Management:${RESET}"
     echo "   a. Stop Validator Node"
     echo "   b. Stop Consensus Client Only"
@@ -620,7 +619,8 @@ function menu() {
     echo "   d. Restart Validator Node"
     echo "   e. Restart Consensus Client Only"
     echo "   f. Restart Geth Only"
-    echo "   g. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
+    echo "   g. Backup Validator Key (store it to $HOME directory)"
+    echo "   h. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
     echo -e "${GREEN}4. Install the Story App (v0.13.1) only to execute transactions without running a node${RESET}"
     echo -e "${GREEN}5. Show Grand Valley's Endpoints${RESET}"
     echo -e "${YELLOW}6. Show Guidelines${RESET}"
@@ -665,7 +665,6 @@ function menu() {
                 d) stake_tokens ;;
                 e) unstake_tokens ;;
                 f) export_evm_key ;;
-                g) backup_validator_key ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
@@ -677,7 +676,8 @@ function menu() {
                 d) restart_validator_node ;;
                 e) restart_consensus_client ;;
                 f) restart_geth ;;
-                g) delete_validator_node ;;
+                g) backup_validator_key ;;
+                h) delete_validator_node ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
