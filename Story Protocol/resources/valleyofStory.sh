@@ -547,8 +547,6 @@ function show_guidelines() {
     echo "      - Guide: Use this option to view the logs specifically for the consensus client."
     echo "   i. Show Geth Logs: Displays logs for Geth."
     echo "      - Guide: This option will show the logs specifically for Geth."
-    echo "   j. Install Story App only: Installs the Story app (v0.13.0) for executing transactions without running the node."
-    echo "      - Guide: Use this option to install the Story app if you only need to execute transactions without running a full node."
     echo -e "${GREEN}Validator/Key Interactions:${RESET}"
     echo "   a. Create Validator: Creates a new validator."
     echo "      - Guide: This option will guide you through creating a new validator. You will need to provide details such as the moniker and staking amount."
@@ -579,6 +577,8 @@ function show_guidelines() {
     echo "      - Guide: This option will restart only the Geth service."
     echo "   g. Delete Validator Node: Deletes the validator node. Ensure you backup your seeds phrase/EVM-private key and priv_validator_key.json before doing this."
     echo "      - Guide: Use this option to delete your validator node. Make sure to backup all important data before proceeding."
+    echo -e "${GREEN}Install Story App only: Installs the Story app (v0.13.1) for executing transactions without running the node.${RESET}"
+    echo "      - Guide: Use this option to install the Story app if you only need to execute transactions without running a full node."
     echo -e "${GREEN}Show Grand Valley's Endpoints:${RESET}"
     echo "   Displays Grand Valley's public endpoints."
     echo "      - Guide: This option will show you the public endpoints provided by Grand Valley. These endpoints can be used for various operations."
@@ -605,7 +605,6 @@ function menu() {
     echo "   g. Show Consensus Client & Geth Logs Together"
     echo "   h. Show Consensus Client Logs "
     echo "   i. Show Geth Logs"
-    echo "   j. Install Story App only (v0.13.0)(for executing transactions without running the node)"
     echo -e "${GREEN}2. Validator/Key Interactions:${RESET}"
     echo "   a. Create Validator"
     echo "   b. Query Validator Public Key"
@@ -622,9 +621,10 @@ function menu() {
     echo "   e. Restart Consensus Client Only"
     echo "   f. Restart Geth Only"
     echo "   g. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
-    echo -e "${GREEN}4. Show Grand Valley's Endpoints${RESET}"
-    echo -e "${YELLOW}5. Show Guidelines${RESET}"
-    echo -e "${RED}6. Exit${RESET}"
+    echo -e "${GREEN}4. Install the Story App (v0.13.1) only to execute transactions without running a node${RESET}"
+    echo -e "${GREEN}5. Show Grand Valley's Endpoints${RESET}"
+    echo -e "${YELLOW}6. Show Guidelines${RESET}"
+    echo -e "${RED}7. Exit${RESET}"
 
     echo -e "\n${YELLOW}Please run the following command to apply the changes after exiting the script:${RESET}"
     echo -e "${GREEN}source ~/.bash_profile${RESET}"
@@ -654,7 +654,6 @@ function menu() {
                 g) show_all_logs ;;
                 h) show_consensus_client_logs ;;
                 i) show_geth_logs ;;
-                j) install_story_app ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
@@ -682,9 +681,10 @@ function menu() {
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
-        4) show_endpoints ;;
-        5) show_guidelines ;;
-        6) exit 0 ;;
+        4) install_story_app ;;
+        5) show_endpoints ;;
+        6) show_guidelines ;;
+        7) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
 }

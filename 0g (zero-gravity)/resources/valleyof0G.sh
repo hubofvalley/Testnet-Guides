@@ -597,7 +597,6 @@ function menu() {
     echo "    m. Unstake Tokens"
     echo "    n. Export EVM Private Key"
     echo "    o. Backup Validator Key (store it to $HOME directory)"
-    echo "    p. Install 0gchain App only (v0.4.0)(for executing transactions without running the node)"
     echo -e "${GREEN}2. Storage Node${RESET}"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
@@ -618,9 +617,10 @@ function menu() {
     echo "    g. Stop Storage KV"
     echo "    h. Restart Storage KV"
     echo "    i. Delete Storage KV"
-    echo -e "${GREEN}5. Show Grand Valley's Endpoints${RESET}"
-    echo -e "${YELLOW}6. Show Guidelines${RESET}"
-    echo -e "${RED}7. Exit${RESET}"
+    echo -e "${GREEN}5. Install the 0gchain App (v0.4.0) only to execute transactions without running a node${RESET}"
+    echo -e "${GREEN}6. Show Grand Valley's Endpoints${RESET}"
+    echo -e "${YELLOW}7. Show Guidelines${RESET}"
+    echo -e "${RED}8. Exit${RESET}"
 
     echo -e "\n${YELLOW}Please run the following command to apply the changes after exiting the script:${RESET}"
     echo -e "${GREEN}source ~/.bash_profile${RESET}"
@@ -656,7 +656,6 @@ function menu() {
                 m) unstake_tokens ;;
                 n) export_evm_private_key ;;
                 o) backup_validator_key ;;
-                p) install_0gchain_app ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
@@ -692,9 +691,10 @@ function menu() {
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
-        5) show_endpoints ;;
-        6) show_guidelines ;;
-        7) exit 0 ;;
+        5) install_0gchain_app ;;
+        6) show_endpoints ;;
+        7) show_guidelines ;;
+        8) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
 }
