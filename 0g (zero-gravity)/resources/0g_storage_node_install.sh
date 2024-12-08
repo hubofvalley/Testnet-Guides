@@ -108,7 +108,7 @@ git clone -b v0.8.0 https://github.com/0glabs/0g-storage-node.git
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout 27366a5
+git checkout 27366a5331d4c3a442af9b85275d1330843da7a7
 git submodule update --init
 
 # 6. Build the binary
