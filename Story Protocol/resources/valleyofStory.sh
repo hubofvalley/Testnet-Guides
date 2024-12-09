@@ -613,12 +613,12 @@ function menu() {
     echo "   e. Unstake Tokens"
     echo "   f. Export EVM Key"
     echo -e "${GREEN}3. Node Management:${RESET}"
-    echo "   a. Stop Validator Node"
-    echo "   b. Stop Consensus Client Only"
-    echo "   c. Stop Geth Only"
-    echo "   d. Restart Validator Node"
-    echo "   e. Restart Consensus Client Only"
-    echo "   f. Restart Geth Only"
+    echo "   a. Restart Validator Node"
+    echo "   b. Restart Consensus Client Only"
+    echo "   c. Restart Geth Only"
+    echo "   d. Stop Validator Node"
+    echo "   e. Stop Consensus Client Only"
+    echo "   f. Stop Geth Only"
     echo "   g. Backup Validator Key (store it to $HOME directory)"
     echo "   h. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
     echo -e "${GREEN}4. Install the Story App (v0.13.1) only to execute transactions without running a node${RESET}"
@@ -670,12 +670,12 @@ function menu() {
             ;;
         3)
             case $SUB_OPTION in
-                a) stop_validator_node ;;
-                b) stop_consensus_client ;;
-                c) stop_geth ;;
-                d) restart_validator_node ;;
-                e) restart_consensus_client ;;
-                f) restart_geth ;;
+                a) restart_validator_node ;;
+                b) restart_consensus_client ;;
+                c) restart_geth ;;
+                d) stop_validator_node ;;
+                e) stop_consensus_client ;;
+                f) stop_geth ;;
                 g) backup_validator_key ;;
                 h) delete_validator_node ;;
                 *) echo "Invalid sub-option. Please try again." ;;
