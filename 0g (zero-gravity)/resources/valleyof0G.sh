@@ -607,15 +607,15 @@ function menu() {
     echo "    a. Deploy Storage KV"
     echo "    b. Show Storage KV Logs"
     echo "    c. Update Storage KV"
-    echo -e "${GREEN}4. Node Management${RESET}"
-    echo "    a. Stop Validator Node"
-    echo "    b. Restart Validator Node"
-    echo "    c. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
-    echo "    d. Stop Storage Node"
-    echo "    e. Restart Storage Node"
-    echo "    f. Delete Storage Node"
-    echo "    g. Stop Storage KV"
-    echo "    h. Restart Storage KV"
+    echo -e "${GREEN}Node Management:${RESET}"
+    echo "    a. Restart Validator Node"
+    echo "    b. Restart Storage Node"
+    echo "    c. Restart Storage KV"
+    echo "    d. Stop Validator Node"
+    echo "    e. Stop Storage Node"
+    echo "    f. Stop Storage KV"
+    echo "    g. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
+    echo "    h. Delete Storage Node"
     echo "    i. Delete Storage KV"
     echo -e "${GREEN}5. Install the 0gchain App (v0.4.0) only to execute transactions without running a node${RESET}"
     echo -e "${GREEN}6. Show Grand Valley's Endpoints${RESET}"
@@ -679,14 +679,14 @@ function menu() {
             ;;
         4)
             case $SUB_OPTION in
-                a) stop_validator_node ;;
-                b) restart_validator_node ;;
-                c) delete_validator_node ;;
-                d) stop_storage_node ;;
-                e) restart_storage_node ;;
-                f) delete_storage_node ;;
-                g) stop_storage_kv ;;
-                h) restart_storage_kv ;;
+                a) restart_validator_node ;;
+                b) restart_storage_node ;;
+                c) restart_storage_kv ;;
+                d) stop_validator_node ;;
+                e) stop_storage_node ;;
+                f) stop_storage_kv ;;
+                g) delete_validator_node ;;
+                h) delete_storage_node ;;
                 i) delete_storage_kv ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
