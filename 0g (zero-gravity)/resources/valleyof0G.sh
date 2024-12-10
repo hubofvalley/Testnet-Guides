@@ -607,7 +607,7 @@ function menu() {
     echo "    a. Deploy Storage KV"
     echo "    b. Show Storage KV Logs"
     echo "    c. Update Storage KV"
-    echo -e "${GREEN}Node Management:${RESET}"
+    echo -e "${GREEN}4. Node Management:${RESET}"
     echo "    a. Restart Validator Node"
     echo "    b. Restart Storage Node"
     echo "    c. Restart Storage KV"
