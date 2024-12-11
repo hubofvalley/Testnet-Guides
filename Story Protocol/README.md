@@ -536,12 +536,10 @@ mkdir -p $HOME/story-v0.12.1
 cd $HOME/story-v0.12.1 && \
 wget https://github.com/piplabs/story/releases/download/v0.12.1/$story_file_name
 
-# Move the binary to the appropriate directory
-sudo cp $HOME/story-v0.12.1/$story_file_name $HOME/go/bin/story
-
 # Set ownership and permissions
 sudo chown -R $USER:$USER $HOME/.story && \
 sudo chown -R $USER:$USER $HOME/go/bin/story && \
+sudo chmod +x $HOME/go/bin/story && \
 sudo rm $HOME/.story/story/data/upgrade-info.json
 
 # Add the upgrade to cosmovisor
@@ -568,12 +566,10 @@ mkdir -p $HOME/story-v0.13.0
 cd $HOME/story-v0.13.0 && \
 wget https://github.com/piplabs/story/releases/download/v0.13.0/$story_file_name
 
-# Move the binary to the appropriate directory
-sudo cp $HOME/story-v0.13.0/$story_file_name $HOME/go/bin/story
-
 # Set ownership and permissions
 sudo chown -R $USER:$USER $HOME/.story && \
 sudo chown -R $USER:$USER $HOME/go/bin/story && \
+sudo chmod +x $HOME/go/bin/story && \
 sudo rm $HOME/.story/story/data/upgrade-info.json
 
 # Add the upgrade to cosmovisor

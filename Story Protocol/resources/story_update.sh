@@ -123,6 +123,8 @@ update_version() {
 
     # Set ownership and permissions
     sudo chown -R $USER:$USER $HOME/.story && \
+    sudo chown -R $USER:$USER $HOME/go/bin/story && \
+    sudo chmod +x $HOME/go/bin/story && \
     sudo rm -f $HOME/.story/story/data/upgrade-info.json
 
     # Add the upgrade to cosmovisor
