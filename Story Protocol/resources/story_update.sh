@@ -121,12 +121,8 @@ update_version() {
         exit 1
     fi
 
-    # Move the binary to the appropriate directory
-    sudo cp $HOME/story-$version/story $HOME/go/bin/story
-
     # Set ownership and permissions
     sudo chown -R $USER:$USER $HOME/.story && \
-    sudo chown -R $USER:$USER $HOME/go/bin/story && \
     sudo rm -f $HOME/.story/story/data/upgrade-info.json
 
     # Add the upgrade to cosmovisor
@@ -178,9 +174,6 @@ batch_update_version() {
         echo "Failed to add batch upgrade to cosmovisor. Exiting."
         exit 1
     fi
-
-    # Move the latest version to the go directory
-    sudo cp $HOME/story-$version3/story $HOME/go/bin/story
 }
 
 # Menu for selecting the version
