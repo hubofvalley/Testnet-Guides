@@ -159,7 +159,7 @@ batch_update_version() {
         echo "Failed to download the binary for $version2. Exiting."
         exit 1
     fi
-    if ! wget -P $HOME/story-$version2 $download_url3/$story_file_name -O $HOME/story-$version3/story; then
+    if ! wget -P $HOME/story-$version3 $download_url3/$story_file_name -O $HOME/story-$version3/story; then
         echo "Failed to download the binary for $version3. Exiting."
         exit 1
     fi
