@@ -178,7 +178,7 @@ batch_update_version() {
     fi
 
     # Move the latest version to the go directory
-    sudo cp $HOME/story-$version2/story $HOME/go/bin/story
+    sudo cp $HOME/story-$version3/story $HOME/go/bin/story
 }
 
 # Menu for selecting the version
