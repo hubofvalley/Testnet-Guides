@@ -39,7 +39,9 @@ init_cosmovisor() {
 # Ask the user if cosmovisor is installed
 read -p "Do you have cosmovisor installed? (y/n): " cosmovisor_installed
 
-if [ "$cosmovisor_installed" != "y" ]; then
+if [ "$cosmovisor_installed" == "y" ]; then
+    echo "Cosmovisor is already installed. Skipping installation and initialization."
+else
     install_cosmovisor
     init_cosmovisor
 fi
