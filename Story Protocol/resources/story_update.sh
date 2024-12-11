@@ -128,7 +128,7 @@ update_version() {
     sudo rm -f $HOME/.story/story/data/upgrade-info.json
 
     # Add the upgrade to cosmovisor
-    if ! cosmovisor add-upgrade $version $HOME/go/bin/story --upgrade-height $upgrade_height --force; then
+    if ! cosmovisor add-upgrade $version $HOME/story-$version/story --upgrade-height $upgrade_height --force; then
         echo "Failed to add upgrade to cosmovisor. Exiting."
         exit 1
     fi
