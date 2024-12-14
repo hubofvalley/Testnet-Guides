@@ -59,7 +59,7 @@
       - [self delegate](#self-delegate)
       - [delegate to ](#delegate-to-)
   - [delete the node](#delete-the-node)
-  - [upgrade story-geth version to `v0.10.1` (just if u still use the previous version)](#upgrade-story-geth-version-to-v0101-just-if-u-still-use-the-previous-version)
+  - [upgrade story-geth version to `v0.11.0` (just if u still use the previous version)](#upgrade-story-geth-version-to-v0110-just-if-u-still-use-the-previous-version)
   - [upgrade consensus client version to `v0.12.1` at height `322000`](#upgrade-consensus-client-version-to-v0121-at-height-322000)
   - [upgrade consensus client version to `v0.13.0` at height `858000`](#upgrade-consensus-client-version-to-v0130-at-height-858000)
 - [let's buidl together](#lets-buidl-together)
@@ -244,10 +244,10 @@ source $HOME/.bash_profile
 cd $HOME
 
 # geth binary
-mkdir -p story-geth-v0.10.1
-wget -O story-geth-v0.10.1/geth-linux-amd64 https://github.com/piplabs/story-geth/releases/download/v0.10.1/geth-linux-amd64
+mkdir -p story-geth-v0.11.0
+wget -O story-geth-v0.11.0/geth-linux-amd64 https://github.com/piplabs/story-geth/releases/download/v0.11.0/geth-linux-amd64
 geth_file_name=geth-linux-amd64
-cp story-geth-v0.10.1/$geth_file_name $HOME/go/bin/geth
+cp story-geth-v0.11.0/$geth_file_name $HOME/go/bin/geth
 sudo chown -R $USER:$USER $HOME/go/bin/geth
 sudo chmod +x $HOME/go/bin/geth
 
@@ -484,7 +484,7 @@ sudo rm -r $HOME/go/bin/story-geth $HOME/go/bin/geth
 sed -i "/STORY_/d" $HOME/.bash_profile
 ```
 
-## upgrade story-geth version to `v0.10.1` (just if u still use the previous version)
+## upgrade story-geth version to `v0.11.0` (just if u still use the previous version)
 
 ```bash
 # Define variables
@@ -493,14 +493,14 @@ geth_file_name=geth-linux-amd64
 
 ```bash
 # Create directory and download the binary
-mkdir -p $HOME/story-geth-v0.10.1
-cd $HOME/story-geth-v0.10.1 && \
-wget https://github.com/piplabs/story-geth/releases/download/v0.10.1/$geth_file_name -O geth
+mkdir -p $HOME/story-geth-v0.11.0
+cd $HOME/story-geth-v0.11.0 && \
+wget https://github.com/piplabs/story-geth/releases/download/v0.11.0/$geth_file_name -O geth
 ```
 
 ```bash
 # Move the binary to the appropriate directory
-sudo mv $HOME/story-geth-v0.10.1/geth $HOME/go/bin/geth
+sudo mv $HOME/story-geth-v0.11.0/geth $HOME/go/bin/geth
 ```
 
 ```bash
