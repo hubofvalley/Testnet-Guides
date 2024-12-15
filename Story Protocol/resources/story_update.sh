@@ -138,19 +138,19 @@ update_version() {
 batch_update_version() {
     local version1="v0.12.1"
     local version2="v0.13.0"
-    local version3="v0.14.0"
+    #local version3="v0.14.0"
     local download_url1="https://github.com/piplabs/story/releases/download/v0.12.1"
     local download_url2="https://github.com/piplabs/story/releases/download/v0.13.0"
-    local download_url3="https://github.com/piplabs/story/releases/download/v0.14.0"
+    #local download_url3="https://github.com/piplabs/story/releases/download/v0.14.0"
     local upgrade_height1=322000
     local upgrade_height2=858000
-    local upgrade_height3=1349000
+    #local upgrade_height3=1349000
 
     # Create directories and download the binaries
     cd $HOME
     mkdir -p $HOME/story-$version1
     mkdir -p $HOME/story-$version2
-    mkdir -p $HOME/story-$version3
+    #mkdir -p $HOME/story-$version3
     if ! wget -P $HOME/story-$version1 $download_url1/$story_file_name -O $HOME/story-$version1/story; then
         echo "Failed to download the binary for $version1. Exiting."
         exit 1
@@ -159,20 +159,20 @@ batch_update_version() {
         echo "Failed to download the binary for $version2. Exiting."
         exit 1
     fi
-    if ! wget -P $HOME/story-$version3 $download_url3/$story_file_name -O $HOME/story-$version3/story; then
-        echo "Failed to download the binary for $version3. Exiting."
-        exit 1
-    fi
+    #if ! wget -P $HOME/story-$version3 $download_url3/$story_file_name -O $HOME/story-$version3/story; then
+        #echo "Failed to download the binary for $version3. Exiting."
+        #exit 1
+    #fi
 
     # Set ownership and permissions
     sudo chown -R $USER:$USER $HOME/.story && \
     sudo chown -R $USER:$USER $HOME/story-$version1/story && \
     sudo chown -R $USER:$USER $HOME/story-$version2/story && \
-    sudo chown -R $USER:$USER $HOME/story-$version3/story && \
+    #sudo chown -R $USER:$USER $HOME/story-$version3/story && \
     sudo rm -f $HOME/.story/story/data/upgrade-info.json
 
     # Add the batch upgrade to cosmovisor
-    if ! cosmovisor add-batch-upgrade --upgrade-list $version1:$HOME/story-$version1/story:$upgrade_height1,$version2:$HOME/story-$version2/story:$upgrade_height2,$version3:$HOME/story-$version3/story:$upgrade_height3; then
+    if ! cosmovisor add-batch-upgrade --upgrade-list $version1:$HOME/story-$version1/story:$upgrade_height1,$version2:$HOME/story-$version2/story:$upgrade_height2; then
         echo "Failed to add batch upgrade to cosmovisor. Exiting."
         exit 1
     fi
@@ -182,8 +182,8 @@ batch_update_version() {
 echo "Choose the version to update to:"
 echo "a. v0.12.1 (Upgrade height: 322,000)"
 echo "b. v0.13.0 (Upgrade height: 858,000)"
-echo "c. v0.14.0 (Upgrade height: 1,349,000)"
-echo "d. Batch update: Upgrade to v0.12.1 at height 322,000, v0.13.0 at height 858,000 and v0.14.0 at height 1,349,000 (RECOMMENDED FOR THOSE AIMING TO ACHIEVE ARCHIVE NODE STATUS)."
+#echo "c. v0.14.0 (Upgrade height: 1,349,000)"
+echo "c. Batch update: Upgrade to v0.12.1 at height 322,000 and v0.13.0 at height 858,000 (RECOMMENDED FOR THOSE AIMING TO ACHIEVE ARCHIVE NODE STATUS)."
 read -p "Enter the letter corresponding to the version: " choice
 
 case $choice in
@@ -193,10 +193,10 @@ case $choice in
     b)
         update_version "v0.13.0" "https://github.com/piplabs/story/releases/download/v0.13.0" 858000
         ;;
-    c)
-        update_version "v0.14.0" "https://github.com/piplabs/story/releases/download/v0.14.0" 1349000
+    #c)
+        #update_version "v0.14.0" "https://github.com/piplabs/story/releases/download/v0.14.0" 1349000
         ;;
-    d)
+    c)
         batch_update_version
         ;;
     *)
