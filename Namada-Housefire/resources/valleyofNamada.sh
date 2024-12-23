@@ -108,7 +108,7 @@ source $HOME/.bash_profile
 # Validator Node Functions
 function deploy_validator_node() {
     echo -e "${CYAN}Deploying Validator Node...${RESET}"
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Mainnet-Guides/main/Namada/resources/namada_validator_node_install_mainnet.sh)
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Namada-Campfire/resources/namada_validator_node_install_campfire_testnet.sh)
     menu
 }
 
