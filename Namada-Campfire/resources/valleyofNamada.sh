@@ -116,9 +116,9 @@ function create_validator() {
     DEFAULT_WALLET=$WALLET_NAME # Assuming $WALLET_NAME is set elsewhere in your script
     read -p "Enter the name for your validator: " NAME
 
-    read -p "Enter the commission rate: (e.g. 0.5) " COMMISION_RATE
+    read -p "Enter the commission rate: (e.g. 0.05) " COMMISION_RATE
 
-    read -p "Enter the max commission rate change: (e.g. 0.5) " MAX_COMMISION_RATE_CHANGE
+    read -p "Enter the max commission rate change: (e.g. 0.05) " MAX_COMMISION_RATE_CHANGE
 
     read -p "Enter the email for your validator security contact: " EMAIL
 
