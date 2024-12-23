@@ -92,7 +92,7 @@ else
     namadac utils join-network --chain-id $NAMADA_CHAIN_ID
 fi
 
-peers="tcp://e9a6dafe9a6d8e2e61b7ae70607aa2859eacd0a1@206.168.190.35:26656"0
+peers="tcp://e9a6dafe9a6d8e2e61b7ae70607aa2859eacd0a1@206.168.190.35:26656"
 sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml
 
 # 8. Set custom ports and moniker in config.toml
