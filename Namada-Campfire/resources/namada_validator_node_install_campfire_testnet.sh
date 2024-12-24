@@ -35,7 +35,7 @@ sudo systemctl disable namadad
 sudo rm -rf /etc/systemd/system/namadad.service
 sudo rm /usr/local/bin/namad*
 sudo rm -r namada
-sudo rm -rf $HOME/.local/share/namada/namada-dryrun.abaaeaf7b78cb3ac
+sudo rm -rf $HOME/.local/share/namada/campfire-square.ff09671d333707
 sed -i "/NAMADA_/d" $HOME/.bash_profile
 
 # 1. Install dependencies for building from source
