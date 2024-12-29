@@ -195,7 +195,7 @@ case $choice in
         ;;
     #c)
         #update_version "v0.14.0" "https://github.com/piplabs/story/releases/download/v0.14.0" 1349000
-        ;;
+
     c)
         batch_update_version
         ;;

@@ -573,7 +573,7 @@ sudo chmod +x $HOME/go/bin/story && \
 sudo rm $HOME/.story/story/data/upgrade-info.json
 
 # Add the upgrade to cosmovisor
-cosmovisor add-upgrade v0.13.0 $HOME/story-v0.13.0/$story_file_name --upgrade-height 322000 --force
+cosmovisor add-upgrade v0.13.0 $HOME/story-v0.13.0/$story_file_name --upgrade-height 858000 --force
 ```
 
 # let's buidl together
