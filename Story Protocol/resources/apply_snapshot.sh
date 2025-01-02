@@ -475,7 +475,7 @@ main_script() {
     mv $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
 
     # Delete previous geth chaindata and story data folders
-    sudo rm -rf $HOME/.story/geth/odyssey/chaindata $HOME/.story/story/data
+    sudo rm -rf $HOME/.story/geth/odyssey/geth/chaindata $HOME/.story/story/data
 
     # Download and decompress snapshots based on the provider
     if [[ $provider_choice -eq 1 || $provider_choice -eq 2 || $provider_choice -eq 4 ]]; then
