@@ -51,7 +51,7 @@ ${YELLOW}| Category  | Requirements                   |
 | Storage   | 500GB / 1TB NVMe SSD           |
 | Bandwidth | 100 MBps for Download / Upload |${RESET}
 
-storage node current binary version: ${CYAN}v0.8.0${RESET}
+storage node current binary version: ${CYAN}v0.8.4${RESET}
 
 ------------------------------------------------------------------
 
