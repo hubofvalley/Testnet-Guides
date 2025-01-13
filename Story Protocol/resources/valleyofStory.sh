@@ -348,7 +348,7 @@ function show_node_status() {
     port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.story/story/config/config.toml") && curl "http://127.0.0.1:$port/status" | jq
     story status
     geth_block_height=$(geth --exec "eth.blockNumber" attach $HOME/.story/geth/odyssey/geth.ipc)
-    echo "\n Geth block height: $geth_block_height"
+    echo "Geth block height: $geth_block_height"
     echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
     read -r
     menu
