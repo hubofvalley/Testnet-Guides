@@ -260,7 +260,7 @@ sudo systemctl stop zgs
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout f4d5228234258ef4c9f8b2b83d80911fa38a6db9
+git checkout 40d435597aee9750fb945aac07ed8f760da665db
 git submodule update --init
 ```
 
