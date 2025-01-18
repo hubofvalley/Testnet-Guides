@@ -194,7 +194,7 @@ case $choice in
         update_version "v0.13.0" "https://github.com/piplabs/story/releases/download/v0.13.0" 858000
         ;;
     c)
-        update_version "v0.13.2" "https://github.com/piplabs/story/releases/download/v0.13.2" 2065886
+        update_version "v0.13.2" "https://github.com/piplabs/story/releases/download/v0.13.2" 2065884
         ;;
     d)
         batch_update_version
