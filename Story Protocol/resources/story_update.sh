@@ -144,7 +144,7 @@ batch_update_version() {
     local download_url3="https://github.com/piplabs/story/releases/download/v0.13.2"
     local upgrade_height1=322000
     local upgrade_height2=858000
-    local upgrade_height3=2065886
+    local upgrade_height3=2065884
 
     # Create directories and download the binaries
     cd $HOME
