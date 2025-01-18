@@ -138,13 +138,13 @@ update_version() {
 batch_update_version() {
     local version1="v0.12.1"
     local version2="v0.13.0"
-    #local version3="v0.14.0"
+    #local version3="v0.13.2"
     local download_url1="https://github.com/piplabs/story/releases/download/v0.12.1"
     local download_url2="https://github.com/piplabs/story/releases/download/v0.13.0"
-    #local download_url3="https://github.com/piplabs/story/releases/download/v0.14.0"
+    local download_url3="https://github.com/piplabs/story/releases/download/v0.13.2"
     local upgrade_height1=322000
     local upgrade_height2=858000
-    #local upgrade_height3=1349000
+    local upgrade_height3=2065886
 
     # Create directories and download the binaries
     cd $HOME
@@ -168,7 +168,7 @@ batch_update_version() {
     sudo chown -R $USER:$USER $HOME/.story && \
     sudo chown -R $USER:$USER $HOME/story-$version1/story && \
     sudo chown -R $USER:$USER $HOME/story-$version2/story && \
-    #sudo chown -R $USER:$USER $HOME/story-$version3/story && \
+    sudo chown -R $USER:$USER $HOME/story-$version3/story && \
     sudo rm -f $HOME/.story/story/data/upgrade-info.json
 
     # Add the batch upgrade to cosmovisor
@@ -182,8 +182,8 @@ batch_update_version() {
 echo "Choose the version to update to:"
 echo "a. v0.12.1 (Upgrade height: 322,000)"
 echo "b. v0.13.0 (Upgrade height: 858,000)"
-#echo "c. v0.14.0 (Upgrade height: 1,349,000)"
-echo "c. Batch update: Upgrade to v0.12.1 at height 322,000 and v0.13.0 at height 858,000 (RECOMMENDED FOR THOSE AIMING TO ACHIEVE ARCHIVE NODE STATUS)."
+echo "c. v0.13.2 (Upgrade height: 2,065,886)"
+echo "d. Batch update: Upgrade to v0.12.1 at height 322,000, v0.13.0 at height 858,000, and v0.13.2 at height 2,065,886 (RECOMMENDED FOR THOSE AIMING TO ACHIEVE ARCHIVE NODE STATUS)."
 read -p "Enter the letter corresponding to the version: " choice
 
 case $choice in
@@ -193,10 +193,10 @@ case $choice in
     b)
         update_version "v0.13.0" "https://github.com/piplabs/story/releases/download/v0.13.0" 858000
         ;;
-    #c)
-        #update_version "v0.14.0" "https://github.com/piplabs/story/releases/download/v0.14.0" 1349000
-
     c)
+        update_version "v0.13.2" "https://github.com/piplabs/story/releases/download/v0.13.2" 2065886
+
+    d)
         batch_update_version
         ;;
     *)
