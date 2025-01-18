@@ -36,6 +36,33 @@ init_cosmovisor() {
     mkdir -p $HOME/.story/story/cosmovisor/backup
 }
 
+# Function to initialize cosmovisor
+init_cosmovisor0132() {
+    echo "Initializing cosmovisor..."
+
+    # Download genesis story version
+    mkdir -p story-v0.13.2
+    if ! wget -p $HOME/story-v0.12.0 https://github.com/piplabs/story/releases/download/v0.13.2/story-linux-amd64 -O $HOME/story-v0.13.2/story; then
+        echo "Failed to download the genesis binary. Exiting."
+        exit 1
+    fi
+
+    # Initialize cosmovisor
+    if ! cosmovisor init $HOME/story-v0.13.2/story; then
+        echo "Failed to initialize cosmovisor. Exiting."
+        exit 1
+    fi
+
+    cd $HOME/go/bin/
+    sudo rm -r story
+    ln -s $HOME/.story/story/cosmovisor/current/bin/story story
+    sudo chown -R $USER:$USER $HOME/go/bin/story
+    sudo chmod +x $HOME/go/bin/story
+    sudo rm -r $HOME/.story/story/data/upgrade-info.json
+    mkdir -p $HOME/.story/story/cosmovisor/upgrades
+    mkdir -p $HOME/.story/story/cosmovisor/backup
+}
+
 # Ask the user if cosmovisor is installed
 read -p "Do you have cosmovisor installed? (y/n): " cosmovisor_installed
 
@@ -65,10 +92,10 @@ if [ -z "$input2" ]; then
 fi
 
 # Check if backup directory exists
-#if [ -z "$input3" ]; then
-    #echo "Backup directory not found. Please ensure it exists."
-    #exit 1
-#fi
+if [ -z "$input3" ]; then
+    echo "Backup directory not found. Please ensure it exists."
+    exit 1
+fi
 
 # Export environment variables
 echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
@@ -182,7 +209,7 @@ batch_update_version() {
 echo "Choose the version to update to:"
 echo "a. v0.12.1 (Upgrade height: 322,000)"
 echo "b. v0.13.0 (Upgrade height: 858,000)"
-#echo "c. v0.13.2 (Upgrade height: 2,065,886)"
+echo "c. v0.13.2 (Upgrade height: 2,065,886)"
 echo "d. Batch update: Upgrade to v0.12.1 at height 322,000, v0.13.0 at height 858,000, and v0.13.2 at height 2,065,886 (RECOMMENDED FOR THOSE AIMING TO ACHIEVE ARCHIVE NODE STATUS)."
 read -p "Enter the letter corresponding to the version: " choice
 
@@ -193,9 +220,9 @@ case $choice in
     b)
         update_version "v0.13.0" "https://github.com/piplabs/story/releases/download/v0.13.0" 858000
         ;;
-    #c)
-        #update_version "v0.13.2" "https://github.com/piplabs/story/releases/download/v0.13.2" 2065886
-        
+    c)
+        init_cosmovisor0132
+        ;;
     d)
         batch_update_version
         ;;
