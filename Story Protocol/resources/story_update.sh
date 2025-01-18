@@ -138,7 +138,7 @@ update_version() {
 batch_update_version() {
     local version1="v0.12.1"
     local version2="v0.13.0"
-    #local version3="v0.13.2"
+    local version3="v0.13.2"
     local download_url1="https://github.com/piplabs/story/releases/download/v0.12.1"
     local download_url2="https://github.com/piplabs/story/releases/download/v0.13.0"
     local download_url3="https://github.com/piplabs/story/releases/download/v0.13.2"
@@ -150,7 +150,7 @@ batch_update_version() {
     cd $HOME
     mkdir -p $HOME/story-$version1
     mkdir -p $HOME/story-$version2
-    #mkdir -p $HOME/story-$version3
+    mkdir -p $HOME/story-$version3
     if ! wget -P $HOME/story-$version1 $download_url1/$story_file_name -O $HOME/story-$version1/story; then
         echo "Failed to download the binary for $version1. Exiting."
         exit 1
@@ -159,10 +159,10 @@ batch_update_version() {
         echo "Failed to download the binary for $version2. Exiting."
         exit 1
     fi
-    #if ! wget -P $HOME/story-$version3 $download_url3/$story_file_name -O $HOME/story-$version3/story; then
-        #echo "Failed to download the binary for $version3. Exiting."
-        #exit 1
-    #fi
+    if ! wget -P $HOME/story-$version3 $download_url3/$story_file_name -O $HOME/story-$version3/story; then
+        echo "Failed to download the binary for $version3. Exiting."
+        exit 1
+    fi
 
     # Set ownership and permissions
     sudo chown -R $USER:$USER $HOME/.story && \
