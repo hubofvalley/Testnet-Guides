@@ -42,7 +42,7 @@ init_cosmovisor0132() {
 
     # Download genesis story version
     mkdir -p story-v0.13.2
-    if ! wget -p $HOME/story-v0.12.0 https://github.com/piplabs/story/releases/download/v0.13.2/story-linux-amd64 -O $HOME/story-v0.13.2/story; then
+    if ! wget -p $HOME/story-v0.13.2 https://github.com/piplabs/story/releases/download/v0.13.2/story-linux-amd64 -O $HOME/story-v0.13.2/story; then
         echo "Failed to download the genesis binary. Exiting."
         exit 1
     fi
