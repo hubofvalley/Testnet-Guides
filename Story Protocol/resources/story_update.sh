@@ -38,13 +38,14 @@ init_cosmovisor() {
 
 # Function to initialize cosmovisor
 init_cosmovisor0132() {
-    echo "Initializing cosmovisor..."
+    sudo systemctl stop story story-geth
 
     # Download genesis story version
     mkdir -p story-v0.13.2
     wget -p $HOME/story-v0.13.2 https://github.com/piplabs/story/releases/download/v0.13.2/story-linux-amd64 -O $HOME/story-v0.13.2/story
 
     # Initialize cosmovisor
+    sudo rm -r $HOME/.story/story/cosmovisor
     cosmovisor init $HOME/story-v0.13.2/story
     cd $HOME/go/bin/
     sudo rm -r story
@@ -54,6 +55,7 @@ init_cosmovisor0132() {
     sudo rm -r $HOME/.story/story/data/upgrade-info.json
     mkdir -p $HOME/.story/story/cosmovisor/upgrades
     mkdir -p $HOME/.story/story/cosmovisor/backup
+    sudo systemctl restart story story-geth
 }
 
 # Ask the user if cosmovisor is installed
