@@ -166,13 +166,13 @@ batch_update_version() {
     local download_url3="https://github.com/piplabs/story/releases/download/v0.13.2"
     local upgrade_height1=322000
     local upgrade_height2=858000
-    #local upgrade_height3=2065886
+    local upgrade_height3=2065886
 
     # Create directories and download the binaries
     cd $HOME
     mkdir -p $HOME/story-$version1
     mkdir -p $HOME/story-$version2
-    #mkdir -p $HOME/story-$version3
+    mkdir -p $HOME/story-$version3
     if ! wget -P $HOME/story-$version1 $download_url1/$story_file_name -O $HOME/story-$version1/story; then
         echo "Failed to download the binary for $version1. Exiting."
         exit 1
@@ -190,11 +190,11 @@ batch_update_version() {
     sudo chown -R $USER:$USER $HOME/.story && \
     sudo chown -R $USER:$USER $HOME/story-$version1/story && \
     sudo chown -R $USER:$USER $HOME/story-$version2/story && \
-    #sudo chown -R $USER:$USER $HOME/story-$version3/story && \
+    sudo chown -R $USER:$USER $HOME/story-$version3/story && \
     sudo rm -f $HOME/.story/story/data/upgrade-info.json
 
     # Add the batch upgrade to cosmovisor
-    if ! cosmovisor add-batch-upgrade --upgrade-list $version1:$HOME/story-$version1/story:$upgrade_height1,$version2:$HOME/story-$version2/story:$upgrade_height2; then
+    if ! cosmovisor add-batch-upgrade --upgrade-list $version1:$HOME/story-$version1/story:$upgrade_height1,$version2:$HOME/story-$version2/story:$upgrade_height2,$version3:$HOME/story-$version3/story:$upgrade_height3; then
         echo "Failed to add batch upgrade to cosmovisor. Exiting."
         exit 1
     fi
@@ -216,7 +216,7 @@ case $choice in
         update_version "v0.13.0" "https://github.com/piplabs/story/releases/download/v0.13.0" 858000
         ;;
     c)
-        init_cosmovisor0132
+        update_version "v0.13.2" "https://github.com/piplabs/story/releases/download/v0.13.2" 2065886
         ;;
     d)
         batch_update_version
