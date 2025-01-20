@@ -624,7 +624,7 @@ function menu() {
     echo "   f. Stop Geth Only"
     echo "   g. Backup Validator Key (store it to $HOME directory)"
     echo "   h. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
-    echo -e "${GREEN}4. Install the Story App (v0.13.1) only to execute transactions without running a node${RESET}"
+    echo -e "${GREEN}4. Install the Story App (v0.13.2) only to execute transactions without running a node${RESET}"
     echo -e "${GREEN}5. Show Grand Valley's Endpoints${RESET}"
     echo -e "${YELLOW}6. Show Guidelines${RESET}"
     echo -e "${RED}7. Exit${RESET}"
