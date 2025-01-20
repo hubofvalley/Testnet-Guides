@@ -491,6 +491,7 @@ function install_story_app() {
     cp story-v0.13.2/story $HOME/go/bin/story
     sudo chown -R $USER:$USER $HOME/go/bin/story
     sudo chmod +x $HOME/go/bin/story
+    story init --network $STORY_CHAIN_ID --moniker gv-story
     echo -e "${YELLOW}story app installed successfully${RESET}"
     menu
 }
