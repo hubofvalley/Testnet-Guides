@@ -194,7 +194,7 @@ bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main
 
 - service file name: `story.service` `story-geth.service`
 - current chain: `odyssey`
-- current story node version: `v0.12.0 - v0.12.1 - v0.13.0 - v0.14.0`
+- current story node version: `v0.12.0 - v0.12.1 - v0.13.0 - v0.13.2`
 - current story-geth node version: `v0.11.0`
 
 ## Validator Manual installation
