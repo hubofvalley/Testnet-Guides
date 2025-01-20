@@ -486,9 +486,9 @@ function show_geth_logs() {
 
 function install_story_app() {
     echo -e "${YELLOW}This option is only for those who want to execute the transactions without running the node.${RESET}"
-    mkdir -p story-v0.13.0
-    wget -O story-v0.13.0/story https://github.com/piplabs/story/releases/download/v0.13.0/story-linux-amd64
-    cp story-v0.13.0/story $HOME/go/bin/story
+    mkdir -p story-v0.13.2
+    wget -O story-v0.13.2/story https://github.com/piplabs/story/releases/download/v0.13.2/story-linux-amd64
+    cp story-v0.13.2/story $HOME/go/bin/story
     sudo chown -R $USER:$USER $HOME/go/bin/story
     sudo chmod +x $HOME/go/bin/story
     echo -e "${YELLOW}story app installed successfully${RESET}"
