@@ -302,8 +302,10 @@ suggest_update() {
         required_version="v0.12.0-stable"
     elif [[ $snapshot_height -ge 322000 && $snapshot_height -le 857999 ]]; then
         required_version="v0.12.1-stable"
-    elif [[ $snapshot_height -ge 858000 ]]; then
+    elif [[ $snapshot_height -ge 858000 && $snapshot_height -le 2065885 ]]; then
         required_version="v0.13.0-stable"
+    elif [[ $snapshot_height -ge 2065886 ]]; then
+        required_version="v0.13.2-stable"
     fi
 
     echo -e "${YELLOW}Required version for snapshot block height $snapshot_height: $required_version${NC}"
