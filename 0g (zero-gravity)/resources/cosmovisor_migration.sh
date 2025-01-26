@@ -18,7 +18,11 @@ init_cosmovisor() {
         echo "Failed to initialize cosmovisor. Exiting."
         exit 1
     fi
-
+    cd $HOME/go/bin/
+    sudo rm -r $HOME/go/bin/0gchaind
+    ln -s $HOME/.0gchain/cosmovisor/current/bin/0gchaind 0gchaind
+    sudo chown -R $USER:$USER $HOME/go/bin/0gchaind
+    sudo chmod +x $HOME/go/bin/0gchaind
     mkdir -p $HOME/.0gchain/cosmovisor/upgrades
     mkdir -p $HOME/.0gchain/cosmovisor/backup
 }
