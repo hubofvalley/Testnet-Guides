@@ -155,7 +155,15 @@ main_script() {
     # Ask the user if they want to delete the downloaded snapshot files
     read -p "Do you want to delete the downloaded snapshot files? (y/n): " delete_choice
 
-    cd $HOME
+    # Prompt the user for the download location
+    read -p "Enter the directory where you want to download the snapshots (default is $HOME): " download_location
+    download_location=${download_location:-$HOME}
+
+    # Create the download directory if it doesn't exist
+    mkdir -p $download_location
+
+    # Change to the download directory
+    cd $download_location
 
     # Install required dependencies
     sudo apt-get install wget lz4 jq -y
