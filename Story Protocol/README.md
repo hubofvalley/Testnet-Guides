@@ -254,8 +254,8 @@ sudo chmod +x $HOME/go/bin/geth
 # consensus client binary
 mkdir -p story-v0.12.0
 wget -O story-v0.12.0/story-linux-amd64 https://github.com/piplabs/story/releases/download/v0.12.0/story-linux-amd64
-story_file__name=story-linux-amd64
-cp story-v0.12.0/$story_file__name $HOME/go/bin/story
+story_file_name=story-linux-amd64
+cp story-v0.12.0/$story_file_name $HOME/go/bin/story
 sudo chown -R $USER:$USER $HOME/go/bin/story
 sudo chmod +x $HOME/go/bin/story
 ```
