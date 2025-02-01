@@ -30,11 +30,12 @@ update_version() {
 }
 
 # Inform the user that there is no currently latest version of story-geth
-echo "There is currently no latest version of story-geth available."
+#echo "There is currently no latest version of story-geth available."
+
 
 # Menu for selecting the version
 echo "Choose the version to update to:"
-echo "There are currently no versions available."
+#read -p "There are currently no new versions available."
 
 # Placeholder for future versions
 # Uncomment and add new versions here
