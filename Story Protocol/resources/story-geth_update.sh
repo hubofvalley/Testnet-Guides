@@ -17,6 +17,7 @@ update_version() {
     fi
 
     # Move the binary to the appropriate directory
+    sudo systemctl stop story story-geth
     sudo mv $HOME/story-geth-$version/geth $HOME/go/bin/geth
 
     # Set ownership and permissions
@@ -25,7 +26,7 @@ update_version() {
 
     # Restart the service
     sudo systemctl daemon-reload && \
-    sudo systemctl restart story-geth
+    sudo systemctl restart story story-geth
 }
 
 # Inform the user that there is no currently latest version of story-geth
