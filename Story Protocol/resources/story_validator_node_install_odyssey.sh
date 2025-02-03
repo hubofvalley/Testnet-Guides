@@ -166,7 +166,7 @@ After=network-online.target
 
 [Service]
 User=$USER
-ExecStart=$(which geth) --odyssey --syncmode full --http --http.api eth,net,web3,engine --http.vhosts '*' --http.addr 0.0.0.0 --http.port ${STORY_PORT}545 --ws --ws.api eth,web3,net,txpool --ws.addr 0.0.0.0 --ws.port ${STORY_PORT}546 --authrpc.port ${STORY_PORT}551
+ExecStart=$(which geth) --odyssey --syncmode full --http --http.api eth,net,web3,engine --http.vhosts '*' --http.addr 127.0.0.1 --http.port ${STORY_PORT}545 --ws --ws.api eth,web3,net,txpool --ws.addr 127.0.0.1 --ws.port ${STORY_PORT}546 --authrpc.port ${STORY_PORT}551
 StandardOutput=journal
 StandardError=journal
 Restart=on-failure
