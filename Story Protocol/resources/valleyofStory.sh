@@ -332,6 +332,7 @@ function delete_validator_node() {
 }
 
 function stop_validator_node() {
+    sudo systemctl daemon-reload
     sudo systemctl stop story story-geth
     echo "Consensus client and Geth service stopped."
     menu
@@ -347,8 +348,18 @@ function restart_validator_node() {
 function show_node_status() {
     port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.story/story/config/config.toml") && curl "http://127.0.0.1:$port/status" | jq
     story status
-    geth_block_height=$(geth --exec "eth.blockNumber" attach $HOME/.story/geth/odyssey/geth.ipc)
+    geth_block_height=$(geth --exec "eth.blockNumber" attach $HOME/.story/geth/story/geth.ipc)
+    realtime_block_height=$(curl -s -X POST "https://odyssey.storyrpc.io" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
+    node_height=$(story status | jq -r '.sync_info.latest_block_height')
     echo "Geth block height: $geth_block_height"
+    block_difference=$(( realtime_block_height - node_height ))
+    echo "Real-time Block Height: $realtime_block_height"
+    echo -e "${YELLOW}Block Difference:${NC} $block_difference"
+
+    # Add explanation for negative values
+    if (( block_difference < 0 )); then
+        echo -e "${GREEN}Note:${NC} A negative value is normal - this means Story's official RPC block height is currently behind your node's height"
+    fi
     echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
     read -r
     menu
