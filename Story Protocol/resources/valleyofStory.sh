@@ -348,7 +348,7 @@ function restart_validator_node() {
 function show_node_status() {
     port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.story/story/config/config.toml") && curl "http://127.0.0.1:$port/status" | jq
     story status
-    geth_block_height=$(geth --exec "eth.blockNumber" attach $HOME/.story/geth/story/geth.ipc)
+    geth_block_height=$(geth --exec "eth.blockNumber" attach $HOME/.story/geth/odyssey/geth.ipc)
     realtime_block_height=$(curl -s -X POST "https://odyssey.storyrpc.io" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
     node_height=$(story status | jq -r '.sync_info.latest_block_height')
     echo "Geth block height: $geth_block_height"
