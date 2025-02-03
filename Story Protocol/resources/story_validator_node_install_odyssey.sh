@@ -103,7 +103,7 @@ PRIVATE_KEY=$(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_k
 
 # 11. Initialize Cosmovisor and create a symlink to the latest consensus client version in the Go directory
 echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
-echo "export DAEMON_HOME=$(find "$HOME/.story" -type d -name "story" -print -quit)" >> $HOME/.bash_profile
+echo "export DAEMON_HOME=$(find "$HOME/.story/story" -type d -name "story" -print -quit)" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 cosmovisor init $HOME/go/bin/story
 cd $HOME/go/bin/
@@ -118,7 +118,7 @@ cd $HOME
 
 # 12. Define Cosmovisor paths for the consensus client
 input1=$(which cosmovisor)
-input2=$(find "$HOME/.story" -type d -name "story" -print -quit)
+input2=$(find "$HOME/.story/story" -type d -name "story" -print -quit)
 input3=$(find "$HOME/.story/story/cosmovisor" -type d -name "backup" -print -quit)
 echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
 echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile

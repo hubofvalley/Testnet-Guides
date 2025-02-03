@@ -70,7 +70,7 @@ fi
 
 # Define variables
 input1=$(which cosmovisor)
-input2=$(find "$HOME/.story" -type d -name "story" -print -quit)
+input2=$(find "$HOME/.story/story" -type d -name "story" -print -quit)
 input3=$(find "$HOME/.story/story/cosmovisor" -type d -name "backup" -print -quit)
 story_file_name=story-linux-amd64
 
