@@ -1049,14 +1049,43 @@ function claim_rewards() {
 
     # Display choices prompt first
     echo "Choose an option:"
-    echo "1. Claim rewards from your validator"
-    echo "2. Claim rewards from another validator"
-    echo "3. Back"
-    read -p "Enter your choice (1, 2, or 3): " CHOICE
+    echo "1. Claim delegator rewards from your validator"
+    echo "2. Claim delegator rewards from another validator"
+    echo "3. Claim validator commission rewards"
+    echo "4. Back"
+    read -p "Enter your choice (1-4): " CHOICE
 
     case $CHOICE in
-        1|2)
-            # Show available wallets
+        1|2|3)
+            # Auto-fetch validator address for options 1 and 3
+            if [ "$CHOICE" -eq 1 ] || [ "$CHOICE" -eq 3 ]; then
+                echo "Fetching validator address..."
+                port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.local/share/namada/namada.5f5de2dd1b88cba30586420/config.toml")
+                if [ -z "$port" ]; then
+                    echo "Error: Could not find RPC port in config.toml"
+                    return 1
+                fi
+                
+                tm_address=$(curl -s 127.0.0.1:$port/status | jq -r .result.validator_info.address)
+                if [ -z "$tm_address" ]; then
+                    echo "Error: Failed to fetch Tendermint validator address"
+                    return 1
+                fi
+                
+                VALIDATOR_ADDRESS=$(namadac find-validator --tm-address=$tm_address | grep 'Found validator address' | awk -F'"' '{print $2}')
+                if [ -z "$VALIDATOR_ADDRESS" ]; then
+                    echo "Error: Validator address not found!"
+                    return 1
+                fi
+                echo "Your validator address: $VALIDATOR_ADDRESS"
+            fi
+            
+            # Get validator address for option 2
+            if [ "$CHOICE" -eq 2 ]; then
+                read -p "Enter validator address: " VALIDATOR_ADDRESS
+            fi
+
+            # Wallet selection flow
             echo "Fetching available wallet aliases..."
             echo
             namadaw list | grep Implicit
@@ -1064,55 +1093,51 @@ function claim_rewards() {
 
             while true; do
                 read -p "Enter wallet name/alias (leave empty to use current default wallet --> $DEFAULT_WALLET): " WALLET_NAME
-                if [ -z "$WALLET_NAME" ]; then
-                    WALLET_NAME=$DEFAULT_WALLET
-                fi
-
-                # Get wallet address
+                [ -z "$WALLET_NAME" ] && WALLET_NAME=$DEFAULT_WALLE
+                
+                # Verify wallet exists
                 WALLET_ADDRESS=$(namadaw find --alias $WALLET_NAME | grep -oP '(?<=Implicit: ).*')
-
-                if [ -n "$WALLET_ADDRESS" ]; then
-                    break
-                else
-                    echo "Wallet name not found. Please check the wallet name/alias and try again."
-                fi
+                [ -n "$WALLET_ADDRESS" ] && break
+                echo "Wallet name not found. Please try again."
             done
 
             echo "Using wallet: $WALLET_NAME ($WALLET_ADDRESS)"
 
-            read -p "Enter validator address: " VALIDATOR_ADDRESS
+            # Reward type specific configuration
+            case $CHOICE in
+                1|2)
+                    # Delegator rewards flow
+                    REWARDS=$(namadac rewards --source $WALLET_NAME --validator $VALIDATOR_ADDRESS)
+                    CLAIM_CMD="namadac claim-rewards --source $WALLET_NAME --validator $VALIDATOR_ADDRESS"
+                    ;;
+                3)
+                    # Commission rewards flow
+                    REWARDS=$(namadac rewards --validator $VALIDATOR_ADDRESS)
+                    CLAIM_CMD="namadac claim-rewards --validator $VALIDATOR_ADDRESS signing-keys $WALLET_NAME"
+                    ;;
+            esac
 
-            # Fetch pending rewards
-            echo "Fetching pending rewards for validator $VALIDATOR_ADDRESS..."
-            REWARDS=$(namadac rewards --source $WALLET_NAME --validator $VALIDATOR_ADDRESS)
             echo "Pending rewards: $REWARDS"
-
             read -p "Are you sure you want to claim the rewards? (yes/no): " CONFIRM
+            [[ "$CONFIRM" != "yes" ]] && echo "Rewards claim cancelled." && return
 
-            if [ "$CONFIRM" == "yes" ]; then
-                read -p "Use your own RPC or Grand Valley's? (own/gv, leave empty for gv): " RPC_CHOICE
+            # RPC selection
+            read -p "Use your own RPC or Grand Valley's? (own/gv, leave empty for gv): " RPC_CHOICE
+            [ "$RPC_CHOICE" = "gv" ] || [ -z "$RPC_CHOICE" ] && RPC_NODE="--node https://lightnode-rpc-mainnet-namada.grandvalleys.com"
 
-        # Default to Grand Valley's RPC if empty
-        if [ -z "$RPC_CHOICE" ]; then
-            RPC_CHOICE="gv"
-        fi
-
-                if [ "$RPC_CHOICE" == "gv" ]; then
-                    namadac claim-rewards --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
-                else
-                    namadac claim-rewards --source $WALLET_NAME --validator $VALIDATOR_ADDRESS
-                fi
-                echo "Rewards claimed successfully."
-            else
-                echo "Rewards claim cancelled."
-            fi
+            # Execute claim command
+            echo "Claiming rewards..."
+            $CLAIM_CMD $RPC_NODE
+            echo "Rewards claimed successfully."
             ;;
-        3)
+
+        4)
             echo "Returning to the Valley of Namada main menu."
             menu
             ;;
+
         *)
-            echo "Invalid choice. Please enter 1, 2 or 3."
+            echo "Invalid choice. Please enter 1-4."
             ;;
     esac
 
