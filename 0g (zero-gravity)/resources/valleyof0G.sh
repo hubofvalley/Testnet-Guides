@@ -346,6 +346,11 @@ function show_validator_logs() {
 
 function show_node_status() {
     0gchaind status | jq
+    realtime_block_height=$(curl -s -X POST "https://evmrpc-testnet.0g.ai" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
+    node_height=$(0gchaind status | jq -r '.sync_info.latest_block_height')
+    echo "Validator node block height: $node_height"
+    block_difference=$(( realtime_block_height - node_height ))
+    echo "Real-time Block Height: $realtime_block_height"
     echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
     read -r
     menu
