@@ -78,7 +78,7 @@ display_snapshot_details() {
     echo -e "${GREEN}Snapshot Height:${NC} $snapshot_height"
 
     # Get the real-time block height
-    realtime_block_height=$(curl -s -X POST "https://odyssey.storyrpc.io" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
+    realtime_block_height=$(curl -s -X POST "https://aeneid.storyrpc.io" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
 
     # Calculate the difference
     block_difference=$((realtime_block_height - snapshot_height))
@@ -263,7 +263,7 @@ choose_originstake_snapshot() {
 
 # Function to decompress snapshots for Mandragora, ITRocket, and Josephtran
 decompress_snapshots() {
-    lz4 -c -d $GETH_SNAPSHOT_FILE | tar -xv -C $HOME/.story/geth/odyssey/geth
+    lz4 -c -d $GETH_SNAPSHOT_FILE | tar -xv -C $HOME/.story/geth/aeneid/geth
     lz4 -c -d $STORY_SNAPSHOT_FILE | tar -xv -C $HOME/.story/story
 }
 
@@ -485,7 +485,7 @@ main_script() {
     mv $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
 
     # Delete previous geth chaindata and story data folders
-    sudo rm -rf $HOME/.story/geth/odyssey/geth/chaindata $HOME/.story/story/data
+    sudo rm -rf $HOME/.story/geth/aeneid/geth/chaindata $HOME/.story/story/data
 
     # Download and decompress snapshots based on the provider
     if [[ $provider_choice -eq 1 || $provider_choice -eq 2 || $provider_choice -eq 4 ]]; then

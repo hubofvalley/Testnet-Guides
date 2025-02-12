@@ -193,7 +193,7 @@ bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main
 | Bandwidth | 10MBit/s         |
 
 - service file name: `story.service` `story-geth.service`
-- current chain: `odyssey`
+- current chain: `aeneid`
 - current story node version: `v0.12.0 - v0.12.1 - v0.13.0 - v0.13.2`
 - current story-geth node version: `v0.11.0`
 
@@ -233,7 +233,7 @@ read -p "Enter your moniker: " MONIKER && echo "Current moniker: $MONIKER"
 read -p "Enter your 2 digits custom port: (leave empty to use default: 26)" STORY_PORT && echo "Current port number: ${STORY_PORT:-26}"
 
 echo "export MONIKER="$MONIKER"" >> $HOME/.bash_profile
-echo "export STORY_CHAIN_ID="odyssey"" >> $HOME/.bash_profile
+echo "export STORY_CHAIN_ID="aeneid"" >> $HOME/.bash_profile
 echo "export STORY_PORT="$STORY_PORT"" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 ```
@@ -372,7 +372,7 @@ After=network-online.target
 
 [Service]
 User=$USER
-ExecStart=$(which geth) --odyssey --syncmode full --http --http.api eth,net,web3,engine --http.vhosts '*' --http.addr 0.0.0.0 --http.port ${STORY_PORT}545 --ws --ws.api eth,web3,net,txpool --ws.addr 0.0.0.0 --ws.port ${STORY_PORT}546 --authrpc.port ${STORY_PORT}551
+ExecStart=$(which geth) --aeneid --syncmode full --http --http.api eth,net,web3,engine --http.vhosts '*' --http.addr 0.0.0.0 --http.port ${STORY_PORT}545 --ws --ws.api eth,web3,net,txpool --ws.addr 0.0.0.0 --ws.port ${STORY_PORT}546 --authrpc.port ${STORY_PORT}551
 StandardOutput=journal
 StandardError=journal
 Restart=on-failure

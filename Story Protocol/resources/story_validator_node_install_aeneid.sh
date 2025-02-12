@@ -34,7 +34,7 @@ sudo apt update -y && sudo apt upgrade -y
 sudo apt install -y curl git jq build-essential gcc unzip wget lz4 openssl libssl-dev pkg-config protobuf-compiler clang cmake llvm llvm-dev
 
 # 2. Install Go
-cd $HOME && ver="1.22.0"
+cd $HOME && ver="1.22.5"
 wget "https://golang.org/dl/go$ver.linux-amd64.tar.gz"
 sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf "go$ver.linux-amd64.tar.gz"
 rm "go$ver.linux-amd64.tar.gz"
@@ -57,17 +57,39 @@ source $HOME/.bash_profile
 # 5. Download Geth and Consensus Client binaries
 cd $HOME
 
-# Geth binary
-mkdir -p story-geth-v0.11.0
-wget -O story-geth-v0.11.0/geth-linux-amd64 https://github.com/piplabs/story-geth/releases/download/v0.11.0/geth-linux-amd64
-cp story-geth-v0.11.0/geth-linux-amd64 $HOME/go/bin/geth
-sudo chown -R $USER:$USER $HOME/go/bin/geth
-sudo chmod +x $HOME/go/bin/geth
+# Check Ubuntu version and install Geth accordingly
+source /etc/os-release
+
+if [ "$VERSION_ID" = "22.04" ]; then
+    # Install Geth using method 2 (build from source)
+    echo "Installing Geth using method 2 (Ubuntu 22.04 detected)"
+    mkdir -p story-geth
+    cd story-geth
+    wget -O v1.0.1.tar.gz https://github.com/piplabs/story-geth/archive/refs/tags/v1.0.1.tar.gz
+    tar -xzf v1.0.1.tar.gz
+    cd story-geth-1.0.1
+    make geth
+    cp $HOME/story-geth/story-geth-1.0.1/build/bin/geth $HOME/go/bin/
+    sudo chown -R $USER:$USER $HOME/go/bin/geth
+    sudo chmod +x $HOME/go/bin/geth
+    cd $HOME
+elif dpkg --compare-versions "$VERSION_ID" "gt" "22.04"; then
+    # Install Geth using method 1 (pre-built binary)
+    echo "Installing Geth using method 1 (Ubuntu version higher than 22.04 detected)"
+    mkdir -p story-geth-v1.0.1
+    wget -O story-geth-v1.0.1/geth-linux-amd64 https://github.com/piplabs/story-geth/releases/download/v1.0.1/geth-linux-amd64
+    cp story-geth-v1.0.1/geth-linux-amd64 $HOME/go/bin/geth
+    sudo chown -R $USER:$USER $HOME/go/bin/geth
+    sudo chmod +x $HOME/go/bin/geth
+else
+    echo "Error: Unsupported Ubuntu version. Only Ubuntu 22.04 and newer are supported."
+    exit 1
+fi
 
 # Consensus client binary
-mkdir -p story-v0.12.0
-wget -p $HOME/story-v0.12.0 https://github.com/piplabs/story/releases/download/v0.12.0/story-linux-amd64 -O $HOME/story-v0.12.0/story
-cp story-v0.12.0/story $HOME/go/bin/story
+mkdir -p story-v1.1.0
+wget -O $HOME/story-v1.1.0/story https://github.com/piplabs/story/releases/download/v1.1.0/story-linux-amd64
+cp story-v1.1.0/story $HOME/go/bin/story
 sudo chown -R $USER:$USER $HOME/go/bin/story
 sudo chmod +x $HOME/go/bin/story
 
@@ -81,7 +103,7 @@ s%proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${STORY_PO
 s%laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://127.0.0.1:${STORY_PORT}657\"%" $HOME/.story/story/config/config.toml
 
 sed -i.bak -e "s%engine-endpoint = \"http://localhost:8551\"%engine-endpoint = \"http://localhost:${STORY_PORT}551\"%;
-s%api-address = \"127.0.0.1:1317\"%api-address = \"127.0.0.1:${STORY_PORT}317\"%" $HOME/.story/story/config/story.toml
+s%address = \"127.0.0.1:1317\"%address = \"127.0.0.1:${STORY_PORT}317\"%" $HOME/.story/story/config/story.toml
 
 # 8. Add peers to the config.toml
 peers=$(curl -sS https://lightnode-rpc-story.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)

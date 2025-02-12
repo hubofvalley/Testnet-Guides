@@ -39,9 +39,9 @@ ${YELLOW}| Category  | Requirements     |
 
 - consensus client service file name: ${CYAN}story.service${RESET}
 - geth service file name: ${CYAN}story-geth.service${RESET}
-- current chain: ${CYAN}odyssey${RESET}
-- current story node version: ${CYAN}v0.12.0 - v0.12.1 - v0.13.0 - v0.13.2${RESET}
-- current story-geth node version: ${CYAN}v0.11.0${RESET}
+- current chain: ${CYAN}story${RESET}
+- current story node version: ${CYAN}v1.1.0${RESET}
+- current story-geth node version: ${CYAN}v1.0.1${RESET}
 "
 
 PRIVACY_SAFETY_STATEMENT="
@@ -68,21 +68,22 @@ ${GREEN}Contact${RESET}
 
 ENDPOINTS="${GREEN}
 Grand Valley Story Protocol public endpoints:${RESET}
-- cosmos-rpc: \e]8;;https://lightnode-rpc-story.grandvalleys.com\a${BLUE}https://lightnode-rpc-story.grandvalleys.com\e]8;;\a${RESET}
+- cosmos-rpc: ${BLUE}https://lightnode-rpc-story.grandvalleys.com${RESET}
 - evm-rpc: ${BLUE}https://lightnode-json-rpc-story.grandvalleys.com${RESET}
 - cosmos rest-api: ${BLUE}https://lightnode-api-story.grandvalleys.com${RESET}
 - cosmos ws: ${BLUE}wss://lightnode-rpc-story.grandvalleys.com/websocket${RESET}
 - evm ws: ${BLUE}wss://lightnode-wss-story.grandvalleys.com${RESET}
+- peer: ${BLUE}fffb1a0dc2b6af331c65328c1ed9afad0bf107de@lightnode-peer-story.grandvalleys.com:38656${RESET}
 
 ${GREEN}Connect with Story Protocol:${RESET}
-- Official Website: \e]8;;https://www.story.foundation\a${BLUE}https://www.story.foundation\e]8;;\a${RESET}
-- X: \e]8;;https://x.com/StoryProtocol\a${BLUE}https://x.com/StoryProtocol\e]8;;\a${RESET}
-- Official Docs: \e]8;;https://docs.story.foundation\a${BLUE}https://docs.story.foundation\e]8;;\a${RESET}
+- Official Website: ${BLUE}https://www.story.foundation${RESET}
+- X: ${BLUE}https://x.com/StoryProtocol${RESET}
+- Official Docs: ${BLUE}https://docs.story.foundation${RESET}
 
 ${GREEN}Connect with Grand Valley:${RESET}
-- X: \e]8;;https://x.com/bacvalley\a${BLUE}https://x.com/bacvalley\e]8;;\a${RESET}
-- GitHub: \e]8;;https://github.com/hubofvalley\a${BLUE}https://github.com/hubofvalley\e]8;;\a${RESET}
-- Email: \e]8;;mailto:letsbuidltogether@grandvalleys.com\a${BLUE}letsbuidltogether@grandvalleys.com\e]8;;\a${RESET}
+- X: ${BLUE}https://x.com/bacvalley${RESET}
+- GitHub: ${BLUE}https://github.com/hubofvalley${RESET}
+- Email: ${BLUE}letsbuidltogether@grandvalleys.com${RESET}
 "
 
 # Display LOGO and wait for user input to continue
@@ -97,7 +98,7 @@ echo -e "$ENDPOINTS"
 echo -e "\n${YELLOW}Press Enter to continue${RESET}"
 read -r
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
-echo "export STORY_CHAIN_ID="odyssey"" >> ~/.bash_profile
+echo "export STORY_CHAIN_ID="aeneid"" >> ~/.bash_profile
 echo "export DAEMON_NAME=story" >> ~/.bash_profile
 echo "export DAEMON_HOME=$(find "$HOME/.story/story" -type d -name "story" -print -quit)" >> ~/.bash_profile
 echo "export DAEMON_DATA_BACKUP_DIR=$(find "$HOME/.story/story/cosmovisor" -type d -name "backup" -print -quit)" >> ~/.bash_profile
@@ -105,14 +106,15 @@ source $HOME/.bash_profile
 
 # Function to update to a specific version
 function update_geth() {
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story-geth_update.sh)
+    echo -e "${YELLOW}This feature is not available yet.${RESET}"
+    #bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story-geth_update.sh)
     menu
 }
 
 # Validator Node Functions
 function deploy_validator_node() {
     echo -e "${CYAN}Deploying Validator Node...${RESET}"
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_validator_node_install_odyssey.sh)
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_validator_node_install_aeneid.sh)
     menu
 }
 
@@ -133,7 +135,7 @@ function create_validator() {
 
     read -p "Enter the amount to be staked in IP (e.g., 1024 for 1024 IP, minimum requirement is 1024 IP): " STAKE_IP
 
-    # Convert IP to the required format (assuming 1 IP = 10^18 units)
+    # Validate minimum stake
     MIN_STAKE=1024
     if [ "$STAKE_IP" -lt "$MIN_STAKE" ]; then
         echo "The stake amount is below the minimum requirement of 1024 IP."
@@ -141,10 +143,70 @@ function create_validator() {
         return
     fi
 
+    # Stake type selection
+    echo "Choose the stake type for your validator:"
+    PS3="Enter your choice (1-2): "
+    select STAKE_TYPE in "Locked (non-withdrawable stake)" "Unlocked (withdrawable stake)"; do
+        case $REPLY in
+            1)
+                UNLOCKED_FLAG="false"
+                break
+                ;;
+            2)
+                UNLOCKED_FLAG="true"
+                break
+                ;;
+            *)
+                echo "Invalid option. Please select 1 or 2."
+                ;;
+        esac
+    done
+
+    # Commission rates input
+    while true; do
+        read -p "Enter commission rate percentage (e.g., 10 for 10%): " COMMISSION_PERCENT
+        if [[ ! "$COMMISSION_PERCENT" =~ ^[0-9]+$ ]]; then
+            echo "Invalid input. Please enter an integer value."
+        else
+            COMMISSION_RATE=$(echo "$COMMISSION_PERCENT * 100" | bc)
+            break
+        fi
+    done
+
+    while true; do
+        read -p "Enter maximum commission change rate percentage (e.g., 5 for 5% daily increase): " MAX_CHANGE_PERCENT
+        if [[ ! "$MAX_CHANGE_PERCENT" =~ ^[0-9]+$ ]]; then
+            echo "Invalid input. Please enter an integer value."
+        else
+            MAX_COMMISSION_CHANGE_RATE=$(echo "$MAX_CHANGE_PERCENT * 100" | bc)
+            break
+        fi
+    done
+
+    while true; do
+        read -p "Enter maximum commission rate percentage (e.g., 50 for 50% maximum): " MAX_COMMISSION_PERCENT
+        if [[ ! "$MAX_COMMISSION_PERCENT" =~ ^[0-9]+$ ]]; then
+            echo "Invalid input. Please enter an integer value."
+        else
+            MAX_COMMISSION_RATE=$(echo "$MAX_COMMISSION_PERCENT * 100" | bc)
+            break
+        fi
+    done
+
     # Convert the stake from IP to the required unit format
     STAKE=$(echo "$STAKE_IP * 10^18" | bc)
 
-    story validator create --stake "$STAKE" --moniker "$MONIKER" --private-key "$PRIVATE_KEY" --chain-id 1516
+    story validator create \
+        --stake "$STAKE" \
+        --moniker "$MONIKER" \
+        --private-key "$PRIVATE_KEY" \
+        --chain-id 1315 \
+        --unlocked="$UNLOCKED_FLAG" \
+        --commission-rate "$COMMISSION_RATE" \
+        --max-commission-change-rate "$MAX_COMMISSION_CHANGE_RATE" \
+        --max-commission-rate "$MAX_COMMISSION_RATE" \
+        --rpc "https://aeneid.storyrpc.io"
+        
     menu
 }
 
@@ -165,12 +227,12 @@ function query_balance() {
     case $choice in
         1)
             echo -e "${GREEN}Querying balance of your own EVM address...${RESET}"
-            geth --exec "(parseFloat(eth.getBalance('$(story validator export | grep -oP '(?<=EVM Address: ).*')') / 1e18).toFixed(2)) + ' IP'" attach $HOME/.story/geth/odyssey/geth.ipc
+            geth --exec "(parseFloat(eth.getBalance('$(story validator export | grep -oP '(?<=EVM Address: ).*')') / 1e18).toFixed(2)) + ' IP'" attach $HOME/.story/geth/aeneid/geth.ipc
             ;;
         2)
             read -p "Enter the EVM address to query: " evm_address
             echo -e "${GREEN}Querying balance of $evm_address...${RESET}"
-            geth --exec "(parseFloat(eth.getBalance('$evm_address') / 1e18).toFixed(2)) + ' IP'" attach ~/.story/geth/odyssey/geth.ipc
+            geth --exec "(parseFloat(eth.getBalance('$evm_address') / 1e18).toFixed(2)) + ' IP'" attach ~/.story/geth/aeneid/geth.ipc
             ;;
         3)
             menu
@@ -202,7 +264,7 @@ function stake_tokens() {
 
     case $CHOICE in
         1)
-            VALIDATOR_PUBKEY="036a75cfa84cf485e5b4a6844fa9f2ff03f410f7c8c0148f4e4c9e535df9caba22"
+            VALIDATOR_PUBKEY="022199ce81e29408b87c60ee57a25090fcf19514ed35ab85b4549196316c419858"
             ;;
         2)
             VALIDATOR_PUBKEY=$(story validator export | grep -oP 'Compressed Public Key \(hex\): \K[0-9a-fA-F]+')
@@ -238,9 +300,9 @@ function stake_tokens() {
     fi
 
     if [ "$RPC_CHOICE" == "2" ]; then
-        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 --chain-id 1516
+        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 --chain-id 1315
     elif [ "$RPC_CHOICE" == "1" ]; then
-        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG --chain-id 1516
+        story validator stake --validator-pubkey $VALIDATOR_PUBKEY --stake $AMOUNT $PRIVATE_KEY_FLAG --chain-id 1315
     else
         echo "Invalid choice. Please select a valid option."
         stake_tokens
@@ -298,9 +360,9 @@ function unstake_tokens() {
     fi
 
     if [ "$RPC_CHOICE" == "2" ]; then
-        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT $PRIVATE_KEY_FLAG --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 --chain-id 1516
+        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT $PRIVATE_KEY_FLAG --rpc https://lightnode-json-rpc-story.grandvalleys.com:443 --chain-id 1315
     elif [ "$RPC_CHOICE" == "1" ]; then
-        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT $PRIVATE_KEY_FLAG --chain-id 1516
+        story validator unstake --validator-pubkey $VALIDATOR_PUBKEY --unstake $AMOUNT $PRIVATE_KEY_FLAG --chain-id 1315
     else
         echo "Invalid choice. Please select a valid option."
         unstake_tokens
@@ -348,8 +410,8 @@ function restart_validator_node() {
 function show_node_status() {
     port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.story/story/config/config.toml") && curl "http://127.0.0.1:$port/status" | jq
     story status
-    geth_block_height=$(geth --exec "eth.blockNumber" attach $HOME/.story/geth/odyssey/geth.ipc)
-    realtime_block_height=$(curl -s -X POST "https://odyssey.storyrpc.io" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
+    geth_block_height=$(geth --exec "eth.blockNumber" attach $HOME/.story/geth/aeneid/geth.ipc)
+    realtime_block_height=$(curl -s -X POST "https://aeneid.storyrpc.io" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
     node_height=$(story status | jq -r '.sync_info.latest_block_height')
     echo "Geth block height: $geth_block_height"
     block_difference=$(( realtime_block_height - node_height ))
@@ -452,12 +514,14 @@ function migrate_to_cosmovisor() {
 
 # New functions for stopping and restarting individual services
 function stop_consensus_client() {
+    sudo systemctl daemon-reload
     sudo systemctl stop story
     echo "Consensus client service stopped."
     menu
 }
 
 function stop_geth() {
+    sudo systemctl daemon-reload
     sudo systemctl stop story-geth
     echo "Geth service stopped."
     menu
@@ -497,9 +561,9 @@ function show_geth_logs() {
 
 function install_story_app() {
     echo -e "${YELLOW}This option is only for those who want to execute the transactions without running the node.${RESET}"
-    mkdir -p story-v0.13.2
-    wget -O story-v0.13.2/story https://github.com/piplabs/story/releases/download/v0.13.2/story-linux-amd64
-    cp story-v0.13.2/story $HOME/go/bin/story
+    mkdir -p story-v1.1.0
+    wget -O story-v1.1.0/story https://github.com/piplabs/story/releases/download/v1.1.0/story-linux-amd64
+    cp story-v1.1.0/story $HOME/go/bin/story
     sudo chown -R $USER:$USER $HOME/go/bin/story
     sudo chmod +x $HOME/go/bin/story
     story init --network $STORY_CHAIN_ID --moniker gv-story
@@ -508,7 +572,8 @@ function install_story_app() {
 }
 
 function apply_snapshot() {
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/apply_snapshot.sh)
+    echo -e "${YELLOW}This feature is not available yet.${RESET}"
+    #bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/apply_snapshot.sh)
     menu
 }
 
@@ -591,7 +656,7 @@ function show_guidelines() {
     echo "      - Guide: This option will backup your validator key to your home directory. Ensure you keep this key secure."
     echo "   h. Delete Validator Node: Deletes the validator node. Ensure you backup your seeds phrase/EVM-private key and priv_validator_key.json before doing this."
     echo "      - Guide: Use this option to delete your validator node. Make sure to backup all important data before proceeding."
-    echo -e "${GREEN}Install Story App only: Installs the Story app (v0.13.2) for executing transactions without running the node.${RESET}"
+    echo -e "${GREEN}Install Story App only: Installs the Story app (v1.1.0) for executing transactions without running the node.${RESET}"
     echo "      - Guide: Use this option to install the Story app if you only need to execute transactions without running a full node."
     echo -e "${GREEN}Show Grand Valley's Endpoints:${RESET}"
     echo "   Displays Grand Valley's public endpoints."
@@ -607,7 +672,7 @@ function show_guidelines() {
 # Menu function
 function menu() {
     echo -e "${CYAN}Valley of Story Testnet${RESET}"
-    echo -e "${CYAN}Story Validator Node = Consensus Client Service + Execution Client Service (geth/story-geth)${RESET}"
+    echo -e "${CYAN}Story Validator Node = Consensus Client Service + Execution Client Service (geth/aeneid-geth)${RESET}"
     echo "Main Menu:"
     echo -e "${GREEN}1. Node Interactions:${RESET}"
     echo "   a. Deploy/re-Deploy Validator Node (includes Cosmovisor deployment)"
@@ -635,7 +700,7 @@ function menu() {
     echo "   f. Stop Geth Only"
     echo "   g. Backup Validator Key (store it to $HOME directory)"
     echo "   h. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
-    echo -e "${GREEN}4. Install the Story App (v0.13.2) only to execute transactions without running a node${RESET}"
+    echo -e "${GREEN}4. Install the Story App (v1.1.0) only to execute transactions without running a node${RESET}"
     echo -e "${GREEN}5. Show Grand Valley's Endpoints${RESET}"
     echo -e "${YELLOW}6. Show Guidelines${RESET}"
     echo -e "${RED}7. Exit${RESET}"

@@ -32,15 +32,14 @@ update_version() {
 # Inform the user that there is no currently latest version of story-geth
 #echo "There is currently no latest version of story-geth available."
 
-
 # Menu for selecting the version
 echo "Choose the version to update to:"
-#read -p "There are currently no new versions available."
+read -p "There are currently no new versions available."
 
 # Placeholder for future versions
 # Uncomment and add new versions here
-echo "a. v0.10.1"
-echo "b. v0.11.0"
+# echo "a. v0.10.1"
+# echo "b. v0.11.0"
 # echo "b. v0.9.5"
 
 read -p "Enter the letter corresponding to the version: " choice
@@ -48,12 +47,12 @@ read -p "Enter the letter corresponding to the version: " choice
 case $choice in
     # Placeholder for future versions
     # Uncomment and add new versions here
-    a)
-         update_version "v0.10.1" "https://github.com/piplabs/story-geth/releases/download/v0.10.1"
-         ;;
-    b)
-         update_version "v0.11.0" "https://github.com/piplabs/story-geth/releases/download/v0.11.0"
-         ;;
+    #a)
+         #update_version "v0.10.1" "https://github.com/piplabs/story-geth/releases/download/v0.10.1"
+         #;;
+    #b)
+         #update_version "v0.11.0" "https://github.com/piplabs/story-geth/releases/download/v0.11.0"
+         #;;
     *)
         echo "Invalid choice. Exiting."
         exit 1
