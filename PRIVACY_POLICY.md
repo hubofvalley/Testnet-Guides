@@ -1,4 +1,4 @@
-# Privacy Policy for Grand Valley Tools and Services
+# Privacy Policy for Grand Valley Testnet Tools and Services
 
 **Last Updated:** 21/02/2025
 
