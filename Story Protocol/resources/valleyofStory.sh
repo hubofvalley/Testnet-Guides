@@ -51,7 +51,7 @@ ${GREEN}No User Data Stored Externally${RESET}
 - This script does not store any user data externally. All operations are performed locally on your machine.
 
 ${GREEN}No Phishing Links${RESET}
-- This script does not contain any phishing links. All URLs and commands are provided for legitimate purposes related to Namada validator node operations.
+- This script does not contain any phishing links. All URLs and commands are provided for legitimate purposes related to Story validator node operations.
 
 ${GREEN}Security Best Practices${RESET}
 - Always verify the integrity of the script and its source.
