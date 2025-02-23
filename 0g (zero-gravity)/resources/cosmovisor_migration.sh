@@ -88,6 +88,7 @@ EOF
 
 # Reload and Restart systemd to apply changes
 sudo systemctl daemon-reload
+sudo systemctl enable "$SERVICE_FILE_NAME"
 sudo systemctl restart "$SERVICE_FILE_NAME"
 
 echo "Cosmovisor migration completed successfully."
