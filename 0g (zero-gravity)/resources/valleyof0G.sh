@@ -137,7 +137,6 @@ echo "export SERVICE_FILE_NAME=\"$SERVICE_FILE_NAME\"" >> ~/.bash_profile
 echo "export DAEMON_NAME=0gchaind" >> ~/.bash_profile
 echo "export DAEMON_HOME=$(find $HOME -type d -name ".0gchain" -print -quit)" >> ~/.bash_profile
 echo "export DAEMON_DATA_BACKUP_DIR=$(find "$HOME/.0gchain/cosmovisor" -type d -name "backup" -print -quit)" >> ~/.bash_profile
-realtime_block_height=$(curl -s -X POST "https://evmrpc-testnet.0g.ai" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
 source $HOME/.bash_profile
 
 # Validator Node Functions
@@ -591,6 +590,7 @@ function menu() {
     SERVICE_FILE_NAME="Not found"
     echo -e "${RED}No valid service file found (0gchaind.service or 0gd.service). Continuing without setting a service file name.${RESET}"
     fi
+    realtime_block_height=$(curl -s -X POST "https://evmrpc-testnet.0g.ai" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
     echo -e "${CYAN}Valley of 0G${RESET}"
     echo -e "Latest Block Height: ${GREEN}$realtime_block_height${RESET}"
     echo "Main Menu:"
