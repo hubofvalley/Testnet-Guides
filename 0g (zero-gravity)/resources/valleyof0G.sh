@@ -592,7 +592,6 @@ function menu() {
     fi
     realtime_block_height=$(curl -s -X POST "https://evmrpc-testnet.0g.ai" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
     echo -e "${CYAN}Valley of 0G${RESET}"
-    echo -e "Latest Block Height: ${GREEN}$realtime_block_height${RESET}"
     echo "Main Menu:"
     echo -e "${GREEN}1. Validator Node${RESET}"
     echo "    a. Deploy/re-Deploy Validator Node (includes Cosmovisor deployment)"
@@ -635,6 +634,7 @@ function menu() {
     echo -e "${YELLOW}7. Show Guidelines${RESET}"
     echo -e "${RED}8. Exit${RESET}"
 
+    echo -e "Latest Block Height: ${GREEN}$realtime_block_height${RESET}"
     echo -e "\n${YELLOW}Please run the following command to apply the changes after exiting the script:${RESET}"
     echo -e "${GREEN}source ~/.bash_profile${RESET}"
     echo -e "${YELLOW}This ensures the environment variables are set in your current bash session.${RESET}"
