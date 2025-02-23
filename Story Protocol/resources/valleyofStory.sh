@@ -102,6 +102,7 @@ echo "export STORY_CHAIN_ID="aeneid"" >> ~/.bash_profile
 echo "export DAEMON_NAME=story" >> ~/.bash_profile
 echo "export DAEMON_HOME=$(find "$HOME/.story/story" -type d -name "story" -print -quit)" >> ~/.bash_profile
 echo "export DAEMON_DATA_BACKUP_DIR=$(find "$HOME/.story/story/cosmovisor" -type d -name "backup" -print -quit)" >> ~/.bash_profile
+realtime_block_height=$(curl -s -X POST "https://aeneid.storyrpc.io" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
 source $HOME/.bash_profile
 
 # Function to update to a specific version
@@ -673,6 +674,7 @@ function show_guidelines() {
 function menu() {
     echo -e "${CYAN}Valley of Story Testnet${RESET}"
     echo -e "${CYAN}Story Validator Node = Consensus Client Service + Execution Client Service (geth/story-geth)${RESET}"
+    echo -e "Latest Block Height: ${GREEN}$realtime_block_height${RESET}"
     echo "Main Menu:"
     echo -e "${GREEN}1. Node Interactions:${RESET}"
     echo "   a. Deploy/re-Deploy Validator Node (includes Cosmovisor deployment)"
