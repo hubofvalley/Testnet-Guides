@@ -207,7 +207,6 @@ main_script() {
     sudo chmod +x $HOME/go/bin/0gchaind && \
     sudo rm -f $HOME/.0gchain/data/upgrade-info.json
     cosmovisor add-upgrade v0.4.0 $HOME/0gchain-v0.4.0/0gchaind --upgrade-height 1510000 --force
-    cp $HOME/0gchain-v0.4.0/0gchaind $HOME/.0gchain/cosmovisor/genesis/bin/
 
     # Start your 0gchain nodes
     sudo systemctl enable $SERVICE_FILE_NAME
