@@ -118,6 +118,11 @@ main_script() {
     read -p "Enter your choice: " provider_choice
 
     provider_name=""
+    cosmovisor_choice="n"
+
+    # Initial Cosmovisor prompt
+    echo -e "${GREEN}Have you integrated your 0G validator node to Cosmovisor?${NC}"
+    read -p "Enter your choice (y/n): " cosmovisor_choice
 
     case $provider_choice in
         1)
@@ -196,18 +201,23 @@ main_script() {
     # Restore your validator state
     cp $HOME/.0gchain/priv_validator_state.json.backup $HOME/.0gchain/data/priv_validator_state.json
 
-    # Migrate to Cosmovisor
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/cosmovisor_migration.sh)
+    # Conditional Cosmovisor migration
+    if [[ $cosmovisor_choice == "n" || $cosmovisor_choice == "N" ]]; then
+        echo -e "${GREEN}Migrating to Cosmovisor...${NC}"
+        bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/cosmovisor_migration.sh)
+    else
+        echo -e "${YELLOW}Skipping Cosmovisor migration...${NC}"
+    fi
 
     # Schedule upgrade
-    mkdir -p $HOME/0gchain-v0.4.0
-    wget -P $HOME/0gchain-v0.4.0 https://github.com/0glabs/0g-chain/releases/download/v0.4.0/0gchaind-linux-v0.4.0 -O $HOME/0gchain-v0.4.0/0gchaind
+    mkdir -p $HOME/0gchain-v0.5.0
+    wget -P $HOME/0gchain-v0.5.0 https://github.com/0glabs/0g-chain/releases/download/v0.5.0/0gchaind-linux-v0.5.0 -O $HOME/0gchain-v0.5.0/0gchaind
     sudo chown -R $USER:$USER $HOME/.0gchain && \
     sudo chown -R $USER:$USER $HOME/go/bin/0gchaind && \
     sudo chmod +x $HOME/go/bin/0gchaind && \
     sudo rm -f $HOME/.0gchain/data/upgrade-info.json
-    cosmovisor add-upgrade v0.4.0 $HOME/0gchain-v0.4.0/0gchaind --upgrade-height 1510000 --force
-    cp $HOME/0gchain-v0.4.0/0gchaind $HOME/.0gchain/cosmovisor/genesis/bin/
+    cosmovisor add-upgrade v0.5.0 $HOME/0gchain-v0.5.0/0gchaind --upgrade-height 2880000 --force
+    cp $HOME/0gchain-v0.5.0/0gchaind $HOME/.0gchain/cosmovisor/genesis/bin/
 
     # Start your 0gchain nodes
     sudo systemctl daemon-reload
