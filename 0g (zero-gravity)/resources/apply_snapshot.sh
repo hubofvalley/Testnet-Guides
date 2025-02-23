@@ -119,6 +119,7 @@ main_script() {
 
     provider_name=""
     cosmovisor_choice="n"
+    ARIA2_OPTIONS=""
 
     # Initial Cosmovisor prompt
     echo -e "${GREEN}Have you integrated your 0G validator node to Cosmovisor?${NC}"
@@ -131,6 +132,7 @@ main_script() {
 
             choose_itrocket_snapshot
             SNAPSHOT_FILE=$FILE_NAME
+            ARIA2_OPTIONS="-x 5 -s 5"
             ;;
         2)
             provider_name="Josephtran"
@@ -146,6 +148,7 @@ main_script() {
 
             choose_josephtran_snapshot
             SNAPSHOT_FILE="0gchain_snapshot.lz4"
+            ARIA2_OPTIONS="-x 16 -s 16 -k 1M"
             ;;
         3)
             echo -e "${GREEN}Exiting.${NC}"
@@ -171,7 +174,7 @@ main_script() {
     cd $download_location
 
     # Install required dependencies
-    sudo apt-get install wget lz4 jq -y
+    sudo apt-get install aria2 lz4 jq -y
 
     # Stop your 0gchain nodes
     sudo systemctl stop $SERVICE_FILE_NAME
@@ -184,7 +187,7 @@ main_script() {
     sudo rm -rf $HOME/.0gchain/data
 
     # Download and decompress snapshot
-    wget -O $SNAPSHOT_FILE $SNAPSHOT_URL
+    aria2c $ARIA2_OPTIONS --out="$SNAPSHOT_FILE" "$SNAPSHOT_URL"
     decompress_snapshot
 
     # Change ownership of the .0gchain directory
