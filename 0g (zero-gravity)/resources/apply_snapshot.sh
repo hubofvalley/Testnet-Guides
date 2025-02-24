@@ -215,11 +215,11 @@ main_script() {
     # Schedule upgrade
     mkdir -p $HOME/0gchain-v0.5.0
     wget -P $HOME/0gchain-v0.5.0 https://github.com/0glabs/0g-chain/releases/download/v0.5.0/0gchaind-linux-v0.5.0 -O $HOME/0gchain-v0.5.0/0gchaind
+    sudo chown -R $USER:$USER $HOME/0gchain-v0.5.0/0gchaind && \
+    sudo chmod +x $HOME/0gchain-v0.5.0/0gchaind && \
     sudo chown -R $USER:$USER $HOME/.0gchain && \
     sudo chown -R $USER:$USER $HOME/go/bin/0gchaind && \
     sudo chmod +x $HOME/go/bin/0gchaind && \
-    sudo rm -f $HOME/.0gchain/data/upgrade-info.json
-    cosmovisor add-upgrade v0.5.0 $HOME/0gchain-v0.5.0/0gchaind --upgrade-height 2880000 --force
     cp $HOME/0gchain-v0.5.0/0gchaind $HOME/.0gchain/cosmovisor/genesis/bin/
 
     # Start your 0gchain nodes
