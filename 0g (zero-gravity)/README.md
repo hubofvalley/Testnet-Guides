@@ -121,6 +121,7 @@ With Public Testnet, 0G’s docs and code become public. Check them out below! -
 - cosmos rpc: `https://lightnode-rpc-0g.grandvalleys.com`
 - json-rpc: `https://lightnode-json-rpc-0g.grandvalleys.com`
 - cosmos rest-api: `https://lightnode-api-0g.grandvalleys.com`
+- peer: `65f62fc8e46ff89f7960bc30e2fc1c0e4a846340@lightnode-peer-0g.grandvalleys.com:26656$`
 
 ## Valley of 0G. 0G tools created by Grand Valley
 
