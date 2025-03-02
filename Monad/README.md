@@ -44,4 +44,4 @@ For more detailed information, visit the [Monad Documentation](https://docs.mona
 - [Monad GitHub Repository](https://github.com/Monad)
 - [Monad Explorer]()
 
-This README provides an overview of Monad's intent-centric architecture and its potential to revolutionize decentralized applications. For more detailed information and to stay updated on the latest developments, please refer to the additional resources listed above.
+This README provides an overview of Monad's architecture and its potential to revolutionize decentralized applications. For more detailed information and to stay updated on the latest developments, please refer to the additional resources listed above.
