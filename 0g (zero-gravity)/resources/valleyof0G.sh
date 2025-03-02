@@ -27,7 +27,7 @@ LOGO="
 "
 
 INTRO="
-Valley of 0G by Grand Valley
+Valley of 0G by ${ORANGE}Grand Valley${RESET}
 
 ${GREEN}0G Validator Node System Requirements${RESET}
 ${YELLOW}| Category  | Requirements                   |
@@ -592,7 +592,7 @@ function menu() {
     echo -e "${RED}No valid service file found (0gchaind.service or 0gd.service). Continuing without setting a service file name.${RESET}"
     fi
     realtime_block_height=$(curl -s -X POST "https://evmrpc-testnet.0g.ai" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
-    echo -e "${CYAN}Valley of 0G${RESET}"
+    echo -e "${ORANGE}Valley of 0G${RESET}"
     echo "Main Menu:"
     echo -e "${GREEN}1. Validator Node${RESET}"
     echo "    a. Deploy/re-Deploy Validator Node (includes Cosmovisor deployment)"
