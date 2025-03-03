@@ -59,10 +59,9 @@
       - [self delegate](#self-delegate)
       - [delegate to ](#delegate-to-)
   - [delete the node](#delete-the-node)
-  - [upgrade story-geth version to `v0.11.0` (just if u still use the previous version)](#upgrade-story-geth-version-to-v0110-just-if-u-still-use-the-previous-version)
-  - [upgrade consensus client version to `v0.12.1` at height `322000`](#upgrade-consensus-client-version-to-v0121-at-height-322000)
-  - [upgrade consensus client version to `v0.13.0` at height `858000`](#upgrade-consensus-client-version-to-v0130-at-height-858000)
-- [let's buidl together](#lets-buidl-together)
+  - [upgrade execution client (`story-geth`) to a user-specified version](#upgrade-execution-client-story-geth-to-a-user-specified-version)
+  - [upgrade the consensus client (`story`) to a user-specified version at a user-specified block height](#upgrade-the-consensus-client-story-to-a-user-specified-version-at-a-user-specified-block-height)
+- [let's buidl Story together](#lets-buidl-story-together)
 
 # Story Protocol
 
@@ -194,8 +193,8 @@ bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main
 
 - service file name: `story.service` `story-geth.service`
 - current chain: `aeneid`
-- current story node version: `v0.12.0 - v0.12.1 - v0.13.0 - v0.13.2`
-- current story-geth node version: `v0.11.0`
+- current story node version: `v1.1.1 - v0.12.1 - v0.13.0 - v0.13.2`
+- current story-geth node version: `v1.0.2`
 
 ## Validator Manual installation
 
@@ -244,18 +243,18 @@ source $HOME/.bash_profile
 cd $HOME
 
 # geth binary
-mkdir -p story-geth-v0.11.0
-wget -O story-geth-v0.11.0/geth-linux-amd64 https://github.com/piplabs/story-geth/releases/download/v0.11.0/geth-linux-amd64
+mkdir -p story-geth-v1.0.2
+wget -O story-geth-v1.0.2/geth-linux-amd64 https://github.com/piplabs/story-geth/releases/download/v1.0.2/geth-linux-amd64
 geth_file_name=geth-linux-amd64
-cp story-geth-v0.11.0/$geth_file_name $HOME/go/bin/geth
+cp story-geth-v1.0.2/$geth_file_name $HOME/go/bin/geth
 sudo chown -R $USER:$USER $HOME/go/bin/geth
 sudo chmod +x $HOME/go/bin/geth
 
 # consensus client binary
-mkdir -p story-v0.12.0
-wget -O story-v0.12.0/story-linux-amd64 https://github.com/piplabs/story/releases/download/v0.12.0/story-linux-amd64
+mkdir -p story-v1.1.1
+wget -O story-v1.1.1/story-linux-amd64 https://github.com/piplabs/story/releases/download/v1.1.1/story-linux-amd64
 story_file_name=story-linux-amd64
-cp story-v0.12.0/$story_file_name $HOME/go/bin/story
+cp story-v1.1.1/$story_file_name $HOME/go/bin/story
 sudo chown -R $USER:$USER $HOME/go/bin/story
 sudo chmod +x $HOME/go/bin/story
 ```
@@ -484,57 +483,54 @@ sudo rm -r $HOME/go/bin/story-geth $HOME/go/bin/geth
 sed -i "/STORY_/d" $HOME/.bash_profile
 ```
 
-## upgrade story-geth version to `v0.11.0` (just if u still use the previous version)
+## upgrade execution client (`story-geth`) to a user-specified version
 
 ```bash
+# Prompt user for input
+read -p "Enter the story-geth version (e.g., v1.0.2): " GETH_VERSION
+read -p "Enter the installation directory (e.g., $HOME/story-geth-$GETH_VERSION): " GETH_INSTALL_DIR
+
 # Define variables
-geth_file_name=geth-linux-amd64
-```
+GETH_FILE_NAME="geth-linux-amd64"
 
-```bash
 # Create directory and download the binary
-mkdir -p $HOME/story-geth-v0.11.0
-cd $HOME/story-geth-v0.11.0 && \
-wget https://github.com/piplabs/story-geth/releases/download/v0.11.0/$geth_file_name -O geth
-```
+mkdir -p $GETH_INSTALL_DIR
+cd $GETH_INSTALL_DIR && \
+wget https://github.com/piplabs/story-geth/releases/download/$GETH_VERSION/$GETH_FILE_NAME -O geth
 
-```bash
 # Move the binary to the appropriate directory
-sudo mv $HOME/story-geth-v0.11.0/geth $HOME/go/bin/geth
-```
+sudo mv $GETH_INSTALL_DIR/geth $HOME/go/bin/geth
 
-```bash
 # Set ownership and permissions
 sudo chown -R $USER:$USER $HOME/go/bin/geth
 sudo chmod +x $HOME/go/bin/geth
-```
 
-```bash
 # Restart the service
 sudo systemctl daemon-reload && \
 sudo systemctl restart story-geth
 ```
 
-
-## upgrade consensus client version to `v0.12.1` at height `322000`
+## upgrade the consensus client (`story`) to a user-specified version at a user-specified block height
 
 ```bash
+# Prompt user for input
+read -p "Enter the consensus client version (e.g., v1.1.1): " CONSENSUS_VERSION
+read -p "Enter the upgrade block height (e.g., 322000): " UPGRADE_HEIGHT
+read -p "Enter the installation directory (e.g., $HOME/story-$CONSENSUS_VERSION): " STORY_INSTALL_DIR
+
 # Define variables
-input1=$(which cosmovisor)
-input2=$(find $HOME -type d -name "story")
-input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
-story_file_name=story-linux-amd64
+STORY_FILE_NAME="story-linux-amd64"
 
 # Export environment variables
 echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
-echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
-echo "export DAEMON_DATA_BACKUP_DIR=$input3" >> $HOME/.bash_profile
+echo "export DAEMON_HOME=$(find $HOME -type d -name "story")" >> $HOME/.bash_profile
+echo "export DAEMON_DATA_BACKUP_DIR=$(find $HOME/.story/story/cosmovisor -type d -name "backup")" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
 # Create directory and download the binary
-mkdir -p $HOME/story-v0.12.1
-cd $HOME/story-v0.12.1 && \
-wget https://github.com/piplabs/story/releases/download/v0.12.1/$story_file_name
+mkdir -p $STORY_INSTALL_DIR
+cd $STORY_INSTALL_DIR && \
+wget https://github.com/piplabs/story/releases/download/$CONSENSUS_VERSION/$STORY_FILE_NAME
 
 # Set ownership and permissions
 sudo chown -R $USER:$USER $HOME/.story && \
@@ -543,37 +539,7 @@ sudo chmod +x $HOME/go/bin/story && \
 sudo rm $HOME/.story/story/data/upgrade-info.json
 
 # Add the upgrade to cosmovisor
-cosmovisor add-upgrade v0.12.1 $HOME/story-v0.12.1/$story_file_name --upgrade-height 322000 --force
+cosmovisor add-upgrade $CONSENSUS_VERSION $STORY_INSTALL_DIR/$STORY_FILE_NAME --upgrade-height $UPGRADE_HEIGHT --force
 ```
 
-## upgrade consensus client version to `v0.13.0` at height `858000`
-
-```bash
-# Define variables
-input1=$(which cosmovisor)
-input2=$(find $HOME -type d -name "story")
-input3=$(find $HOME/.story/story/cosmovisor -type d -name "backup")
-story_file_name=story-linux-amd64
-
-# Export environment variables
-echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
-echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
-echo "export DAEMON_DATA_BACKUP_DIR=$input3" >> $HOME/.bash_profile
-source $HOME/.bash_profile
-
-# Create directory and download the binary
-mkdir -p $HOME/story-v0.13.0
-cd $HOME/story-v0.13.0 && \
-wget https://github.com/piplabs/story/releases/download/v0.13.0/$story_file_name
-
-# Set ownership and permissions
-sudo chown -R $USER:$USER $HOME/.story && \
-sudo chown -R $USER:$USER $HOME/go/bin/story && \
-sudo chmod +x $HOME/go/bin/story && \
-sudo rm $HOME/.story/story/data/upgrade-info.json
-
-# Add the upgrade to cosmovisor
-cosmovisor add-upgrade v0.13.0 $HOME/story-v0.13.0/$story_file_name --upgrade-height 858000 --force
-```
-
-# let's buidl together
+# let's buidl Story together

@@ -42,7 +42,7 @@ ${YELLOW}| Category  | Requirements     |
 - geth service file name: ${CYAN}story-geth.service${RESET}
 - current chain: ${CYAN}aeneid${RESET}
 - current story node version: ${CYAN}v1.1.0${RESET}
-- current story-geth node version: ${CYAN}v1.0.1${RESET}
+- current story-geth node version: ${CYAN}v1.1.1${RESET}
 "
 
 PRIVACY_SAFETY_STATEMENT="
