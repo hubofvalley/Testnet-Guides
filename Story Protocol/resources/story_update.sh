@@ -174,7 +174,7 @@ batch_update_version() {
     local download_url2="https://github.com/piplabs/story/releases/download/v1.2.0"
     local download_url3="https://github.com/piplabs/story/releases/download/v1.3.0"
     local upgrade_height1=640000
-    local upgrade_height2=858000
+    local upgrade_height2=1398904
     local upgrade_height3=2065886
 
     # Create directories and download the binaries
@@ -216,7 +216,7 @@ batch_update_version() {
 echo "Choose the version to update to:"
 #read -p "There are currently no new versions available."
 echo -e "a. ${YELLOW}v1.1.0${RESET} (${GREEN}Virgil${RESET} Upgrade height: 640,000)"
-#echo "b. v1.2.0 (Upgrade height: 858,000)"
+echo -e "b. ${YELLOW}v1.1.1${RESET} (${GREEN}Additional update for validator CLI interaction${RESET} Upgrade height: 1,398,904)"
 #echo "c. v1.3.0 (Upgrade height: 2,065,886)"
 #echo "d. Batch update: Upgrade to v1.1.0 at height 640,000, v1.0.0 at height 858,000, and v1.1.0 at height 2,065,886 (RECOMMENDED FOR THOSE AIMING TO ACHIEVE ARCHIVE NODE STATUS)."
 read -p "Enter the letter corresponding to the version: " choice
@@ -225,9 +225,9 @@ case $choice in
     a)
         update_version "v1.1.0" "https://github.com/piplabs/story/releases/download/v1.1.0" 640000
         ;;
-    #b)
-        #update_version "v1.0.0" "https://github.com/piplabs/story/releases/download/v1.0.0" 858000
-        #;;
+    b)
+        update_version "v1.1.1" "https://github.com/piplabs/story/releases/download/v1.1.1" 1398904
+        ;;
     #c)
         #update_version "v1.1.0" "https://github.com/piplabs/story/releases/download/v1.1.0" 2065886
         #;;
