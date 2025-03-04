@@ -1,5 +1,7 @@
 # Anoma: Intent-Centric Architecture for Decentralized Applications
 
+![Grand Valley x Anoma](resources/gvxanoma.gif)
+
 Anoma introduces a pioneering intent-centric architecture designed to revolutionize decentralized applications (dApps). By focusing on the fundamental primitive of intent, Anoma breaks free from the constraints of traditional blockchain-centric architectures, offering a more flexible and scalable solution for a wide range of applications.
 
 ## Key Concepts
