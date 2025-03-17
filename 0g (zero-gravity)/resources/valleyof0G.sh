@@ -163,9 +163,9 @@ function apply_snapshot() {
 
 function install_0gchain_app() {
     cd $HOME
-    mkdir -p 0gchain-v0.4.0
-    wget -O 0gchain-v0.4.0/0gchaind https://github.com/0glabs/0g-chain/releases/download/v0.4.0/0gchaind-linux-v0.4.0
-    cp 0gchain-v0.4.0/0gchaind $HOME/go/bin/0gchaind
+    mkdir -p 0gchain-v0.5.1
+    wget -O 0gchain-v0.5.1/0gchaind https://github.com/0glabs/0g-chain/releases/download/v0.5.1/0gchaind-linux-v0.5.1
+    cp 0gchain-v0.5.1/0gchaind $HOME/go/bin/0gchaind
     sudo chown -R $USER:$USER $HOME/go/bin/0gchaind
     sudo chmod +x $HOME/go/bin/0gchaind
     echo "0gchain app installed successfully."
@@ -561,7 +561,7 @@ function show_guidelines() {
     echo "      - Guide: This option will help you unstake tokens from a validator. You can choose to unstake from yourself or another validator."
     echo "   n. Export EVM Private Key: Exports the EVM private key."
     echo "   o. Backup Validator Key: Backs up the validator key to the $HOME directory."
-    echo "   p. Install 0gchain App only: Installs the 0gchain app (v0.4.0) for executing transactions without running the node."
+    echo "   p. Install 0gchain App only: Installs the 0gchain app (v0.5.1) for executing transactions without running the node."
     echo -e "${GREEN}Validator/Key Interactions:${RESET}"
     echo "   a. Create Validator"
     echo "   b. Query Validator Public Key"
@@ -632,7 +632,7 @@ function menu() {
     echo "    g. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
     echo "    h. Delete Storage Node"
     echo "    i. Delete Storage KV"
-    echo -e "${GREEN}5. Install the 0gchain App (v0.4.0) only to execute transactions without running a node${RESET}"
+    echo -e "${GREEN}5. Install the 0gchain App (v0.5.1) only to execute transactions without running a node${RESET}"
     echo -e "${GREEN}6. Show Grand Valley's Endpoints${RESET}"
     echo -e "${YELLOW}7. Show Guidelines${RESET}"
     echo -e "${RED}8. Exit${RESET}"
