@@ -499,7 +499,6 @@ function manage_consensus_client() {
             ;;
         *)
             echo "Invalid choice. Please select a valid option."
-            update_consensus_client
             ;;
     esac
 }

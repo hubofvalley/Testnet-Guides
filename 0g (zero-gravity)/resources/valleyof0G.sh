@@ -148,6 +148,32 @@ function deploy_validator_node() {
     menu
 }
 
+function manage_validator_node() {
+    echo "Choose an option:"
+    echo "1. Migrate to Cosmovisor only"
+    echo "2. Update Validator Node Version (includes Cosmovisor migration and deployment)"
+    echo "3. Back"
+    read -p "Enter your choice (1/2/3): " choice
+
+    case $choice in
+        1)
+            migrate_to_cosmovisor
+            ;;
+        2)
+            bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/validator_node_update.sh)
+            menu
+            ;;
+        3)
+            menu
+            ;;
+        *)
+            echo "Invalid choice. Please select a valid option."
+            ;;
+    esac
+}
+
+# Function to migrate to Cosmovisor
+
 function migrate_to_cosmovisor() {
     echo "The service file for your current validator node will be updated to match Grand Valley's current configuration."
     echo "Press Enter to continue..."
@@ -163,9 +189,9 @@ function apply_snapshot() {
 
 function install_0gchain_app() {
     cd $HOME
-    mkdir -p 0gchain-v0.5.1
-    wget -O 0gchain-v0.5.1/0gchaind https://github.com/0glabs/0g-chain/releases/download/v0.5.1/0gchaind-linux-v0.5.1
-    cp 0gchain-v0.5.1/0gchaind $HOME/go/bin/0gchaind
+    mkdir -p 0gchain-v0.5.2
+    wget -O 0gchain-v0.5.2/0gchaind https://github.com/0glabs/0g-chain/releases/download/v0.5.2/0gchaind-linux-v0.5.2
+    cp 0gchain-v0.5.2/0gchaind $HOME/go/bin/0gchaind
     sudo chown -R $USER:$USER $HOME/go/bin/0gchaind
     sudo chmod +x $HOME/go/bin/0gchaind
     echo "0gchain app installed successfully."
@@ -418,7 +444,7 @@ function add_peers() {
             menu
             ;;
     esac
-    echo "Now you can restart your consensus client"
+    echo "Now you can restart your Validator Node"
     menu
 }
 
@@ -517,11 +543,11 @@ function show_endpoints() {
 # Function to show guidelines
 function show_guidelines() {
     echo -e "${CYAN}Guidelines on How to Use the Valley of 0G${RESET}"
-    echo -e "${YELLOW}This tool is designed to help you manage your 0G Validator Node. Below are the guidelines on how to use it effectively:${RESET}"
+    echo -e "${YELLOW}This tool is designed to help you manage your 0G nodes. Below are the guidelines on how to use it effectively:${RESET}"
     echo -e "${GREEN}1. Navigating the Menu${RESET}"
-    echo "   - The menu is divided into several sections: Node Interactions, Validator/Key Interactions, Node Management, Show Grand Valley's Endpoints, and Guidelines."
+    echo "   - The menu is divided into several sections: Validator Node, Storage Node, Storage KV, Node Management, and Utilities."
     echo "   - To select an option, you can either:"
-    echo "     a. Enter the corresponding number followed by the letter (e.g., 1a for Deploy/re-Deploy Validator Node)."
+    echo "     a. Enter the corresponding number followed by the letter (e.g., 1a for Deploy Validator Node)."
     echo "     b. Enter the number, press Enter, and then enter the letter (e.g., 1 then a)."
     echo "   - For sub-options, you will be prompted to enter the letter corresponding to your choice."
     echo -e "${GREEN}2. Entering Choices${RESET}"
@@ -532,52 +558,58 @@ function show_guidelines() {
     echo "   - After selecting an option, the script will execute the corresponding commands."
     echo "   - Ensure you have the necessary permissions and dependencies installed for the commands to run successfully."
     echo -e "${GREEN}4. Exiting the Script${RESET}"
-    echo "   - To exit the script, select option 6 from the main menu."
+    echo "   - To exit the script, select option 8 from the main menu."
     echo "   - Remember to run 'source ~/.bash_profile' after exiting to apply any changes made to environment variables."
     echo -e "${GREEN}5. Additional Tips${RESET}"
-    echo "   - Always backup your keys and important data before performing operations like deleting the node."
-    echo "   - Regularly update your node to the latest version to ensure compatibility and security."
+    echo "   - Always backup your keys and important data before performing operations like deleting nodes."
+    echo "   - Regularly update your nodes to the latest version to ensure compatibility and security."
     echo -e "${GREEN}6. Option Descriptions and Guides${RESET}"
-    echo -e "${GREEN}Node Interactions:${RESET}"
-    echo "   a. Deploy/re-Deploy Validator Node: Deploys or re-deploys the validator node, including Cosmovisor deployment."
-    echo "      - Guide: This option will download and install the necessary components to set up your validator node. Ensure you have the required system specifications."
-    echo "   b. Manage Consensus Client: Allows you to migrate to Cosmovisor or update the consensus client version."
-    echo "      - Guide: Use this option to update your consensus client to the latest version or migrate to Cosmovisor for better management."
-    echo "   c. Apply Snapshot: Applies a snapshot to the node."
-    echo "      - Guide: This option will apply a snapshot to your node, which can significantly speed up the syncing process."
-    echo "   d. Add Peers: Adds peers to the node, either manually or using Grand Valley's peers for better connectivity."
-    echo "      - Guide: Use this option to add peers to your node. You can either enter peers manually or use Grand Valley's peers."
-    echo "   e. Show Node Status: Displays the current status of your validator node. It will display relevant information about your node's health."
-    echo "   f. Show Validator Logs: Displays logs specifically for the validator."
-    echo "   g. Create Validator: Creates a new validator."
-    echo "      - Guide: This option will guide you through creating a new validator. You will need to provide details such as the moniker and staking amount."
-    echo "   h. Create Wallet: Creates a new wallet."
-    echo "   i. Restore Wallet: Restores an existing wallet."
-    echo "   j. Query Balance: Queries the balance of a specified EVM address."
-    echo "   k. Send Transaction: Sends a transaction between two wallets."
-    echo "   l. Stake Tokens: Stakes tokens to a validator."
-    echo "      - Guide: Use this option to stake tokens to a validator. You can choose to stake to Grand Valley, yourself, or another validator."
-    echo "   m. Unstake Tokens: Unstakes tokens from a validator."
-    echo "      - Guide: This option will help you unstake tokens from a validator. You can choose to unstake from yourself or another validator."
-    echo "   n. Export EVM Private Key: Exports the EVM private key."
-    echo "   o. Backup Validator Key: Backs up the validator key to the $HOME directory."
-    echo "   p. Install 0gchain App only: Installs the 0gchain app (v0.5.1) for executing transactions without running the node."
-    echo -e "${GREEN}Validator/Key Interactions:${RESET}"
-    echo "   a. Create Validator"
-    echo "   b. Query Validator Public Key"
-    echo "   c. Query Balance"
-    echo "   d. Stake Tokens"
-    echo "   e. Unstake Tokens"
-    echo "   f. Export EVM Key"
-    echo "   g. Backup Validator Key (store it to $HOME directory)"
+    echo -e "${GREEN}Validator Node Options:${RESET}"
+    echo "   a. Deploy/re-Deploy Validator Node: Sets up a new validator node or redeploys an existing one, including Cosmovisor."
+    echo "      - Guide: This will install all necessary components. Ensure your system meets requirements."
+    echo "   b. Manage Validator Node: Migrate to Cosmovisor or update the node version."
+    echo "      - Guide: Use this for version updates or Cosmovisor migration."
+    echo "   c. Apply Snapshot: Applies a snapshot to sync your node faster."
+    echo "      - Guide: Useful for quickly catching up with the blockchain."
+    echo "   d. Add Peers: Manually add peers or use Grand Valley's peers."
+    echo "      - Guide: Improves node connectivity and network participation."
+    echo "   e. Show Node Status: Displays your validator's current status and health."
+    echo "   f. Show Validator Logs: Views the validator's operational logs."
+    echo "   g. Create Validator: Registers a new validator on the network."
+    echo "      - Guide: You'll need to provide a moniker and stake tokens."
+    echo "   h. Create Wallet: Generates a new wallet for transactions."
+    echo "   i. Restore Wallet: Recovers an existing wallet from seed phrase."
+    echo "   j. Query Balance: Checks the balance of an EVM address."
+    echo "   k. Send Transaction: Sends tokens between wallets."
+    echo "   l. Stake Tokens: Delegates tokens to a validator."
+    echo "      - Guide: You can stake to Grand Valley, yourself, or others."
+    echo "   m. Unstake Tokens: Withdraws staked tokens from a validator."
+    echo "   n. Export EVM Private Key: Exports your wallet's private key."
+    echo "   o. Backup Validator Key: Saves your validator key to $HOME."
+    echo -e "${GREEN}Storage Node Options:${RESET}"
+    echo "   a. Deploy Storage Node: Sets up a new storage node."
+    echo "   b. Update Storage Node: Upgrades to the latest storage node version."
+    echo "   c. Change Storage Node: Modifies storage node configuration."
+    echo "   d. Show Storage Node Logs: Views storage node operational logs."
+    echo "   e. Show Storage Node Status: Checks storage node health."
+    echo -e "${GREEN}Storage KV Options:${RESET}"
+    echo "   a. Deploy Storage KV: Sets up a key-value storage node."
+    echo "   b. Show Storage KV Logs: Views KV node operational logs."
+    echo "   c. Update Storage KV: Upgrades the KV node version."
     echo -e "${GREEN}Node Management:${RESET}"
-    echo "   a. Stop Validator Node: Stops the validator node."
-    echo "   b. Restart Validator Node: Restarts the validator node."
-    echo "   c. Delete Validator Node: Deletes the validator node. Ensure you backup your seeds phrase/EVM-private key and priv_validator_key.json before doing this."
-    echo -e "${GREEN}Show Grand Valley's Endpoints:${RESET}"
-    echo "   Displays Grand Valley's public endpoints."
-    echo -e "${GREEN}Show Guidelines:${RESET}"
-    echo "   Displays these guidelines."
+    echo "   a. Restart Validator Node: Gracefully restarts validator."
+    echo "   b. Restart Storage Node: Gracefully restarts storage node."
+    echo "   c. Restart Storage KV: Gracefully restarts KV node."
+    echo "   d. Stop Validator Node: Safely stops validator operations."
+    echo "   e. Stop Storage Node: Safely stops storage operations."
+    echo "   f. Stop Storage KV: Safely stops KV operations."
+    echo "   g. Delete Validator Node: Removes validator (BACKUP KEYS FIRST!)."
+    echo "   h. Delete Storage Node: Removes storage node."
+    echo "   i. Delete Storage KV: Removes KV node."
+    echo -e "${GREEN}Utilities:${RESET}"
+    echo "   5. Install 0gchain App: Installs CLI (v0.5.2) for transactions without running a node."
+    echo "   6. Show Endpoints: Displays Grand Valley's public endpoints."
+    echo "   7. Show Guidelines: Displays this help information."
     echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
     read -r
     menu
@@ -598,7 +630,7 @@ function menu() {
     echo "Main Menu:"
     echo -e "${GREEN}1. Validator Node${RESET}"
     echo "    a. Deploy/re-Deploy Validator Node (includes Cosmovisor deployment)"
-    echo "    b. Migrate Validator Node to Cosmovisor"
+    echo "    b. Manage Validator Node (Migrate to Cosmovisor or Update Version)"
     echo "    c. Apply Snapshot"
     echo "    d. Add Peers"
     echo "    e. Show Node Status"
@@ -632,7 +664,7 @@ function menu() {
     echo "    g. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
     echo "    h. Delete Storage Node"
     echo "    i. Delete Storage KV"
-    echo -e "${GREEN}5. Install the 0gchain App (v0.5.1) only to execute transactions without running a node${RESET}"
+    echo -e "${GREEN}5. Install the 0gchain App (v0.5.2) only to execute transactions without running a node${RESET}"
     echo -e "${GREEN}6. Show Grand Valley's Endpoints${RESET}"
     echo -e "${YELLOW}7. Show Guidelines${RESET}"
     echo -e "${RED}8. Exit${RESET}"
@@ -658,7 +690,7 @@ function menu() {
         1)
             case $SUB_OPTION in
                 a) deploy_validator_node ;;
-                b) migrate_to_cosmovisor ;;
+                b) manage_validator_node ;;
                 c) apply_snapshot ;;
                 d) add_peers ;;
                 e) show_node_status ;;
