@@ -102,7 +102,7 @@ main() {
     else
         PRIVATE_KEY=$EXISTING_MINER_KEY
     fi
-b
+
     if [ -n "$BLOCKCHAIN_RPC_ENDPOINT" ]; then
         sed -i "s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|" "$CONFIG_FILE"
     else
