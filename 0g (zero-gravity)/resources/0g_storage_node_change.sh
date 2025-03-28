@@ -35,6 +35,7 @@ choose_json_rpc_endpoint() {
         echo "5. https://og-testnet-jsonrpc.itrocket.net:443 [$(query_block_number https://og-testnet-jsonrpc.itrocket.net:443)]"
         echo "6. https://0g-evmrpc-zstake.xyz [$(query_block_number https://0g-evmrpc-zstake.xyz)]"
         echo "7. https://zerog-testnet-json-rpc.contributiondao.com [$(query_block_number https://zerog-testnet-json-rpc.contributiondao.com)]"
+        echo "8. https://16600.rpc.thirdweb.com [$(query_block_number https://16600.rpc.thirdweb.com)]"
         read -p "Enter the number of your chosen public JSON-RPC endpoint: " PUBLIC_RPC_CHOICE
 
         if [ -n "$PUBLIC_RPC_CHOICE" ]; then
@@ -46,6 +47,7 @@ choose_json_rpc_endpoint() {
                 5) BLOCKCHAIN_RPC_ENDPOINT="https://og-testnet-jsonrpc.itrocket.net:443";;
                 6) BLOCKCHAIN_RPC_ENDPOINT="https://0g-evmrpc-zstake.xyz";;
                 7) BLOCKCHAIN_RPC_ENDPOINT="https://zerog-testnet-json-rpc.contributiondao.com";;
+                8) BLOCKCHAIN_RPC_ENDPOINT="https://16600.rpc.thirdweb.com";;
                 *) echo "Invalid choice. Exiting."; exit 1;;
             esac
         else
@@ -100,7 +102,7 @@ main() {
     else
         PRIVATE_KEY=$EXISTING_MINER_KEY
     fi
-
+b
     if [ -n "$BLOCKCHAIN_RPC_ENDPOINT" ]; then
         sed -i "s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|" "$CONFIG_FILE"
     else
