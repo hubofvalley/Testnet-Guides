@@ -479,7 +479,35 @@ function show_storage_logs() {
 }
 
 function show_storage_status() {
-    curl -X POST http://localhost:5678 -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"zgs_getStatus","params":[],"id":1}'  | jq
+    echo -e "${YELLOW}Storage Node Status:${RESET}"
+    curl -s -X POST http://localhost:5678 \
+        -H "Content-Type: application/json" \
+        -d '{"jsonrpc":"2.0","method":"zgs_getStatus","params":[],"id":1}' \
+        | jq
+
+    config_file=$(sudo systemctl cat zgs | grep ExecStart | sed -E 's/.*--config[= ]([^ ]+)/\1/')
+
+    if [[ -f "$config_file" ]]; then
+        # Get blockchain RPC endpoint
+        rpc_endpoint=$(grep -E '^blockchain_rpc_endpoint' "$config_file" | sed -E 's/.*= *"([^"]+)"/\1/')
+        echo -e "\nBlockchain RPC Endpoint: ${GREEN}$rpc_endpoint${RESET}"
+
+        # Get miner contract address
+        contract_address=$(grep -E '^mine_contract_address' "$config_file" | sed -E 's/.*= *"([^"]+)"/\1/')
+        echo -e "Miner Contract Address: ${GREEN}$contract_address${RESET}"
+
+        # Detect contract type
+        if [[ "$contract_address" == "0x1785c8683b3c527618eFfF78d876d9dCB4b70285" ]]; then
+            echo -e "Contract Type: ${CYAN}Standard Contract${RESET}"
+        elif [[ "$contract_address" == "0x6815F41019255e00D6F34aAB8397a6Af5b6D806f" ]]; then
+            echo -e "Contract Type: ${CYAN}Turbo Contract${RESET}"
+        else
+            echo -e "Contract Type: ${RED}Unknown Contract${RESET}"
+        fi
+    else
+        echo -e "${RED}Config file not found! Unable to determine contract or RPC info.${RESET}"
+    fi
+
     echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
     read -r
     menu
