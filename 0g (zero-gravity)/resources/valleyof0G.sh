@@ -272,9 +272,9 @@ function stake_tokens() {
         1)
             read -p "Enter amount to stake: " AMOUNT
             if [ "$RPC_CHOICE" == "grandvalley" ]; then
-                0gchaind tx staking delegate 0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4 ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.4 --node https://lightnode-rpc-0g.grandvalleys.com:443 -y
+                0gchaind tx staking delegate 0gvaloper1gela3jtnmen0dmj2q5p0pne5y45ftshzs053x3 ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.4 --node https://lightnode-rpc-0g.grandvalleys.com:443 -y
             else
-                0gchaind tx staking delegate 0gvaloper1yzwlgyrgcg83u32fclz0sy2yhxsuzpvprrt5r4 ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.4 -y
+                0gchaind tx staking delegate 0gvaloper1gela3jtnmen0dmj2q5p0pne5y45ftshzs053x3 ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.4 -y
             fi
             ;;
         2)
