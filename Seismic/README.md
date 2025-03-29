@@ -57,6 +57,6 @@ We welcome contributions to Seismic! To get involved:
 
 For inquiries or more information:
 
-- **Email**: Contact us at [contact@seismic.systems](mailto:contact@seismic.systems).
+- **Email**: [L@seismic.systems](mailto:L@seismic.systems).
 
 Explore more about Seismic and start building on the encrypted blockchain today!
