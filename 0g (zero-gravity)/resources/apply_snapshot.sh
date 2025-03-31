@@ -213,14 +213,14 @@ main_script() {
     fi
 
     # Schedule upgrade
-    mkdir -p $HOME/0gchain-v0.5.0
-    wget -P $HOME/0gchain-v0.5.0 https://github.com/0glabs/0g-chain/releases/download/v0.5.0/0gchaind-linux-v0.5.0 -O $HOME/0gchain-v0.5.0/0gchaind
-    sudo chown -R $USER:$USER $HOME/0gchain-v0.5.0/0gchaind && \
-    sudo chmod +x $HOME/0gchain-v0.5.0/0gchaind && \
+    mkdir -p $HOME/0gchain-v0.5.3
+    wget -P $HOME/0gchain-v0.5.3 https://github.com/0glabs/0g-chain/releases/download/v0.5.3/0gchaind-linux-v0.5.3 -O $HOME/0gchain-v0.5.3/0gchaind
+    sudo chown -R $USER:$USER $HOME/0gchain-v0.5.3/0gchaind && \
+    sudo chmod +x $HOME/0gchain-v0.5.3/0gchaind && \
     sudo chown -R $USER:$USER $HOME/.0gchain && \
     sudo chown -R $USER:$USER $HOME/go/bin/0gchaind && \
     sudo chmod +x $HOME/go/bin/0gchaind && \
-    cp $HOME/0gchain-v0.5.0/0gchaind $HOME/.0gchain/cosmovisor/genesis/bin/
+    cp $HOME/0gchain-v0.5.3/0gchaind $HOME/.0gchain/cosmovisor/genesis/bin/
 
     # Start your 0gchain nodes
     sudo systemctl daemon-reload
