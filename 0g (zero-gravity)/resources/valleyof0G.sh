@@ -189,9 +189,9 @@ function apply_snapshot() {
 
 function install_0gchain_app() {
     cd $HOME
-    mkdir -p 0gchain-v0.5.2
-    wget -O 0gchain-v0.5.2/0gchaind https://github.com/0glabs/0g-chain/releases/download/v0.5.2/0gchaind-linux-v0.5.2
-    cp 0gchain-v0.5.2/0gchaind $HOME/go/bin/0gchaind
+    mkdir -p 0gchain-v0.5.3
+    wget -O 0gchain-v0.5.3/0gchaind https://github.com/0glabs/0g-chain/releases/download/v0.5.3/0gchaind-linux-v0.5.3
+    cp 0gchain-v0.5.3/0gchaind $HOME/go/bin/0gchaind
     sudo chown -R $USER:$USER $HOME/go/bin/0gchaind
     sudo chmod +x $HOME/go/bin/0gchaind
     echo "0gchain app installed successfully."
@@ -635,7 +635,7 @@ function show_guidelines() {
     echo "   h. Delete Storage Node: Removes storage node."
     echo "   i. Delete Storage KV: Removes KV node."
     echo -e "${GREEN}Utilities:${RESET}"
-    echo "   5. Install 0gchain App: Installs CLI (v0.5.2) for transactions without running a node."
+    echo "   5. Install 0gchain App: Installs CLI (v0.5.3) for transactions without running a node."
     echo "   6. Show Endpoints: Displays Grand Valley's public endpoints."
     echo "   7. Show Guidelines: Displays this help information."
     echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
@@ -692,7 +692,7 @@ function menu() {
     echo "    g. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
     echo "    h. Delete Storage Node"
     echo "    i. Delete Storage KV"
-    echo -e "${GREEN}5. Install the 0gchain App (v0.5.2) only to execute transactions without running a node${RESET}"
+    echo -e "${GREEN}5. Install the 0gchain App (v0.5.3) only to execute transactions without running a node${RESET}"
     echo -e "${GREEN}6. Show Grand Valley's Endpoints${RESET}"
     echo -e "${YELLOW}7. Show Guidelines${RESET}"
     echo -e "${RED}8. Exit${RESET}"

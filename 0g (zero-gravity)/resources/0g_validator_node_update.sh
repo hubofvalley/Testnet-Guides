@@ -22,14 +22,14 @@ init_cosmovisor() {
     echo "Initializing cosmovisor..."
 
     # Download genesis 0g version
-    mkdir -p 0g-v0.5.2
-    if ! wget -P $HOME/0g-v0.5.2 https://github.com/0glabs/0g-chain/releases/download/v0.5.2/0gchaind-linux-v0.5.2 -O $HOME/0g-v0.5.2/0gchaind; then
+    mkdir -p 0g-v0.5.3
+    if ! wget -P $HOME/0g-v0.5.3 https://github.com/0glabs/0g-chain/releases/download/v0.5.3/0gchaind-linux-v0.5.3 -O $HOME/0g-v0.5.3/0gchaind; then
         echo "Failed to download the genesis binary. Exiting."
         exit 1
     fi
 
     # Initialize cosmovisor
-    if ! cosmovisor init $HOME/0g-v0.5.2/0gchaind; then
+    if ! cosmovisor init $HOME/0g-v0.5.3/0gchaind; then
         echo "Failed to initialize cosmovisor. Exiting."
         exit 1
     fi
@@ -49,12 +49,12 @@ init_cosmovisor052() {
     sudo systemctl stop 0gchaind
 
     # Download genesis 0g version
-    mkdir -p 0g-v0.5.2
-    wget -P $HOME/0g-v0.5.2 https://github.com/0glabs/0g-chain/releases/download/v0.5.2/0gchaind-linux-v0.5.2 -O $HOME/0g-v0.5.2/0gchaind
+    mkdir -p 0g-v0.5.3
+    wget -P $HOME/0g-v0.5.3 https://github.com/0glabs/0g-chain/releases/download/v0.5.3/0gchaind-linux-v0.5.3 -O $HOME/0g-v0.5.3/0gchaind
 
     # Initialize cosmovisor
     sudo rm -r $HOME/.0gchain/cosmovisor
-    cosmovisor init $HOME/0g-v0.5.2/0gchaind
+    cosmovisor init $HOME/0g-v0.5.3/0gchaind
     cd $HOME/go/bin/
     sudo rm -r 0gchaind
     ln -s $HOME/.0gchain/cosmovisor/current/bin/0gchaind 0gchaind
@@ -80,7 +80,7 @@ fi
 input1=$(which cosmovisor)
 input2=$(find "$HOME" -type d -name ".0gchain" -print -quit)
 input3=$(find "$HOME/.0gchain/cosmovisor" -type d -name "backup" -print -quit)
-binary_file_name=0gchaind-linux-v0.5.2
+binary_file_name=0gchaind-linux-v0.5.3
 
 # Check if cosmovisor is installed
 if [ -z "$input1" ]; then
@@ -165,12 +165,12 @@ update_version() {
 
 # Menu for selecting the version
 echo "Choose the version to update to:"
-echo -e "a. ${YELLOW}v0.5.2${RESET} (Upgrade height: 3,781,700)"
+echo -e "a. ${YELLOW}v0.5.3${RESET} (Upgrade height: 3,781,700)"
 read -p "Enter the letter corresponding to the version: " choice
 
 case $choice in
     a)
-        update_version "v0.5.2" "https://github.com/0glabs/0g-chain/releases/download/v0.5.2" 3781700
+        update_version "v0.5.3" "https://github.com/0glabs/0g-chain/releases/download/v0.5.3" 3781700
         ;;
     *)
         echo "Invalid choice. Exiting."
