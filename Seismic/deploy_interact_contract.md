@@ -69,6 +69,7 @@ You'll know it's successful when you see confirmation on-screen.
 ### Step 1: Install Bun
 ```bash
 curl -fsSL https://bun.sh/install | bash
+source /root/.bashrc
 ```
 Follow the instructions to update your environment.
 
