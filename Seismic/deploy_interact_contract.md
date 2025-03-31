@@ -37,7 +37,7 @@ curl -L \
 ```
 Follow the shell’s suggestion (typically):
 ```bash
-source ~/.bashrc
+source $HOME/.bashrc
 sfoundryup
 ```
 
@@ -45,14 +45,15 @@ sfoundryup
 
 ## 3. Clone Devnet Starter Project
 ```bash
+cd $HOME
 git clone --recurse-submodules https://github.com/SeismicSystems/try-devnet.git
-cd try-devnet/packages/contract/
 ```
 
 ---
 
 ## 4. Deploy Contract
 ```bash
+cd $HOME try-devnet/packages/contract/
 bash script/deploy.sh
 ```
 Follow prompts:
@@ -68,14 +69,15 @@ You'll know it's successful when you see confirmation on-screen.
 ## 5. Interact with the Contract
 ### Step 1: Install Bun
 ```bash
+cd $HOME
 curl -fsSL https://bun.sh/install | bash
-source /root/.bashrc
+source $HOME/.bashrc
 ```
 Follow the instructions to update your environment.
 
 ### Step 2: Setup CLI and Run
 ```bash
-cd ~/try-devnet/packages/cli/
+cd $HOME/try-devnet/packages/cli/
 bun install
 bash script/transact.sh
 ```

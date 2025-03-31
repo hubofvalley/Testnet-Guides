@@ -100,3 +100,5 @@ For partnerships or enterprise inquiries:
 ---
 
 **Seismic redefines blockchain privacy—not as a feature, but as a foundation.** 
+
+***Lets Buidl Seismic Together***
