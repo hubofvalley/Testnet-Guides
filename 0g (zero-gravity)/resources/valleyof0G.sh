@@ -160,7 +160,7 @@ function manage_validator_node() {
             migrate_to_cosmovisor
             ;;
         2)
-            bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/validator_node_update.sh)
+            bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_validator_node_update.sh)
             menu
             ;;
         3)
