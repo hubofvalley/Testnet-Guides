@@ -3,7 +3,6 @@
 <p align="center">
   <img src="resources/image.png" width="600" height="600">
 </p>
-
 ---
 
 ## What is Seismic?  
