@@ -165,12 +165,12 @@ update_version() {
 
 # Menu for selecting the version
 echo "Choose the version to update to:"
-echo -e "a. ${YELLOW}v0.5.3${RESET} (Upgrade height: 3,781,700)"
+echo -e "a. ${YELLOW}v0.5.3${RESET} (Upgrade height: 3,824,126)"
 read -p "Enter the letter corresponding to the version: " choice
 
 case $choice in
     a)
-        update_version "v0.5.3" "https://github.com/0glabs/0g-chain/releases/download/v0.5.3" 3781700
+        update_version "v0.5.3" "https://github.com/0glabs/0g-chain/releases/download/v0.5.3" 3824126
         ;;
     *)
         echo "Invalid choice. Exiting."
