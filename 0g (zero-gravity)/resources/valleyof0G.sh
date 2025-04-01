@@ -480,6 +480,15 @@ function show_storage_logs() {
 
 function show_storage_status() {
     echo -e "${YELLOW}Storage Node Status:${RESET}"
+
+    # Show ZGS node version
+    if [[ -x "$HOME/0g-storage-node/target/release/zgs_node" ]]; then
+        zgs_version=$("$HOME/0g-storage-node/target/release/zgs_node" --version)
+        echo -e "ZGS Node Version: ${GREEN}$zgs_version${RESET}"
+    else
+        echo -e "${RED}ZGS node binary not found or not executable!${RESET}"
+    fi
+
     curl -s -X POST http://localhost:5678 \
         -H "Content-Type: application/json" \
         -d '{"jsonrpc":"2.0","method":"zgs_getStatus","params":[],"id":1}' \
