@@ -74,7 +74,7 @@ Grand Valley Story Protocol public endpoints:${RESET}
 - cosmos rest-api: ${BLUE}https://lightnode-api-story.grandvalleys.com${RESET}
 - cosmos ws: ${BLUE}wss://lightnode-rpc-story.grandvalleys.com/websocket${RESET}
 - evm ws: ${BLUE}wss://lightnode-wss-story.grandvalleys.com${RESET}
-- peer: ${BLUE}267401ceb4815b8e7012b8f78e4268d57a84a5d6@lightnode-peer-story.grandvalleys.com:26656${RESET}
+- peer: ${BLUE}7e311e22cff1a0d39c3758e342fa4c2ee1aea461@lightnode-peer-story.grandvalleys.com:26656${RESET}
 
 ${GREEN}Connect with Story Protocol:${RESET}
 - Official Website: ${BLUE}https://www.story.foundation${RESET}
