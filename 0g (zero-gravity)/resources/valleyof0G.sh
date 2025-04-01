@@ -481,14 +481,7 @@ function show_storage_logs() {
 function show_storage_status() {
     echo -e "${YELLOW}Storage Node Status:${RESET}"
 
-    # Show ZGS node version
-    if [[ -x "$HOME/0g-storage-node/target/release/zgs_node" ]]; then
-        zgs_version=$("$HOME/0g-storage-node/target/release/zgs_node" --version)
-        echo -e "ZGS Node Version: ${GREEN}$zgs_version${RESET}"
-    else
-        echo -e "${RED}ZGS node binary not found or not executable!${RESET}"
-    fi
-
+    # Show Storage Node RPC Status
     curl -s -X POST http://localhost:5678 \
         -H "Content-Type: application/json" \
         -d '{"jsonrpc":"2.0","method":"zgs_getStatus","params":[],"id":1}' \
@@ -497,6 +490,14 @@ function show_storage_status() {
     config_file=$(sudo systemctl cat zgs | grep ExecStart | sed -E 's/.*--config[= ]([^ ]+)/\1/')
 
     if [[ -f "$config_file" ]]; then
+        # Show ZGS node version
+        if [[ -x "$HOME/0g-storage-node/target/release/zgs_node" ]]; then
+            zgs_version=$("$HOME/0g-storage-node/target/release/zgs_node" --version)
+            echo -e "\nZGS Node Version: ${GREEN}$zgs_version${RESET}"
+        else
+            echo -e "\n${RED}ZGS node binary not found or not executable!${RESET}"
+        fi
+
         # Get blockchain RPC endpoint
         rpc_endpoint=$(grep -E '^blockchain_rpc_endpoint' "$config_file" | sed -E 's/.*= *"([^"]+)"/\1/')
         echo -e "\nBlockchain RPC Endpoint: ${GREEN}$rpc_endpoint${RESET}"
@@ -514,7 +515,7 @@ function show_storage_status() {
             echo -e "Contract Type: ${RED}Unknown Contract${RESET}"
         fi
     else
-        echo -e "${RED}Config file not found! Unable to determine contract or RPC info.${RESET}"
+        echo -e "\n${RED}Config file not found! Unable to determine contract or RPC info.${RESET}"
     fi
 
     echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
