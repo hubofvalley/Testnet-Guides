@@ -23,7 +23,7 @@
     - [3. build the latest binary](#3-build-the-latest-binary)
     - [4. set vars](#4-set-vars-1)
     - [5. store your private key in variable:](#5-store-your-private-key-in-variable)
-    - [6. delete current version's data-db](#6-delete-current-versions-data-db)
+    - [6. delete current version's data\_db](#6-delete-current-versions-data_db)
     - [7. update node configuration](#7-update-node-configuration)
       - [TURBO CONTRACT](#turbo-contract-1)
       - [STANDARD CONTRACT](#standard-contract-1)
@@ -304,7 +304,7 @@ echo -e "\n\033[31mCHECK YOUR STORAGE NODE VARIABLES\033[0m\nZGS_LOG_SYNC_BLOCK:
 read -p "Enter your private key: " PRIVATE_KEY && echo "private key: $PRIVATE_KEY"
 ```
 
-### 6. delete current version's data-db
+### 6. delete current version's data_db
 
 ```bash
 sudo rm -r $HOME/0g-storage-node/run/db/data_db
