@@ -87,9 +87,9 @@ else
 fi
 
 # Consensus client binary
-mkdir -p story-v1.1.1
-wget -O $HOME/story-v1.1.1/story https://github.com/piplabs/story/releases/download/v1.1.1/story-linux-amd64
-cp story-v1.1.1/story $HOME/go/bin/story
+mkdir -p story-v1.1.0
+wget -O $HOME/story-v1.1.0/story https://github.com/piplabs/story/releases/download/v1.1.0/story-linux-amd64
+cp story-v1.1.0/story $HOME/go/bin/story
 sudo chown -R $USER:$USER $HOME/go/bin/story
 sudo chmod +x $HOME/go/bin/story
 
