@@ -1,7 +1,7 @@
 # **FogoChain: Reimagining High-Performance Layer 1 Infrastructure for Financial-Grade Applications**
 
 <p align="center">
-  <img src="resources/fogo-logo.png" width="400" height="400">
+  <img src="resources/image.png" width="400" height="400">
 </p>
 
 ---
