@@ -225,36 +225,49 @@ function create_validator() {
 }
 
 function query_balance() {
+    echo -e "\n${YELLOW}Available wallets:${RESET}"
+    0gchaind keys list
+
+    echo -e "\nYou can input your own wallet address or any other address you'd like to query."
     read -p "Enter wallet address: " WALLET_ADDRESS
+
     0gchaind query bank balances $WALLET_ADDRESS --chain-id $OG_CHAIN_ID
+
     echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
     read -r
     menu
 }
 
 function send_transaction() {
+    echo -e "\n${YELLOW}Available wallets:${RESET}"
+    0gchaind keys list
+
     read -p "Enter sender wallet name: " SENDER_WALLET
     read -p "Enter recipient wallet address: " RECIPIENT_ADDRESS
     read -p "Enter amount to send: " AMOUNT
+
     0gchaind tx bank send $SENDER_WALLET $RECIPIENT_ADDRESS ${AMOUNT}ua0gi --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.5 -y
+
     menu
 }
 
 function stake_tokens() {
-    DEFAULT_WALLET=$WALLET  # Assuming $WALLET is set elsewhere in your script
+    echo -e "\n${YELLOW}Available wallets:${RESET}"
+    0gchaind keys list
+
+    DEFAULT_WALLET=$WALLET  # Assuming $WALLET is set elsewhere
+
     while true; do
         read -p "Enter wallet name (leave empty to use current default wallet --> $DEFAULT_WALLET): " WALLET_NAME
         if [ -z "$WALLET_NAME" ]; then
             WALLET_NAME=$DEFAULT_WALLET
         fi
 
-        # Get wallet address
-        WALLET_ADDRESS=$(0gchaind keys list | grep -E 'address:' | sed 's/[^:]*: //')
-
+        WALLET_ADDRESS=$(0gchaind keys show "$WALLET_NAME" -a 2>/dev/null)
         if [ -n "$WALLET_ADDRESS" ]; then
             break
         else
-            echo "Wallet name not found. Please check the wallet name and try again."
+            echo -e "${RED}Wallet not found. Please check the wallet name and try again.${RESET}"
         fi
     done
 
@@ -271,52 +284,51 @@ function stake_tokens() {
     case $CHOICE in
         1)
             read -p "Enter amount to stake: " AMOUNT
-            if [ "$RPC_CHOICE" == "grandvalley" ]; then
-                0gchaind tx staking delegate 0gvaloper1gela3jtnmen0dmj2q5p0pne5y45ftshzs053x3 ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.5 --node https://lightnode-rpc-0g.grandvalleys.com:443 -y
-            else
-                0gchaind tx staking delegate 0gvaloper1gela3jtnmen0dmj2q5p0pne5y45ftshzs053x3 ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.5 -y
-            fi
+            VAL="0gvaloper1gela3jtnmen0dmj2q5p0pne5y45ftshzs053x3"
             ;;
         2)
             read -p "Enter amount to stake: " AMOUNT
-            if [ "$RPC_CHOICE" == "grandvalley" ]; then
-                0gchaind tx staking delegate $(0gchaind keys show $WALLET_NAME --bech val -a) ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.5 --node https://lightnode-rpc-0g.grandvalleys.com:443 -y
-            else
-                0gchaind tx staking delegate $(0gchaind keys show $WALLET_NAME --bech val -a) ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.5 -y
-            fi
+            VAL=$(0gchaind keys show "$WALLET_NAME" --bech val -a)
             ;;
         3)
-            read -p "Enter validator address: " VALIDATOR_ADDRESS
+            read -p "Enter validator address: " VAL
             read -p "Enter amount to stake: " AMOUNT
-            if [ "$RPC_CHOICE" == "grandvalley" ]; then
-                0gchaind tx staking delegate $VALIDATOR_ADDRESS ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.5 --node https://lightnode-rpc-0g.grandvalleys.com:443 -y
-            else
-                0gchaind tx staking delegate $VALIDATOR_ADDRESS ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.5 -y
-            fi
             ;;
         *)
             echo "Invalid choice. Please enter 1, 2, or 3."
+            menu
+            return
             ;;
     esac
+
+    if [ "$RPC_CHOICE" == "grandvalley" ]; then
+        NODE="--node https://lightnode-rpc-0g.grandvalleys.com:443"
+    else
+        NODE=""
+    fi
+
+    0gchaind tx staking delegate "$VAL" "${AMOUNT}ua0gi" --from "$WALLET_NAME" --chain-id "$OG_CHAIN_ID" --gas auto --gas-adjustment 1.5 $NODE -y
 
     menu
 }
 
 function unstake_tokens() {
-    DEFAULT_WALLET=$WALLET  # Assuming $WALLET is set elsewhere in your script
+    echo -e "\n${YELLOW}Available wallets:${RESET}"
+    0gchaind keys list
+
+    DEFAULT_WALLET=$WALLET  # Assuming $WALLET is set elsewhere
+
     while true; do
         read -p "Enter wallet name (leave empty to use current default wallet --> $DEFAULT_WALLET): " WALLET_NAME
         if [ -z "$WALLET_NAME" ]; then
             WALLET_NAME=$DEFAULT_WALLET
         fi
 
-        # Get wallet address
-        WALLET_ADDRESS=$(0gchaind keys list | grep -E 'address:' | sed 's/[^:]*: //')
-
+        WALLET_ADDRESS=$(0gchaind keys show "$WALLET_NAME" -a 2>/dev/null)
         if [ -n "$WALLET_ADDRESS" ]; then
             break
         else
-            echo "Wallet name not found. Please check the wallet name and try again."
+            echo -e "${RED}Wallet not found. Please check the wallet name and try again.${RESET}"
         fi
     done
 
@@ -324,14 +336,42 @@ function unstake_tokens() {
 
     read -p "Enter validator address: " VALIDATOR_ADDRESS
     read -p "Enter amount to unstake: " AMOUNT
-
     read -p "Do you want to use your own RPC or Grand Valley's RPC? (own/grandvalley): " RPC_CHOICE
 
     if [ "$RPC_CHOICE" == "grandvalley" ]; then
-        0gchaind tx staking unbond $VALIDATOR_ADDRESS ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.5 --node https://lightnode-rpc-0g.grandvalleys.com:443 -y
+        NODE="--node https://lightnode-rpc-0g.grandvalleys.com:443"
     else
-        0gchaind tx staking unbond $VALIDATOR_ADDRESS ${AMOUNT}ua0gi --from $WALLET_NAME --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.5 -y
+        NODE=""
     fi
+
+    0gchaind tx staking unbond "$VALIDATOR_ADDRESS" "${AMOUNT}ua0gi" --from "$WALLET_NAME" --chain-id "$OG_CHAIN_ID" --gas auto --gas-adjustment 1.5 $NODE -y
+
+    menu
+}
+
+function unjail_validator() {
+    echo -e "\n${YELLOW}Available wallets:${RESET}"
+    0gchaind keys list
+
+    DEFAULT_WALLET=$WALLET  # Assuming $WALLET is set elsewhere in your script
+
+    while true; do
+        read -p "Enter wallet name to unjail (leave empty to use default --> $DEFAULT_WALLET): " WALLET_NAME
+        if [ -z "$WALLET_NAME" ]; then
+            WALLET_NAME=$DEFAULT_WALLET
+        fi
+
+        WALLET_ADDRESS=$(0gchaind keys show "$WALLET_NAME" -a 2>/dev/null)
+        if [ -n "$WALLET_ADDRESS" ]; then
+            break
+        else
+            echo -e "${RED}Wallet not found. Please check the wallet name and try again.${RESET}"
+        fi
+    done
+
+    echo "Using wallet: $WALLET_NAME ($WALLET_ADDRESS)"
+
+    0gchaind tx slashing unjail --from "$WALLET_NAME" --chain-id "$OG_CHAIN_ID" --gas-adjustment 1.6 --gas auto --gas-prices 0.003ua0gi -y
 
     menu
 }
@@ -578,29 +618,33 @@ function show_endpoints() {
     menu
 }
 
-# Function to show guidelines
 function show_guidelines() {
     echo -e "${CYAN}Guidelines on How to Use the Valley of 0G${RESET}"
     echo -e "${YELLOW}This tool is designed to help you manage your 0G nodes. Below are the guidelines on how to use it effectively:${RESET}"
+    
     echo -e "${GREEN}1. Navigating the Menu${RESET}"
     echo "   - The menu is divided into several sections: Validator Node, Storage Node, Storage KV, Node Management, and Utilities."
     echo "   - To select an option, you can either:"
     echo "     a. Enter the corresponding number followed by the letter (e.g., 1a for Deploy Validator Node)."
     echo "     b. Enter the number, press Enter, and then enter the letter (e.g., 1 then a)."
-    echo "   - For sub-options, you will be prompted to enter the letter corresponding to your choice."
+
     echo -e "${GREEN}2. Entering Choices${RESET}"
-    echo "   - For any prompt that has choices, you only need to enter the numbering (1, 2, 3, etc.) or the letter (a, b, c, etc.)."
+    echo "   - For any prompt that has choices, you only need to enter the number (1, 2, 3, etc.) or the letter (a, b, c, etc.)."
     echo "   - For y/n prompts, enter 'y' for yes and 'n' for no."
     echo "   - For yes/no prompts, enter 'yes' for yes and 'no' for no."
+
     echo -e "${GREEN}3. Running Commands${RESET}"
     echo "   - After selecting an option, the script will execute the corresponding commands."
     echo "   - Ensure you have the necessary permissions and dependencies installed for the commands to run successfully."
+
     echo -e "${GREEN}4. Exiting the Script${RESET}"
     echo "   - To exit the script, select option 8 from the main menu."
     echo "   - Remember to run 'source ~/.bash_profile' after exiting to apply any changes made to environment variables."
+
     echo -e "${GREEN}5. Additional Tips${RESET}"
-    echo "   - Always backup your keys and important data before performing operations like deleting nodes."
+    echo "   - Always backup your wallets and important data before performing operations like deleting nodes."
     echo "   - Regularly update your nodes to the latest version to ensure compatibility and security."
+
     echo -e "${GREEN}6. Option Descriptions and Guides${RESET}"
     echo -e "${GREEN}Validator Node Options:${RESET}"
     echo "   a. Deploy/re-Deploy Validator Node: Sets up a new validator node or redeploys an existing one, including Cosmovisor."
@@ -617,23 +661,27 @@ function show_guidelines() {
     echo "      - Guide: You'll need to provide a moniker and stake tokens."
     echo "   h. Create Wallet: Generates a new wallet for transactions."
     echo "   i. Restore Wallet: Recovers an existing wallet from seed phrase."
-    echo "   j. Query Balance: Checks the balance of an EVM address."
+    echo "   j. Query Balance: Checks the balance of an address (your wallet or another)."
     echo "   k. Send Transaction: Sends tokens between wallets."
     echo "   l. Stake Tokens: Delegates tokens to a validator."
     echo "      - Guide: You can stake to Grand Valley, yourself, or others."
     echo "   m. Unstake Tokens: Withdraws staked tokens from a validator."
-    echo "   n. Export EVM Private Key: Exports your wallet's private key."
-    echo "   o. Backup Validator Key: Saves your validator key to $HOME."
+    echo "   n. Unjail Validator: Unjails a jailed validator if eligible."
+    echo "   o. Export EVM Private Key: Exports your wallet's private key."
+    echo "   p. Backup Validator Key: Saves your validator key to \$HOME."
+
     echo -e "${GREEN}Storage Node Options:${RESET}"
     echo "   a. Deploy Storage Node: Sets up a new storage node."
     echo "   b. Update Storage Node: Upgrades to the latest storage node version."
     echo "   c. Change Storage Node: Modifies storage node configuration."
     echo "   d. Show Storage Node Logs: Views storage node operational logs."
     echo "   e. Show Storage Node Status: Checks storage node health."
+
     echo -e "${GREEN}Storage KV Options:${RESET}"
     echo "   a. Deploy Storage KV: Sets up a key-value storage node."
     echo "   b. Show Storage KV Logs: Views KV node operational logs."
     echo "   c. Update Storage KV: Upgrades the KV node version."
+
     echo -e "${GREEN}Node Management:${RESET}"
     echo "   a. Restart Validator Node: Gracefully restarts validator."
     echo "   b. Restart Storage Node: Gracefully restarts storage node."
@@ -641,13 +689,15 @@ function show_guidelines() {
     echo "   d. Stop Validator Node: Safely stops validator operations."
     echo "   e. Stop Storage Node: Safely stops storage operations."
     echo "   f. Stop Storage KV: Safely stops KV operations."
-    echo "   g. Delete Validator Node: Removes validator (BACKUP KEYS FIRST!)."
+    echo "   g. Delete Validator Node: Removes validator (BACKUP WALLET & PRIV_KEYS FIRST!)."
     echo "   h. Delete Storage Node: Removes storage node."
     echo "   i. Delete Storage KV: Removes KV node."
+
     echo -e "${GREEN}Utilities:${RESET}"
     echo "   5. Install 0gchain App: Installs CLI (v0.5.3) for transactions without running a node."
     echo "   6. Show Endpoints: Displays Grand Valley's public endpoints."
     echo "   7. Show Guidelines: Displays this help information."
+
     echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
     read -r
     menu
@@ -680,8 +730,9 @@ function menu() {
     echo "    k. Send Transaction"
     echo "    l. Stake Tokens"
     echo "    m. Unstake Tokens"
-    echo "    n. Export EVM Private Key"
-    echo "    o. Backup Validator Key (store it to $HOME directory)"
+    echo "    n. Unjail Validator"
+    echo "    o. Export EVM Private Key"
+    echo "    p. Backup Validator Key (store it to \$HOME directory)"
     echo -e "${GREEN}2. Storage Node${RESET}"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
@@ -740,10 +791,12 @@ function menu() {
                 k) send_transaction ;;
                 l) stake_tokens ;;
                 m) unstake_tokens ;;
-                n) export_evm_private_key ;;
-                o) backup_validator_key ;;
+                n) unjail_validator ;;
+                o) export_evm_private_key ;;
+                p) backup_validator_key ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
+
             ;;
         2)
             case $SUB_OPTION in
