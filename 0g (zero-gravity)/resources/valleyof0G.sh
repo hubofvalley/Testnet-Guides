@@ -508,18 +508,18 @@ function update_storage_node() {
 function apply_storage_node_snapshot() {
     clear
     # Display critical information
-    echo -e "${RED}▓▒░ CRITICAL NOTICE:${RESET}"
-    echo -e "${YELLOW}░ Snapshot contains: ${GREEN}flow_db (blockchain data)${RESET}"
-    echo -e "${YELLOW}░ Not included:      ${ORANGE}data_db (mining storage)${RESET}"
-    echo -e "${GREEN}░ Your data_db will auto-create when node starts${RESET}"
-    echo -e "${RED}░ ${ORANGE}⚠ SECURITY WARNING: ${RED}Never use pre-made data_db!${RESET}"
-    echo -e "${RED}░               It would mine for someone else's wallet!${RESET}"
-    echo -e "${CYAN}Documentation: ${BLUE}https://docs.0g.ai/run-a-node/storage-node#snapshot${RESET}\n"
+    echo -e "\033[0;31m▓▒░ CRITICAL NOTICE:\033[0m"
+    echo -e "\033[0;33m░ Snapshot contains: \033[0;32mflow_db (blockchain data)\033[0m"
+    echo -e "\033[0;33m░ Not included:      \033[38;5;214mdata_db (mining storage)\033[0m"
+    echo -e "\033[0;32m░ Your data_db will auto-create when node starts\033[0m"
+    echo -e "\033[0;31m░ \033[38;5;214m⚠ SECURITY WARNING: \033[0;31mNever use pre-made data_db!\033[0m"
+    echo -e "\033[0;31m░               It would mine for someone else's wallet!\033[0m"
+    echo -e "\033[0;36mDocumentation: \033[0;34mhttps://docs.0g.ai/run-a-node/storage-node#snapshot\033[0m\n"
 
     # Get explicit confirmation
-    read -p "${CYAN}Do you accept these conditions? (y/N): ${RESET}" agree
+    read -p $'\033[0;36mDo you accept these conditions? (y/N): \033[0m' agree
     if [[ "${agree,,}" != "y" ]]; then
-        echo -e "${RED}Operation cancelled by user${RESET}"
+        echo -e "\033[0;31mOperation cancelled by user\033[0m"
         sleep 1
         menu
         return
@@ -528,51 +528,49 @@ function apply_storage_node_snapshot() {
     # Contract selection loop
     while true; do
         clear
-        echo -e "${CYAN}▓▒░ Storage Node Contract Type${RESET}"
-        echo -e "${GREEN}1) Standard Contract${RESET}   (Available Now)"
-        echo -e "${YELLOW}2) Turbo Contract${RESET}     (Under Development)"
-        echo -e "${RED}3) Cancel & Return${RESET}"
+        echo -e "\033[0;36m▓▒░ Storage Node Contract Type\033[0m"
+        echo -e "\033[0;32m1) Standard Contract\033[0m   (Available Now)"
+        echo -e "\033[0;33m2) Turbo Contract\033[0m     (Under Development)"
+        echo -e "\033[0;31m3) Cancel & Return\033[0m"
         
-        read -p "${BLUE}Select option [1-3]: ${RESET}" contract_choice
+        read -p $'\033[0;34mSelect option [1-3]: \033[0m' contract_choice
 
         case $contract_choice in
             1)
-                # Add downtime warning
-                echo -e "\n${RED}▓▒░ IMPORTANT: Post-Snapshot Downtime Expected ░▒▓${RESET}"
-                echo -e "${YELLOW}After applying the snapshot, your storage node will experience"
+                echo -e "\n\033[0;31m▓▒░ IMPORTANT: Post-Snapshot Downtime Expected ░▒▓\033[0m"
+                echo -e "\033[0;33mAfter applying the snapshot, your storage node will experience"
                 echo -e "several hours of downtime while the data_db automatically syncs."
-                echo -e "This is NORMAL BEHAVIOR - no action is needed!${RESET}\n"
+                echo -e "This is NORMAL BEHAVIOR - no action is needed!\033[0m\n"
                 echo -e "The node will resume normal operations once sync completes."
-                echo -e "${CYAN}Progress can be monitored via node logs.${RESET}"
+                echo -e "\033[0;36mProgress can be monitored via node logs.\033[0m"
                 sleep 3
-                
-                echo -e "\n${GREEN}Initializing Standard Contract snapshot...${RESET}"
-                echo -e "${YELLOW}This may take several minutes...${RESET}"
+
+                echo -e "\n\033[0;32mInitializing Standard Contract snapshot...\033[0m"
+                echo -e "\033[0;33mThis may take several minutes...\033[0m"
                 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_standard_zgs_node_snapshot.sh)
-                
-                # Post-application notice
-                echo -e "\n${GREEN}▓▒░ Snapshot Applied Successfully ░▒▓${RESET}"
-                echo -e "${YELLOW}Your node is now syncing data_db - this will take several hours"
-                echo -e "${RED}DO NOT RESTART OR INTERRUPT THIS PROCESS${YELLOW}"
-                echo -e "Monitor progress with: ${CYAN}show_storage_logs${RESET}"
+
+                echo -e "\n\033[0;32m▓▒░ Snapshot Applied Successfully ░▒▓\033[0m"
+                echo -e "\033[0;33mYour node is now syncing data_db - this will take several hours"
+                echo -e "\033[0;31mDO NOT RESTART OR INTERRUPT THIS PROCESS\033[0m"
+                echo -e "\033[0;33mMonitor progress with: \033[0;36mshow_storage_logs\033[0m"
                 echo -e "Concerned? Check logs before contacting support!"
                 sleep 3
                 menu
                 break
                 ;;
             2)
-                echo -e "${YELLOW}Turbo Contract snapshot is currently in development."
-                echo -e "Please monitor official channels for updates!${RESET}"
+                echo -e "\033[0;33mTurbo Contract snapshot is currently in development."
+                echo -e "Please monitor official channels for updates!\033[0m"
                 sleep 2
                 ;;
             3)
-                echo -e "${RED}Operation aborted by user${RESET}"
+                echo -e "\033[0;31mOperation aborted by user\033[0m"
                 sleep 1
                 menu
                 break
                 ;;
             *)
-                echo -e "${RED}Invalid selection! Please choose 1, 2, or 3.${RESET}"
+                echo -e "\033[0;31mInvalid selection! Please choose 1, 2, or 3.\033[0m"
                 sleep 1
                 ;;
         esac
