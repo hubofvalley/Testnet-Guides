@@ -109,7 +109,7 @@ echo -e "\n\033[31mCHECK YOUR STORAGE KV VARIABLES\033[0m\n\nZGS_NODE: $ZGS_NODE
 
 # 5. Download binary
 cd $HOME
-git clone -b v1.3.0 https://github.com/0glabs/0g-storage-kv.git
+git clone -b v1.4.0 https://github.com/0glabs/0g-storage-kv.git
 cd $HOME/0g-storage-kv
 git stash
 git fetch --all --tags

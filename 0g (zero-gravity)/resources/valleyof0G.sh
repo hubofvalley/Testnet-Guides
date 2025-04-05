@@ -63,7 +63,7 @@ ${YELLOW}| Category | Requirements                                |
 | RAM      | 32+ GB                                      |
 | Storage  | Matches the size of kv streams it maintains |${RESET}
 
-storage kvs current binary version: ${CYAN}v1.2.2${RESET}
+storage kvs current binary version: ${CYAN}v1.4.0${RESET}
 
 ------------------------------------------------------------------
 "
