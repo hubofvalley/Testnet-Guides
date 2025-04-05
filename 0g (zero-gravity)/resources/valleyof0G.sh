@@ -231,7 +231,19 @@ function query_balance() {
     echo -e "\nYou can input your own wallet address or any other address you'd like to query."
     read -p "Enter wallet address: " WALLET_ADDRESS
 
-    0gchaind query bank balances $WALLET_ADDRESS --chain-id $OG_CHAIN_ID
+    # Prompt for RPC choice
+    read -p "Use your own RPC or Grand Valley's? (own/gv, leave empty for gv): " RPC_CHOICE
+    if [ -z "$RPC_CHOICE" ]; then
+        RPC_CHOICE="gv"
+    fi
+
+    if [ "$RPC_CHOICE" == "gv" ]; then
+        NODE="--node https://lightnode-rpc-0g.grandvalleys.com:443"
+    else
+        NODE=""
+    fi
+
+    0gchaind query bank balances "$WALLET_ADDRESS" --chain-id "$OG_CHAIN_ID" $NODE
 
     echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
     read -r
@@ -244,9 +256,11 @@ function send_transaction() {
 
     read -p "Enter sender wallet name: " SENDER_WALLET
     read -p "Enter recipient wallet address: " RECIPIENT_ADDRESS
-    read -p "Enter amount to send: " AMOUNT
+    read -p "Enter amount to send (in AOGI, e.g. 10 = 10 AOGI): " AMOUNT_AOGI
 
-    0gchaind tx bank send $SENDER_WALLET $RECIPIENT_ADDRESS ${AMOUNT}ua0gi --chain-id $OG_CHAIN_ID --gas auto --gas-adjustment 1.5 -y
+    AMOUNT_UAOGI=$(awk "BEGIN { printf \"%.0f\", $AMOUNT_AOGI * 1000000 }")
+
+    0gchaind tx bank send "$SENDER_WALLET" "$RECIPIENT_ADDRESS" "${AMOUNT_UAOGI}ua0gi" --chain-id "$OG_CHAIN_ID" --gas auto --gas-adjustment 1.5 -y
 
     menu
 }
@@ -255,23 +269,12 @@ function stake_tokens() {
     echo -e "\n${YELLOW}Available wallets:${RESET}"
     0gchaind keys list
 
-    DEFAULT_WALLET=$WALLET  # Assuming $WALLET is set elsewhere
+    DEFAULT_WALLET=$WALLET
 
-    while true; do
-        read -p "Enter wallet name (leave empty to use current default wallet --> $DEFAULT_WALLET): " WALLET_NAME
-        if [ -z "$WALLET_NAME" ]; then
-            WALLET_NAME=$DEFAULT_WALLET
-        fi
-
-        WALLET_ADDRESS=$(0gchaind keys show "$WALLET_NAME" -a 2>/dev/null)
-        if [ -n "$WALLET_ADDRESS" ]; then
-            break
-        else
-            echo -e "${RED}Wallet not found. Please check the wallet name and try again.${RESET}"
-        fi
-    done
-
-    echo "Using wallet: $WALLET_NAME ($WALLET_ADDRESS)"
+    read -p "Enter wallet name (leave empty to use current default wallet --> $DEFAULT_WALLET): " WALLET_NAME
+    if [ -z "$WALLET_NAME" ]; then
+        WALLET_NAME=$DEFAULT_WALLET
+    fi
 
     echo "Choose an option:"
     echo "1. Delegate to Grand Valley"
@@ -279,20 +282,24 @@ function stake_tokens() {
     echo "3. Delegate to another validator"
     read -p "Enter your choice (1, 2, or 3): " CHOICE
 
-    read -p "Do you want to use your own RPC or Grand Valley's RPC? (own/grandvalley): " RPC_CHOICE
+    # Prompt for RPC choice
+    read -p "Use your own RPC or Grand Valley's? (own/gv, leave empty for gv): " RPC_CHOICE
+    if [ -z "$RPC_CHOICE" ]; then
+        RPC_CHOICE="gv"
+    fi
 
     case $CHOICE in
         1)
-            read -p "Enter amount to stake: " AMOUNT
+            read -p "Enter amount to stake (in AOGI, e.g. 10 = 10 AOGI): " AMOUNT_AOGI
             VAL="0gvaloper1gela3jtnmen0dmj2q5p0pne5y45ftshzs053x3"
             ;;
         2)
-            read -p "Enter amount to stake: " AMOUNT
+            read -p "Enter amount to stake (in AOGI, e.g. 10 = 10 AOGI): " AMOUNT_AOGI
             VAL=$(0gchaind keys show "$WALLET_NAME" --bech val -a)
             ;;
         3)
             read -p "Enter validator address: " VAL
-            read -p "Enter amount to stake: " AMOUNT
+            read -p "Enter amount to stake (in AOGI, e.g. 10 = 10 AOGI): " AMOUNT_AOGI
             ;;
         *)
             echo "Invalid choice. Please enter 1, 2, or 3."
@@ -301,13 +308,15 @@ function stake_tokens() {
             ;;
     esac
 
-    if [ "$RPC_CHOICE" == "grandvalley" ]; then
+    AMOUNT_UAOGI=$(awk "BEGIN { printf \"%.0f\", $AMOUNT_AOGI * 1000000 }")
+
+    if [ "$RPC_CHOICE" == "gv" ]; then
         NODE="--node https://lightnode-rpc-0g.grandvalleys.com:443"
     else
         NODE=""
     fi
 
-    0gchaind tx staking delegate "$VAL" "${AMOUNT}ua0gi" --from "$WALLET_NAME" --chain-id "$OG_CHAIN_ID" --gas auto --gas-adjustment 1.5 $NODE -y
+    0gchaind tx staking delegate "$VAL" "${AMOUNT_UAOGI}ua0gi" --from "$WALLET_NAME" --chain-id "$OG_CHAIN_ID" --gas auto --gas-adjustment 1.5 $NODE -y
 
     menu
 }
@@ -316,35 +325,31 @@ function unstake_tokens() {
     echo -e "\n${YELLOW}Available wallets:${RESET}"
     0gchaind keys list
 
-    DEFAULT_WALLET=$WALLET  # Assuming $WALLET is set elsewhere
+    DEFAULT_WALLET=$WALLET
 
-    while true; do
-        read -p "Enter wallet name (leave empty to use current default wallet --> $DEFAULT_WALLET): " WALLET_NAME
-        if [ -z "$WALLET_NAME" ]; then
-            WALLET_NAME=$DEFAULT_WALLET
-        fi
-
-        WALLET_ADDRESS=$(0gchaind keys show "$WALLET_NAME" -a 2>/dev/null)
-        if [ -n "$WALLET_ADDRESS" ]; then
-            break
-        else
-            echo -e "${RED}Wallet not found. Please check the wallet name and try again.${RESET}"
-        fi
-    done
-
-    echo "Using wallet: $WALLET_NAME ($WALLET_ADDRESS)"
+    read -p "Enter wallet name (leave empty to use current default wallet --> $DEFAULT_WALLET): " WALLET_NAME
+    if [ -z "$WALLET_NAME" ]; then
+        WALLET_NAME=$DEFAULT_WALLET
+    fi
 
     read -p "Enter validator address: " VALIDATOR_ADDRESS
-    read -p "Enter amount to unstake: " AMOUNT
-    read -p "Do you want to use your own RPC or Grand Valley's RPC? (own/grandvalley): " RPC_CHOICE
+    read -p "Enter amount to unstake (in AOGI, e.g. 10 = 10 AOGI): " AMOUNT_AOGI
 
-    if [ "$RPC_CHOICE" == "grandvalley" ]; then
+    # Prompt for RPC choice
+    read -p "Use your own RPC or Grand Valley's? (own/gv, leave empty for gv): " RPC_CHOICE
+    if [ -z "$RPC_CHOICE" ]; then
+        RPC_CHOICE="gv"
+    fi
+
+    AMOUNT_UAOGI=$(awk "BEGIN { printf \"%.0f\", $AMOUNT_AOGI * 1000000 }")
+
+    if [ "$RPC_CHOICE" == "gv" ]; then
         NODE="--node https://lightnode-rpc-0g.grandvalleys.com:443"
     else
         NODE=""
     fi
 
-    0gchaind tx staking unbond "$VALIDATOR_ADDRESS" "${AMOUNT}ua0gi" --from "$WALLET_NAME" --chain-id "$OG_CHAIN_ID" --gas auto --gas-adjustment 1.5 $NODE -y
+    0gchaind tx staking unbond "$VALIDATOR_ADDRESS" "${AMOUNT_UAOGI}ua0gi" --from "$WALLET_NAME" --chain-id "$OG_CHAIN_ID" --gas auto --gas-adjustment 1.5 $NODE -y
 
     menu
 }
@@ -353,25 +358,26 @@ function unjail_validator() {
     echo -e "\n${YELLOW}Available wallets:${RESET}"
     0gchaind keys list
 
-    DEFAULT_WALLET=$WALLET  # Assuming $WALLET is set elsewhere in your script
+    DEFAULT_WALLET=$WALLET
 
-    while true; do
-        read -p "Enter wallet name to unjail (leave empty to use default --> $DEFAULT_WALLET): " WALLET_NAME
-        if [ -z "$WALLET_NAME" ]; then
-            WALLET_NAME=$DEFAULT_WALLET
-        fi
+    read -p "Enter wallet name to unjail (leave empty to use default --> $DEFAULT_WALLET): " WALLET_NAME
+    if [ -z "$WALLET_NAME" ]; then
+        WALLET_NAME=$DEFAULT_WALLET
+    fi
 
-        WALLET_ADDRESS=$(0gchaind keys show "$WALLET_NAME" -a 2>/dev/null)
-        if [ -n "$WALLET_ADDRESS" ]; then
-            break
-        else
-            echo -e "${RED}Wallet not found. Please check the wallet name and try again.${RESET}"
-        fi
-    done
+    # Prompt for RPC choice
+    read -p "Use your own RPC or Grand Valley's? (own/gv, leave empty for gv): " RPC_CHOICE
+    if [ -z "$RPC_CHOICE" ]; then
+        RPC_CHOICE="gv"
+    fi
 
-    echo "Using wallet: $WALLET_NAME ($WALLET_ADDRESS)"
+    if [ "$RPC_CHOICE" == "gv" ]; then
+        NODE="--node https://lightnode-rpc-0g.grandvalleys.com:443"
+    else
+        NODE=""
+    fi
 
-    0gchaind tx slashing unjail --from "$WALLET_NAME" --chain-id "$OG_CHAIN_ID" --gas-adjustment 1.6 --gas auto --gas-prices 0.003ua0gi -y
+    0gchaind tx slashing unjail --from "$WALLET_NAME" --chain-id "$OG_CHAIN_ID" --gas-adjustment 1.6 --gas auto --gas-prices 0.003ua0gi $NODE -y
 
     menu
 }
@@ -499,6 +505,63 @@ function update_storage_node() {
     menu
 }
 
+function apply_storage_node_snapshot() {
+    clear
+    # Display critical information
+    echo -e "${RED}▓▒░ CRITICAL NOTICE:${RESET}"
+    echo -e "${YELLOW}░ Snapshot contains: ${GREEN}flow_db (blockchain data)${RESET}"
+    echo -e "${YELLOW}░ Not included:      ${ORANGE}data_db (mining storage)${RESET}"
+    echo -e "${GREEN}░ Your data_db will auto-create when node starts${RESET}"
+    echo -e "${RED}░ ${ORANGE}⚠ SECURITY WARNING: ${RED}Never use pre-made data_db!${RESET}"
+    echo -e "${RED}░               It would mine for someone else's wallet!${RESET}"
+    echo -e "${CYAN}Documentation: ${BLUE}https://docs.0g.ai/run-a-node/storage-node#snapshot${RESET}\n"
+
+    # Get explicit confirmation
+    read -p "${CYAN}Do you accept these conditions? (y/N): ${RESET}" agree
+    if [[ "${agree,,}" != "y" ]]; then
+        echo -e "${RED}Operation cancelled by user${RESET}"
+        sleep 1
+        menu
+        return
+    fi
+
+    # Contract selection loop
+    while true; do
+        clear
+        echo -e "${CYAN}▓▒░ Storage Node Contract Type${RESET}"
+        echo -e "${GREEN}1) Standard Contract${RESET}   (Available Now)"
+        echo -e "${YELLOW}2) Turbo Contract${RESET}     (Under Development)"
+        echo -e "${RED}3) Cancel & Return${RESET}"
+        
+        read -p "${BLUE}Select option [1-3]: ${RESET}" contract_choice
+
+        case $contract_choice in
+            1)
+                echo -e "${GREEN}Initializing Standard Contract snapshot...${RESET}"
+                echo -e "${YELLOW}This may take several minutes...${RESET}"
+                bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_standard_zgs_node_snapshot.sh)
+                menu
+                break
+                ;;
+            2)
+                echo -e "${YELLOW}Turbo Contract snapshot is currently in development."
+                echo -e "Please monitor official channels for updates!${RESET}"
+                sleep 2
+                ;;
+            3)
+                echo -e "${RED}Operation aborted by user${RESET}"
+                sleep 1
+                menu
+                break
+                ;;
+            *)
+                echo -e "${RED}Invalid selection! Please choose 1, 2, or 3.${RESET}"
+                sleep 1
+                ;;
+        esac
+    done
+}
+
 function delete_storage_node() {
     sudo systemctl stop zgs
     sudo systemctl disable zgs
@@ -514,7 +577,48 @@ function change_storage_node() {
 }
 
 function show_storage_logs() {
-    tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d)
+    clear
+    LOG_FILE="$HOME/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d)"
+    
+    # Verify log file exists
+    if [[ ! -f "$LOG_FILE" ]]; then
+        echo -e "${RED}Error: Log file not found!${RESET}"
+        echo -e "Verify node is running at: ${CYAN}$LOG_FILE${RESET}"
+        sleep 2
+        menu
+        return
+    fi
+
+    # Show persistent instructions first
+    echo -e "${CYAN}▓▒░ Storage Node Log Viewer ░▒▓${RESET}"
+    echo -e "${YELLOW}┌────────────────────────────────────────────────────┐"
+    echo -e "│ ${GREEN}Controls:${RESET}"
+    echo -e "│ ${CYAN}Shift+F${RESET}                 - Auto-scroll new logs"
+    echo -e "│ ${CYAN}Ctrl+C${RESET}                  - Pause auto-scroll"
+    echo -e "│ ${CYAN}up arrow/down arrow${RESET}     - Scroll manually"
+    echo -e "│ ${CYAN}/search${RESET}                 - Find text (n=next match)"
+    echo -e "│ ${CYAN}Q${RESET}                       - Quit to menu"
+    echo -e "└────────────────────────────────────────────────────┘${RESET}"
+    
+    # Wait for user confirmation
+    read -n 1 -s -p $'\n\e[33mPress ANY KEY to view logs (Q to cancel): \e[0m' input
+    echo ""
+    
+    if [[ "${input,,}" == "q" ]]; then
+        echo -e "${GREEN}Operation cancelled. Returning to menu...${RESET}"
+        sleep 1
+        menu
+        return
+    fi
+
+    # Show logs with instructions visible first
+    echo -e "\n${CYAN}Loading logs...${RESET}"
+    sleep 1  # Pause to see loading message
+    less -R +F "$LOG_FILE"
+    
+    # Return to menu
+    echo -e "\n${GREEN}Log viewing session closed. Returning to menu...${RESET}"
+    sleep 1
     menu
 }
 
@@ -553,6 +657,19 @@ function show_storage_status() {
             echo -e "Contract Type: ${CYAN}Turbo Contract${RESET}"
         else
             echo -e "Contract Type: ${RED}Unknown Contract${RESET}"
+        fi
+
+        # Get PoRA Transactions - UPDATED SECTION
+        log_file="$HOME/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d)"
+        if [[ -f "$log_file" ]]; then
+            hit_value=$(tail -n 100 "$log_file" | grep -oP 'hit: \K\d+' | tail -n1)
+            if [[ -n "$hit_value" ]]; then
+                echo -e "\nLatest PoRA TXs Count: ${GREEN}$hit_value${RESET}"
+            else
+                echo -e "\nLatest PoRA TXs Count: ${RED}No valid hits found in recent logs${RESET}"
+            fi
+        else
+            echo -e "\nLatest PoRA TXs Count: ${RED}Log file not found${RESET}"
         fi
     else
         echo -e "\n${RED}Config file not found! Unable to determine contract or RPC info.${RESET}"
@@ -673,9 +790,12 @@ function show_guidelines() {
     echo -e "${GREEN}Storage Node Options:${RESET}"
     echo "   a. Deploy Storage Node: Sets up a new storage node."
     echo "   b. Update Storage Node: Upgrades to the latest storage node version."
-    echo "   c. Change Storage Node: Modifies storage node configuration."
-    echo "   d. Show Storage Node Logs: Views storage node operational logs."
-    echo "   e. Show Storage Node Status: Checks storage node health."
+    echo "   c. Apply Storage Node Snapshot: Applies official snapshot for faster sync"
+    echo "      - ${YELLOW}Important:${RESET} Always generate your own data_db - using others' will make you mine for them!"
+    echo "      - Official docs: ${BLUE}https://docs.0g.ai/run-a-node/storage-node#snapshot${RESET}"
+    echo "   d. Change Storage Node: Modifies storage node configuration."
+    echo "   e. Show Storage Node Logs: Views storage node operational logs."
+    echo "   f. Show Storage Node Status: Checks storage node health."
 
     echo -e "${GREEN}Storage KV Options:${RESET}"
     echo "   a. Deploy Storage KV: Sets up a key-value storage node."
@@ -736,9 +856,10 @@ function menu() {
     echo -e "${GREEN}2. Storage Node${RESET}"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
-    echo "    c. Change Storage Node"
-    echo "    d. Show Storage Node Logs"
-    echo "    e. Show Storage Node Status"
+    echo "    c. Apply Storage Node Snapshot"
+    echo "    d. Change Storage Node"
+    echo "    e. Show Storage Node Logs"
+    echo "    f. Show Storage Node Status"
     echo -e "${GREEN}3. Storage KV${RESET}"
     echo "    a. Deploy Storage KV"
     echo "    b. Show Storage KV Logs"
@@ -802,12 +923,13 @@ function menu() {
             case $SUB_OPTION in
                 a) deploy_storage_node ;;
                 b) update_storage_node ;;
-                c) change_storage_node ;;
-                d) show_storage_logs ;;
-                e) show_storage_status ;;
+                c) apply_storage_node_snapshot ;;
+                d) change_storage_node ;;
+                e) show_storage_logs ;;
+                f) show_storage_status ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
-            ;;
+    ;;
         3)
             case $SUB_OPTION in
                 a) deploy_storage_kv ;;
