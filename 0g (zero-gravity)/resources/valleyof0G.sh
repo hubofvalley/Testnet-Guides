@@ -537,9 +537,26 @@ function apply_storage_node_snapshot() {
 
         case $contract_choice in
             1)
-                echo -e "${GREEN}Initializing Standard Contract snapshot...${RESET}"
+                # Add downtime warning
+                echo -e "\n${RED}▓▒░ IMPORTANT: Post-Snapshot Downtime Expected ░▒▓${RESET}"
+                echo -e "${YELLOW}After applying the snapshot, your storage node will experience"
+                echo -e "several hours of downtime while the data_db automatically syncs."
+                echo -e "This is NORMAL BEHAVIOR - no action is needed!${RESET}\n"
+                echo -e "The node will resume normal operations once sync completes."
+                echo -e "${CYAN}Progress can be monitored via node logs.${RESET}"
+                sleep 3
+                
+                echo -e "\n${GREEN}Initializing Standard Contract snapshot...${RESET}"
                 echo -e "${YELLOW}This may take several minutes...${RESET}"
                 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_standard_zgs_node_snapshot.sh)
+                
+                # Post-application notice
+                echo -e "\n${GREEN}▓▒░ Snapshot Applied Successfully ░▒▓${RESET}"
+                echo -e "${YELLOW}Your node is now syncing data_db - this will take several hours"
+                echo -e "${RED}DO NOT RESTART OR INTERRUPT THIS PROCESS${YELLOW}"
+                echo -e "Monitor progress with: ${CYAN}show_storage_logs${RESET}"
+                echo -e "Concerned? Check logs before contacting support!"
+                sleep 3
                 menu
                 break
                 ;;
