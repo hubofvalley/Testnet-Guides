@@ -48,6 +48,18 @@ choose_json_rpc_endpoint() {
     fi
 }
 
+echo -e "${YELLOW}⚠️  This script will DELETE your existing 0G Storage Node (${GREEN}zgs.service${YELLOW}) and install a fresh one.${RESET}"
+echo -e "${RED}Proceed ONLY if you are aware of the consequences.${RESET}"
+read -p "Press Enter to continue or Ctrl+C to cancel..."
+
+# Delete previous installation
+echo -e "${RED}Deleting previous installation of 0G Storage Node...${RESET}"
+sudo systemctl stop zgs.service 2>/dev/null
+sudo systemctl disable zgs.service 2>/dev/null
+sudo rm -f /etc/systemd/system/zgs.service
+sudo rm -rf $HOME/0g-storage-node
+echo -e "${GREEN}Previous storage node deleted successfully.${RESET}"
+
 # Prompt user for private key
 read -p "Enter your private key: " PRIVATE_KEY
 echo "private key: $PRIVATE_KEY"
