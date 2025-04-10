@@ -5,7 +5,6 @@
     - [**System Requirements**](#system-requirements)
     - [Install via Valley of 0G (Recommended)](#install-via-valley-of-0g-recommended)
       - [Deploy a Storage Node](#deploy-a-storage-node)
-      - [Apply a Snapshot](#apply-a-snapshot)
       - [Update the Node](#update-the-node)
     - [Manual Installation Guide](#manual-installation-guide)
       - [1. Install dependencies for building from source](#1-install-dependencies-for-building-from-source)
@@ -45,8 +44,7 @@ If you want a faster and easier way to deploy or manage your storage node, use *
 
 **1. Open Valley of 0G**
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/valleyof0G.sh)
-```
+bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/valleyof0G.sh)```
 
 **2. Follow the instructions to enter the main menu**
 
