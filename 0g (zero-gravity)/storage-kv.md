@@ -6,6 +6,7 @@ BEFORE YOU DEPLOY THE STORAGE KV NODE, FIRST YOU MUST DEPLOY YOUR [storage node]
     - [**System Requirements**](#system-requirements)
     - [Install via Valley of 0G (Recommended)](#install-via-valley-of-0g-recommended)
       - [Deploy Storage KV](#deploy-storage-kv)
+      - [Update Storage KV](#update-storage-kv)
     - [Manual Installation Guide](#manual-installation-guide)
       - [1. Install Dependencies](#1-install-dependencies)
       - [2. Install Go](#2-install-go)
@@ -39,7 +40,8 @@ Valley of 0G provides a faster and simpler way to deploy and manage your Storage
 
 Open the Valley of 0G CLI:
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/valleyof0G.sh)```
+bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/valleyof0G.sh)
+```
 
 From the menu, select:
 ```
