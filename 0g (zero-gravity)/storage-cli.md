@@ -1,29 +1,36 @@
-# storage-cli
+# 0gchain Storage CLI Guide
 
-- [storage-cli](#storage-cli)
-  - [0g storage-cli installation](#0g-storage-cli-installation)
-    - [1. install dependencies](#1-install-dependencies)
-    - [2. install go](#2-install-go)
-    - [3. Download binary](#3-download-binary)
-    - [4. Build the binary](#4-build-the-binary)
-  - [variables configuration](#variables-configuration)
-    - [1. Input your json-rpc, storage node url and private key](#1-input-your-json-rpc-storage-node-url-and-private-key)
-    - [2. Set cli variables](#2-set-cli-variables)
-  - [Upload file transaction](#upload-file-transaction)
-    - [1. input size and path of the file you want to create then upload](#1-input-size-and-path-of-the-file-you-want-to-create-then-upload)
-    - [2. execute the transaction](#2-execute-the-transaction)
-    - [SUCCESSFUL RESULT: ](#successful-result-)
-  - [Download file transaction](#download-file-transaction)
-    - [1. input the output path and the root hash of the file you want to download](#1-input-the-output-path-and-the-root-hash-of-the-file-you-want-to-download)
-    - [2. execute the transaction](#2-execute-the-transaction-1)
-    - [SUCCESSFUL RESULT: ](#successful-result--1)
-- [let's buidl together](#lets-buidl-together)
+## Table of Contents
 
-guide's current binary version: `v0.6.1`
+- [0gchain Storage CLI Guide](#0gchain-storage-cli-guide)
+  - [Table of Contents](#table-of-contents)
+  - [0g Storage-CLI Installation](#0g-storage-cli-installation)
+    - [1. Install Dependencies](#1-install-dependencies)
+    - [2. Install Go](#2-install-go)
+    - [3. Download Binary](#3-download-binary)
+    - [4. Build the Binary](#4-build-the-binary)
+  - [Variables Configuration](#variables-configuration)
+    - [1. Input Your JSON-RPC, Storage Node URL, and Private Key](#1-input-your-json-rpc-storage-node-url-and-private-key)
+    - [2. Set CLI Variables](#2-set-cli-variables)
+  - [Upload File Transaction](#upload-file-transaction)
+    - [1. Input Size and Path of the File to Create and Upload](#1-input-size-and-path-of-the-file-to-create-and-upload)
+    - [2. Execute the Transaction](#2-execute-the-transaction)
+    - [Successful Result](#successful-result)
+  - [Download File Transaction](#download-file-transaction)
+    - [1. Input the Output Path and Root Hash](#1-input-the-output-path-and-root-hash)
+    - [2. Execute the Transaction](#2-execute-the-transaction-1)
+    - [Successful Result](#successful-result-1)
+- [Let's BUIDL Together](#lets-buidl-together)
 
-## 0g storage-cli installation
+---
 
-### 1. install dependencies
+Guide's current binary version: `v0.6.1`
+
+---
+
+## 0g Storage-CLI Installation
+
+### 1. Install Dependencies
 
 ```bash
 sudo apt update -y && sudo apt upgrade -y && \
@@ -31,7 +38,7 @@ sudo apt install -y curl git jq build-essential gcc unzip wget lz4 openssl \
 libssl-dev pkg-config protobuf-compiler clang cmake llvm llvm-dev
 ```
 
-### 2. install go
+### 2. Install Go
 
 ```bash
 cd $HOME && ver="1.22.0" && \
@@ -42,13 +49,13 @@ echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile && \
 source ~/.bash_profile && go version
 ```
 
-### 3. Download binary
+### 3. Download Binary
 
 ```bash
 git clone https://github.com/0glabs/0g-storage-client.git
 ```
 
-### 4. Build the binary
+### 4. Build the Binary
 
 ```bash
 cd 0g-storage-client
@@ -59,17 +66,21 @@ git submodule update --init
 go build
 ```
 
-## variables configuration
+---
 
-### 1. Input your json-rpc, storage node url and private key
+## Variables Configuration
 
-- PLEASE INPUT YOUR STORAGE NODE URL (http://STORAGE_NODE_IP:5678) YOUR JSON RPC ENDPOINT (http://VALIDATOR_NODE_IP:8545) OR YOU CAN OUR ENDPOINTS PLEASE CHECK [README](<https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/README.md>)
+### 1. Input Your JSON-RPC, Storage Node URL, and Private Key
+
+- Please input your storage node URL (`http://STORAGE_NODE_IP:5678`), your JSON RPC endpoint (`http://VALIDATOR_NODE_IP:8545`), or you can use our endpoints (see [README](https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/README.md)).
 
 ```bash
-read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT && echo "Current json-rpc: $BLOCKCHAIN_RPC_ENDPOINT" && read -p "Enter storage node url: " ZGS_NODE && echo "Current storage node url: $ZGS_NODE" && read -sp "Enter private key: " PRIVATE_KEY && echo "Current storage private key: $PRIVATE_KEY"
+read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT && echo "Current json-rpc: $BLOCKCHAIN_RPC_ENDPOINT"
+read -p "Enter storage node url: " ZGS_NODE && echo "Current storage node url: $ZGS_NODE"
+read -sp "Enter private key: " PRIVATE_KEY && echo "Current storage private key: $PRIVATE_KEY"
 ```
 
-### 2. Set cli variables
+### 2. Set CLI Variables
 
 ```bash
 echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
@@ -79,72 +90,88 @@ echo "export PRIVATE_KEY=\"$PRIVATE_KEY\"" >> ~/.bash_profile
 
 source ~/.bash_profile
 
-echo -e "\n\033[31mCHECK YOUR STORAGE CLI VARIABLES\033[0m\n\nZGS_NODE: $ZGS_NODE\nLOG_CONTRACT_ADDRESS: $LOG_CONTRACT_ADDRESS\nBLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT\nPRIVATE_KEY: $PRIVATE_KEY \n\n"
-echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
+echo -e "\n\033[31mCHECK YOUR STORAGE CLI VARIABLES\033[0m\n"
+echo "ZGS_NODE: $ZGS_NODE"
+echo "LOG_CONTRACT_ADDRESS: $LOG_CONTRACT_ADDRESS"
+echo "BLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT"
+echo "PRIVATE_KEY: $PRIVATE_KEY"
+echo -e "\033[3mlets buidl together - Grand Valley\033[0m"
 ```
 
-## Upload file transaction
+---
 
-- **THESE COMMANDS CAN ONLY WORK IF THE FILE PATH IS INSIDE THE 0g-storage-client DIRECTORY.**
-- **THIS MEANS YOU MUST CREATE OR CHOOSE THE FILE INSIDE THE 0g-storage-client DIRECTORY**.
+## Upload File Transaction
 
-### 1. input size and path of the file you want to create then upload
+> **These commands only work if the file path is inside the `0g-storage-client` directory. You must create or choose the file inside this directory.**
+
+### 1. Input Size and Path of the File to Create and Upload
 
 ```bash
-cd $HOME/0g-storage-client && read -p "Enter file size (byte): " FILE_SIZE && echo "file size (byte): $FILE_SIZE" && read -p "Enter file name: " INPUT_FILE_PATH && echo "Current file name: $INPUT_FILE_PATH" && ./0g-storage-client gen --size $FILE_SIZE --file $INPUT_FILE_PATH
+cd $HOME/0g-storage-client
+read -p "Enter file size (byte): " FILE_SIZE && echo "file size (byte): $FILE_SIZE"
+read -p "Enter file name: " INPUT_FILE_PATH && echo "Current file name: $INPUT_FILE_PATH"
+./0g-storage-client gen --size $FILE_SIZE --file $INPUT_FILE_PATH
 ```
 
-### 2. execute the transaction
+### 2. Execute the Transaction
 
 ```bash
-   cd $HOME/0g-storage-client &&
-   ./0g-storage-client upload \
-   --url $BLOCKCHAIN_RPC_ENDPOINT \
-   --contract $LOG_CONTRACT_ADDRESS \
-   --key $PRIVATE_KEY \
-   --node $ZGS_NODE \
-   --file $INPUT_FILE_PATH \
-   --gas-limit 25000000 \
-   --finality-required true
+cd $HOME/0g-storage-client
+./0g-storage-client upload \
+  --url $BLOCKCHAIN_RPC_ENDPOINT \
+  --contract $LOG_CONTRACT_ADDRESS \
+  --key $PRIVATE_KEY \
+  --node $ZGS_NODE \
+  --file $INPUT_FILE_PATH \
+  --gas-limit 25000000 \
+  --finality-required true
 
-   # Check if the upload was successful and then delete the file
-   if [ $? -eq 0 ]; then
-   rm $INPUT_FILE_PATH
-   echo "File $INPUT_FILE_PATH has been deleted after upload."
-   else
-   echo "Upload failed, file $INPUT_FILE_PATH was not deleted."
-   fi
+# Check if the upload was successful and then delete the file
+if [ $? -eq 0 ]; then
+  rm $INPUT_FILE_PATH
+  echo "File $INPUT_FILE_PATH has been deleted after upload."
+else
+  echo "Upload failed, file $INPUT_FILE_PATH was not deleted."
+fi
 
-   echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
+echo -e "\033[3mlets buidl together - Grand Valley\033[0m"
 ```
 
-### SUCCESSFUL RESULT: ![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/421cb81a-3f2b-41d5-b798-e7f1897f2802)
+### Successful Result
 
-## Download file transaction
+![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/421cb81a-3f2b-41d5-b798-e7f1897f2802)
 
-- **THESE COMMANDS CAN ONLY WORK IF THE FILE PATH IS INSIDE THE 0g-storage-client DIRECTORY**.
-- **THIS MEANS YOU MUST CREATE OR CHOOSE THE FILE INSIDE THE 0g-storage-client DIRECTORY**.
-- **YOU MUST UPLOAD YOUR FILE FIRST BEFORE YOU CAN DOWNLOAD IT. INPUT THE ROOT HASH VALUE FROM THE UPLOAD TRANSACTION LOGS**.
+---
 
-### 1. input the output path and the root hash of the file you want to download
+## Download File Transaction
+
+> **These commands only work if the file path is inside the `0g-storage-client` directory. You must upload your file first before you can download it. Input the root hash value from the upload transaction logs.**
+
+### 1. Input the Output Path and Root Hash
 
 ```bash
-   cd $HOME/0g-storage-client && read -p "Enter your output file path: " OUTPUT_FILE_PATH && echo "Current output file path: $OUTPUT_FILE_PATH" && read -p "Enter the file root hash: " ROOT_HASH && echo "Current file root hash: $ROOT_HASH"
+cd $HOME/0g-storage-client
+read -p "Enter your output file path: " OUTPUT_FILE_PATH && echo "Current output file path: $OUTPUT_FILE_PATH"
+read -p "Enter the file root hash: " ROOT_HASH && echo "Current file root hash: $ROOT_HASH"
 ```
 
-### 2. execute the transaction
+### 2. Execute the Transaction
 
 ```bash
-   cd $HOME/0g-storage-client &&
-   ./0g-storage-client download \
-   --node $ZGS_NODE \
-   --root $ROOT_HASH \
-   --file $OUTPUT_FILE_PATH \
-   --proof
+cd $HOME/0g-storage-client
+./0g-storage-client download \
+  --node $ZGS_NODE \
+  --root $ROOT_HASH \
+  --file $OUTPUT_FILE_PATH \
+  --proof
 
-   echo -e "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
+echo -e "\033[3mlets buidl together - Grand Valley\033[0m"
 ```
 
-### SUCCESSFUL RESULT: ![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/ea095625-ae68-427e-a626-d742dcb575a7)
+### Successful Result
 
-# let's buidl together
+![image](https://github.com/hubofvalley/Testnet-Guides/assets/100946299/ea095625-ae68-427e-a626-d742dcb575a7)
+
+---
+
+# Let's BUIDL Together

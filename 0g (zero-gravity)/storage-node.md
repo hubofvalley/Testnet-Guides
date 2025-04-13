@@ -1,114 +1,118 @@
-
 # 0gchain Storage Node Deployment Guide
 
+## Table of Contents
+
 - [0gchain Storage Node Deployment Guide](#0gchain-storage-node-deployment-guide)
-    - [**System Requirements**](#system-requirements)
-    - [Install via Valley of 0G (Recommended)](#install-via-valley-of-0g-recommended)
-      - [Deploy a Storage Node](#deploy-a-storage-node)
-      - [Apply a Snapshot](#apply-a-snapshot)
-      - [Update the Node](#update-the-node)
-    - [Manual Installation Guide](#manual-installation-guide)
-      - [1. Install dependencies for building from source](#1-install-dependencies-for-building-from-source)
-      - [2. install go](#2-install-go)
-      - [3. install rustup](#3-install-rustup)
-      - [4. set vars](#4-set-vars)
-      - [5. download binary](#5-download-binary)
-      - [6. check the storage node version](#6-check-the-storage-node-version)
-      - [7. wallet private key check](#7-wallet-private-key-check)
-      - [8. update node configuration](#8-update-node-configuration)
-      - [9. create service](#9-create-service)
-      - [10. start the node](#10-start-the-node)
-      - [11. show logs by date](#11-show-logs-by-date)
-      - [delete storage node](#delete-storage-node)
-- [let's buidl together](#lets-buidl-together)
+  - [Table of Contents](#table-of-contents)
+  - [System Requirements](#system-requirements)
+  - [Install via Valley of 0G (Recommended)](#install-via-valley-of-0g-recommended)
+    - [Deploy a Storage Node](#deploy-a-storage-node)
+    - [Apply a Snapshot](#apply-a-snapshot)
+    - [Update the Node](#update-the-node)
+  - [Manual Installation Guide](#manual-installation-guide)
+    - [1. Install Dependencies for Building from Source](#1-install-dependencies-for-building-from-source)
+    - [2. Install Go](#2-install-go)
+    - [3. Install Rustup](#3-install-rustup)
+    - [4. Set Vars](#4-set-vars)
+    - [5. Download Binary](#5-download-binary)
+    - [6. Check the Storage Node Version](#6-check-the-storage-node-version)
+    - [7. Wallet Private Key Check](#7-wallet-private-key-check)
+    - [8. Update Node Configuration](#8-update-node-configuration)
+    - [9. Create Service](#9-create-service)
+    - [10. Start the Node](#10-start-the-node)
+    - [11. Show Logs by Date](#11-show-logs-by-date)
+    - [Delete Storage Node](#delete-storage-node)
+- [Let's BUIDL Together](#lets-buidl-together)
+
+---
 
 ![0G's storage infrastructure](resources/storage.png)
 
-### **System Requirements**
+## System Requirements
 
-| Category  | Requirements                   |
-| --------- | ------------------------------ |
-| CPU       | 8+ cores                       |
-| RAM       | 32+ GB                         |
-| Storage   | 500GB / 1TB NVMe SSD           |
-| Bandwidth | 100 MBps for Download / Upload |
+| Category   | Requirements                   |
+| ---------- | ----------------------------- |
+| CPU        | 8+ cores                      |
+| RAM        | 32+ GB                        |
+| Storage    | 500GB / 1TB NVMe SSD          |
+| Bandwidth  | 100 MBps for Download/Upload  |
 
-Guide's current binary version: `v0.8.7`
+- Guide's current binary version: `v0.8.7`
 
 ---
 
-### Install via Valley of 0G (Recommended)
+## Install via Valley of 0G (Recommended)
 
 If you want a faster and easier way to deploy or manage your storage node, use **Valley of 0G**. It automates most of the installation and management steps.
 
-#### Deploy a Storage Node
+### Deploy a Storage Node
 
-**1. Open Valley of 0G**
-```bash
-bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/valleyof0G.sh)
-```
+1. **Open Valley of 0G:**
+   ```bash
+   bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/valleyof0G.sh)
+   ```
 
-**2. Follow the instructions to enter the main menu**
+2. **Follow the instructions to enter the main menu.**
 
-![Open Vo0G](resources/image_vo0g_start.png)
+   ![Open Vo0G](resources/image_vo0g_start.png)
 
-**3. Select Storage Node options**
-To deploy your node, input:
-```
-2a
-```
+3. **Select Storage Node options.**  
+   To deploy your node, input:
+   ```
+   2a
+   ```
 
-![Main Menu](resources/image_vo0g_menu.png)
+   ![Main Menu](resources/image_vo0g_menu.png)
 
-**4. Follow the tool's prompts until your node is running**
+4. **Follow the tool's prompts until your node is running.**
 
-![Deploy Node](resources/image_vo0g_execute.png)
+   ![Deploy Node](resources/image_vo0g_execute.png)
 
 ---
 
-#### Apply a Snapshot
+### Apply a Snapshot
 
 If you want to sync your storage node faster, use the snapshot feature in Vo0G.
 
-**1. Open Valley of 0G** (if you haven't already):
-```bash
-bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/valleyof0G.sh)
-```
+1. **Open Valley of 0G** (if you haven't already):
+   ```bash
+   bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/valleyof0G.sh)
+   ```
 
-**2. From the main menu, input:**
-```
-2c
-```
-This will apply the latest snapshot.
+2. **From the main menu, input:**
+   ```
+   2c
+   ```
+   This will apply the latest snapshot.
 
-> `data_db` is already excluded from the snapshot file  
-> existing `data_db` will be automatically removed before syncing
+> `data_db` is already excluded from the snapshot file.  
+> Existing `data_db` will be automatically removed before syncing.
 
 ---
 
-#### Update the Node
+### Update the Node
 
 To update your storage node to the latest version:
 
-**1. Open Valley of 0G**:
-```bash
-bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/valleyof0G.sh)
-```
+1. **Open Valley of 0G:**
+   ```bash
+   bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/valleyof0G.sh)
+   ```
 
-**2. From the main menu, input:**
-```
-2b
-```
-The tool will:
-- pull the latest version of the repo  
-- rebuild the binary  
-- restart your node with zero hassle
+2. **From the main menu, input:**
+   ```
+   2b
+   ```
+   The tool will:
+   - Pull the latest version of the repo
+   - Rebuild the binary
+   - Restart your node with zero hassle
 
 ---
 
-### Manual Installation Guide
+## Manual Installation Guide
 
-#### 1. Install dependencies for building from source
+### 1. Install Dependencies for Building from Source
 
 ```bash
 sudo apt-get update -y
@@ -121,7 +125,7 @@ sudo apt-get install clang -y
 sudo apt-get install llvm llvm-dev -y
 ```
 
-#### 2. install go
+### 2. Install Go
 
 ```bash
 cd $HOME && \
@@ -135,13 +139,13 @@ source ~/.bash_profile && \
 go version
 ```
 
-#### 3. install rustup
+### 3. Install Rustup
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-#### 4. set vars
+### 4. Set Vars
 
 ```bash
 read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT && echo "Current json-rpc: $BLOCKCHAIN_RPC_ENDPOINT"
@@ -157,7 +161,7 @@ Check sync block via:
 curl -s -X POST $BLOCKCHAIN_RPC_ENDPOINT -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n"
 ```
 
-#### 5. download binary
+### 5. Download Binary
 
 ```bash
 cd $HOME
@@ -169,18 +173,17 @@ git submodule update --init
 ```
 
 Then build it:
-
 ```bash
 cargo build --release
 ```
 
-#### 6. check the storage node version
+### 6. Check the Storage Node Version
 
 ```bash
 $HOME/0g-storage-node/target/release/zgs_node --version
 ```
 
-#### 7. wallet private key check
+### 7. Wallet Private Key Check
 
 Get private key via validator node:
 ```bash
@@ -192,7 +195,7 @@ Save in variable:
 read -p "Enter your private key: " PRIVATE_KEY && echo "private key: $PRIVATE_KEY"
 ```
 
-#### 8. update node configuration
+### 8. Update Node Configuration
 
 **Standard Contract**
 ```bash
@@ -216,7 +219,7 @@ s|^\s*#?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN
 " $HOME/0g-storage-node/run/config-testnet.toml
 ```
 
-#### 9. create service
+### 9. Create Service
 
 ```bash
 sudo tee /etc/systemd/system/zgs.service > /dev/null <<EOF
@@ -237,7 +240,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-#### 10. start the node
+### 10. Start the Node
 
 ```bash
 sudo systemctl daemon-reload && \
@@ -246,7 +249,7 @@ sudo systemctl restart zgs && \
 sudo systemctl status zgs
 ```
 
-#### 11. show logs by date
+### 11. Show Logs by Date
 
 ```bash
 tail -f ~/0g-storage-node/run/log/zgs.log.$(TZ=UTC date +%Y-%m-%d)
@@ -262,7 +265,7 @@ Check node RPC status:
 curl -X POST http://localhost:5678 -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"zgs_getStatus","params":[],"id":1}'  | jq
 ```
 
-#### delete storage node
+### Delete Storage Node
 
 ```bash
 sudo systemctl stop zgs
@@ -271,4 +274,6 @@ sudo rm /etc/systemd/system/zgs.service
 sudo rm -rf $HOME/0g-storage-node
 ```
 
-# let's buidl together
+---
+
+# Let's BUIDL Together
