@@ -199,7 +199,7 @@ bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main
 
 - Service file names: `story.service`, `story-geth.service`
 - Current chain: `aeneid`
-- Current story node version: `v1.1.1 - v0.12.1 - v0.13.0 - v0.13.2`
+- Current story node version: `v1.1.0 - v1.1.1`
 - Current story-geth node version: `v1.0.2`
 
 ---
