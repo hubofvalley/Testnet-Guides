@@ -1,10 +1,12 @@
 # Story Protocol Testnet Guide
 
-`will always update`
+> _This guide is continuously updated._
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/2ac53a77-8eec-48be-9106-eb832ae5fee3" width="600" height="300">
 </p>
+
+## Table of Contents
 
 - [Story Protocol Testnet Guide](#story-protocol-testnet-guide)
 - [Story Protocol](#story-protocol)
@@ -16,8 +18,8 @@
   - [Story Solving Target](#story-solving-target)
   - [Example Use Case](#example-use-case)
   - [Conclusion](#conclusion)
-  - [Grand Valley's Story Protocol public endpoints:](#grand-valleys-story-protocol-public-endpoints)
-  - [Valley of Story: Story Protocol Tools Created by Grand Valley](#valley-of-story-story-protocol-tools-created-by-grand-valley)
+  - [Grand Valley's Story Protocol Public Endpoints](#grand-valleys-story-protocol-public-endpoints)
+  - [Valley of Story: Tools by Grand Valley](#valley-of-story-tools-by-grand-valley)
     - [Installation](#installation)
     - [Key Features of Valley of Story](#key-features-of-valley-of-story)
       - [1. Node Interactions](#1-node-interactions)
@@ -25,43 +27,45 @@
       - [3. Snapshot Application](#3-snapshot-application)
       - [4. Story App Installation](#4-story-app-installation)
   - [Story Node Deployment Guide With Cosmovisor](#story-node-deployment-guide-with-cosmovisor)
-    - [**System Requirements**](#system-requirements)
-  - [Validator Manual installation](#validator-manual-installation)
-    - [1. install dependencies for building from source](#1-install-dependencies-for-building-from-source)
-    - [2. install go](#2-install-go)
-    - [3. install cosmovisor](#3-install-cosmovisor)
-    - [4. set vars](#4-set-vars)
-    - [5. download geth and consensus client binaries](#5-download-geth-and-consensus-client-binaries)
-    - [6. init app](#6-init-app)
-    - [7. set custom ports in config.toml file](#7-set-custom-ports-in-configtoml-file)
-    - [8. add peers to the config.toml](#8-add-peers-to-the-configtoml)
-    - [9. enable indexer (optional) (if u want to run a full node follow this step)](#9-enable-indexer-optional-if-u-want-to-run-a-full-node-follow-this-step)
-    - [10. initialize Cosmovisor and create a symlink to the latest consensus client version in the Go directory](#10-initialize-cosmovisor-and-create-a-symlink-to-the-latest-consensus-client-version-in-the-go-directory)
-    - [11. define the path of cosmovisor for being used in the consensus client](#11-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client)
-      - [save the results, they'll be used in the next step](#save-the-results-theyll-be-used-in-the-next-step)
-      - [this is an example of the result](#this-is-an-example-of-the-result)
-    - [12. create service files](#12-create-service-files)
-        - [consensus client service file](#consensus-client-service-file)
-        - [geth service file](#geth-service-file)
-    - [13. start the node](#13-start-the-node)
-      - [start geth \& consensus client](#start-geth--consensus-client)
-      - [this is an example of the node running properly](#this-is-an-example-of-the-node-running-properly)
-        - [story-geth logs](#story-geth-logs)
-        - [story logs](#story-logs)
-    - [14. check node synchronization](#14-check-node-synchronization)
-    - [15. check the node version](#15-check-the-node-version)
-  - [Validator and key Commands](#validator-and-key-commands)
-    - [1. export evm public key and private key](#1-export-evm-public-key-and-private-key)
-    - [2. claim faucet](#2-claim-faucet)
-    - [3. create validator](#3-create-validator)
-    - [4. BACKUP YOUR VALIDATOR ](#4-backup-your-validator-)
-    - [5. delegate token to validator](#5-delegate-token-to-validator)
-      - [self delegate](#self-delegate)
-      - [delegate to ](#delegate-to-)
-  - [delete the node](#delete-the-node)
-  - [upgrade execution client (`story-geth`) to a user-specified version](#upgrade-execution-client-story-geth-to-a-user-specified-version)
-  - [upgrade the consensus client (`story`) to a user-specified version at a user-specified block height](#upgrade-the-consensus-client-story-to-a-user-specified-version-at-a-user-specified-block-height)
-- [let's buidl Story together](#lets-buidl-story-together)
+    - [System Requirements](#system-requirements)
+  - [Validator Manual Installation](#validator-manual-installation)
+    - [1. Install Dependencies for Building from Source](#1-install-dependencies-for-building-from-source)
+    - [2. Install Go](#2-install-go)
+    - [3. Install Cosmovisor](#3-install-cosmovisor)
+    - [4. Set Vars](#4-set-vars)
+    - [5. Download Geth and Consensus Client Binaries](#5-download-geth-and-consensus-client-binaries)
+    - [6. Init App](#6-init-app)
+    - [7. Set Custom Ports in config.toml](#7-set-custom-ports-in-configtoml-file)
+    - [8. Add Peers to config.toml](#8-add-peers-to-the-configtoml)
+    - [9. Enable Indexer (Optional)](#9-enable-indexer-optional-if-u-want-to-run-a-full-node-follow-this-step)
+    - [10. Initialize Cosmovisor and Create Symlink](#10-initialize-cosmovisor-and-create-a-symlink-to-the-latest-consensus-client-version-in-the-go-directory)
+    - [11. Define the Path of Cosmovisor](#11-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client)
+      - [Save the Results](#save-the-results-theyll-be-used-in-the-next-step)
+      - [Example Result](#this-is-an-example-of-the-result)
+    - [12. Create Service Files](#12-create-service-files)
+      - [Consensus Client Service File](#consensus-client-service-file)
+      - [Geth Service File](#geth-service-file)
+    - [13. Start the Node](#13-start-the-node)
+      - [Start Geth & Consensus Client](#start-geth--consensus-client)
+      - [Example: Node Running Properly](#this-is-an-example-of-the-node-running-properly)
+        - [story-geth Logs](#story-geth-logs)
+        - [story Logs](#story-logs)
+    - [14. Check Node Synchronization](#14-check-node-synchronization)
+    - [15. Check the Node Version](#15-check-the-node-version)
+  - [Validator and Key Commands](#validator-and-key-commands)
+    - [1. Export EVM Public Key and Private Key](#1-export-evm-public-key-and-private-key)
+    - [2. Claim Faucet](#2-claim-faucet)
+    - [3. Create Validator](#3-create-validator)
+    - [4. Backup Your Validator](#4-backup-your-validator-)
+    - [5. Delegate Token to Validator](#5-delegate-token-to-validator)
+      - [Self Delegate](#self-delegate)
+      - [Delegate to Grand Valley](#delegate-to-)
+  - [Delete the Node](#delete-the-node)
+  - [Upgrade Execution Client (story-geth)](#upgrade-execution-client-story-geth-to-a-user-specified-version)
+  - [Upgrade Consensus Client (story)](#upgrade-the-consensus-client-story-to-a-user-specified-version-at-a-user-specified-block-height)
+- [Let's BUIDL Story Together](#lets-buidl-story-together)
+
+---
 
 # Story Protocol
 
@@ -77,8 +81,7 @@ In the sections below, we will delve deeper into this architecture and explore t
 
 Story Network is a purpose-built layer 1 blockchain that combines the advantages of EVM (Ethereum Virtual Machine) and Cosmos SDK. It is fully EVM-compatible and features deep execution layer optimizations to support complex data structures like IP quickly and cost-efficiently. Key features include:
 
-1. **Precompiled Primitives**: These allow the system to traverse complex data structures like IP graphs within seconds at marginal costs, ensuring that the licensing process is both fast and affordable.
-
+1. **Precompiled Primitives**: Traverse complex data structures like IP graphs within seconds at marginal costs, ensuring that the licensing process is both fast and affordable.
 2. **Consensus Layer**: Based on the mature CometBFT stack, this layer ensures fast finality and cheap transactions, further enhancing the efficiency of the network.
 
 The Proof-of-Creativity Protocol is a set of smart contracts natively deployed on Story Network. It allows creators to register their IP as "IP Assets" (IPA) on the protocol.
@@ -106,10 +109,10 @@ Moreover, the current system relies on one-to-one licensing deals, which are not
 
 Story offers a solution with a specialized layer 1 blockchain that combines the advantages of EVM and Cosmos SDK, providing the infrastructure needed for massive IP data scalability. Key applications of Story include:
 
-1. **Creators**: Story enables creators to register their IP as IP Assets and set terms using the Programmable IP License (PIL).
-2. **Derivative Works**: Creators of derivative works can license IP automatically through the blockchain, making the process efficient and scalable.
-3. **AI-Generated Media**: Story supports the efficient management of AI-generated content by automating the licensing process.
-4. **Scalable Licensing**: Story's approach to licensing ensures that all potential opportunities are captured, fostering creativity and collaboration.
+1. **Creators**: Register IP as IP Assets and set terms using the Programmable IP License (PIL).
+2. **Derivative Works**: License IP automatically through the blockchain, making the process efficient and scalable.
+3. **AI-Generated Media**: Efficiently manage AI-generated content by automating the licensing process.
+4. **Scalable Licensing**: Ensure all potential opportunities are captured, fostering creativity and collaboration.
 
 ## Example Use Case
 
@@ -121,7 +124,7 @@ By leveraging blockchain technology, Story is poised to revolutionize IP managem
 
 For more detailed information, visit the [Story Documentation](https://docs.story.foundation).
 
-With Public Testnet, Story's docs and code become public. Check them out below!
+With Public Testnet, Story's docs and code become public. Check them out below:
 
 - [Story Website](https://www.story.foundation/)
 - [Story Twitter](https://x.com/StoryProtocol)
@@ -131,20 +134,20 @@ With Public Testnet, Story's docs and code become public. Check them out below!
 - [Story Explorer](https://testnet.storyscan.app/)
 - [Piplabs Github](https://github.com/piplabs)
 
-## Grand Valley's Story Protocol public endpoints:
+## Grand Valley's Story Protocol Public Endpoints
 
-- cosmos rpc: `https://lightnode-rpc-story.grandvalleys.com`
-- json-rpc: `https://lightnode-json-rpc-story.grandvalleys.com`
-- cosmos rest-api: `https://lightnode-api-story.grandvalleys.com`
-- cosmos ws: `wss://lightnode-rpc-story.grandvalleys.com/websocket`
-- evm ws: `wss://lightnode-wss-story.grandvalleys.com`
+- **Cosmos RPC:** `https://lightnode-rpc-story.grandvalleys.com`
+- **JSON-RPC:** `https://lightnode-json-rpc-story.grandvalleys.com`
+- **Cosmos REST API:** `https://lightnode-api-story.grandvalleys.com`
+- **Cosmos WS:** `wss://lightnode-rpc-story.grandvalleys.com/websocket`
+- **EVM WS:** `wss://lightnode-wss-story.grandvalleys.com`
 
-## Valley of Story: Story Protocol Tools Created by Grand Valley
+## Valley of Story: Tools by Grand Valley
 
 ![Valley of Story Image 1](https://github.com/user-attachments/assets/5110da6d-4ec2-492d-86ea-887b34b279b4)
 ![image](https://github.com/user-attachments/assets/ba8cc713-307f-4440-b146-a6a79856a4c5)
 
-**Valley of Story** by Grand Valley is an all-in-one infrastructure solution providing powerful tools for efficient node management and validator interactions within the **Story Protocol** network. Designed for node runners in the **Story Protocol** ecosystem, **Valley of Story** offers an accessible, streamlined interface to manage nodes, maintain network participation, and perform validator functions effectively.
+**Valley of Story** by Grand Valley is an all-in-one infrastructure solution providing powerful tools for efficient node management and validator interactions within the Story Protocol network. Designed for node runners in the Story Protocol ecosystem, Valley of Story offers an accessible, streamlined interface to manage nodes, maintain network participation, and perform validator functions effectively.
 
 ### Installation
 
@@ -158,19 +161,19 @@ bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main
 
 #### 1. Node Interactions
 
-- **Deploy and Manage Validator Nodes**: Deploy new validator nodes or remove existing ones. **Important!** Always back up critical files (e.g., seed phrases, private keys, `priv_validator_key.json`) before deletion.
-- **Node Control**: Start, stop, or restart validator nodes as needed.
-- **Node Status**: Monitor the current operational status of the validator node.
-- **Peer Management**: Add peers to enhance network stability and communication.
-- **Client Updates**: Update Consensus Client and Geth (Execution Client) to ensure compatibility and performance.
-- **Targeted Controls**: Stop or restart specific services, such as the Consensus Client or Geth, for more granular control.
-- **Logging**: Access unified logs for both Consensus Client and Geth, aiding in troubleshooting and monitoring.
+- **Deploy and Manage Validator Nodes:** Deploy new validator nodes or remove existing ones. **Important!** Always back up critical files (e.g., seed phrases, private keys, `priv_validator_key.json`) before deletion.
+- **Node Control:** Start, stop, or restart validator nodes as needed.
+- **Node Status:** Monitor the current operational status of the validator node.
+- **Peer Management:** Add peers to enhance network stability and communication.
+- **Client Updates:** Update Consensus Client and Geth (Execution Client) to ensure compatibility and performance.
+- **Targeted Controls:** Stop or restart specific services, such as the Consensus Client or Geth, for more granular control.
+- **Logging:** Access unified logs for both Consensus Client and Geth, aiding in troubleshooting and monitoring.
 
 #### 2. Validator and Key Interactions
 
-- **Validator Setup**: Create a validator to engage in network consensus and security.
-- **Key Management**: Export EVM private keys and back up validator keys to prevent data loss.
-- **Stake and Unstake Tokens**: Stake tokens to support network security or unstake them as required. Also, query validator public keys and account balances.
+- **Validator Setup:** Create a validator to engage in network consensus and security.
+- **Key Management:** Export EVM private keys and back up validator keys to prevent data loss.
+- **Stake and Unstake Tokens:** Stake tokens to support network security or unstake them as required. Also, query validator public keys and account balances.
 
 #### 3. Snapshot Application
 
@@ -180,25 +183,29 @@ bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main
 
 - Install the Story app for command-line transactions and network interactions without running a full node.
 
+---
+
 ## Story Node Deployment Guide With Cosmovisor
 
-### **System Requirements**
+### System Requirements
 
-| Category  | Requirements     |
-| --------- | ---------------- |
-| CPU       | 8+ cores         |
-| RAM       | 32+ GB           |
-| Storage   | 500+ GB NVMe SSD |
-| Bandwidth | 10MBit/s         |
+| Category   | Requirements     |
+| ---------- | ---------------- |
+| CPU        | 8+ cores         |
+| RAM        | 32+ GB           |
+| Storage    | 500+ GB NVMe SSD |
+| Bandwidth  | 10MBit/s         |
 
-- service file name: `story.service` `story-geth.service`
-- current chain: `aeneid`
-- current story node version: `v1.1.1 - v0.12.1 - v0.13.0 - v0.13.2`
-- current story-geth node version: `v1.0.2`
+- Service file names: `story.service`, `story-geth.service`
+- Current chain: `aeneid`
+- Current story node version: `v1.1.1 - v0.12.1 - v0.13.0 - v0.13.2`
+- Current story-geth node version: `v1.0.2`
 
-## Validator Manual installation
+---
 
-### 1. install dependencies for building from source
+## Validator Manual Installation
+
+### 1. Install Dependencies for Building from Source
 
 ```bash
 sudo apt update -y && sudo apt upgrade -y && \
@@ -206,7 +213,7 @@ sudo apt install -y curl git jq build-essential gcc unzip wget lz4 openssl \
 libssl-dev pkg-config protobuf-compiler clang cmake llvm llvm-dev
 ```
 
-### 2. install go
+### 2. Install Go
 
 ```bash
 cd $HOME && ver="1.22.0" && \
@@ -217,27 +224,27 @@ echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile && \
 source ~/.bash_profile && go version
 ```
 
-### 3. install cosmovisor
+### 3. Install Cosmovisor
 
 ```bash
 go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 ```
 
-### 4. set vars
+### 4. Set Vars
 
-EDIT YOUR MONIKER & YOUR PREFERRED PORT NUMBER
+Edit your moniker and your preferred port number:
 
 ```bash
 read -p "Enter your moniker: " MONIKER && echo "Current moniker: $MONIKER"
 read -p "Enter your 2 digits custom port: (leave empty to use default: 26)" STORY_PORT && echo "Current port number: ${STORY_PORT:-26}"
 
-echo "export MONIKER="$MONIKER"" >> $HOME/.bash_profile
-echo "export STORY_CHAIN_ID="aeneid"" >> $HOME/.bash_profile
-echo "export STORY_PORT="$STORY_PORT"" >> $HOME/.bash_profile
+echo "export MONIKER=$MONIKER" >> $HOME/.bash_profile
+echo "export STORY_CHAIN_ID=aeneid" >> $HOME/.bash_profile
+echo "export STORY_PORT=$STORY_PORT" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 ```
 
-### 5. download geth and consensus client binaries
+### 5. Download Geth and Consensus Client Binaries
 
 ```bash
 cd $HOME
@@ -259,13 +266,13 @@ sudo chown -R $USER:$USER $HOME/go/bin/story
 sudo chmod +x $HOME/go/bin/story
 ```
 
-### 6. init app
+### 6. Init App
 
 ```bash
 story init --network $STORY_CHAIN_ID --moniker $MONIKER
 ```
 
-### 7. set custom ports in config.toml file
+### 7. Set Custom Ports in config.toml
 
 ```bash
 sed -i.bak -e "s%laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${STORY_PORT}656\"%;
@@ -277,7 +284,7 @@ sed -i.bak -e "s%engine-endpoint = \"http://localhost:8551\"%engine-endpoint = \
 s%api-address = \"127.0.0.1:1317\"%api-address = \"127.0.0.1:${STORY_PORT}317\"%" $HOME/.story/story/config/story.toml
 ```
 
-### 8. add peers to the config.toml
+### 8. Add Peers to config.toml
 
 ```bash
 peers=$(curl -sS https://lightnode-rpc-story.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
@@ -285,13 +292,15 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.story
 echo $peers
 ```
 
-### 9. enable indexer (optional) (if u want to run a full node follow this step)
+### 9. Enable Indexer (Optional)
+
+_If you want to run a full node, follow this step:_
 
 ```bash
 sed -i -e 's/^indexer = "null"/indexer = "kv"/' $HOME/.story/story/config/config.toml
 ```
 
-### 10. initialize Cosmovisor and create a symlink to the latest consensus client version in the Go directory
+### 10. Initialize Cosmovisor and Create Symlink
 
 ```bash
 echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
@@ -309,7 +318,7 @@ mkdir -p $HOME/.story/story/cosmovisor/backup
 cd $HOME
 ```
 
-### 11. define the path of cosmovisor for being used in the consensus client
+### 11. Define the Path of Cosmovisor
 
 ```bash
 input1=$(which cosmovisor)
@@ -324,15 +333,17 @@ echo "Story home: $input2"
 echo "Backup directory: $input3"
 ```
 
-#### save the results, they'll be used in the next step
+#### Save the Results
 
-#### this is an example of the result
+_They'll be used in the next step._
+
+#### Example Result
 
 ![image](https://github.com/user-attachments/assets/21ef09d9-2595-46b6-b014-e30d5ff09cc1)
 
-### 12. create service files
+### 12. Create Service Files
 
-##### consensus client service file
+#### Consensus Client Service File
 
 ```bash
 sudo tee /etc/systemd/system/story.service > /dev/null <<EOF
@@ -361,7 +372,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-##### geth service file
+#### Geth Service File
 
 ```bash
 sudo tee /etc/systemd/system/story-geth.service > /dev/null <<EOF
@@ -384,9 +395,9 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### 13. start the node
+### 13. Start the Node
 
-#### start geth & consensus client
+#### Start Geth & Consensus Client
 
 ```bash
 sudo systemctl daemon-reload && \
@@ -395,55 +406,57 @@ sudo systemctl restart story-geth story && \
 sudo journalctl -u story-geth -u story -fn 100
 ```
 
-#### this is an example of the node running properly
+#### Example: Node Running Properly
 
-##### story-geth logs
+##### story-geth Logs
 
 ![story-geth logs](resources/image.png)
 
-##### story logs
+##### story Logs
 
 ![story logs](resources/image-1.png)
 
-### 14. check node synchronization
+### 14. Check Node Synchronization
 
 ```bash
 curl http://127.0.0.1:${STORY_PORT}657/status | jq
 ```
 
-if u use default port (26):
+If you use default port (26):
 
 ```bash
 curl http://127.0.0.1:26657/status | jq
 ```
 
-### 15. check the node version
+### 15. Check the Node Version
 
 ```bash
 cosmovisor run version
 ```
 
-## Validator and key Commands
+---
 
-### 1. export evm public key and private key
+## Validator and Key Commands
+
+### 1. Export EVM Public Key and Private Key
 
 ```bash
 story validator export --export-evm-key && cat $HOME/.story/story/config/private_key.txt
 ```
 
-make sure your node block height has been synced with the latest block height. or you can check the `catching_up` value must be `false`
+Make sure your node block height has been synced with the latest block height, or check that the `catching_up` value is `false`.
 
-### 2. claim faucet
+### 2. Claim Faucet
 
 https://faucet.story.foundation/
 
-### 3. create validator
+### 3. Create Validator
 
 ```bash
- story validator create --stake 1000000000000000000 --private-key <your private key>
+story validator create --stake 1000000000000000000 --private-key <your private key>
 ```
 
-### 4. BACKUP YOUR VALIDATOR <img src="https://img.shields.io/badge/IMPORTANT-red" alt="Important" width="100">
+### 4. Backup Your Validator <img src="https://img.shields.io/badge/IMPORTANT-red" alt="Important" width="100">
 
 ```bash
 nano /$HOME/.story/story/config/priv_validator_key.json
@@ -453,25 +466,27 @@ nano /$HOME/.story/story/config/priv_validator_key.json
 nano /$HOME/.story/story/data/priv_validator_state.json
 ```
 
-copy all of the contents of the ![priv_validator_key.json](https://img.shields.io/badge/priv__validator__key.json-red) !and ![priv_validator_key.json](https://img.shields.io/badge/priv__validator__state.json-red) files and save them in a safe place. This is a vital step in case you need to migrate your validator node
+Copy all contents of the ![priv_validator_key.json](https://img.shields.io/badge/priv__validator__key.json-red) and ![priv_validator_state.json](https://img.shields.io/badge/priv__validator__state.json-red) files and save them in a safe place. This is vital in case you need to migrate your validator node.
 
-### 5. delegate token to validator
+### 5. Delegate Token to Validator
 
-#### self delegate
+#### Self Delegate
 
 ```bash
 story validator stake --private-key <your private key> --stake 1024000000000000000000 --validator-pubkey <your validator public key>
 ```
 
-#### delegate to <a href="https://testnet.storyscan.app/validators/storyvaloper1cvsdp0tsz25fhedd7cjvntq42347astvar06v8"><img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/e8704cc4-2319-4a21-9138-0264e75e3a82" alt="GRAND VALLEY" width="50" height="50">
+#### Delegate to Grand Valley
 
-</a>
+[<img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/e8704cc4-2319-4a21-9138-0264e75e3a82" alt="GRAND VALLEY" width="50" height="50">](https://testnet.storyscan.app/validators/storyvaloper1cvsdp0tsz25fhedd7cjvntq42347astvar06v8)
 
 ```bash
 story validator stake --private-key <your private key> --stake 1024000000000000000000 --validator-pubkey 036a75cfa84cf485e5b4a6844fa9f2ff03f410f7c8c0148f4e4c9e535df9caba22/wP0EPfIwBSPTkyeU135yroi
 ```
 
-## delete the node
+---
+
+## Delete the Node
 
 ```bash
 sudo systemctl stop story-geth story
@@ -483,7 +498,9 @@ sudo rm -r $HOME/go/bin/story-geth $HOME/go/bin/geth
 sed -i "/STORY_/d" $HOME/.bash_profile
 ```
 
-## upgrade execution client (`story-geth`) to a user-specified version
+---
+
+## Upgrade Execution Client (`story-geth`) to a User-Specified Version
 
 ```bash
 # Prompt user for input
@@ -510,7 +527,9 @@ sudo systemctl daemon-reload && \
 sudo systemctl restart story-geth
 ```
 
-## upgrade the consensus client (`story`) to a user-specified version at a user-specified block height
+---
+
+## Upgrade the Consensus Client (`story`) to a User-Specified Version at a User-Specified Block Height
 
 ```bash
 # Prompt user for input
@@ -542,4 +561,6 @@ sudo rm $HOME/.story/story/data/upgrade-info.json
 cosmovisor add-upgrade $CONSENSUS_VERSION $STORY_INSTALL_DIR/$STORY_FILE_NAME --upgrade-height $UPGRADE_HEIGHT --force
 ```
 
-# let's buidl Story together
+---
+
+# Let's BUIDL Story Together
