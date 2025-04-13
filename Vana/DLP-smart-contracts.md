@@ -82,4 +82,4 @@ follow these instructions
 
 # [CONTINUE TO DLP VALIDATOR NODE](https://github.com/hubofvalley/Testnet-Guides/blob/main/Vana/DLP-validator-node.md)
 
-### let's buidl together
+### Let's Buidl Vana Together

@@ -117,3 +117,5 @@ For more detailed information, visit the [Anoma Documentation](https://anoma.net
 ---
 
 This README provides an overview of Anoma's intent-centric architecture and its potential to revolutionize decentralized applications. For more detailed information and to stay updated on the latest developments, please refer to the additional resources listed above.
+
+### Let's Buidl Anoma Together

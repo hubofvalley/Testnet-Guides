@@ -99,7 +99,7 @@ source ~/.bash_profile
 
 echo 'export LOG_CONTRACT_ADDRESS="'"$LOG_CONTRACT_ADDRESS"'"' >> ~/.bash_profile
 
-echo -e "\n\033[31mCHECK YOUR STORAGE KV VARIABLES\033[0m\n\nZGS_NODE: $ZGS_NODE\nLOG_CONTRACT_ADDRESS: $LOG_CONTRACT_ADDRESS\nZGS_LOG_SYNC_BLOCK: $ZGS_LOG_SYNC_BLOCK\nBLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT\n\n" "\033[3m\"lets buidl together\" - Grand Valley\033[0m"
+echo -e "\n\033[31mCHECK YOUR STORAGE KV VARIABLES\033[0m\n\nZGS_NODE: $ZGS_NODE\nLOG_CONTRACT_ADDRESS: $LOG_CONTRACT_ADDRESS\nZGS_LOG_SYNC_BLOCK: $ZGS_LOG_SYNC_BLOCK\nBLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT\n\n" "\033[3m\"Let's Buidl 0G Together\" - Grand Valley\033[0m"
 
 ### 5. Update storage kv configuration
 rm -rf $HOME/0g-storage-kv/run/config.toml && cp $HOME/0g-storage-kv/run/config_example.toml $HOME/0g-storage-kv/run/config.toml
@@ -131,4 +131,4 @@ else
     echo "Storage KV installation failed. Please check the logs for more information."
 fi
 
-echo "Let's Buidl 0G Together"
+echo "Lets Buidl 0G Together"

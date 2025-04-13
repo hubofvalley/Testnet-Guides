@@ -17,7 +17,7 @@
     - [User-Owned Foundation Models](#user-owned-foundation-models)
   - [Conclusion](#conclusion)
 - [SETUP GUIDE](#setup-guide)
-    - [let's buidl together](#lets-buidl-together)
+    - [Let's Buidl Vana Together](#lets-buidl-vana-together)
 
 # Vana: Turning Data into Currency
 
@@ -106,4 +106,4 @@ Join us and be part of the revolution!
 
 # [SETUP GUIDE](https://github.com/hubofvalley/Testnet-Guides/blob/main/Vana/setup.md)
 
-### let's buidl together
+### Let's Buidl Vana Together

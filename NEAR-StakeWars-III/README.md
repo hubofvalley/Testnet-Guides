@@ -56,3 +56,5 @@ Pada bagian ID, isi dengan email kalian.
 ```text
 1 UNP (UNLOCKED NEAR POINTS) = 1 NEAR
 1 DNP (DELEGATED NEAR POINTS) = 500 NEAR DELEGATED YOUR MAINNET VALIDATOR
+
+### Let's Buidl NEAR Together

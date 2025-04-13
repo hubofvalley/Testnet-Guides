@@ -197,6 +197,8 @@ source $HOME/.bash_profile
 
 _You need to verify by using your Discord account and get the faucet role on Initia's Discord channel._  
 [**Faucet**](https://faucet.testnet.initia.xyz/)
+### Let's Buidl Initia Together
+
 
 ### 18. Check Sync Status
 

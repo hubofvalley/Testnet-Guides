@@ -97,6 +97,8 @@ Additional information on how IBC works can be found [here](https://ibc.cosmos.n
 
    Adding chains from the chain-registry randomly selects an RPC address from the registry entry.  
    If you are running your own node, manually go into the config and adjust the `rpc-addr` setting.
+### Let's Buidl Stride Together
+
 
    > NOTE: `rly chains add` will check the liveliness of the available RPC endpoints for that chain in the chain-registry.  
    > It is possible that the command will fail if none of these RPC endpoints are available. In this case, you will want to manually add the chain config.

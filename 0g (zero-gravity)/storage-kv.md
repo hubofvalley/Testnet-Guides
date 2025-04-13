@@ -130,7 +130,7 @@ echo "ZGS_NODE: $ZGS_NODE"
 echo "LOG_CONTRACT_ADDRESS: $LOG_CONTRACT_ADDRESS"
 echo "ZGS_LOG_SYNC_BLOCK: $ZGS_LOG_SYNC_BLOCK"
 echo "BLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT"
-echo -e "\n\033[3mlets buidl together - Grand Valley\033[0m\n"
+echo -e "\n\033[3mLet's Buidl 0G Together - Grand Valley\033[0m\n"
 ```
 
 ### 5. Download the Binary

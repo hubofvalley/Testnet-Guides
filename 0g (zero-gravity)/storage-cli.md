@@ -95,7 +95,7 @@ echo "ZGS_NODE: $ZGS_NODE"
 echo "LOG_CONTRACT_ADDRESS: $LOG_CONTRACT_ADDRESS"
 echo "BLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT"
 echo "PRIVATE_KEY: $PRIVATE_KEY"
-echo -e "\033[3mlets buidl together - Grand Valley\033[0m"
+echo -e "\033[3mLet's Buidl 0G Together - Grand Valley\033[0m"
 ```
 
 ---
@@ -134,7 +134,7 @@ else
   echo "Upload failed, file $INPUT_FILE_PATH was not deleted."
 fi
 
-echo -e "\033[3mlets buidl together - Grand Valley\033[0m"
+echo -e "\033[3mLet's Buidl 0G Together - Grand Valley\033[0m"
 ```
 
 ### Successful Result
@@ -165,7 +165,7 @@ cd $HOME/0g-storage-client
   --file $OUTPUT_FILE_PATH \
   --proof
 
-echo -e "\033[3mlets buidl together - Grand Valley\033[0m"
+echo -e "\033[3mLet's Buidl 0G Together - Grand Valley\033[0m"
 ```
 
 ### Successful Result

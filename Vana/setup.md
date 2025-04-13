@@ -89,4 +89,4 @@ cd $HOME/vana-dlp-chatgpt/ && \
 
 # [CONTINUE TO DLP SMART CONTRACTS DEPLOYMENT](https://github.com/hubofvalley/Testnet-Guides/blob/main/Vana/DLP-smart-contracts.md)
 
-### let's buidl together
+### Let's Buidl Vana Together

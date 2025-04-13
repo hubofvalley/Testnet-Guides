@@ -47,6 +47,8 @@ Monad represents a significant advancement in blockchain technology, offering a 
 For more detailed information, visit the [Monad Documentation](https://docs.monad.xyz/).
 
 ---
+### Let's Buidl Monad Together
+
 
 ## Additional Resources
 
