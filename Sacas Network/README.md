@@ -26,7 +26,7 @@
     - [4. Set Vars](#4-set-vars)
     - [5. Download Binary](#5-download-binary)
     - [6. Config and Init App](#6-config-and-init-app)
-    - [Let's Buidl Sacas Network Together](#lets-buidl-sacas-network-together)
+    - [Let's Buidl Sacas Together](#lets-buidl-sacas-together)
     - [7. Set Chain ID and Custom Ports in client.toml](#7-set-chain-id-and-custom-ports-in-clienttoml)
     - [8. Set Custom Ports in config.toml](#8-set-custom-ports-in-configtoml)
     - [9. Set Custom Ports in app.toml](#9-set-custom-ports-in-apptoml)
@@ -198,7 +198,7 @@ sacasd version
 cd $HOME
 sacasd init $MONIKER --chain-id $SACAS_CHAIN_ID
 ```
-### Let's Buidl Sacas Network Together
+### Let's Buidl Sacas Together
 
 
 ### 7. Set Chain ID and Custom Ports in client.toml
