@@ -1,6 +1,6 @@
 # Gensyn Overview
 
-`will always update`
+> _This guide is continuously updated._
 
 <p align="center">
   <img src="resources/grandvalleyxgensyn.png" width="1000" />
@@ -10,9 +10,9 @@
 
 ## What is Gensyn?
 
-**Gensyn** is a decentralized compute protocol designed for training machine learning models at scale — without relying on centralized infrastructure.
+**Gensyn** is a decentralized compute protocol designed for training machine learning models at scale—without relying on centralized infrastructure.
 
-It creates a permissionless, trustless marketplace for ML compute where anyone can offer or request training power. The protocol ensures correctness of work using lightweight cryptographic proofs — making trust in centralized compute obsolete.
+It creates a permissionless, trustless marketplace for ML compute where anyone can offer or request training power. The protocol ensures correctness of work using lightweight cryptographic proofs—making trust in centralized compute obsolete.
 
 ---
 
@@ -33,9 +33,9 @@ It creates a permissionless, trustless marketplace for ML compute where anyone c
 ### 1. Training Job Submission
 
 Clients submit training tasks to the network, which include:
-- Initial model weights  
-- Datasets or data loaders  
-- Optimizer configurations  
+- Initial model weights
+- Datasets or data loaders
+- Optimizer configurations
 - Target objectives / checkpoints
 
 These are dispatched into a peer-to-peer marketplace for available compute nodes to pick up.
@@ -87,18 +87,18 @@ To support scalable model training:
   Supports parallelized ML training across distributed nodes with low coordination overhead.
 
 - **Incentive Alignment**  
-  Honest compute is rewarded. Cheating provably fails — or gets slashed.
+  Honest compute is rewarded. Cheating provably fails—or gets slashed.
 
 ---
 
 ## Further Reading
 
-- 🔗 [Litepaper](https://docs.gensyn.ai/litepaper)  
-- 📘 [Official Docs](https://docs.gensyn.ai)  
-- 🌐 [Website](https://gensyn.ai)  
-- 🧠 [Gensyn on Twitter](https://x.com/GensynAI)  
+- 🔗 [Litepaper](https://docs.gensyn.ai/litepaper)
+- 📘 [Official Docs](https://docs.gensyn.ai)
+- 🌐 [Website](https://gensyn.ai)
+- 🧠 [Gensyn on Twitter](https://x.com/GensynAI)
 - 💻 [GitHub](https://github.com/GensynAI)
 
 ---
 
-**Let's Buidl Gensyn Together.**
+**Let's BUIDL Gensyn Together.**
