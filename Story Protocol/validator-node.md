@@ -5,6 +5,21 @@
 
 **Valley of Story** by Grand Valley is an all-in-one infrastructure solution providing powerful tools for efficient node management and validator interactions within the Story Protocol network. Designed for node runners in the Story Protocol ecosystem, Valley of Story offers an accessible, streamlined interface to manage nodes, maintain network participation, and perform validator functions effectively.
 
+### Key Features of Valley of Story
+
+- **Deploy and Manage Validator Nodes:** Deploy new validator nodes or remove existing ones. **Important!** Always back up critical files (e.g., seed phrases, private keys, `priv_validator_key.json`) before deletion.
+- **Node Control:** Start, stop, or restart validator nodes as needed.
+- **Node Status:** Monitor the current operational status of the validator node.
+- **Peer Management:** Add peers to enhance network stability and communication.
+- **Client Updates:** Update Consensus Client and Geth (Execution Client) to ensure compatibility and performance.
+- **Targeted Controls:** Stop or restart specific services, such as the Consensus Client or Geth, for more granular control.
+- **Logging:** Access unified logs for both Consensus Client and Geth, aiding in troubleshooting and monitoring.
+- **Validator Setup:** Create a validator to engage in network consensus and security.
+- **Key Management:** Export EVM private keys and back up validator keys to prevent data loss.
+- **Stake and Unstake Tokens:** Stake tokens to support network security or unstake them as required. Also, query validator public keys and account balances.
+- **Snapshot Application:** Quickly synchronize with the network by applying the latest snapshot, expediting node setup.
+- **Story App Installation:** Install the Story app for command-line transactions and network interactions without running a full node.
+
 ## Installation
 
 #### System Requirements
@@ -28,30 +43,6 @@ Run the following command to install Valley of Story:
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/valleyofStory.sh)
 ```
-
-### Key Features of Valley of Story
-
-#### 1. Node Interactions
-
-- **Deploy and Manage Validator Nodes:** Deploy new validator nodes or remove existing ones. **Important!** Always back up critical files (e.g., seed phrases, private keys, `priv_validator_key.json`) before deletion.
-- **Node Control:** Start, stop, or restart validator nodes as needed.
-- **Node Status:** Monitor the current operational status of the validator node.
-- **Peer Management:** Add peers to enhance network stability and communication.
-- **Client Updates:** Update Consensus Client and Geth (Execution Client) to ensure compatibility and performance.
-- **Targeted Controls:** Stop or restart specific services, such as the Consensus Client or Geth, for more granular control.
-- **Logging:** Access unified logs for both Consensus Client and Geth, aiding in troubleshooting and monitoring.
-
-#### 2. Validator and Key Interactions
-
-- **Validator Setup:** Create a validator to engage in network consensus and security.
-- **Key Management:** Export EVM private keys and back up validator keys to prevent data loss.
-- **Stake and Unstake Tokens:** Stake tokens to support network security or unstake them as required. Also, query validator public keys and account balances.
-
-#### 3. Snapshot Application
-
-- Quickly synchronize with the network by applying the latest snapshot, expediting node setup.
-
-#### 4. Story App Installation
 
 - Install the Story app for command-line transactions and network interactions without running a full node.
 
