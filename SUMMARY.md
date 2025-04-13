@@ -3,10 +3,10 @@
 * [Home](README.md)
 
 * [0g (zero-gravity)](0g%20(zero-gravity)/README.md)
+  * [Validator Node Guide](0g%20(zero-gravity)/validator-node.md)
   * [Storage Node Guide](0g%20(zero-gravity)/storage-node.md)
   * [Storage CLI Guide](0g%20(zero-gravity)/storage-cli.md)
   * [Storage KV Guide](0g%20(zero-gravity)/storage-kv.md)
-  * [Validator Node Guide](0g%20(zero-gravity)/validator-node.md)
 
 * [Anoma](Anoma/README.md)
 
