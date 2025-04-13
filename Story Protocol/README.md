@@ -9,6 +9,7 @@
 ## Table of Contents
 
 - [Story Protocol Testnet Guide](#story-protocol-testnet-guide)
+  - [Table of Contents](#table-of-contents)
 - [Story Protocol](#story-protocol)
   - [What Is Story?](#what-is-story)
   - [Story’s Architecture](#storys-architecture)
@@ -35,19 +36,19 @@
     - [4. Set Vars](#4-set-vars)
     - [5. Download Geth and Consensus Client Binaries](#5-download-geth-and-consensus-client-binaries)
     - [6. Init App](#6-init-app)
-    - [7. Set Custom Ports in config.toml](#7-set-custom-ports-in-configtoml-file)
-    - [8. Add Peers to config.toml](#8-add-peers-to-the-configtoml)
-    - [9. Enable Indexer (Optional)](#9-enable-indexer-optional-if-u-want-to-run-a-full-node-follow-this-step)
-    - [10. Initialize Cosmovisor and Create Symlink](#10-initialize-cosmovisor-and-create-a-symlink-to-the-latest-consensus-client-version-in-the-go-directory)
-    - [11. Define the Path of Cosmovisor](#11-define-the-path-of-cosmovisor-for-being-used-in-the-consensus-client)
-      - [Save the Results](#save-the-results-theyll-be-used-in-the-next-step)
-      - [Example Result](#this-is-an-example-of-the-result)
+    - [7. Set Custom Ports in config.toml](#7-set-custom-ports-in-configtoml)
+    - [8. Add Peers to config.toml](#8-add-peers-to-configtoml)
+    - [9. Enable Indexer (Optional)](#9-enable-indexer-optional)
+    - [10. Initialize Cosmovisor and Create Symlink](#10-initialize-cosmovisor-and-create-symlink)
+    - [11. Define the Path of Cosmovisor](#11-define-the-path-of-cosmovisor)
+      - [Save the Results](#save-the-results)
+      - [Example Result](#example-result)
     - [12. Create Service Files](#12-create-service-files)
       - [Consensus Client Service File](#consensus-client-service-file)
       - [Geth Service File](#geth-service-file)
     - [13. Start the Node](#13-start-the-node)
-      - [Start Geth & Consensus Client](#start-geth--consensus-client)
-      - [Example: Node Running Properly](#this-is-an-example-of-the-node-running-properly)
+      - [Start Geth \& Consensus Client](#start-geth--consensus-client)
+      - [Example: Node Running Properly](#example-node-running-properly)
         - [story-geth Logs](#story-geth-logs)
         - [story Logs](#story-logs)
     - [14. Check Node Synchronization](#14-check-node-synchronization)
@@ -56,14 +57,14 @@
     - [1. Export EVM Public Key and Private Key](#1-export-evm-public-key-and-private-key)
     - [2. Claim Faucet](#2-claim-faucet)
     - [3. Create Validator](#3-create-validator)
-    - [4. Backup Your Validator](#4-backup-your-validator-)
+    - [4. Backup Your Validator ](#4-backup-your-validator-)
     - [5. Delegate Token to Validator](#5-delegate-token-to-validator)
       - [Self Delegate](#self-delegate)
-      - [Delegate to Grand Valley](#delegate-to-)
+      - [Delegate to Grand Valley](#delegate-to-grand-valley)
   - [Delete the Node](#delete-the-node)
-  - [Upgrade Execution Client (story-geth)](#upgrade-execution-client-story-geth-to-a-user-specified-version)
-  - [Upgrade Consensus Client (story)](#upgrade-the-consensus-client-story-to-a-user-specified-version-at-a-user-specified-block-height)
-- [Let's BUIDL Story Together](#lets-buidl-story-together)
+  - [Upgrade Execution Client (`story-geth`) to a User-Specified Version](#upgrade-execution-client-story-geth-to-a-user-specified-version)
+  - [Upgrade the Consensus Client (`story`) to a User-Specified Version at a User-Specified Block Height](#upgrade-the-consensus-client-story-to-a-user-specified-version-at-a-user-specified-block-height)
+- [Lets Buidl Story Together](#lets-buidl-story-together)
 
 ---
 
@@ -563,4 +564,4 @@ cosmovisor add-upgrade $CONSENSUS_VERSION $STORY_INSTALL_DIR/$STORY_FILE_NAME --
 
 ---
 
-# Let's BUIDL Story Together
+# Lets Buidl Story Together

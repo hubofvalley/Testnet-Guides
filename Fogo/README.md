@@ -110,4 +110,4 @@ FogoChain is a decentralized open-source initiative. Grand Valley welcomes resea
 
 FogoChain is not simply a faster blockchain—it is an institutional-grade infrastructure layer reimagined for the digital economy. By combining execution efficiency, secure validator coordination, and seamless compatibility with existing ecosystems, FogoChain charts a new course for performant, decentralized finance.
 
-**Let's BUIDL Fogo Together**
+**Lets Buidl Fogo Together**

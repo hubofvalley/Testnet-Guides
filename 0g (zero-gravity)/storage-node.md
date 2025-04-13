@@ -22,7 +22,7 @@
     - [10. Start the Node](#10-start-the-node)
     - [11. Show Logs by Date](#11-show-logs-by-date)
     - [Delete Storage Node](#delete-storage-node)
-- [Let's BUIDL Together](#lets-buidl-together)
+- [Lets Buidl 0G Together](#lets-buidl-0g-together)
 
 ---
 
@@ -276,4 +276,4 @@ sudo rm -rf $HOME/0g-storage-node
 
 ---
 
-# Let's BUIDL Together
+# Lets Buidl 0G Together

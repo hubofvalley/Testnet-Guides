@@ -20,7 +20,7 @@
     - [1. Input the Output Path and Root Hash](#1-input-the-output-path-and-root-hash)
     - [2. Execute the Transaction](#2-execute-the-transaction-1)
     - [Successful Result](#successful-result-1)
-- [Let's BUIDL Together](#lets-buidl-together)
+- [Lets Buidl 0G Together](#lets-buidl-0g-together)
 
 ---
 
@@ -174,4 +174,4 @@ echo -e "\033[3mlets buidl together - Grand Valley\033[0m"
 
 ---
 
-# Let's BUIDL Together
+# Lets Buidl 0G Together

@@ -101,4 +101,4 @@ To support scalable model training:
 
 ---
 
-**Let's BUIDL Gensyn Together.**
+**Lets Buidl Gensyn Together.**
