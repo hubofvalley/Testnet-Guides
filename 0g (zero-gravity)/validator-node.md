@@ -38,11 +38,6 @@ bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main
 
 ---
 
-### Manual Installation
-- Service file name: `0gchaind.service`
-- Current chain: `zgtendermint_16600-2`
-
----
 
 ## Manual Installation
 
@@ -403,3 +398,8 @@ sudo rm -rf /etc/systemd/system/0gchaind.service
 sudo rm -r 0g-chain
 sudo rm -rf $HOME/.0gchain
 sed -i "/OG_/d" $HOME/.bash_profile
+```
+
+---
+
+# Lets Buidl 0G Together

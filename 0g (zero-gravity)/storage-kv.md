@@ -7,9 +7,9 @@
 - [0gchain Storage KV Deployment Guide](#0gchain-storage-kv-deployment-guide)
   - [Table of Contents](#table-of-contents)
   - [System Requirements](#system-requirements)
-  - [Install via Valley of 0G (Recommended)](#install-via-valley-of-0g-recommended)
-    - [Deploy Storage KV](#deploy-storage-kv)
-    - [Update Storage KV](#update-storage-kv)
+  - [Automatic Installation (Recommended)](#automatic-installation-recommended)
+    - [Valley of 0G Main Menu (Storage KV Section)](#valley-of-0g-main-menu-storage-kv-section)
+    - [How to Install Automatically](#how-to-install-automatically)
   - [Manual Installation Guide](#manual-installation-guide)
     - [1. Install Dependencies](#1-install-dependencies)
     - [2. Install Go](#2-install-go)
@@ -22,6 +22,7 @@
     - [9. Check Logs](#9-check-logs)
   - [Delete the Node](#delete-the-node)
   - [Manual Update](#manual-update)
+- [Lets Buidl 0G Together](#lets-buidl-0g-together)
 
 ---
 
@@ -37,41 +38,47 @@
 
 ---
 
-## Install via Valley of 0G (Recommended)
+## Automatic Installation (Recommended)
 
-Valley of 0G provides a faster and simpler way to deploy and manage your Storage KV node.
+For the fastest and easiest way to deploy or manage your Storage KV node, use **Valley of 0G**. This tool automates installation, updates, and service management for Storage KV.
 
-### Deploy Storage KV
-
-Open the Valley of 0G CLI:
-```bash
-bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/valleyof0G.sh)
+### Valley of 0G Main Menu (Storage KV Section)
+```
+3. Storage KV
+    a. Deploy Storage KV
+    b. Show Storage KV Logs
+    c. Update Storage KV
 ```
 
-From the menu, select:
-```
-3a → Deploy Storage KV
-```
+### How to Install Automatically
 
-This will:
-- Install dependencies
-- Clone the latest repo
-- Build the binary
-- Configure and launch your service
+1. **Run the Valley of 0G installer:**
+   ```bash
+   bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20(zero-gravity)/resources/valleyof0G.sh)
+   ```
 
----
+2. **At the main menu, select Storage KV options.**
+   - To deploy Storage KV, enter:
+     ```
+     3a
+     ```
+   - To view logs, enter:
+     ```
+     3b
+     ```
+   - To update Storage KV, enter:
+     ```
+     3c
+     ```
 
-### Update Storage KV
+3. **Follow the on-screen prompts until your node is running.**
 
-If you're upgrading your node to the latest version, use the update menu:
-```
-3c → Update Storage KV
-```
+4. **After exiting the script, apply environment changes:**
+   ```bash
+   source ~/.bash_profile
+   ```
 
-The tool will:
-- Pull the latest tag
-- Rebuild the node
-- Restart it cleanly
+> Valley of 0G automates all required steps, including dependency installation, binary build, configuration, and service setup. For advanced management (logs, updates), use the menu options under "Storage KV".
 
 ---
 
@@ -234,3 +241,7 @@ cargo build --release
 ```
 
 Re-configure and restart if necessary.
+
+---
+
+# Lets Buidl 0G Together

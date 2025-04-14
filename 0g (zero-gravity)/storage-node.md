@@ -5,8 +5,9 @@
 - [0gchain Storage Node Deployment Guide](#0gchain-storage-node-deployment-guide)
   - [Table of Contents](#table-of-contents)
   - [System Requirements](#system-requirements)
-  - [Install via Valley of 0G (Recommended)](#install-via-valley-of-0g-recommended)
-    - [Deploy a Storage Node](#deploy-a-storage-node)
+  - [Automatic Installation (Recommended)](#automatic-installation-recommended)
+    - [Valley of 0G Main Menu (Storage Node Section)](#valley-of-0g-main-menu-storage-node-section)
+    - [How to Install Automatically](#how-to-install-automatically)
     - [Apply a Snapshot](#apply-a-snapshot)
     - [Update the Node](#update-the-node)
   - [Manual Installation Guide](#manual-installation-guide)
@@ -41,32 +42,49 @@
 
 ---
 
-## Install via Valley of 0G (Recommended)
+## Automatic Installation (Recommended)
 
-If you want a faster and easier way to deploy or manage your storage node, use **Valley of 0G**. It automates most of the installation and management steps.
 
-### Deploy a Storage Node
+### Valley of 0G Main Menu (Storage Node Section)
+```
+2. Storage Node
+    a. Deploy Storage Node
+    b. Update Storage Node
+    c. Apply Storage Node Snapshot
+    d. Change Storage Node
+    e. Show Storage Node Logs
+    f. Show Storage Node Status
+```
 
-1. **Open Valley of 0G:**
+### How to Install Automatically
+
+1. **Run the Valley of 0G installer:**
    ```bash
-   bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/valleyof0G.sh)
+   bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20(zero-gravity)/resources/valleyof0G.sh)
    ```
 
-2. **Follow the instructions to enter the main menu.**
+2. **At the main menu, select Storage Node options.**
+   - To deploy a storage node, enter:
+     ```
+     2a
+     ```
+   - To update, enter:
+     ```
+     2b
+     ```
+   - To apply a snapshot, enter:
+     ```
+     2c
+     ```
 
-   ![Open Vo0G](resources/image_vo0g_start.png)
+3. **Follow the on-screen prompts until your node is running.**
 
-3. **Select Storage Node options.**  
-   To deploy your node, input:
+4. **After exiting the script, apply environment changes:**
+   ```bash
+   source ~/.bash_profile
    ```
-   2a
-   ```
 
-   ![Main Menu](resources/image_vo0g_menu.png)
-
-4. **Follow the tool's prompts until your node is running.**
-
-   ![Deploy Node](resources/image_vo0g_execute.png)
+> Valley of 0G automates all required steps, including binary download, configuration, and service setup. For advanced management (logs, status, etc.), use the menu options under "Storage Node".
 
 ---
 
