@@ -94,7 +94,7 @@ If you want to sync your storage node faster, use the snapshot feature in Vo0G.
 
 1. **Open Valley of 0G** (if you haven't already):
    ```bash
-   bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/valleyof0G.sh)
+   bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/valleyof0G.sh)
    ```
 
 2. **From the main menu, input:**
@@ -114,7 +114,7 @@ To update your storage node to the latest version:
 
 1. **Open Valley of 0G:**
    ```bash
-   bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/valleyof0G.sh)
+   bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/valleyof0G.sh)
    ```
 
 2. **From the main menu, input:**
