@@ -229,21 +229,32 @@ function query_balance() {
     case $choice in
         1)
             echo -e "${GREEN}Querying balance of your own EVM address...${RESET}"
-            geth --exec "(parseFloat(eth.getBalance('$(story validator export | grep -oP '(?<=EVM Address: ).*')') / 1e18).toFixed(2)) + ' IP'" attach $HOME/.story/geth/aeneid/geth.ipc
+            evm_address=$(story validator export | grep -oP '(?<=EVM Address: ).*')
             ;;
         2)
             read -p "Enter the EVM address to query: " evm_address
-            echo -e "${GREEN}Querying balance of $evm_address...${RESET}"
-            geth --exec "(parseFloat(eth.getBalance('$evm_address') / 1e18).toFixed(2)) + ' IP'" attach ~/.story/geth/aeneid/geth.ipc
             ;;
         3)
             menu
+            return
             ;;
         *)
             echo -e "${RED}Invalid choice. Please enter 1, 2, or 3.${RESET}"
             query_balance
+            return
             ;;
     esac
+
+    echo -e "${CYAN}Fetching balance from mainnet RPC for $evm_address...${RESET}"
+    curl -s --insecure -X POST https://mainnet.storyrpc.io \
+        -H "Content-Type: application/json" \
+        -d "{
+            \"jsonrpc\":\"2.0\",
+            \"method\":\"eth_getBalance\",
+            \"params\": [\"$evm_address\", \"latest\"],
+            \"id\":1514
+        }" | jq -r '.result' | awk '{printf "Balance of %s: %0.18f IP\n", "'"$evm_address"'", strtonum($1)/1e18}'
+
     echo -e "\n${YELLOW}Press Enter to go back to main menu...${RESET}"
     read -r
     menu
