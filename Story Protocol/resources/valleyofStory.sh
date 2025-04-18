@@ -584,8 +584,8 @@ function install_story_app() {
 }
 
 function apply_snapshot() {
-    echo -e "${YELLOW}This feature is not available yet.${RESET}"
-    #bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/apply_snapshot.sh)
+    #echo -e "${YELLOW}This feature is not available yet.${RESET}"
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/apply_snapshot.sh)
     menu
 }
 

@@ -8,42 +8,48 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Snapshot URLs
-MAND_PRUNED_GETH_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/geth_snapshot.lz4"
-MAND_PRUNED_STORY_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/story_snapshot.lz4"
-MAND_ARCHIVE_GETH_SNAPSHOT_URL="https://snapshots.mandragora.io/geth_snapshot.lz4"
-MAND_ARCHIVE_STORY_SNAPSHOT_URL="https://snapshots.mandragora.io/story_snapshot.lz4"
+# MAND_PRUNED_GETH_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/geth_snapshot.lz4"
+# MAND_PRUNED_STORY_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/story_snapshot.lz4"
+# MAND_ARCHIVE_GETH_SNAPSHOT_URL="https://snapshots.mandragora.io/geth_snapshot.lz4"
+# MAND_ARCHIVE_STORY_SNAPSHOT_URL="https://snapshots.mandragora.io/story_snapshot.lz4"
 
-MAND_PRUNED_API_URL="https://snapshots2.mandragora.io/story/info.json"
-MAND_ARCHIVE_API_URL="https://snapshots.mandragora.io/info.json"
+#MAND_PRUNED_API_URL="https://snapshots2.mandragora.io/story/info.json"
+#MAND_ARCHIVE_API_URL="https://snapshots.mandragora.io/info.json"
 
-ITR_PRUNED_API_URL_1="https://server-1.itrocket.net/testnet/story/.current_state.json"
-ITR_ARCHIVE_API_URL_1="https://server-5.itrocket.net/testnet/story/.current_state.json"
-ITR_PRUNED_API_URL_2="https://server-3.itrocket.net/testnet/story/.current_state.json"
-ITR_ARCHIVE_API_URL_2="https://server-8.itrocket.net/testnet/story/.current_state.json"
+#ITR_PRUNED_API_URL_1="https://server-1.itrocket.net/testnet/story/.current_state.json"
+#ITR_ARCHIVE_API_URL_1="https://server-5.itrocket.net/testnet/story/.current_state.json"
+#ITR_PRUNED_API_URL_2="https://server-3.itrocket.net/testnet/story/.current_state.json"
+#ITR_ARCHIVE_API_URL_2="https://server-8.itrocket.net/testnet/story/.current_state.json"
 
-CROUTON_SNAPSHOT_URL="https://storage.crouton.digital/testnet/story/snapshots/story_latest.tar.lz4"
-CROUTON_API_URL="https://storage.crouton.digital/testnet/story/snapshots/block_status.json"
+#CROUTON_SNAPSHOT_URL="https://storage.crouton.digital/testnet/story/snapshots/story_latest.tar.lz4"
+#CROUTON_API_URL="https://storage.crouton.digital/testnet/story/snapshots/block_status.json"
 
-JOSEPHTRAN_PRUNED_GETH_SNAPSHOT_URL="https://story.josephtran.co/Geth_snapshot.lz4"
-JOSEPHTRAN_PRUNED_STORY_SNAPSHOT_URL="https://story.josephtran.co/Story_snapshot.lz4"
-JOSEPHTRAN_ARCHIVE_GETH_SNAPSHOT_URL="https://story.josephtran.co/archive_Geth_snapshot.lz4"
-JOSEPHTRAN_ARCHIVE_STORY_SNAPSHOT_URL="https://story.josephtran.co/archive_Story_snapshot.lz4"
+#JOSEPHTRAN_PRUNED_GETH_SNAPSHOT_URL="https://story.josephtran.co/Geth_snapshot.lz4"
+#JOSEPHTRAN_PRUNED_STORY_SNAPSHOT_URL="https://story.josephtran.co/Story_snapshot.lz4"
+#JOSEPHTRAN_ARCHIVE_GETH_SNAPSHOT_URL="https://story.josephtran.co/archive_Geth_snapshot.lz4"
+#JOSEPHTRAN_ARCHIVE_STORY_SNAPSHOT_URL="https://story.josephtran.co/archive_Story_snapshot.lz4"
 
-JOSEPHTRAN_PRUNED_API_URL="https://story.josephtran.co/prune_snapshot_info.json"
-JOSEPHTRAN_ARCHIVE_API_URL="https://story.josephtran.co/archive_snapshot_info.json"
+#JOSEPHTRAN_PRUNED_API_URL="https://story.josephtran.co/prune_snapshot_info.json"
+#JOSEPHTRAN_ARCHIVE_API_URL="https://story.josephtran.co/archive_snapshot_info.json"
 
-ORIGINSTAKE_PRUNED_API_URL="https://snapshot.originstake.com/story_snapshot_metadata.json"
-ORIGINSTAKE_ARCHIVE_API_URL="https://snapshot.originstake.com/full/story_full_snapshot_metadata.json"
+#ORIGINSTAKE_PRUNED_API_URL="https://snapshot.originstake.com/story_snapshot_metadata.json"
+#ORIGINSTAKE_ARCHIVE_API_URL="https://snapshot.originstake.com/full/story_full_snapshot_metadata.json"
+
+# DTEAM Story Testnet Snapshots
+DTEAM_PRUNED_GETH_SNAPSHOT_URL="https://download.dteam.tech/story/testnet/pruned/latest-geth-snapshot"
+DTEAM_PRUNED_STORY_SNAPSHOT_URL="https://download.dteam.tech/story/testnet/pruned/latest-snapshot"
+DTEAM_PRUNED_API_URL="https://data.dteam.tech/story/testnet/snapshot"
 
 # Function to display the menu
 show_menu() {
     echo -e "${GREEN}Choose a snapshot provider:${NC}"
-    echo "1. Mandragora"
-    echo "2. ITRocket"
-    echo "3. CroutonDigital"
-    echo "4. Josephtran (J•Node)"
-    echo "5. OriginStake"
-    echo "6. Exit"
+    # echo "1. Mandragora"
+    # echo "2. ITRocket"
+    # echo "3. CroutonDigital"
+    # echo "4. Josephtran (J•Node)"
+    # echo "5. OriginStake"
+    echo "1. DTEAM"
+    echo "2. Exit"
 }
 
 # Function to check if a URL is available
@@ -58,21 +64,25 @@ check_url() {
 }
 
 # Function to display snapshot details
+
 display_snapshot_details() {
     local api_url=$1
     local snapshot_info=$(curl -s $api_url)
     local snapshot_height
 
-    if [[ $api_url == *"mandragora"* ]]; then
-        snapshot_height=$(echo "$snapshot_info" | grep -oP '"snapshot_height":\s*"\K\d+')
-    elif [[ $api_url == *"originstake"* ]]; then
-        snapshot_height=$(echo "$snapshot_info" | jq -r '.height')
-    elif [[ $api_url == *"josephtran"* ]]; then
-        snapshot_height=$(echo "$snapshot_info" | grep -oP '"block_height":\s*\K\d+')
-    elif [[ $api_url == *"crouton"* ]]; then
-        snapshot_height=$(echo "$snapshot_info" | grep -oP '"latest_block_height":\s*"\K\d+')
-    else
-        snapshot_height=$(echo "$snapshot_info" | jq -r '.snapshot_height')
+    if [[ $api_url == *"dteam"* ]]; then
+        # DTEAM: ambil latest.height dari API
+        snapshot_height=$(echo "$snapshot_info" | jq -r '.latest.height')
+    # elif [[ $api_url == *"mandragora"* ]]; then
+    #     snapshot_height=$(echo "$snapshot_info" | grep -oP '"snapshot_height":\s*"\K\d+')
+    # elif [[ $api_url == *"originstake"* ]]; then
+    #     snapshot_height=$(echo "$snapshot_info" | jq -r '.height')
+    # elif [[ $api_url == *"josephtran"* ]]; then
+    #     snapshot_height=$(echo "$snapshot_info" | grep -oP '"block_height":\s*\K\d+')
+    # elif [[ $api_url == *"crouton"* ]]; then
+    #     snapshot_height=$(echo "$snapshot_info" | grep -oP '"latest_block_height":\s*"\K\d+')
+    # else
+    #     snapshot_height=$(echo "$snapshot_info" | jq -r '.snapshot_height')
     fi
 
     echo -e "${GREEN}Snapshot Height:${NC} $snapshot_height"
@@ -85,6 +95,20 @@ display_snapshot_details() {
 
     echo -e "${GREEN}Real-time Block Height:${NC} $realtime_block_height"
     echo -e "${GREEN}Block Difference:${NC} $block_difference"
+}
+
+# Function to choose snapshot for DTEAM
+choose_DTEAM_snapshot() {
+    echo -e "${GREEN}DTEAM snapshot selected.${NC}"
+    GETH_SNAPSHOT_FILE="dteam_geth_snapshot.lz4"
+    STORY_SNAPSHOT_FILE="dteam_consensus_snapshot.lz4"
+    GETH_SNAPSHOT_URL=$DTEAM_PRUNED_GETH_SNAPSHOT_URL
+    STORY_SNAPSHOT_URL=$DTEAM_PRUNED_STORY_SNAPSHOT_URL
+
+    # Tampilkan detail snapshot DTEAM
+    display_snapshot_details $DTEAM_PRUNED_API_URL
+
+    prompt_back_or_continue
 }
 
 # Function to choose snapshot type for Mandragora
@@ -327,134 +351,133 @@ main_script() {
     provider_name=""
 
     case $provider_choice in
+        # 1)
+        #     provider_name="Mandragora"
+        #     echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
+        #     echo -e "${GREEN}Checking availability of Mandragora snapshots:${NC}"
+        #     echo -n "Pruned GETH Snapshot: "
+        #     check_url $MAND_PRUNED_GETH_SNAPSHOT_URL
+        #     echo -n "Pruned STORY Snapshot: "
+        #     check_url $MAND_PRUNED_STORY_SNAPSHOT_URL
+        #     echo -n "Archive GETH Snapshot: "
+        #     check_url $MAND_ARCHIVE_GETH_SNAPSHOT_URL
+        #     echo -n "Archive STORY Snapshot: "
+        #     check_url $MAND_ARCHIVE_STORY_SNAPSHOT_URL
+        #     prompt_back_or_continue
+        #     choose_mandragora_snapshot
+        #     GETH_SNAPSHOT_FILE="geth_snapshot.lz4"
+        #     STORY_SNAPSHOT_FILE="story_snapshot.lz4"
+        #     # Suggest update based on snapshot block height
+        #     snapshot_height=$(curl -s $SNAPSHOT_API_URL | grep -oP '"snapshot_height":\s*\K\d+')
+        #     suggest_update $snapshot_height
+        #     # Ask the user if they want to delete the downloaded snapshot files
+        #     read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
+        #     ;;
         1)
-            provider_name="Mandragora"
+            provider_name="DTEAM"
             echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
-
-            echo -e "${GREEN}Checking availability of Mandragora snapshots:${NC}"
-            echo -n "Pruned GETH Snapshot: "
-            check_url $MAND_PRUNED_GETH_SNAPSHOT_URL
-            echo -n "Pruned STORY Snapshot: "
-            check_url $MAND_PRUNED_STORY_SNAPSHOT_URL
-            echo -n "Archive GETH Snapshot: "
-            check_url $MAND_ARCHIVE_GETH_SNAPSHOT_URL
-            echo -n "Archive STORY Snapshot: "
-            check_url $MAND_ARCHIVE_STORY_SNAPSHOT_URL
+            echo -n "Checking DTEAM Geth snapshot: "
+            check_url $DTEAM_PRUNED_GETH_SNAPSHOT_URL
+            echo -n "Checking DTEAM Consensus snapshot: "
+            check_url $DTEAM_PRUNED_STORY_SNAPSHOT_URL
 
             prompt_back_or_continue
 
-            choose_mandragora_snapshot
-            GETH_SNAPSHOT_FILE="geth_snapshot.lz4"
-            STORY_SNAPSHOT_FILE="story_snapshot.lz4"
+            # Pilih snapshot DTEAM (set variabel, tampilkan detail, prompt back/continue)
+            choose_DTEAM_snapshot
 
-            # Suggest update based on snapshot block height
-            snapshot_height=$(curl -s $SNAPSHOT_API_URL | grep -oP '"snapshot_height":\s*\K\d+')
-            suggest_update $snapshot_height
-
-            # Ask the user if they want to delete the downloaded snapshot files
             read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
             ;;
+        # 2)
+        #     provider_name="ITRocket"
+        #     echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
+        #     echo -e "${GREEN}Checking availability of ITRocket snapshots:${NC}"
+        #     echo -n "Pruned Snapshot (Server 1): "
+        #     check_url $ITR_PRUNED_API_URL_1
+        #     echo -n "Pruned Snapshot (Server 3): "
+        #     check_url $ITR_PRUNED_API_URL_2
+        #     echo -n "Archive Snapshot (Server 5): "
+        #     check_url $ITR_ARCHIVE_API_URL_1
+        #     echo -n "Archive Snapshot (Server 8): "
+        #     check_url $ITR_ARCHIVE_API_URL_2
+        #     prompt_back_or_continue
+        #     choose_itrocket_snapshot
+        #     GETH_SNAPSHOT_FILE=$GETH_FILE_NAME
+        #     STORY_SNAPSHOT_FILE=$FILE_NAME
+        #     # Suggest update based on snapshot block height
+        #     snapshot_height=$(curl -s $SNAPSHOT_API_URL | jq -r '.snapshot_height')
+        #     suggest_update $snapshot_height
+        #     # Ask the user if they want to delete the downloaded snapshot files
+        #     read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
+        #     ;;
+        # 3)
+        #     provider_name="CroutonDigital"
+        #     echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
+        #     echo -e "${GREEN}Checking availability of CroutonDigital snapshot:${NC}"
+        #     echo -n "Archive Snapshot: "
+        #     check_url $CROUTON_SNAPSHOT_URL
+        #     prompt_back_or_continue
+        #     SNAPSHOT_FILE="story_latest.tar.lz4"
+        #     SNAPSHOT_URL=$CROUTON_SNAPSHOT_URL
+        #     # Display snapshot details
+        #     display_snapshot_details $CROUTON_API_URL
+        #     # Suggest update based on snapshot block height
+        #     snapshot_height=$(curl -s $CROUTON_API_URL | grep -oP '"latest_block_height":\s*"\K\d+')
+        #     suggest_update $snapshot_height
+        #     # Ask the user if they want to delete the downloaded snapshot files
+        #     read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
+        #     ;;
+        # 4)
+        #    provider_name="Josephtran"
+        #    echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
+        #
+        #    echo -e "${GREEN}Checking availability of Josephtran snapshots:${NC}"
+        #    echo -n "Pruned GETH Snapshot: "
+        #    check_url $JOSEPHTRAN_PRUNED_GETH_SNAPSHOT_URL
+        #    echo -n "Pruned STORY Snapshot: "
+        #    check_url $JOSEPHTRAN_PRUNED_STORY_SNAPSHOT_URL
+        #    echo -n "Archive GETH Snapshot: "
+        #    check_url $JOSEPHTRAN_ARCHIVE_GETH_SNAPSHOT_URL
+        #    echo -n "Archive STORY Snapshot: "
+        #    check_url $JOSEPHTRAN_ARCHIVE_STORY_SNAPSHOT_URL
+
+        #    prompt_back_or_continue
+
+        #    choose_josephtran_snapshot
+        #    GETH_SNAPSHOT_FILE="Geth_snapshot.lz4"
+        #    STORY_SNAPSHOT_FILE="Story_snapshot.lz4"
+
+            # Suggest update based on snapshot block height
+        #    snapshot_height=$(curl -s $SNAPSHOT_API_URL | grep -oP '"block_height":\s*\K\d+')
+        #    suggest_update $snapshot_height
+
+            # Ask the user if they want to delete the downloaded snapshot files
+        #    read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
+        #    ;;
+        # 5)
+        #    provider_name="OriginStake"
+        #    echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
+
+        #    echo -e "${GREEN}Checking availability of OriginStake snapshots:${NC}"
+        #    echo -n "Pruned Snapshot: "
+        #    check_url $ORIGINSTAKE_PRUNED_API_URL
+        #    echo -n "Archive Snapshot: "
+        #    check_url $ORIGINSTAKE_ARCHIVE_API_URL
+
+        #    prompt_back_or_continue
+
+        #    choose_originstake_snapshot
+        #    SNAPSHOT_FILE=$FILE_NAME
+        #    SNAPSHOT_URL=$SNAPSHOT_URL
+
+            # Suggest update based on snapshot block height
+        #    snapshot_height=$(curl -s $SNAPSHOT_API_URL | jq -r '.height')
+        #    suggest_update $snapshot_height
+
+            # Ask the user if they want to delete the downloaded snapshot files
+        #    read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
+        #    ;;
         2)
-            provider_name="ITRocket"
-            echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
-
-            echo -e "${GREEN}Checking availability of ITRocket snapshots:${NC}"
-            echo -n "Pruned Snapshot (Server 1): "
-            check_url $ITR_PRUNED_API_URL_1
-            echo -n "Pruned Snapshot (Server 3): "
-            check_url $ITR_PRUNED_API_URL_2
-            echo -n "Archive Snapshot (Server 5): "
-            check_url $ITR_ARCHIVE_API_URL_1
-            echo -n "Archive Snapshot (Server 8): "
-            check_url $ITR_ARCHIVE_API_URL_2
-
-            prompt_back_or_continue
-
-            choose_itrocket_snapshot
-            GETH_SNAPSHOT_FILE=$GETH_FILE_NAME
-            STORY_SNAPSHOT_FILE=$FILE_NAME
-
-            # Suggest update based on snapshot block height
-            snapshot_height=$(curl -s $SNAPSHOT_API_URL | jq -r '.snapshot_height')
-            suggest_update $snapshot_height
-
-            # Ask the user if they want to delete the downloaded snapshot files
-            read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
-            ;;
-        3)
-            provider_name="CroutonDigital"
-            echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
-
-            echo -e "${GREEN}Checking availability of CroutonDigital snapshot:${NC}"
-            echo -n "Archive Snapshot: "
-            check_url $CROUTON_SNAPSHOT_URL
-
-            prompt_back_or_continue
-
-            SNAPSHOT_FILE="story_latest.tar.lz4"
-            SNAPSHOT_URL=$CROUTON_SNAPSHOT_URL
-
-            # Display snapshot details
-            display_snapshot_details $CROUTON_API_URL
-
-            # Suggest update based on snapshot block height
-            snapshot_height=$(curl -s $CROUTON_API_URL | grep -oP '"latest_block_height":\s*"\K\d+')
-            suggest_update $snapshot_height
-
-            # Ask the user if they want to delete the downloaded snapshot files
-            read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
-            ;;
-        4)
-            provider_name="Josephtran"
-            echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
-
-            echo -e "${GREEN}Checking availability of Josephtran snapshots:${NC}"
-            echo -n "Pruned GETH Snapshot: "
-            check_url $JOSEPHTRAN_PRUNED_GETH_SNAPSHOT_URL
-            echo -n "Pruned STORY Snapshot: "
-            check_url $JOSEPHTRAN_PRUNED_STORY_SNAPSHOT_URL
-            echo -n "Archive GETH Snapshot: "
-            check_url $JOSEPHTRAN_ARCHIVE_GETH_SNAPSHOT_URL
-            echo -n "Archive STORY Snapshot: "
-            check_url $JOSEPHTRAN_ARCHIVE_STORY_SNAPSHOT_URL
-
-            prompt_back_or_continue
-
-            choose_josephtran_snapshot
-            GETH_SNAPSHOT_FILE="Geth_snapshot.lz4"
-            STORY_SNAPSHOT_FILE="Story_snapshot.lz4"
-
-            # Suggest update based on snapshot block height
-            snapshot_height=$(curl -s $SNAPSHOT_API_URL | grep -oP '"block_height":\s*\K\d+')
-            suggest_update $snapshot_height
-
-            # Ask the user if they want to delete the downloaded snapshot files
-            read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
-            ;;
-        5)
-            provider_name="OriginStake"
-            echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
-
-            echo -e "${GREEN}Checking availability of OriginStake snapshots:${NC}"
-            echo -n "Pruned Snapshot: "
-            check_url $ORIGINSTAKE_PRUNED_API_URL
-            echo -n "Archive Snapshot: "
-            check_url $ORIGINSTAKE_ARCHIVE_API_URL
-
-            prompt_back_or_continue
-
-            choose_originstake_snapshot
-            SNAPSHOT_FILE=$FILE_NAME
-            SNAPSHOT_URL=$SNAPSHOT_URL
-
-            # Suggest update based on snapshot block height
-            snapshot_height=$(curl -s $SNAPSHOT_API_URL | jq -r '.height')
-            suggest_update $snapshot_height
-
-            # Ask the user if they want to delete the downloaded snapshot files
-            read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
-            ;;
-        6)
             echo -e "${GREEN}Exiting.${NC}"
             exit 0
             ;;
