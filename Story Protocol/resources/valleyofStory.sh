@@ -245,7 +245,7 @@ function query_balance() {
             ;;
     esac
 
-    echo -e "${CYAN}Fetching balance from mainnet RPC for $evm_address...${RESET}"
+    echo -e "${CYAN}Fetching balance from testnet RPC for $evm_address...${RESET}"
     curl -s --insecure -X POST https://lightnode-json-rpc-story.grandvalleys.com \
         -H "Content-Type: application/json" \
         -d "{
