@@ -99,7 +99,6 @@ display_snapshot_details() {
 
 # Function to choose snapshot for DTEAM
 choose_DTEAM_snapshot() {
-    echo -e "${GREEN}DTEAM snapshot selected.${NC}"
     GETH_SNAPSHOT_FILE="dteam_geth_snapshot.lz4"
     STORY_SNAPSHOT_FILE="dteam_consensus_snapshot.lz4"
     GETH_SNAPSHOT_URL=$DTEAM_PRUNED_GETH_SNAPSHOT_URL
@@ -318,27 +317,27 @@ check_cosmovisor() {
 # Function to suggest update based on snapshot block height
 suggest_update() {
     local snapshot_height=$1
-    current_version=$(cosmovisor version 2>&1 | grep -oP 'v0\.[0-9]+(\.[0-9]+)*-(stable|unstable)')
+    current_version=$(cosmovisor version 2>&1 | awk '/^Version/ {print $2}')
 
     echo -e "${YELLOW}Current consensus client version: $current_version${NC}"
 
-    if [[ $snapshot_height -ge 0 && $snapshot_height -le 321999 ]]; then
-        required_version="v0.12.0-stable"
-    elif [[ $snapshot_height -ge 322000 && $snapshot_height -le 857999 ]]; then
-        required_version="v0.12.1-stable"
-    elif [[ $snapshot_height -ge 858000 && $snapshot_height -le 2065885 ]]; then
-        required_version="v0.13.0-stable"
-    elif [[ $snapshot_height -ge 2065886 ]]; then
-        required_version="v0.13.2-stable"
+    if [[ $snapshot_height -ge 0 ]]; then
+        required_version="v1.1.1-stable"
+    #elif [[ $snapshot_height -ge 322000 && $snapshot_height -le 857999 ]]; then
+        #required_version="v0.12.1-stable"
+    #elif [[ $snapshot_height -ge 858000 && $snapshot_height -le 2065885 ]]; then
+        #required_version="v0.13.0-stable"
+    #elif [[ $snapshot_height -ge 2065886 ]]; then
+        #required_version="v0.13.2-stable"
     fi
 
     echo -e "${YELLOW}Required version for snapshot block height $snapshot_height: $required_version${NC}"
 
-    if [[ $required_version == "v0.12.1-stable" ]]; then
-        echo -e "${YELLOW}If an update is required, choose option 'a' at the consensus client update prompt.${NC}"
-    elif [[ $required_version == "v0.13.0-stable" ]]; then
-        echo -e "${YELLOW}If an update is required, choose option 'b' at the consensus client update prompt.${NC}"
-    fi
+    #if [[ $required_version == "v0.12.1-stable" ]]; then
+        #echo -e "${YELLOW}If an update is required, choose option 'a' at the consensus client update prompt.${NC}"
+    #elif [[ $required_version == "v0.13.0-stable" ]]; then
+        #echo -e "${YELLOW}If an update is required, choose option 'b' at the consensus client update prompt.${NC}"
+    #fi
 
     read -p "Do you want to update the consensus client version? (y/n): " update_choice
 }
@@ -375,6 +374,7 @@ main_script() {
         #     ;;
         1)
             provider_name="DTEAM"
+            echo -e "${GREEN}DTEAM snapshot selected.${NC}"
             echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
             echo -n "Checking DTEAM Geth snapshot: "
             check_url $DTEAM_PRUNED_GETH_SNAPSHOT_URL
@@ -386,10 +386,15 @@ main_script() {
             # Pilih snapshot DTEAM (set variabel, tampilkan detail, prompt back/continue)
             choose_DTEAM_snapshot
 
+            # Suggest update based on snapshot block height
+            snapshot_height=$(curl -s $DTEAM_PRUNED_API_URL | jq -r '.latest.height')
+            suggest_update $snapshot_height
+
             read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
             ;;
         # 2)
         #     provider_name="ITRocket"
+        #     echo -e "${GREEN}ITRocket snapshot selected.${NC}"
         #     echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
         #     echo -e "${GREEN}Checking availability of ITRocket snapshots:${NC}"
         #     echo -n "Pruned Snapshot (Server 1): "
@@ -412,6 +417,7 @@ main_script() {
         #     ;;
         # 3)
         #     provider_name="CroutonDigital"
+        #     echo -e "${GREEN}CroutonDigital snapshot selected.${NC}"
         #     echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
         #     echo -e "${GREEN}Checking availability of CroutonDigital snapshot:${NC}"
         #     echo -n "Archive Snapshot: "
@@ -429,6 +435,7 @@ main_script() {
         #     ;;
         # 4)
         #    provider_name="Josephtran"
+        #    echo -e "${GREEN}Josephtran snapshot selected.${NC}"
         #    echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
         #
         #    echo -e "${GREEN}Checking availability of Josephtran snapshots:${NC}"
@@ -456,6 +463,7 @@ main_script() {
         #    ;;
         # 5)
         #    provider_name="OriginStake"
+        #    echo -e "${GREEN}OriginStake snapshot selected.${NC}"
         #    echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
 
         #    echo -e "${GREEN}Checking availability of OriginStake snapshots:${NC}"
