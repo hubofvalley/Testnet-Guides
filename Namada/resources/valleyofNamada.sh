@@ -1061,7 +1061,7 @@ function claim_rewards() {
             # Auto-fetch validator address for options 1 and 3
             if [ "$CHOICE" -eq 1 ] || [ "$CHOICE" -eq 3 ]; then
                 echo "Fetching validator address..."
-                port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.local/share/namada/namada.5f5de2dd1b88cba30586420/config.toml")
+                port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml")
                 if [ -z "$port" ]; then
                     echo "Error: Could not find RPC port in config.toml"
                     return 1
