@@ -231,11 +231,12 @@ sed -i "
 s|^\s*#\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|
 s|^\s*#\s*listen_address\s*=.*|listen_address = \"0.0.0.0:5678\"|
 s|^\s*#\s*listen_address_admin\s*=.*|listen_address_admin = \"0.0.0.0:5679\"|
-s|^\s*#?\s*rpc_enabled\s*=.*|rpc_enabled = true|
-s|^\s*#?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = 0|
-s|^\s*#?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|
-s|^\s*#?\s*log_contract_address\s*=.*|log_contract_address = \"0x56A565685C9992BF5ACafb940ff68922980DBBC5\"|
-s|^\s*#?\s*mine_contract_address\s*=.*|mine_contract_address = \"0xB87E0e5657C25b4e132CB6c34134C0cB8A962AD6\"|
+s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
+s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = 0|
+s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|
+s|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = \"0x56A565685C9992BF5ACafb940ff68922980DBBC5\"|
+s|^\s*#\?\s*mine_contract_address\s*=.*|mine_contract_address = \"0xB87E0e5657C25b4e132CB6c34134C0cB8A962AD6\"|
+s|^\s*#\?\s*reward_contract_address\s*=.*|reward_contract_address = \"0x233B2768332e4Bae542824c93cc5c8ad5d44517E\"|
 " $HOME/0g-storage-node/run/config-testnet.toml
 ```
 
