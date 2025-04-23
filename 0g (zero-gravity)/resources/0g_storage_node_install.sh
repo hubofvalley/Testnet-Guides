@@ -64,8 +64,8 @@ echo -e "${GREEN}Previous storage node deleted successfully.${RESET}"
 read -p "Enter your private key: " PRIVATE_KEY
 echo "private key: $PRIVATE_KEY"
 
-# Prompt user for contract type
-read -p "Choose contract type (turbo/standard): " CONTRACT_TYPE
+# Set contract type to turbo by default
+CONTRACT_TYPE="turbo"
 
 # Prompt user to choose JSON-RPC endpoint
 choose_json_rpc_endpoint
@@ -127,11 +127,11 @@ $HOME/0g-storage-node/target/release/zgs_node --version
 # 8. Update node configuration based on contract type
 if [ "$CONTRACT_TYPE" == "turbo" ]; then
     rm -rf $HOME/0g-storage-node/run/config-testnet.toml && cp $HOME/0g-storage-node/run/config-testnet-turbo.toml $HOME/0g-storage-node/run/config-testnet.toml
-elif [ "$CONTRACT_TYPE" == "standard" ]; then
-    rm -rf $HOME/0g-storage-node/run/config-testnet.toml && cp $HOME/0g-storage-node/run/config-testnet-standard.toml $HOME/0g-storage-node/run/config-testnet.toml
-else
-    echo "Invalid contract type. Please choose either 'turbo' or 'standard'."
-    exit 1
+#elif [ "$CONTRACT_TYPE" == "standard" ]; then
+#    rm -rf $HOME/0g-storage-node/run/config-testnet.toml && cp $HOME/0g-storage-node/run/config-testnet-standard.toml $HOME/0g-storage-node/run/config-testnet.toml
+#else
+#    echo "Invalid contract type. Please choose either 'turbo' or 'standard'."
+#    exit 1
 fi
 
 sed -i "
@@ -139,8 +139,10 @@ s|^\s*#\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|
 s|^\s*#\s*listen_address\s*=.*|listen_address = \"0.0.0.0:5678\"|
 s|^\s*#\s*listen_address_admin\s*=.*|listen_address_admin = \"0.0.0.0:5679\"|
 s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
-s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = $ZGS_LOG_SYNC_BLOCK|
+s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = 0|
 s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|
+s|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = \"0x56A565685C9992BF5ACafb940ff68922980DBBC5\"|
+s|^\s*#\?\s*mine_contract_address\s*=.*|mine_contract_address = \"0xB87E0e5657C25b4e132CB6c34134C0cB8A962AD6\"|
 " $HOME/0g-storage-node/run/config-testnet.toml
 
 # 9. Create service

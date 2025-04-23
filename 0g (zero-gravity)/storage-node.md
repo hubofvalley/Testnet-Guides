@@ -38,7 +38,7 @@
 | Storage    | 500GB / 1TB NVMe SSD          |
 | Bandwidth  | 100 MBps for Download/Upload  |
 
-- Guide's current binary version: `v0.8.7`
+- Guide's current binary version: `v1.0.0`
 
 ---
 
@@ -169,7 +169,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT && echo "Current json-rpc: $BLOCKCHAIN_RPC_ENDPOINT"
 echo "export ENR_ADDRESS=${ENR_ADDRESS}" >> ~/.bash_profile
 echo 'export ZGS_LOG_DIR="$HOME/0g-storage-node/run/log"' >> ~/.bash_profile
-echo 'export ZGS_LOG_SYNC_BLOCK="595059"' >> ~/.bash_profile
+echo 'export ZGS_LOG_SYNC_BLOCK="0"' >> ~/.bash_profile
 echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
 source ~/.bash_profile
 ```
@@ -183,7 +183,7 @@ curl -s -X POST $BLOCKCHAIN_RPC_ENDPOINT -H "Content-Type: application/json" -d 
 
 ```bash
 cd $HOME
-git clone -b v0.8.7 https://github.com/0glabs/0g-storage-node.git
+git clone -b v1.0.0 https://github.com/0glabs/0g-storage-node.git
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
@@ -232,8 +232,10 @@ s|^\s*#\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|
 s|^\s*#\s*listen_address\s*=.*|listen_address = \"0.0.0.0:5678\"|
 s|^\s*#\s*listen_address_admin\s*=.*|listen_address_admin = \"0.0.0.0:5679\"|
 s|^\s*#?\s*rpc_enabled\s*=.*|rpc_enabled = true|
-s|^\s*#?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = $ZGS_LOG_SYNC_BLOCK|
+s|^\s*#?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = 0|
 s|^\s*#?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|
+s|^\s*#?\s*log_contract_address\s*=.*|log_contract_address = \"0x56A565685C9992BF5ACafb940ff68922980DBBC5\"|
+s|^\s*#?\s*mine_contract_address\s*=.*|mine_contract_address = \"0xB87E0e5657C25b4e132CB6c34134C0cB8A962AD6\"|
 " $HOME/0g-storage-node/run/config-testnet.toml
 ```
 
