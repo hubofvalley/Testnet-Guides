@@ -668,7 +668,7 @@ function show_storage_status() {
         # Detect contract type
         if [[ "$contract_address" == "0x1785c8683b3c527618eFfF78d876d9dCB4b70285" ]]; then
             echo -e "Contract Type: ${CYAN}Standard Contract${RESET}"
-        elif [[ "$contract_address" == "0x6815F41019255e00D6F34aAB8397a6Af5b6D806f" ]]; then
+        elif [[ "$contract_address" == "0xB87E0e5657C25b4e132CB6c34134C0cB8A962AD6" ]]; then
             echo -e "Contract Type: ${CYAN}Turbo Contract${RESET}"
         else
             echo -e "Contract Type: ${RED}Unknown Contract${RESET}"
