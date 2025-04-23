@@ -122,18 +122,19 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT
 echo "Current json-rpc: $BLOCKCHAIN_RPC_ENDPOINT"
 
-read -p "Enter storage kv urls: " ZGS_NODE
-echo "Current storage kv urls: $ZGS_NODE"
+read -p "Enter storage node urls: " ZGS_NODE
+echo "Current storage node urls: $ZGS_NODE"
 
 echo 'export ZGS_LOG_SYNC_BLOCK="0"' >> ~/.bash_profile
-echo "export ZGS_NODE=$ZGS_NODE" >> ~/.bash_profile
+# ZGS_NODE is used for config but not exported
 echo 'export LOG_CONTRACT_ADDRESS="0x56A565685C9992BF5ACafb940ff68922980DBBC5"' >> ~/.bash_profile
+echo 'export ZGS_KV_VERSION="v1.4.0"' >> ~/.bash_profile
 echo "export BLOCKCHAIN_RPC_ENDPOINT=$BLOCKCHAIN_RPC_ENDPOINT" >> ~/.bash_profile
 
 source ~/.bash_profile
 
 echo -e "\n\033[31mCHECK YOUR STORAGE KV VARIABLES\033[0m\n"
-echo "ZGS_NODE: $ZGS_NODE"
+echo "Storage KV Version: v1.4.0"
 echo "LOG_CONTRACT_ADDRESS: $LOG_CONTRACT_ADDRESS"
 echo "ZGS_LOG_SYNC_BLOCK: $ZGS_LOG_SYNC_BLOCK"
 echo "BLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT"

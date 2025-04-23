@@ -61,17 +61,17 @@ choose_json_rpc_endpoint
 
 echo "Current JSON-RPC endpoint: $BLOCKCHAIN_RPC_ENDPOINT"
 
-# Prompt user for contract type
-read -p "Choose contract type (turbo/standard): " CONTRACT_TYPE
+# Set contract type to turbo by default
+CONTRACT_TYPE="turbo"
+LOG_CONTRACT_ADDRESS="0x56A565685C9992BF5ACafb940ff68922980DBBC5"
 
-if [ "$CONTRACT_TYPE" == "turbo" ]; then
-    LOG_CONTRACT_ADDRESS="0x56A565685C9992BF5ACafb940ff68922980DBBC5"
-elif [ "$CONTRACT_TYPE" == "standard" ]; then
-    LOG_CONTRACT_ADDRESS="0x0460aA47b41a66694c0a73f667a1b795A5ED3556"
-else
-    echo "Invalid contract type. Please choose either 'turbo' or 'standard'."
-    exit 1
-fi
+# Standard contract logic (commented out for future use)
+#if [ "$CONTRACT_TYPE" == "standard" ]; then
+#    LOG_CONTRACT_ADDRESS="0x0460aA47b41a66694c0a73f667a1b795A5ED3556"
+#else
+#    echo "Invalid contract type. Please choose either 'turbo' or 'standard'."
+#    exit 1
+#fi
 
 # 1. Install dependencies for building from source
 sudo apt-get update -y
@@ -99,13 +99,15 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # 4. Set vars
 echo 'export ZGS_LOG_SYNC_BLOCK="0"' >> ~/.bash_profile
+# Export required variables
 echo "export ZGS_NODE=\"$ZGS_NODE\"" >> ~/.bash_profile
+echo "export ZGS_KV_VERSION=\"v1.4.0\"" >> ~/.bash_profile
 echo "export LOG_CONTRACT_ADDRESS=\"$LOG_CONTRACT_ADDRESS\"" >> ~/.bash_profile
 echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
 
 source ~/.bash_profile
 
-echo -e "\n\033[31mCHECK YOUR STORAGE KV VARIABLES\033[0m\n\nZGS_NODE: $ZGS_NODE\nLOG_CONTRACT_ADDRESS: $LOG_CONTRACT_ADDRESS\nZGS_LOG_SYNC_BLOCK: $ZGS_LOG_SYNC_BLOCK\nBLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT\n\n" "\033[3m\"Let's Buidl 0G Together\" - Grand Valley\033[0m"
+echo -e "\n\033[31mCHECK YOUR STORAGE KV VARIABLES\033[0m\n\nStorage KV Version: v1.4.0\nZGS_NODE: $ZGS_NODE\nLOG_CONTRACT_ADDRESS: $LOG_CONTRACT_ADDRESS\nZGS_LOG_SYNC_BLOCK: $ZGS_LOG_SYNC_BLOCK\nBLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT\n\n" "\033[3m\"Let's Buidl 0G Together\" - Grand Valley\033[0m"
 
 # 5. Download binary
 cd $HOME
