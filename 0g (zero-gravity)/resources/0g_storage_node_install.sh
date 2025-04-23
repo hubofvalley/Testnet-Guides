@@ -2,8 +2,12 @@
 
 # Define new boot nodes
 BOOT_NODES=(
-  "/ip4/47.251.88.201/udp/1234/p2p/16Uiu2HAmFGrDV8wKToa1dd8uh6bz8bSY28n33iRP3pvfeBU6ysCw"
-  "/ip4/47.76.49.188/udp/1234/p2p/16Uiu2HAmBb7PQzvfZjHBENcF7E7mZaiHSrpBoH7mKTyNijYdqMM6"
+  "/ip4/47.251.79.83/udp/1234/p2p/16Uiu2HAkvJYQABP1MdvfWfUZUzGLx1sBSDZ2AT92EFKcMCCPVawV"
+  "/ip4/47.238.87.44/udp/1234/p2p/16Uiu2HAmFGsLoajQdEds6tJqsLX7Dg8bYd2HWR4SbpJUut4QXqCj"
+  "/ip4/47.251.78.104/udp/1234/p2p/16Uiu2HAmSe9UWdHrqkn2mKh99b9DwYZZcea6krfidtU3e5tiHiwN"
+  "/ip4/47.76.30.235/udp/1234/p2p/16Uiu2HAm5tCqwGtXJemZqBhJ9JoQxdDgkWYavfCziaqaAYkGDSfU"
+  "/ip4/47.251.117.133/udp/1234/p2p/16Uiu2HAmTVDGNhkHD98zDnJxQWu3i1FL1aFYeh9wiQTNu4pDCgps"
+  "/ip4/47.76.61.226/udp/1234/p2p/16Uiu2HAm2k6ua2mGgvZ8rTMV8GhpW71aVzkQWy7D37TTDuLCpgmX"
 )
 
 # Function to query the latest block number from a JSON-RPC endpoint
@@ -140,7 +144,7 @@ if [ "$CONTRACT_TYPE" == "turbo" ]; then
 fi
 
 sed -i "
-s|^\s*#\?\s*network_boot_nodes\s*=.*|network_boot_nodes = [\"${BOOT_NODES[0]}\",\"${BOOT_NODES[1]}\"]|
+s|^\s*#\?\s*network_boot_nodes\s*=.*|network_boot_nodes = [\"${BOOT_NODES[0]}\", \"${BOOT_NODES[1]}\", \"${BOOT_NODES[2]}\", \"${BOOT_NODES[3]}\", \"${BOOT_NODES[4]}\", \"${BOOT_NODES[5]}\"]|
 s|^\s*#\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|
 s|^\s*#\s*listen_address\s*=.*|listen_address = \"0.0.0.0:5678\"|
 s|^\s*#\s*listen_address_admin\s*=.*|listen_address_admin = \"0.0.0.0:5679\"|
