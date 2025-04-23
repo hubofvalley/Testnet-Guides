@@ -1,0 +1,497 @@
+#!/bin/bash
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+YELLOW='\033[0;33m'
+ORANGE='\033[38;5;214m'
+RESET='\033[0m'
+
+LOGO="
+
+ __      __     _  _                        __   _   _                               _
+ \ \    / /    | || |                      / _| | \ | |                             | |
+  \ \  / /__ _ | || |  ___  _   _    ___  | |_  |  \| |  __ _  ________    __ _   __| |  __ _
+  _\ \/ // __ || || | / _ \| | | |  / _ \ |  _| | . _ | / __ ||  _   _ \  / __ | / __ | / __ |
+ | |\  /| (_| || || ||  __/| |_| | | (_) || |   | |\  || (_| || | | | | || (_| || (_| || (_| |
+ | |_\/  \____||_||_| \___| \___ |  \___/ |_|   |_| \_| \____||_| |_| |_| \____| \____| \____|
+ |  _ \ | | | |              __/ |
+ | |_) || |_| |             |___/
+ |____/  \___ |
+           __/ |
+          |___/
+ __                                   
+/__ __ __ __   _|   \  / __ | |  _    
+\_| | (_| | | (_|    \/ (_| | | (/_ \/
+                                     /
+"
+
+INTRO="
+Valley of Namada by ${ORANGE}Grand Valley${RESET}
+
+${GREEN}Namada Validator Node System Requirements${RESET}
+${YELLOW}| Category  | Requirements     |
+| --------- | ---------------- |
+| CPU       | 8+ cores         |
+| RAM       | 32+ GB           |
+| Storage   | 500+ GB NVMe SSD |
+| Bandwidth | 100+ MBit/s      |${RESET}
+
+- validator node service file name: ${CYAN}namadad.service${RESET}
+- current chain: ${CYAN}campfire${RESET}
+- current namada node version: ${CYAN}v1.0.0 - v1.1.1 - v1.1.5${RESET}
+- current cometbft version: ${CYAN}v0.37.15${RESET}
+- current namada indexer version: ${CYAN}v2.3.0${RESET}
+- current namada masp-indexer version: ${CYAN}v1.2.0${RESET}
+"
+
+PRIVACY_SAFETY_STATEMENT="
+${YELLOW}Privacy and Safety Statement${RESET}
+
+${GREEN}No User Data Stored Externally${RESET}
+- This script does not store any user data externally. All operations are performed locally on your machine.
+
+${GREEN}No Phishing Links${RESET}
+- This script does not contain any phishing links. All URLs and commands are provided for legitimate purposes related to Namada validator node operations.
+
+${GREEN}Security Best Practices${RESET}
+- Always verify the integrity of the script and its source.
+- Ensure you are running the script in a secure environment.
+- Be cautious when entering sensitive information such as wallet names and addresses.
+
+${GREEN}Disclaimer${RESET}
+- The authors of this script are not responsible for any misuse or damage caused by the use of this script.
+- Use this script at your own risk.
+
+${GREEN}Contact${RESET}
+- If you have any concerns or questions, please contact us at letsbuildtogether@grandvalleys.com.
+"
+
+ENDPOINTS="${GREEN}
+Grand Valley Namada testnet public endpoints:${RESET}
+- cosmos-rpc: ${BLUE}https://lightnode-rpc-testnet-namada.grandvalleys.com${RESET}
+- evm-rpc: ${BLUE}https://lightnode-json-rpc-testnet-namada.grandvalleys.com${RESET}
+- cosmos ws: ${BLUE}wss://lightnode-rpc-testnet-namada.grandvalleys.com/websocket${RESET}
+- seed: ${BLUE}tcp://65882ea69f4146d8cc83564257252f4711d3e05e@seed-testnet-namada.grandvalleys.com:56656${RESET}
+- peer: ${BLUE}tcp://3879583b9c6b1ac29d38fefb5a14815dd79282d6@peer-testnet-namada.grandvalleys.com:38656${RESET}
+- indexer: ${BLUE}https://indexer-testnet-namada.grandvalleys.com${RESET}
+- masp-indexer: ${BLUE}https://masp-indexer-testnet-namada.grandvalleys.com${RESET}
+- Valley of Namadillo (Namadillo): ${BLUE}https://valley-of-namadillo.grandvalleys.com${RESET}
+
+${GREEN}Grand Valley Namada Testnet validator profile links:${RESET}
+    - ${ORANGE}https://explorer75.org/namada/validators/tnam1qyplu8gruqmmvwp7x7kd92m6x4xpyce265fa05r6${RESET}
+    - ${ORANGE}https://namada.valopers.com/validators/tnam1qyplu8gruqmmvwp7x7kd92m6x4xpyce265fa05r6${RESET}
+    - ${ORANGE}https://shielded.live/validators/9FB9AC991FE50B76FB1E4FFEDCC47E6BF13F58FED9B0079400D4F043DD16D207${RESET}
+    - ${ORANGE}https://namada.coverlet.io/validators/9FB9AC991FE50B76FB1E4FFEDCC47E6BF13F58FED9B0079400D4F043DD16D207${RESET}
+    - ${ORANGE}https://namada-explorer.sproutstake.space/main/validators/9FB9AC991FE50B76FB1E4FFEDCC47E6BF13F58FED9B0079400D4F043DD16D207${RESET}
+
+${GREEN}Connect with Namada:${RESET}
+- Official Website: ${BLUE}https://namada.net${RESET}
+- X: ${BLUE}https://twitter.com/namada${RESET}
+- Official Docs: ${BLUE}https://docs.namada.net${RESET}
+
+${GREEN}Connect with Grand Valley:${RESET}
+- X: ${BLUE}https://x.com/bacvalley${RESET}
+- GitHub: ${BLUE}https://github.com/hubofvalley${RESET}
+- Namada Testnet Guide on GitHub by Grand Valley: ${BLUE}https://github.com/hubofvalley/Testnet-Guides/tree/main/Namada${RESET}
+- Email: ${BLUE}letsbuildtogether@grandvalleys.com${RESET}
+"
+
+# Display LOGO and wait for user input to continue
+echo -e "$LOGO"
+echo -e "$PRIVACY_SAFETY_STATEMENT"
+echo -e "\n${YELLOW}Press Enter to continue...${RESET}"
+read -r
+
+# Display INTRO section and wait for user input to continue
+echo -e "$INTRO"
+echo -e "$ENDPOINTS"
+echo -e "\n${YELLOW}Press Enter to continue${RESET}"
+read -r
+echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
+echo 'export NAMADA_CHAIN_ID="campfire"' >> $HOME/.bash_profile
+export NAMADA_CHAIN_ID="campfire"
+source $HOME/.bash_profile
+
+# Validator Node Functions
+function deploy_validator_node() {
+    echo -e "${CYAN}Deploying Validator Node...${RESET}"
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Namada/resources/namada_validator_node_install_testnet.sh)
+    menu
+}
+
+function create_validator() {
+    DEFAULT_WALLET=$WALLET_NAME # Assuming $WALLET_NAME is set elsewhere in your script
+    read -p "Enter the name for your validator: " NAME
+
+    read -p "Enter the commission rate: (e.g. 0.05) " COMMISSION_RATE
+
+    read -p "Enter the max commission rate change: (e.g. 0.05) " MAX_COMMISSION_RATE_CHANGE
+
+    read -p "Enter the email for your validator security contact: " EMAIL
+
+    read -p "Enter wallet name/alias (leave empty to use current default wallet --> $DEFAULT_WALLET): " WALLET_NAME
+
+    namadac init-validator --email "$EMAIL" --commission-rate "$COMMISSION_RATE" --name "$NAME" --max-commission-rate-change "$MAX_COMMISSION_RATE_CHANGE" --account-keys $WALLET_NAME --signing-keys $WALLET_NAME --chain-id $NAMADA_CHAIN_ID
+    menu
+}
+
+function add_seeds() {
+    echo "Select an option:"
+    echo "1. Add seeds manually"
+    echo "2. Use Grand Valley's seed"
+    read -p "Enter your choice (1 or 2): " choice
+
+    case $choice in
+        1)
+            read -p "Enter seeds (comma-separated): " seeds
+            echo "You have entered the following seeds: $seeds"
+            read -p "Do you want to proceed? (yes/no): " confirm
+            if [[ $confirm == "yes" ]]; then
+                sed -i -e "s|^seeds *=.*|seeds = \"$seeds\"|" $HOME/.local/share/namada/campfire/config.toml
+                echo "seeds added manually."
+            else
+                echo "Operation cancelled. Returning to menu."
+                menu
+            fi
+            ;;
+        2)
+            seeds="tcp://65882ea69f4146d8cc83564257252f4711d3e05e@seed-testnet-namada.grandvalleys.com:56656"
+            echo "Grand Valley's seeds: $seeds"
+            read -p "Do you want to proceed? (yes/no): " confirm
+            if [[ $confirm == "yes" ]]; then
+                sed -i -e "s|^seeds *=.*|seeds = \"$seeds\"|" $HOME/.local/share/namada/campfire/config.toml
+                echo "Grand Valley's seeds added."
+            else
+                echo "Operation cancelled. Returning to menu."
+                menu
+            fi
+            ;;
+        *)
+            echo "Invalid choice. Please enter 1 or 2."
+            menu
+            ;;
+    esac
+    echo "Now you can restart your Namada node"
+    menu
+}
+
+function add_peers() {
+    echo "Select an option:"
+    echo "1. Add peers manually"
+    echo "2. Use Grand Valley's peers"
+    read -p "Enter your choice (1 or 2): " choice
+
+    case $choice in
+        1)
+            read -p "Enter peers (comma-separated): " peers
+            echo "You have entered the following peers: $peers"
+            read -p "Do you want to proceed? (yes/no): " confirm
+            if [[ $confirm == "yes" ]]; then
+                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local/share/namada/campfire/config.toml
+                echo "Peers added manually."
+            else
+                echo "Operation cancelled. Returning to menu."
+                menu
+            fi
+            ;;
+        2)
+            peers=$(curl -sS https://lightnode-rpc-testnet-namada.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
+            echo "Grand Valley's peers: $peers"
+            read -p "Do you want to proceed? (yes/no): " confirm
+            if [[ $confirm == "yes" ]]; then
+                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local/share/namada/campfire/config.toml
+                echo "Grand Valley's peers added."
+            else
+                echo "Operation cancelled. Returning to menu."
+                menu
+            fi
+            ;;
+        *)
+            echo "Invalid choice. Please enter 1 or 2."
+            menu
+            ;;
+    esac
+    echo "Now you can restart your Namada node"
+    menu
+}
+
+function delete_validator_node() {
+    sudo systemctl stop namadad
+    sudo systemctl disable namadad
+    sudo rm -rf /etc/systemd/system/namadad.service
+    sudo rm -rf $HOME/namada
+    sudo rm -rf $HOME/.local/share/namada/campfire/
+    sudo rm /usr/local/bin/namad*
+    sed -i "/NAMADA_/d" $HOME/.bash_profile
+    echo -e "${RED}Namada Validator node deleted successfully.${RESET}"
+    menu
+}
+
+function stop_validator_node() {
+    sudo systemctl stop namadad
+    echo "Namada validator node service stopped."
+    menu
+}
+
+function restart_validator_node() {
+    sudo systemctl daemon-reload
+    sudo systemctl restart namadad
+    echo "Namada validator node service restarted."
+    menu
+}
+
+function backup_validator_key() {
+    cp $HOME/.local/share/namada/campfire/cometbft/config/priv_validator_key.json $HOME/priv_validator_key.json
+    echo -e "\n${YELLOW}Your priv_vaidator_key.json file has been copied to $HOME${RESET}"
+    menu
+}
+
+function show_validator_node_logs() {
+    echo "Displaying Namada Validator Node Logs:"
+    sudo journalctl -u namadad -fn 100
+    menu
+}
+
+function show_validator_node_status() {
+    port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.local/share/namada/campfire/config.toml")
+    curl -s http://127.0.0.1:$port/status | jq
+    echo -e "\n${YELLOW}Press Enter to go back to Valley of Namada main menu${RESET}"
+    read -r
+    menu
+}
+
+function apply_snapshot() {
+    echo -e "${CYAN}Applying snapshot...${RESET}"
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Namada/resources/apply_snapshot.sh)
+    menu
+}
+
+function update_namada() {
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Namada/resources/namada_update.sh)
+    menu
+}
+
+function install_namada_app() {
+    echo -e "${YELLOW}This option is only for those who want to execute the transactions without running the node.${RESET}"
+    wget https://github.com/anoma/namada/releases/download/v1.1.5/namada-v1.1.5-Linux-x86_64.tar.gz
+    tar -xvf namada-v1.1.5-Linux-x86_64.tar.gz
+    cd namada-v1.1.5-Linux-x86_64
+    mv namad* /usr/local/bin/
+    export NAMADA_CHAIN_ID="campfire"
+    export NAMADA_NETWORK_CONFIGS_SERVER="https://github.com/anoma/namada-testnet-genesis/releases/download/testnet-genesis/"
+    export BASE_DIR="$HOME/.local/share/namada"
+    echo 'export NAMADA_CHAIN_ID="campfire"' >> $HOME/.bash_profile
+    echo 'export BASE_DIR="$HOME/.local/share/namada"' >> $HOME/.bash_profile
+    echo 'export NAMADA_NETWORK_CONFIGS_SERVER="https://github.com/anoma/namada-testnet-genesis/releases/download/testnet-genesis/"' >> $HOME/.bash_profile
+    namadac utils join-network --chain-id $NAMADA_CHAIN_ID
+    menu
+}
+
+function cubic_slashing() {
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Namada/resources/csr.sh)
+    menu
+}
+
+function create_wallet() {
+    echo -e "${RED}Write down your mnemonic and store it securely -- this is the only time it will be shown. You can use your mnemonic to recover your account if you lose access (for example, if your laptop stops working or is stolen). If you are locked out of your account, and you haven't saved your mnemonic, your funds will be lost forever.
+    Also carefully note the encryption password you provided -- you will need to provide it any time you make a transaction.${RESET}"
+
+    echo -e "${YELLOW}Please provide only the prefix for the wallet name/alias.${RESET}"
+    echo -e "Aliases will be automatically generated as follows:"
+    echo -e "  - Transparent key: ${CYAN}<prefix>${RESET}"
+    echo -e "  - Shielded key: ${CYAN}<prefix>-shielded${RESET}"
+    echo -e "  - Shielded payment address: ${CYAN}<prefix>-shielded-addr${RESET}\n"
+
+    read -p "Enter wallet name/alias prefix: " WALLET_NAME
+    namadaw gen --alias $WALLET_NAME
+    namadaw derive --shielded --alias ${WALLET_NAME}-shielded
+    namadaw gen-payment-addr --key ${WALLET_NAME}-shielded --alias ${WALLET_NAME}-shielded-addr
+    namadaw find --alias $WALLET_NAME
+    namadaw find --alias $WALLET_NAME-shielded
+    namadaw find --alias $WALLET_NAME-shielded-addr
+    echo -e "${GREEN}Wallet creation completed successfully, including shielded wallet restoration.${RESET}"
+    echo -e "\n${YELLOW}Press Enter to go back to Valley of Namada main menu${RESET}"
+    read -r
+    menu
+}
+
+function restore_wallet() {
+    echo -e "${YELLOW}Please provide only the prefix for the wallet name/alias.${RESET}"
+    echo -e "Aliases will be automatically generated as follows:"
+    echo -e "  - Transparent key: ${CYAN}<prefix>${RESET}"
+    echo -e "  - Shielded key: ${CYAN}<prefix>-shielded${RESET}"
+    echo -e "  - Shielded payment address: ${CYAN}<prefix>-shielded-addr${RESET}\n"
+
+    read -p "Enter wallet name/alias prefix: " WALLET_NAME
+    namadaw derive --alias $WALLET_NAME --hd-path default
+    namadaw derive --shielded --alias ${WALLET_NAME}-shielded
+    namadaw gen-payment-addr --key ${WALLET_NAME}-shielded --alias ${WALLET_NAME}-shielded-addr
+    namadaw find --alias $WALLET_NAME
+    namadaw find --alias $WALLET_NAME-shielded
+    namadaw find --alias $WALLET_NAME-shielded-addr
+    echo -e "${GREEN}Wallet restoration completed successfully, including shielded wallet restoration.${RESET}"
+    echo -e "\n${YELLOW}Press Enter to go back to Valley of Namada main menu${RESET}"
+    read -r
+    menu
+}
+
+function create_shielded_payment_address() {
+    # List existing shielded keys
+    SHIELDED_KEYS=$(namadaw list --shielded --keys)
+
+    # Check if there are no shielded keys
+    if [[ "$SHIELDED_KEYS" =~ "No known keys" ]]; then
+        echo -e "${RED}No shielded keys found. Please create a shielded key first.${RESET}"
+        echo -e "\n${YELLOW}Press Enter to go back to the main menu.${RESET}"
+        read -r
+        menu
+        return
+    fi
+
+    # Prompt user to select a shielded key and provide alias prefix
+    echo -e "${GREEN}Available Shielded Keys:${RESET}"
+    echo "$SHIELDED_KEYS"
+    read -p "Enter your shielded key full alias: " SHIELDED_KEY_ALIAS
+    read -p "Enter your desired alias prefix for the payment address: " ALIAS_PREFIX
+
+    # Base alias format
+    NEXT_ALIAS=$ALIAS_PREFIX
+    i=0
+
+    # Check for existing aliases and find the next available one
+    while namadaw find --alias "${NEXT_ALIAS}-shielded-addr" 2>/dev/null | grep -q "^  \"${NEXT_ALIAS}-shielded-addr\""; do
+        ((i++))
+        NEXT_ALIAS="${ALIAS_PREFIX}${i}"
+    done
+
+    # Create the new alias
+    FULL_ALIAS="${NEXT_ALIAS}-shielded-addr"
+
+    # Generate the new payment address with the formatted alias
+    namadaw gen-payment-addr --key "$SHIELDED_KEY_ALIAS" --alias "$FULL_ALIAS"
+
+    # Verify the creation of the payment address
+    if namadaw find --alias "$FULL_ALIAS" 2>/dev/null | grep -q "^  \"$FULL_ALIAS\""; then
+        echo -e "${GREEN}Payment address created successfully: ${FULL_ALIAS}${RESET}"
+    else
+        echo -e "${RED}Failed to create payment address. Please try again.${RESET}"
+    fi
+    echo
+    namadaw list --shielded --addr
+    echo
+
+    echo -e "\n${YELLOW}Press Enter to go back to the main menu${RESET}"
+    read -r
+    menu
+}
+
+function show_wallet() {
+    echo
+    namadaw list --keys --transparent
+    echo
+    echo "Implicit addresses:"
+    namadaw list --addr | grep "Implicit"
+    echo
+    namadaw list --keys --shielded
+    echo
+    namadaw list --shielded --addr
+    echo
+
+    echo -e "${YELLOW}Press Enter to go back to Valley of Namada main menu${RESET}"
+    read -r
+    menu
+}
+
+function delete_wallets() {
+    # Display all stored keys and addresses
+    echo -e "\nAvailable Keys and Addresses:"
+    echo
+    echo "Transparent Keys:"
+    namadaw list --keys --transparent
+    echo
+    echo "Implicit Addresses:"
+    namadaw list --addr | grep "Implicit"
+    echo
+    echo "Shielded Keys:"
+    namadaw list --keys --shielded
+    echo
+    echo "Shielded Addresses:"
+    namadaw list --shielded --addr
+    echo
+
+    # Prompt user for aliases to delete
+    read -p "Enter aliases to delete (comma-separated): " ALIASES
+
+    # Split the input into an array by commas
+    IFS=',' read -r -a ALIAS_ARRAY <<< "$ALIASES"
+
+    # Confirm deletion
+    echo -e "${YELLOW}The following aliases will be deleted:${RESET}"
+    for ALIAS in "${ALIAS_ARRAY[@]}"; do
+        echo " - $ALIAS"
+    done
+    read -p "Are you sure you want to delete these aliases? (yes/no): " CONFIRM
+
+    if [[ "$CONFIRM" != "yes" ]]; then
+        echo -e "${RED}Deletion canceled.${RESET}"
+        return
+    fi
+
+    # Loop through each alias and execute the delete command
+    for ALIAS in "${ALIAS_ARRAY[@]}"; do
+        ALIAS_TRIMMED=$(echo "$ALIAS" | xargs) # Trim whitespace
+        echo "Deleting alias: $ALIAS_TRIMMED..."
+        namadaw remove --alias "$ALIAS_TRIMMED" --do-it
+
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}Successfully deleted $ALIAS_TRIMMED.${RESET}"
+        else
+            echo -e "${RED}Failed to delete $ALIAS_TRIMMED. Please check the alias and try again.${RESET}"
+        fi
+    done
+
+    echo -e "${YELLOW}Deletion process completed.${RESET}"
+    echo -e "${YELLOW}Press Enter to go back to Valley of Namada main menu${RESET}"
+    read -r
+    menu
+}
+
+function query_balance() {
+    DEFAULT_WALLET=$WALLET_NAME # Assuming $WALLET_NAME is set elsewhere in your script
+
+    while true; do
+        echo "Choose an option:"
+        echo "1. Query the balance of my wallet"
+        echo "2. Query the balance of another wallet address"
+        echo "3. Back"
+        read -p "Enter your choice (1, 2, or 3): " WALLET_CHOICE
+
+        if [ "$WALLET_CHOICE" == "3" ]; then
+            echo "Returning to the Valley of Namada main menu."
+            menu
+            return
+        fi
+
+        if [ "$WALLET_CHOICE" == "1" ]; then
+            echo "Available Wallets:"
+            echo
+            echo "Implicit addresses:"
+            namadaw list --addr | grep "Implicit"
+            echo
+            namadaw list --keys
+            echo
+
+            echo "Choose an address type to query:"
+            echo "1. Transparent address"
+            echo "2. Shielded address"
+            echo "3. Back"
+            read -p "Enter your choice (1, 2, or 3): " CHOICE
+
+            if [ "$CHOICE" == "3" ]; then
+                echo "Returning to the Valley of Namada main menu."
+                menu
+                return
+            fi
