@@ -125,9 +125,9 @@ echo "Current json-rpc: $BLOCKCHAIN_RPC_ENDPOINT"
 read -p "Enter storage kv urls: " ZGS_NODE
 echo "Current storage kv urls: $ZGS_NODE"
 
-echo 'export ZGS_LOG_SYNC_BLOCK="595059"' >> ~/.bash_profile
+echo 'export ZGS_LOG_SYNC_BLOCK="0"' >> ~/.bash_profile
 echo "export ZGS_NODE=$ZGS_NODE" >> ~/.bash_profile
-echo 'export LOG_CONTRACT_ADDRESS="0xbD2C3F0E65eDF5582141C35969d66e34629cC768"' >> ~/.bash_profile
+echo 'export LOG_CONTRACT_ADDRESS="0x56A565685C9992BF5ACafb940ff68922980DBBC5"' >> ~/.bash_profile
 echo "export BLOCKCHAIN_RPC_ENDPOINT=$BLOCKCHAIN_RPC_ENDPOINT" >> ~/.bash_profile
 
 source ~/.bash_profile

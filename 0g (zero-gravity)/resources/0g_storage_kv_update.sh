@@ -65,7 +65,7 @@ echo "Current JSON-RPC endpoint: $BLOCKCHAIN_RPC_ENDPOINT"
 read -p "Choose contract type (turbo/standard): " CONTRACT_TYPE
 
 if [ "$CONTRACT_TYPE" == "turbo" ]; then
-    LOG_CONTRACT_ADDRESS="0xbD2C3F0E65eDF5582141C35969d66e34629cC768"
+    LOG_CONTRACT_ADDRESS="0x56A565685C9992BF5ACafb940ff68922980DBBC5"
 elif [ "$CONTRACT_TYPE" == "standard" ]; then
     LOG_CONTRACT_ADDRESS="0x0460aA47b41a66694c0a73f667a1b795A5ED3556"
 else
@@ -91,7 +91,7 @@ git submodule update --init
 cargo build --release
 
 ### 4. Set vars
-echo 'export ZGS_LOG_SYNC_BLOCK="595059"' >> ~/.bash_profile
+echo 'export ZGS_LOG_SYNC_BLOCK="0"' >> ~/.bash_profile
 echo "export ZGS_NODE=\"$ZGS_NODE\"" >> ~/.bash_profile
 echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
 
