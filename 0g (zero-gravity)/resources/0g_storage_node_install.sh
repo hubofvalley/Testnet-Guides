@@ -97,7 +97,7 @@ go version
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # 4. Set vars
-echo 'export ZGS_LOG_SYNC_BLOCK="595059"' >> ~/.bash_profile
+echo 'export ZGS_LOG_SYNC_BLOCK="0"' >> ~/.bash_profile
 echo "export ZGS_NODE=\"$ZGS_NODE\"" >> ~/.bash_profile
 echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
 
