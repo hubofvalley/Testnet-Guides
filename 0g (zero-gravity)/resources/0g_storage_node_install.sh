@@ -98,12 +98,10 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # 4. Set vars
 echo 'export ZGS_LOG_SYNC_BLOCK="0"' >> ~/.bash_profile
-echo "export ZGS_NODE=\"$ZGS_NODE\"" >> ~/.bash_profile
+echo "export ZGS_NODE_VERSION="v1.0.0"" >> ~/.bash_profile
 echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
-
+echo 'export LOG_CONTRACT_ADDRESS="'"0x56A565685C9992BF5ACafb940ff68922980DBBC5"'"' >> ~/.bash_profile
 source ~/.bash_profile
-
-echo 'export LOG_CONTRACT_ADDRESS="'"$LOG_CONTRACT_ADDRESS"'"' >> ~/.bash_profile
 
 echo -e "\n\033[31mCHECK YOUR STORAGE NODE VARIABLES\033[0m\n\nZGS_NODE: $ZGS_NODE\nLOG_CONTRACT_ADDRESS: $LOG_CONTRACT_ADDRESS\nZGS_LOG_SYNC_BLOCK: $ZGS_LOG_SYNC_BLOCK\nBLOCKCHAIN_RPC_ENDPOINT: $BLOCKCHAIN_RPC_ENDPOINT\n\n" "\033[3m\"Let's Buidl 0G Together\" - Grand Valley\033[0m"
 
