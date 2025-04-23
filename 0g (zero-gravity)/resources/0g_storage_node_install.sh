@@ -147,7 +147,7 @@ sed -i "
 s|^\s*#\?\s*network_boot_nodes\s*=.*|network_boot_nodes = [\"${BOOT_NODES[0]}\", \"${BOOT_NODES[1]}\", \"${BOOT_NODES[2]}\", \"${BOOT_NODES[3]}\", \"${BOOT_NODES[4]}\", \"${BOOT_NODES[5]}\"]|
 s|^\s*#\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|
 s|^\s*#\s*listen_address\s*=.*|listen_address = \"0.0.0.0:5678\"|
-s|^\s*#\s*listen_address_admin\s*=.*|listen_address_admin = \"0.0.0.0:5679\"|
+s|^\s*#\s*listen_address_admin\s*=.*|listen_address_admin = \"127.0.0.1:5679\"|
 s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
 s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = 0|
 s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|
