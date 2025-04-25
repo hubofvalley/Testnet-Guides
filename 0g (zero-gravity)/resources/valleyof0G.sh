@@ -529,8 +529,8 @@ function apply_storage_node_snapshot() {
     while true; do
         clear
         echo -e "\033[0;36m▓▒░ Storage Node Contract Type\033[0m"
-        echo -e "\033[0;32m1) Turbo Contract\033[0m   (Available)"
-        echo -e "\033[0;33m2) Standard Contract\033[0m     (Not Available)"
+        echo -e "\033[0;32m1) Standard Contract\033[0m   (Not Available)"
+        echo -e "\033[0;33m2) Turbo Contract\033[0m     (Available)"
         echo -e "\033[0;31m3) Cancel & Return\033[0m"
         
         read -p $'\033[0;34mSelect option [1-3]: \033[0m' contract_choice
