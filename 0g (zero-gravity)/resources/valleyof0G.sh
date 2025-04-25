@@ -537,6 +537,11 @@ function apply_storage_node_snapshot() {
 
         case $contract_choice in
             1)
+                echo -e "\033[0;33mStandard Contract snapshot not available."
+                echo -e "Please monitor official channels for updates!\033[0m"
+                sleep 2
+                ;;
+            2)
                 echo -e "\n\033[0;31m▓▒░ IMPORTANT: Post-Snapshot Downtime Expected ░▒▓\033[0m"
                 echo -e "\033[0;33mAfter applying the snapshot, your storage node will experience"
                 echo -e "several hours of downtime while the data_db automatically syncs."
@@ -547,7 +552,7 @@ function apply_storage_node_snapshot() {
 
                 echo -e "\n\033[0;32mInitializing Standard Contract snapshot...\033[0m"
                 echo -e "\033[0;33mThis may take several minutes...\033[0m"
-                bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_standard_zgs_node_snapshot.sh)
+                bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_turbo_zgs_node_snapshot.sh)
 
                 echo -e "\n\033[0;32m▓▒░ Snapshot Applied Successfully ░▒▓\033[0m"
                 echo -e "\033[0;33mYour node is now syncing data_db - this will take several hours"
@@ -557,11 +562,6 @@ function apply_storage_node_snapshot() {
                 sleep 3
                 menu
                 break
-                ;;
-            2)
-                echo -e "\033[0;33mTurbo Contract snapshot is currently in development."
-                echo -e "Please monitor official channels for updates!\033[0m"
-                sleep 2
                 ;;
             3)
                 echo -e "\033[0;31mOperation aborted by user\033[0m"
