@@ -85,10 +85,10 @@ monitor_csr() {
         clear
 
         # Fetch total voting power
-        total_voting_power=$(curl -s 'https://indexer-mainnet-namada.grandvalleys.com/api/v1/pos/voting-power' | jq -r '.totalVotingPower')
+        total_voting_power=$(curl -s 'https://indexer-testnet-namada.grandvalleys.com/api/v1/pos/voting-power' | jq -r '.totalVotingPower')
 
         # Fetch validator data
-        validator_data=$(curl -s 'https://indexer-mainnet-namada.grandvalleys.com/api/v1/pos/validator/all?state=consensus' | jq -r '.[] | "\(.name) \(.votingPower)"')
+        validator_data=$(curl -s 'https://indexer-testnet-namada.grandvalleys.com/api/v1/pos/validator/all?state=consensus' | jq -r '.[] | "\(.name) \(.votingPower)"')
         sorted_validators=$(echo "$validator_data" | awk '{print $NF, $0}' | sort -nr | cut -d' ' -f2-)
 
         # Create an array of validators
@@ -155,7 +155,7 @@ simulate_infractions() {
     echo ""
 
     declare -A validators
-    total_voting_power=$(curl -s 'https://indexer-mainnet-namada.grandvalleys.com/api/v1/pos/voting-power' | jq -r '.totalVotingPower')
+    total_voting_power=$(curl -s 'https://indexer-testnet-namada.grandvalleys.com/api/v1/pos/voting-power' | jq -r '.totalVotingPower')
 
     while true; do
         # Step 1: Input validator name
@@ -165,7 +165,7 @@ simulate_infractions() {
         fi
 
         # Fetch validator voting power from the API
-        vp=$(curl -s "https://indexer-mainnet-namada.grandvalleys.com/api/v1/pos/validator/all?state=consensus" | jq -r --arg name "$validator_name" '.[] | select(.name == $name) | .votingPower')
+        vp=$(curl -s "https://indexer-testnet-namada.grandvalleys.com/api/v1/pos/validator/all?state=consensus" | jq -r --arg name "$validator_name" '.[] | select(.name == $name) | .votingPower')
         if [[ -z "$vp" ]]; then
             echo -e "${RED}Validator not found. Try again.${RESET}"
             continue

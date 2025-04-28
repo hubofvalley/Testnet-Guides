@@ -1,4 +1,4 @@
-# Namada Mainnet Guide
+# Namada Testnet Guide
 
 `will always update`
 
@@ -8,7 +8,7 @@
 
 ## Table of Contents
 
-- [Namada Mainnet Guide](#namada-mainnet-guide)
+- [Namada Testnet Guide](#namada-guide)
   - [Table of Contents](#table-of-contents)
 - [Namada](#namada)
   - [What is Namada?](#what-is-namada)
@@ -49,7 +49,7 @@ Namada is a proof-of-stake Layer 1 (L1) for interchain asset-agnostic data prote
 
 ### Fast ZKP Generation on Edge Devices
 
-- **Vertical Integration**: Namada is vertically integrated, allowing users to interact at mainnet with the protocol and send shielded transfers via browser applications.
+- **Vertical Integration**: Namada is vertically integrated, allowing users to interact at Testnet with the protocol and send shielded transfers via browser applications.
 
 ### Low Transaction Latency and Near-Zero Fees
 
@@ -90,7 +90,7 @@ Namada is a proof-of-stake Layer 1 (L1) for interchain asset-agnostic data prote
 
 For more detailed information, visit the [Namada Documentation](https://docs.namada.net/).
 
-With Public Mainnet, Namada's docs and code become public. Check them out below!
+With Public Testnet, Namada's docs and code become public. Check them out below!
 
 - [Namada Website](https://namada.net/)
 - [Namada Twitter](https://twitter.com/namada)
@@ -100,13 +100,13 @@ With Public Mainnet, Namada's docs and code become public. Check them out below!
 
 ## Grand Valley's Namada public endpoints
 
-- cosmos rpc: `https://lightnode-rpc-mainnet-namada.grandvalleys.com`
-- json-rpc: `https://lightnode-json-rpc-mainnet-namada.grandvalleys.com`
-- cosmos ws: `wss://lightnode-rpc-mainnet-namada.grandvalleys.com/websocket`
-- seed: `tcp://65882ea69f4146d8cc83564257252f4711d3e05e@seed-mainnet-namada.grandvalleys.com:56656`
-- peer: `tcp://3879583b9c6b1ac29d38fefb5a14815dd79282d6@peer-mainnet-namada.grandvalleys.com:38656`
-- indexer: `https://indexer-mainnet-namada.grandvalleys.com`
-- masp-indexer: `https://masp-indexer-mainnet-namada.grandvalleys.com`
+- cosmos rpc: `https://lightnode-rpc-namada.grandvalleys.com`
+- json-rpc: `https://lightnode-json-rpc-namada.grandvalleys.com`
+- cosmos ws: `wss://lightnode-rpc-namada.grandvalleys.com/websocket`
+- seed: `tcp://65882ea69f4146d8cc83564257252f4711d3e05e@seed-namada.grandvalleys.com:56656`
+- peer: `tcp://3879583b9c6b1ac29d38fefb5a14815dd79282d6@peer-namada.grandvalleys.com:38656`
+- indexer: `https://indexer-namada.grandvalleys.com`
+- masp-indexer: `https://masp-indexer-namada.grandvalleys.com`
 - Valley of Namadillo (Namadillo): `https://valley-of-namadillo.grandvalleys.com`
 
 # Lets Buidl Namada Together

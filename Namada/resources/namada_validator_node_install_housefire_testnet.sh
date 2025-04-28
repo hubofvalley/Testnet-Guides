@@ -35,7 +35,7 @@ sudo systemctl disable namadad
 sudo rm -rf /etc/systemd/system/namadad.service
 sudo rm /usr/local/bin/namad*
 sudo rm -r namada
-sudo rm -rf $HOME/.local/share/namada/campfire-square.ff09671d333707
+sudo rm -rf $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be
 sed -i "/NAMADA_/d" $HOME/.bash_profile
 
 # 1. Install dependencies for building from source
@@ -72,11 +72,11 @@ cometbft version
 # 5. Set environment variables
 echo 'export MONIKER="$MONIKER"' >> $HOME/.bash_profile
 echo 'export WALLET_NAME="$WALLET_NAME"' >> $HOME/.bash_profile
-echo 'export NAMADA_CHAIN_ID="campfire-square.ff09671d333707"' >> $HOME/.bash_profile
+echo 'export NAMADA_CHAIN_ID="housefire-alpaca.cc0d3e0c033be"' >> $HOME/.bash_profile
 echo 'export NAMADA_PORT="$NAMADA_PORT"' >> $HOME/.bash_profile
 echo 'export BASE_DIR="$HOME/.local/share/namada"' >> $HOME/.bash_profile
-echo 'export NAMADA_NETWORK_CONFIGS_SERVER="https://testnet.campfire.tududes.com/configs"' >> $HOME/.bash_profile
-export NAMADA_CHAIN_ID="campfire-square.ff09671d333707"
+echo 'export NAMADA_NETWORK_CONFIGS_SERVER="https://github.com/vknowable/namada-campfire/releases/download/housefire-alpaca"' >> $HOME/.bash_profile
+export NAMADA_CHAIN_ID="housefire-alpaca.cc0d3e0c033be"
 source $HOME/.bash_profile
 
 # 6. Download Namada binaries
@@ -93,8 +93,8 @@ else
     namadac utils join-network --chain-id $NAMADA_CHAIN_ID
 fi
 
-peers="tcp://e9a6dafe9a6d8e2e61b7ae70607aa2859eacd0a1@206.168.190.35:26656"
-sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml
+peers="tcp://3e254524b630ee5a1d0df6aa40b4ed1370b5e51a@74.50.93.254:26656,tcp://0ed550f6f3acc48505fb194ad7966d923db5f7bb@167.99.185.160:26656,tcp://9a8b49025b395b356d8b76591ab84134bbb435fd@138.197.133.118:26656,tcp://76950046528ef89d6e87d835d7a629533475a619@23.88.13.45:21556"
+sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml
 
 # 8. Set custom ports and moniker in config.toml
 sed -i.bak -e "s%laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${NAMADA_PORT}656\"%g;
@@ -103,14 +103,14 @@ s%moniker = \""technodrome"\"%moniker = \""$MONIKER"\"%g;
 s%proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${NAMADA_PORT}658\"%g;
 s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://127.0.0.1:${NAMADA_PORT}657\"%g;
 s%^oracle_rpc_endpoint = \"http://127.0.0.1:8545\"%oracle_rpc_endpoint = \"http://127.0.0.1:${NAMADA_PORT}545\"%g;
-s%^pprof_laddr = \"localhost:26060\"%pprof_laddr = \"localhost:${NAMADA_PORT}060\"%g" $HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml
+s%^pprof_laddr = \"localhost:26060\"%pprof_laddr = \"localhost:${NAMADA_PORT}060\"%g" $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml
 
 # 9. Enable or disable indexer based on user input
 if [ "$ENABLE_INDEXER" = "y" ]; then
-    sed -i -e 's/^indexer = "null"/indexer = "kv"/' $HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml
+    sed -i -e 's/^indexer = "null"/indexer = "kv"/' $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml
     echo "Indexer enabled."
 else
-    sed -i -e 's/^indexer = "kv"/indexer = "null"/' $HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml
+    sed -i -e 's/^indexer = "kv"/indexer = "null"/' $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml
     echo "Indexer disabled."
 fi
 
@@ -119,7 +119,7 @@ fi
 # Consensus service file
 sudo tee /etc/systemd/system/namadad.service > /dev/null <<EOF
 [Unit]
-Description=Namada Campfire Testnet Node
+Description=Namada Housefire Testnet Node
 After=network-online.target
 
 [Service]

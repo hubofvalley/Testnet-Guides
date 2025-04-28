@@ -40,7 +40,7 @@ ${YELLOW}| Category  | Requirements     |
 | Bandwidth | 100+ MBit/s      |${RESET}
 
 - validator node service file name: ${CYAN}namadad.service${RESET}
-- current chain: ${CYAN}campfire-square.ff09671d333707${RESET}
+- current chain: ${CYAN}housefire-alpaca.cc0d3e0c033be${RESET}
 - current namada node version: ${CYAN}v1.0.0${RESET}
 "
 
@@ -67,14 +67,14 @@ ${GREEN}Contact${RESET}
 "
 
 ENDPOINTS="${GREEN}
-Grand Valley Namada mainnet public endpoints:${RESET}
-- cosmos-rpc: ${BLUE}https://lightnode-rpc-mainnet-namada.grandvalleys.com${RESET}
-- evm-rpc: ${BLUE}https://lightnode-json-rpc-mainnet-namada.grandvalleys.com${RESET}
-- cosmos ws: ${BLUE}wss://lightnode-rpc-mainnet-namada.grandvalleys.com/websocket${RESET}
-- seed: ${BLUE}tcp://65882ea69f4146d8cc83564257252f4711d3e05e@seed-mainnet-namada.grandvalleys.com:56656${RESET}
-- peer: ${BLUE}tcp://3879583b9c6b1ac29d38fefb5a14815dd79282d6@peer-mainnet-namada.grandvalleys.com:38656${RESET}
-- indexer: ${BLUE}https://indexer-mainnet-namada.grandvalleys.com${RESET}
-- masp-indexer: ${BLUE}https://masp-indexer-mainnet-namada.grandvalleys.com${RESET}
+Grand Valley Namada Testnet public endpoints:${RESET}
+- cosmos-rpc: ${BLUE}https://lightnode-rpc-namada.grandvalleys.com${RESET}
+- evm-rpc: ${BLUE}https://lightnode-json-rpc-namada.grandvalleys.com${RESET}
+- cosmos ws: ${BLUE}wss://lightnode-rpc-namada.grandvalleys.com/websocket${RESET}
+- seed: ${BLUE}tcp://65882ea69f4146d8cc83564257252f4711d3e05e@seed-namada.grandvalleys.com:56656${RESET}
+- peer: ${BLUE}tcp://3879583b9c6b1ac29d38fefb5a14815dd79282d6@peer-namada.grandvalleys.com:38656${RESET}
+- indexer: ${BLUE}https://indexer-namada.grandvalleys.com${RESET}
+- masp-indexer: ${BLUE}https://masp-indexer-namada.grandvalleys.com${RESET}
 - Valley of Namadillo (Namadillo): ${BLUE}https://valley-of-namadillo.grandvalleys.com${RESET}
 
 Stake to Grand Valley: ${CYAN}tnam1qyplu8gruqmmvwp7x7kd92m6x4xpyce265fa05r6${RESET}
@@ -102,14 +102,14 @@ echo -e "$ENDPOINTS"
 echo -e "\n${YELLOW}Press Enter to continue${RESET}"
 read -r
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
-echo 'export NAMADA_CHAIN_ID="campfire-square.ff09671d333707"' >> $HOME/.bash_profile
-export NAMADA_CHAIN_ID="campfire-square.ff09671d333707"
+echo 'export NAMADA_CHAIN_ID="housefire-alpaca.cc0d3e0c033be"' >> $HOME/.bash_profile
+export NAMADA_CHAIN_ID="housefire-alpaca.cc0d3e0c033be"
 source $HOME/.bash_profile
 
 # Validator Node Functions
 function deploy_validator_node() {
     echo -e "${CYAN}Deploying Validator Node...${RESET}"
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Namada-Campfire/resources/namada_validator_node_install_campfire_testnet.sh)
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Namada/resources/namada_validator_node_install_housefire_testnet.sh)
     menu
 }
 
@@ -141,7 +141,7 @@ function add_seeds() {
             echo "You have entered the following seeds: $seeds"
             read -p "Do you want to proceed? (yes/no): " confirm
             if [[ $confirm == "yes" ]]; then
-                sed -i -e "s|^seeds *=.*|seeds = \"$seeds\"|" $HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml
+                sed -i -e "s|^seeds *=.*|seeds = \"$seeds\"|" $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml
                 echo "seeds added manually."
             else
                 echo "Operation cancelled. Returning to menu."
@@ -149,11 +149,11 @@ function add_seeds() {
             fi
             ;;
         2)
-            seeds="tcp://65882ea69f4146d8cc83564257252f4711d3e05e@seed-mainnet-namada.grandvalleys.com:56656"
+            seeds="tcp://65882ea69f4146d8cc83564257252f4711d3e05e@seed-namada.grandvalleys.com:56656"
             echo "Grand Valley's seeds: $seeds"
             read -p "Do you want to proceed? (yes/no): " confirm
             if [[ $confirm == "yes" ]]; then
-                sed -i -e "s|^seeds *=.*|seeds = \"$seeds\"|" $HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml
+                sed -i -e "s|^seeds *=.*|seeds = \"$seeds\"|" $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml
                 echo "Grand Valley's seeds added."
             else
                 echo "Operation cancelled. Returning to menu."
@@ -181,7 +181,7 @@ function add_peers() {
             echo "You have entered the following peers: $peers"
             read -p "Do you want to proceed? (yes/no): " confirm
             if [[ $confirm == "yes" ]]; then
-                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml
+                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml
                 echo "Peers added manually."
             else
                 echo "Operation cancelled. Returning to menu."
@@ -189,11 +189,11 @@ function add_peers() {
             fi
             ;;
         2)
-            peers=$(curl -sS https://lightnode-rpc-mainnet-namada.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
+            peers=$(curl -sS https://lightnode-rpc-namada.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
             echo "Grand Valley's peers: $peers"
             read -p "Do you want to proceed? (yes/no): " confirm
             if [[ $confirm == "yes" ]]; then
-                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml
+                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml
                 echo "Grand Valley's peers added."
             else
                 echo "Operation cancelled. Returning to menu."
@@ -216,7 +216,7 @@ function delete_validator_node() {
     sudo systemctl disable namadad
     sudo rm -rf /etc/systemd/system/namadad.service
     sudo rm -rf $HOME/namada
-    sudo rm -rf $HOME/.local/share/namada/campfire-square.ff09671d333707/
+    sudo rm -rf $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/
     sudo rm /usr/local/bin/namad*
     sed -i "/NAMADA_/d" $HOME/.bash_profile
     echo -e "${RED}Namada Validator node deleted successfully.${RESET}"
@@ -237,7 +237,7 @@ function restart_validator_node() {
 }
 
 function backup_validator_key() {
-    cp $HOME/.local/share/namada/campfire-square.ff09671d333707/cometbft/config/priv_validator_key.json $HOME/priv_validator_key.json
+    cp $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/cometbft/config/priv_validator_key.json $HOME/priv_validator_key.json
     echo -e "\n${YELLOW}Your priv_vaidator_key.json file has been copied to $HOME${RESET}"
     menu
 }
@@ -249,7 +249,7 @@ function show_validator_node_logs() {
 }
 
 function show_validator_node_status() {
-    port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml")
+    port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml")
     curl -s http://127.0.0.1:$port/status | jq
     echo -e "\n${YELLOW}Press Enter to go back to Valley of Namada main menu${RESET}"
     read -r
@@ -262,18 +262,18 @@ function install_namada_app() {
     tar -xvf namada-v1.0.0-Linux-x86_64.tar.gz
     cd namada-v1.0.0-Linux-x86_64
     mv namad* /usr/local/bin/
-    export NAMADA_CHAIN_ID="campfire-square.ff09671d333707"
-    export NAMADA_NETWORK_CONFIGS_SERVER="https://testnet.campfire.tududes.com/configs/"
+    export NAMADA_CHAIN_ID="housefire-alpaca.cc0d3e0c033be"
+    export NAMADA_NETWORK_CONFIGS_SERVER="https://github.com/vknowable/namada-campfire/releases/download/housefire-alpaca"
     export BASE_DIR="$HOME/.local/share/namada"
-    echo 'export NAMADA_CHAIN_ID="campfire-square.ff09671d333707"' >> $HOME/.bash_profile
+    echo 'export NAMADA_CHAIN_ID="housefire-alpaca.cc0d3e0c033be"' >> $HOME/.bash_profile
     echo 'export BASE_DIR="$HOME/.local/share/namada"' >> $HOME/.bash_profile
-    echo 'export NAMADA_NETWORK_CONFIGS_SERVER="https://github.com/anoma/namada-mainnet-genesis/releases/download/mainnet-genesis/"' >> $HOME/.bash_profile
+    echo 'export NAMADA_NETWORK_CONFIGS_SERVER="https://github.com/anoma/namada-genesis/releases/download/Testnet-genesis/"' >> $HOME/.bash_profile
     namadac utils join-network --chain-id $NAMADA_CHAIN_ID
     menu
 }
 
 function cubic_slashing() {
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Mainnet-Guides/main/Namada/resources/csr.sh)
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Namada/resources/csr.sh)
     menu
 }
 
@@ -508,7 +508,7 @@ function query_balance() {
         case $CHOICE in
             1)
                 if [ "$RPC_CHOICE" == "gv" ]; then
-                    namadac balance --owner $WALLET_ADDRESS --token NAM --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                    namadac balance --owner $WALLET_ADDRESS --token NAM --node https://lightnode-rpc-namada.grandvalleys.com
                 else
                     namadac balance --owner $WALLET_ADDRESS --token NAM
                 fi
@@ -516,10 +516,10 @@ function query_balance() {
             2)
                 if [ "$WALLET_CHOICE" == "1" ]; then
                     if [ "$RPC_CHOICE" == "gv" ]; then
-                        namadac shielded-sync --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
-                        namadac balance --owner ${WALLET_ADDRESS} --token NAM --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                        namadac shielded-sync --node https://lightnode-rpc-namada.grandvalleys.com
+                        namadac balance --owner ${WALLET_ADDRESS} --token NAM --node https://lightnode-rpc-namada.grandvalleys.com
                     else
-                        namadac shielded-sync --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                        namadac shielded-sync --node https://lightnode-rpc-namada.grandvalleys.com
                         namadac balance --owner ${WALLET_ADDRESS} --token NAM
                     fi
                 else
@@ -607,7 +607,7 @@ function transfer_transparent() {
 
         # Execute the transparent transfer
         if [ "$RPC_CHOICE" == "gv" ]; then
-            namadac transparent-transfer --source $SOURCE_WALLET_ADDRESS --target $TARGET_TRANSPARENT_WALLET_ADDRESS --token $TOKEN --amount $AMOUNT --signing-keys $SOURCE_WALLET_NAME --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+            namadac transparent-transfer --source $SOURCE_WALLET_ADDRESS --target $TARGET_TRANSPARENT_WALLET_ADDRESS --token $TOKEN --amount $AMOUNT --signing-keys $SOURCE_WALLET_NAME --node https://lightnode-rpc-namada.grandvalleys.com
         else
             namadac transparent-transfer --source $SOURCE_WALLET_ADDRESS --target $TARGET_TRANSPARENT_WALLET_ADDRESS --token $TOKEN --amount $AMOUNT --signing-keys $SOURCE_WALLET_NAME
         fi
@@ -684,7 +684,7 @@ function stake_tokens() {
             read -p "Enter amount to stake: " AMOUNT
             VALIDATOR_ADDRESS="tnam1qyplu8gruqmmvwp7x7kd92m6x4xpyce265fa05r6"
             if [ "$RPC_CHOICE" == "gv" ]; then
-                namadac bond --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --amount $AMOUNT --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                namadac bond --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --amount $AMOUNT --node https://lightnode-rpc-namada.grandvalleys.com
             else
                 namadac bond --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --amount $AMOUNT
             fi
@@ -697,7 +697,7 @@ function stake_tokens() {
             RPC_CHOICE="gv"
         fi
             read -p "Enter amount to stake: " AMOUNT
-            port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml")
+            port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml")
             VALIDATOR_ADDRESS=$(namadac find-validator --tm-address=$(curl -s 127.0.0.1:$port/status | jq -r .result.validator_info.address) | grep 'Found validator address' | awk -F'"' '{print $2}')
 
             # Ask if the user wants to support Grand Valley
@@ -709,14 +709,14 @@ function stake_tokens() {
             fi
 
             if [ "$RPC_CHOICE" == "gv" ]; then
-                namadac bond --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --amount $AMOUNT --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                namadac bond --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --amount $AMOUNT --node https://lightnode-rpc-namada.grandvalleys.com
             else
                 namadac bond --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --amount $AMOUNT
             fi
 
             if [ "$SUPPORT_GV" == "y" ]; then
                 if [ "$RPC_CHOICE" == "gv" ]; then
-                    namadac bond --source $WALLET_NAME --validator $GV_VALIDATOR_ADDRESS --amount $GV_AMOUNT --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                    namadac bond --source $WALLET_NAME --validator $GV_VALIDATOR_ADDRESS --amount $GV_AMOUNT --node https://lightnode-rpc-namada.grandvalleys.com
                 else
                     namadac bond --source $WALLET_NAME --validator $GV_VALIDATOR_ADDRESS --amount $GV_AMOUNT
                 fi
@@ -741,14 +741,14 @@ function stake_tokens() {
             fi
 
             if [ "$RPC_CHOICE" == "gv" ]; then
-                namadac bond --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --amount $AMOUNT --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                namadac bond --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --amount $AMOUNT --node https://lightnode-rpc-namada.grandvalleys.com
             else
                 namadac bond --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --amount $AMOUNT
             fi
 
             if [ "$SUPPORT_GV" == "y" ]; then
                 if [ "$RPC_CHOICE" == "gv" ]; then
-                    namadac bond --source $WALLET_NAME --validator $GV_VALIDATOR_ADDRESS --amount $GV_AMOUNT --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                    namadac bond --source $WALLET_NAME --validator $GV_VALIDATOR_ADDRESS --amount $GV_AMOUNT --node https://lightnode-rpc-namada.grandvalleys.com
                 else
                     namadac bond --source $WALLET_NAME --validator $GV_VALIDATOR_ADDRESS --amount $GV_AMOUNT
                 fi
@@ -823,10 +823,10 @@ function unstake_tokens() {
             RPC_CHOICE="gv"
         fi
             read -p "Enter amount to unstake: " AMOUNT
-            port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml")
-            VALIDATOR_ADDRESS=$(namadac find-validator --tm-address=$(curl -s 127.0.0.1:$port/status | jq -r .result.validator_info.address) --node https://lightnode-rpc-mainnet-namada.grandvalleys.com | grep 'Found validator address' | awk -F'"' '{print $2}')
+            port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml")
+            VALIDATOR_ADDRESS=$(namadac find-validator --tm-address=$(curl -s 127.0.0.1:$port/status | jq -r .result.validator_info.address) --node https://lightnode-rpc-namada.grandvalleys.com | grep 'Found validator address' | awk -F'"' '{print $2}')
             if [ "$RPC_CHOICE" == "gv" ]; then
-                namadac unbond --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --amount $AMOUNT --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                namadac unbond --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --amount $AMOUNT --node https://lightnode-rpc-namada.grandvalleys.com
             else
                 namadac unbond --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --amount $AMOUNT
             fi
@@ -841,7 +841,7 @@ function unstake_tokens() {
             read -p "Enter validator address: " VALIDATOR_ADDRESS
             read -p "Enter amount to unstake: " AMOUNT
             if [ "$RPC_CHOICE" == "gv" ]; then
-                namadac unbond --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --amount $AMOUNT --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                namadac unbond --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --amount $AMOUNT --node https://lightnode-rpc-namada.grandvalleys.com
             else
                 namadac unbond --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --amount $AMOUNT
             fi
@@ -905,14 +905,14 @@ function redelegate_tokens() {
                     TARGET_VALIDATOR_ADDRESS="tnam1qyplu8gruqmmvwp7x7kd92m6x4xpyce265fa05r6"
                     read -p "Enter source validator address: " SOURCE_VALIDATOR_ADDRESS
                     if [ "$RPC_CHOICE" == "gv" ]; then
-                        namadac redelegate --source-validator $SOURCE_VALIDATOR_ADDRESS --destination-validator $TARGET_VALIDATOR_ADDRESS --owner $WALLET_NAME --amount $AMOUNT --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                        namadac redelegate --source-validator $SOURCE_VALIDATOR_ADDRESS --destination-validator $TARGET_VALIDATOR_ADDRESS --owner $WALLET_NAME --amount $AMOUNT --node https://lightnode-rpc-namada.grandvalleys.com
                     else
                         namadac redelegate --source-validator $SOURCE_VALIDATOR_ADDRESS --destination-validator $TARGET_VALIDATOR_ADDRESS --owner $WALLET_NAME --amount $AMOUNT
                     fi
                     ;;
                 2)
-                    port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml")
-                    SOURCE_VALIDATOR_ADDRESS=$(namadac find-validator --tm-address=$(curl -s 127.0.0.1:$port/status | jq -r .result.validator_info.address) --node https://lightnode-rpc-mainnet-namada.grandvalleys.com | grep 'Found validator address' | awk -F'"' '{print $2}')
+                    port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml")
+                    SOURCE_VALIDATOR_ADDRESS=$(namadac find-validator --tm-address=$(curl -s 127.0.0.1:$port/status | jq -r .result.validator_info.address) --node https://lightnode-rpc-namada.grandvalleys.com | grep 'Found validator address' | awk -F'"' '{print $2}')
 
                     read -p "Enter destination validator address: " TARGET_VALIDATOR_ADDRESS
 
@@ -925,14 +925,14 @@ function redelegate_tokens() {
                     fi
 
                     if [ "$RPC_CHOICE" == "gv" ]; then
-                        namadac redelegate --source-validator $SOURCE_VALIDATOR_ADDRESS --destination-validator $TARGET_VALIDATOR_ADDRESS --owner $WALLET_NAME --amount $AMOUNT --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                        namadac redelegate --source-validator $SOURCE_VALIDATOR_ADDRESS --destination-validator $TARGET_VALIDATOR_ADDRESS --owner $WALLET_NAME --amount $AMOUNT --node https://lightnode-rpc-namada.grandvalleys.com
                     else
                         namadac redelegate --source-validator $SOURCE_VALIDATOR_ADDRESS --destination-validator $TARGET_VALIDATOR_ADDRESS --owner $WALLET_NAME --amount $AMOUNT
                     fi
 
                     if [ "$SUPPORT_GV" == "y" ]; then
                         if [ "$RPC_CHOICE" == "gv" ]; then
-                            namadac redelegate --source-validator $SOURCE_VALIDATOR_ADDRESS --destination-validator $GV_VALIDATOR_ADDRESS --owner $WALLET_NAME --amount $GV_AMOUNT --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                            namadac redelegate --source-validator $SOURCE_VALIDATOR_ADDRESS --destination-validator $GV_VALIDATOR_ADDRESS --owner $WALLET_NAME --amount $GV_AMOUNT --node https://lightnode-rpc-namada.grandvalleys.com
                         else
                             namadac redelegate --source-validator $SOURCE_VALIDATOR_ADDRESS --destination-validator $GV_VALIDATOR_ADDRESS --owner $WALLET_NAME --amount $GV_AMOUNT
                         fi
@@ -951,14 +951,14 @@ function redelegate_tokens() {
                     fi
 
                     if [ "$RPC_CHOICE" == "gv" ]; then
-                        namadac redelegate --source-validator $SOURCE_VALIDATOR_ADDRESS --destination-validator $TARGET_VALIDATOR_ADDRESS --owner $WALLET_NAME --amount $AMOUNT --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                        namadac redelegate --source-validator $SOURCE_VALIDATOR_ADDRESS --destination-validator $TARGET_VALIDATOR_ADDRESS --owner $WALLET_NAME --amount $AMOUNT --node https://lightnode-rpc-namada.grandvalleys.com
                     else
                         namadac redelegate --source-validator $SOURCE_VALIDATOR_ADDRESS --destination-validator $TARGET_VALIDATOR_ADDRESS --owner $WALLET_NAME --amount $AMOUNT
                     fi
 
                     if [ "$SUPPORT_GV" == "y" ]; then
                         if [ "$RPC_CHOICE" == "gv" ]; then
-                            namadac redelegate --source-validator $SOURCE_VALIDATOR_ADDRESS --destination-validator $GV_VALIDATOR_ADDRESS --owner $WALLET_NAME --amount $GV_AMOUNT --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                            namadac redelegate --source-validator $SOURCE_VALIDATOR_ADDRESS --destination-validator $GV_VALIDATOR_ADDRESS --owner $WALLET_NAME --amount $GV_AMOUNT --node https://lightnode-rpc-namada.grandvalleys.com
                         else
                             namadac redelegate --source-validator $SOURCE_VALIDATOR_ADDRESS --destination-validator $GV_VALIDATOR_ADDRESS --owner $WALLET_NAME --amount $GV_AMOUNT
                         fi
@@ -1026,7 +1026,7 @@ function withdraw_unbonded_tokens() {
         fi
 
             if [ "$RPC_CHOICE" == "gv" ]; then
-                namadac withdraw --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                namadac withdraw --source $WALLET_NAME --validator $VALIDATOR_ADDRESS --node https://lightnode-rpc-namada.grandvalleys.com
             else
                 namadac withdraw --source $WALLET_NAME --validator $VALIDATOR_ADDRESS
             fi
@@ -1061,7 +1061,7 @@ function claim_rewards() {
             # Auto-fetch validator address for options 1 and 3
             if [ "$CHOICE" -eq 1 ] || [ "$CHOICE" -eq 3 ]; then
                 echo "Fetching validator address..."
-                port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml")
+                port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml")
                 if [ -z "$port" ]; then
                     echo "Error: Could not find RPC port in config.toml"
                     return 1
@@ -1124,7 +1124,7 @@ function claim_rewards() {
 
             # RPC selection
             read -p "Use your own RPC or Grand Valley's? (own/gv, leave empty for gv): " RPC_CHOICE
-            [ "$RPC_CHOICE" = "gv" ] || [ -z "$RPC_CHOICE" ] && RPC_NODE="--node https://lightnode-rpc-mainnet-namada.grandvalleys.com"
+            [ "$RPC_CHOICE" = "gv" ] || [ -z "$RPC_CHOICE" ] && RPC_NODE="--node https://lightnode-rpc-namada.grandvalleys.com"
 
             # Execute claim command
             echo "Claiming rewards..."
@@ -1245,7 +1245,7 @@ function transfer_shielding() {
 
 function transfer_shielded_to_shielded() {
     DEFAULT_WALLET=$WALLET_NAME # Assuming $WALLET_NAME is set elsewhere in your script
-    namadac shielded-sync --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+    namadac shielded-sync --node https://lightnode-rpc-namada.grandvalleys.com
 
     # Get source shielded key (from the stored shielded key)
     while true; do
@@ -1344,7 +1344,7 @@ function transfer_shielded_to_shielded() {
 
     # Execute the shielded-to-shielded transfer transaction
     if [ "$RPC_CHOICE" == "gv" ]; then
-        namadac transfer --source ${SOURCE_SHIELDED_KEY_NAME} --target $TARGET_SHIELDED_PAYMENT_ADDRESS --token $TOKEN --amount $AMOUNT --signing-keys $SIGNING_KEY --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+        namadac transfer --source ${SOURCE_SHIELDED_KEY_NAME} --target $TARGET_SHIELDED_PAYMENT_ADDRESS --token $TOKEN --amount $AMOUNT --signing-keys $SIGNING_KEY --node https://lightnode-rpc-namada.grandvalleys.com
     else
         namadac transfer --source ${SOURCE_SHIELDED_KEY_NAME} --target $TARGET_SHIELDED_PAYMENT_ADDRESS --token $TOKEN --amount $AMOUNT --signing-keys $SIGNING_KEY
     fi
@@ -1357,7 +1357,7 @@ function transfer_shielded_to_shielded() {
 
 function transfer_unshielding() {
     DEFAULT_WALLET=$WALLET_NAME # Assuming $WALLET_NAME is set elsewhere in your script
-    namadac shielded-sync --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+    namadac shielded-sync --node https://lightnode-rpc-namada.grandvalleys.com
     
     while true; do
         # Show available shielded wallets (stored shielded key addresses only)
@@ -1438,7 +1438,7 @@ function transfer_unshielding() {
 
     # Execute the unshielding transaction to a transparent wallet (assuming source is shielded key)
     if [ "$RPC_CHOICE" == "gv" ]; then
-        namadac unshield --source $SHIELDED_WALLET_NAME --target $TARGET_WALLET_NAME --token $TOKEN --amount $AMOUNT --signing-keys $SIGNING_KEY_ADDRESS --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+        namadac unshield --source $SHIELDED_WALLET_NAME --target $TARGET_WALLET_NAME --token $TOKEN --amount $AMOUNT --signing-keys $SIGNING_KEY_ADDRESS --node https://lightnode-rpc-namada.grandvalleys.com
     else
         namadac unshield --source $SHIELDED_WALLET_NAME --target $TARGET_WALLET_NAME --token $TOKEN --amount $AMOUNT --signing-keys $SIGNING_KEY_ADDRESS
     fi
@@ -1468,7 +1468,7 @@ function vote_proposal() {
             RPC_CHOICE="gv"
         fi
             if [ "$RPC_CHOICE" == "gv" ]; then
-                namadac query-proposal --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                namadac query-proposal --node https://lightnode-rpc-namada.grandvalleys.com
             else
                 namadac query-proposal
             fi
@@ -1482,7 +1482,7 @@ function vote_proposal() {
         fi
             read -p "Enter proposal ID: " PROPOSAL_ID
             if [ "$RPC_CHOICE" == "gv" ]; then
-                namadac query-proposal --proposal-id $PROPOSAL_ID --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                namadac query-proposal --proposal-id $PROPOSAL_ID --node https://lightnode-rpc-namada.grandvalleys.com
             else
                 namadac query-proposal --proposal-id $PROPOSAL_ID
             fi
@@ -1523,7 +1523,7 @@ function vote_proposal() {
 
             # Query all proposals
             if [ "$RPC_CHOICE" == "gv" ]; then
-                PROPOSALS=$(namadac query-proposal --node https://lightnode-rpc-mainnet-namada.grandvalleys.com)
+                PROPOSALS=$(namadac query-proposal --node https://lightnode-rpc-namada.grandvalleys.com)
             else
                 PROPOSALS=$(namadac query-proposal)
             fi
@@ -1535,7 +1535,7 @@ function vote_proposal() {
 
             # Query the specific proposal
             if [ "$RPC_CHOICE" == "gv" ]; then
-                namadac query-proposal --proposal-id $PROPOSAL_ID --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                namadac query-proposal --proposal-id $PROPOSAL_ID --node https://lightnode-rpc-namada.grandvalleys.com
             else
                 namadac query-proposal --proposal-id $PROPOSAL_ID
             fi
@@ -1544,7 +1544,7 @@ function vote_proposal() {
 
             if [ "$ADDRESS_TYPE" == "validator" ]; then
                 # Query validator address
-                port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml")
+                port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml")
                 VALIDATOR_ADDRESS=$(namadac find-validator --tm-address=$(curl -s 127.0.0.1:$port/status | jq -r .result.validator_info.address) | grep 'Found validator address' | awk -F'"' '{print $2}')
                 ADDRESS=$VALIDATOR_ADDRESS
             else
@@ -1554,7 +1554,7 @@ function vote_proposal() {
             read -p "Enter your vote (yay/nay): " VOTE
 
             if [ "$RPC_CHOICE" == "gv" ]; then
-                namadac vote-proposal --proposal-id $PROPOSAL_ID --vote $VOTE --address $ADDRESS --signing-keys $WALLET_NAME --node https://lightnode-rpc-mainnet-namada.grandvalleys.com
+                namadac vote-proposal --proposal-id $PROPOSAL_ID --vote $VOTE --address $ADDRESS --signing-keys $WALLET_NAME --node https://lightnode-rpc-namada.grandvalleys.com
             else
                 namadac vote-proposal --proposal-id $PROPOSAL_ID --vote $VOTE --address $ADDRESS --signing-keys $WALLET_NAME
             fi
@@ -1574,7 +1574,7 @@ function vote_proposal() {
 
 function apply_snapshot() {
     echo -e "${CYAN}Applying snapshot...${RESET}"
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Mainnet-Guides/main/Namada/resources/apply_snapshot.sh)
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Namada/resources/apply_snapshot.sh)
     menu
 }
 

@@ -134,8 +134,8 @@ deploy() {
     git checkout $LATEST_TAG
     git reset --hard $LATEST_TAG
 
-    read -p "Enter RPC URL [https://lightnode-rpc-mainnet-namada.grandvalleys.com]: " TENDERMINT_URL
-    TENDERMINT_URL=${TENDERMINT_URL:-"https://lightnode-rpc-mainnet-namada.grandvalleys.com"}
+    read -p "Enter RPC URL [https://lightnode-rpc-namada.grandvalleys.com]: " TENDERMINT_URL
+    TENDERMINT_URL=${TENDERMINT_URL:-"https://lightnode-rpc-namada.grandvalleys.com"}
 
     cat > "${ENV_FILE}" <<EOF
 COMETBFT_URL="${TENDERMINT_URL}"

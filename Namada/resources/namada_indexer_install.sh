@@ -108,7 +108,7 @@ validate_non_empty() {
 # Interactive Input Section
 ###############################################################################
 read -p "Please input RPC you want to use (leave empty for Grand Valley's RPC): " input_tendermint_url
-TENDERMINT_URL_INPUT="${input_tendermint_url:-https://lightnode-rpc-mainnet-namada.grandvalleys.com}"
+TENDERMINT_URL_INPUT="${input_tendermint_url:-https://lightnode-rpc-namada.grandvalleys.com}"
 
 POSTGRES_USER=$(validate_non_empty "" "Enter postgres username (can't be empty): ")
 POSTGRES_PASSWORD=$(validate_non_empty "" "Enter postgres password (can't be empty): ")
@@ -213,7 +213,7 @@ EOF
 INDEXER_DIR="$HOME/namada-indexer"
 ENV_FILE="${INDEXER_DIR}/.env"
 
-wget -q https://indexer-snapshot-mainnet-namada.grandvalleys.com/checksums.json || echo "Warning: Failed to download checksums"
+wget -q https://indexer-snapshot-namada.grandvalleys.com/checksums.json || echo "Warning: Failed to download checksums"
 
 docker stop $(docker container ls --all | grep 'namada-indexer' | awk '{print $1}') || true
 docker container rm --force $(docker container ls --all | grep 'namada-indexer' | awk '{print $1}') || true

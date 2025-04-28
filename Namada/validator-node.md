@@ -1,4 +1,4 @@
-## Valley of Namada (Mainnet): Tools by Grand Valley
+## Valley of Namada (Testnet): Tools by Grand Valley
 
 **Valley of Namada** is an all-in-one infrastructure solution developed by Grand Valley, designed to provide powerful tools for efficient node management and validator interactions within the Namada network. This toolkit is intended for node runners, validators, and anyone participating in the Namada ecosystem. Valley of Namada offers an accessible, streamlined interface to manage nodes, maintain network participation, and perform validator functions effectively, making it easier to operate and maintain a secure and up-to-date node.
 
@@ -88,7 +88,7 @@ By using the CSR Monitoring Tool, both stakers and validators can better underst
 
 - Guide's current binaries version: `v1.0.0 - v1.1.1 - v1.1.5`
 - Service file name: `namadad.service`
-- Current chain: `campfire-square.ff09671d333707`
+- Current chain: `housefire-alpaca.cc0d3e0c033be`
 
 ### Automatic Installation
 
@@ -97,7 +97,7 @@ Recommended for most users. This method uses an installation script for a quick 
 Run the following command to install Valley of Namada:
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Mainnet-Guides/main/Namada/resources/valleyofNamada.sh)
+bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Namada/resources/valleyofNamada.sh)
 ```
 
 ---
@@ -159,9 +159,9 @@ read -p "Enter your wallet name: " WALLET && echo "Current wallet name: $WALLET"
 
 echo "export WALLET="$WALLET"" >> $HOME/.bash_profile
 echo "export MONIKER="$ALIAS"" >> $HOME/.bash_profile
-echo "export NAMADA_CHAIN_ID="campfire-square.ff09671d333707"" >> $HOME/.bash_profile
+echo "export NAMADA_CHAIN_ID="housefire-alpaca.cc0d3e0c033be"" >> $HOME/.bash_profile
 echo "export NAMADA_PORT="${NAMADA_PORT:-26}"" >> $HOME/.bash_profile
-export NAMADA_NETWORK_CONFIGS_SERVER="https://github.com/anoma/namada-mainnet-genesis/releases/download/mainnet-genesis"
+export NAMADA_NETWORK_CONFIGS_SERVER="https://github.com/vknowable/namada-campfire/releases/download/housefire-alpaca"
 source $HOME/.bash_profile
 ```
 
@@ -181,9 +181,9 @@ mv namad* /usr/local/bin/
 
 ```bash
 namadac utils join-network --chain-id $NAMADA_CHAIN_ID
-peers=$(curl -sS https://lightnode-rpc-mainnet-namada.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
+peers=$(curl -sS https://lightnode-rpc-namada.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
 echo "Grand Valley's peers: $peers"
-sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml
+sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml
 ```
 
 ##### as pre-genesis validator
@@ -194,7 +194,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local
 namadac utils join-network --chain-id $NAMADA_CHAIN_ID --genesis-validator <validator alias>
 peers="tcp://05309c2cce2d163027a47c662066907e89cd6b99@74.50.93.254:26656,tcp://2bf5cdd25975c239e8feb68153d69c5eec004fdb@64.118.250.82:46656"
 echo $peers
-sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml
+sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml
 ```
 
 #### 8. set custom ports in config.toml file
@@ -205,13 +205,13 @@ s%prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${NAMADA_PORT}
 s%proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${NAMADA_PORT}658\"%g;
 s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://127.0.0.1:${NAMADA_PORT}657\"%g;
 s%^oracle_rpc_endpoint = \"http://127.0.0.1:8545\"oracle_rpc_endpoint = \"http://127.0.0.1:${NAMADA_PORT}657\"%g;
-s%^pprof_laddr = \"localhost:26060\"%pprof_laddr = \"localhost:${NAMADA_PORT}060\"%g" $HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml
+s%^pprof_laddr = \"localhost:26060\"%pprof_laddr = \"localhost:${NAMADA_PORT}060\"%g" $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml
 ```
 
 #### 9. disable indexer (optional) (if u want to run a full node, skip this step)
 
 ```bash
-sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml
+sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml
 ```
 
 #### 10. create service file
@@ -219,7 +219,7 @@ sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.local/share/namada/campfi
 ```bash
 sudo tee /etc/systemd/system/namadad.service > /dev/null <<EOF
 [Unit]
-Description=Namada Mainnet Node
+Description=Namada Testnet Node
 After=network-online.target
 
 [Service]
@@ -261,13 +261,13 @@ namada --version
 #### update peers
 
 ```bash
-peers=$(curl -sS https://lightnode-rpc-mainnet-namada.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
+peers=$(curl -sS https://lightnode-rpc-namada.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
 echo "Grand Valley's peers: $peers"
-sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml
+sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml
 ```
 
 #### update seeds
 
 ```bash
-peers=tcp://65882ea69f4146d8cc83564257252f4711d3e05e@seed-mainnet-namada.grandvalleys.com:56656
-sed -i -e "s|^seeds *=.*|seeds = \"$seeds\"|" $HOME/.local/share/namada/campfire-square.ff09671d333707/config.toml
+peers=tcp://65882ea69f4146d8cc83564257252f4711d3e05e@seed-namada.grandvalleys.com:56656
+sed -i -e "s|^seeds *=.*|seeds = \"$seeds\"|" $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml
