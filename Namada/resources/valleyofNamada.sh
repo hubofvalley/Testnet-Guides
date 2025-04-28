@@ -41,7 +41,10 @@ ${YELLOW}| Category  | Requirements     |
 
 - validator node service file name: ${CYAN}namadad.service${RESET}
 - current chain: ${CYAN}housefire-alpaca.cc0d3e0c033be${RESET}
-- current namada node version: ${CYAN}v1.0.0${RESET}
+- current namada node version: ${CYAN}v1.0.0 - v1.1.1 - v1.1.5${RESET}
+- current cometbft version: ${CYAN}v0.37.15${RESET}
+- current namada indexer version: ${CYAN}v2.3.0${RESET}
+- current namada masp-indexer version: ${CYAN}v1.2.0${RESET}
 "
 
 PRIVACY_SAFETY_STATEMENT="
@@ -71,13 +74,18 @@ Grand Valley Namada Testnet public endpoints:${RESET}
 - cosmos-rpc: ${BLUE}https://lightnode-rpc-namada.grandvalleys.com${RESET}
 - evm-rpc: ${BLUE}https://lightnode-json-rpc-namada.grandvalleys.com${RESET}
 - cosmos ws: ${BLUE}wss://lightnode-rpc-namada.grandvalleys.com/websocket${RESET}
-- seed: ${BLUE}tcp://65882ea69f4146d8cc83564257252f4711d3e05e@seed-namada.grandvalleys.com:56656${RESET}
-- peer: ${BLUE}tcp://3879583b9c6b1ac29d38fefb5a14815dd79282d6@peer-namada.grandvalleys.com:38656${RESET}
-- indexer: ${BLUE}https://indexer-namada.grandvalleys.com${RESET}
-- masp-indexer: ${BLUE}https://masp-indexer-namada.grandvalleys.com${RESET}
+- seed: ${BLUE}tcp://65882ea69f4146d8cc83564257252f4711d3e05e@seed-testnet-namada.grandvalleys.com:56656${RESET}
+- peer: ${BLUE}tcp://3879583b9c6b1ac29d38fefb5a14815dd79282d6@peer-testnet-namada.grandvalleys.com:38656${RESET}
+- indexer: ${BLUE}https://indexer-testnet-namada.grandvalleys.com${RESET}
+- masp-indexer: ${BLUE}https://masp-indexer-testnet-namada.grandvalleys.com${RESET}
 - Valley of Namadillo (Namadillo): ${BLUE}https://valley-of-namadillo.grandvalleys.com${RESET}
 
-Stake to Grand Valley: ${CYAN}tnam1qyplu8gruqmmvwp7x7kd92m6x4xpyce265fa05r6${RESET}
+${GREEN}Grand Valley Namada Testnet validator profile links:${RESET}
+    - ${ORANGE}https://explorer75.org/namada/validators/tnam1qyplu8gruqmmvwp7x7kd92m6x4xpyce265fa05r6${RESET}
+    - ${ORANGE}https://namada.valopers.com/validators/tnam1qyplu8gruqmmvwp7x7kd92m6x4xpyce265fa05r6${RESET}
+    - ${ORANGE}https://shielded.live/validators/9FB9AC991FE50B76FB1E4FFEDCC47E6BF13F58FED9B0079400D4F043DD16D207${RESET}
+    - ${ORANGE}https://namada.coverlet.io/validators/9FB9AC991FE50B76FB1E4FFEDCC47E6BF13F58FED9B0079400D4F043DD16D207${RESET}
+    - ${ORANGE}https://namada-explorer.sproutstake.space/main/validators/9FB9AC991FE50B76FB1E4FFEDCC47E6BF13F58FED9B0079400D4F043DD16D207${RESET}
 
 ${GREEN}Connect with Namada:${RESET}
 - Official Website: ${BLUE}https://namada.net${RESET}
@@ -87,6 +95,7 @@ ${GREEN}Connect with Namada:${RESET}
 ${GREEN}Connect with Grand Valley:${RESET}
 - X: ${BLUE}https://x.com/bacvalley${RESET}
 - GitHub: ${BLUE}https://github.com/hubofvalley${RESET}
+- Namada Testnet Guide on GitHub by Grand Valley: ${BLUE}https://github.com/hubofvalley/Testnet-Guides/tree/main/Namada${RESET}
 - Email: ${BLUE}letsbuidltogether@grandvalleys.com${RESET}
 "
 
@@ -117,15 +126,15 @@ function create_validator() {
     DEFAULT_WALLET=$WALLET_NAME # Assuming $WALLET_NAME is set elsewhere in your script
     read -p "Enter the name for your validator: " NAME
 
-    read -p "Enter the commission rate: (e.g. 0.05) " COMMISION_RATE
+    read -p "Enter the commission rate: (e.g. 0.05) " COMMISSION_RATE
 
-    read -p "Enter the max commission rate change: (e.g. 0.05) " MAX_COMMISION_RATE_CHANGE
+    read -p "Enter the max commission rate change: (e.g. 0.05) " MAX_COMMISSION_RATE_CHANGE
 
     read -p "Enter the email for your validator security contact: " EMAIL
 
     read -p "Enter wallet name/alias (leave empty to use current default wallet --> $DEFAULT_WALLET): " WALLET_NAME
 
-    namadac init-validator --email "$EMAIL" --commission-rate "$COMMISION_RATE" --name "$NAME" --max-commission-rate-change "$MAX_COMMISION_RATE_CHANGE" --account-keys $WALLET_NAME --signing-keys $WALLET_NAME --chain-id $NAMADA_CHAIN_ID
+    namadac init-validator --email "$EMAIL" --commission-rate "$COMMISSION_RATE" --name "$NAME" --max-commission-rate-change "$MAX_COMMISSION_RATE_CHANGE" --account-keys $WALLET_NAME --signing-keys $WALLET_NAME --chain-id $NAMADA_CHAIN_ID
     menu
 }
 
@@ -149,7 +158,7 @@ function add_seeds() {
             fi
             ;;
         2)
-            seeds="tcp://65882ea69f4146d8cc83564257252f4711d3e05e@seed-namada.grandvalleys.com:56656"
+            seeds="tcp://65882ea69f4146d8cc83564257252f4711d3e05e@seed-testnet-namada.grandvalleys.com:56656"
             echo "Grand Valley's seeds: $seeds"
             read -p "Do you want to proceed? (yes/no): " confirm
             if [[ $confirm == "yes" ]]; then
@@ -256,18 +265,29 @@ function show_validator_node_status() {
     menu
 }
 
+function apply_snapshot() {
+    echo -e "${CYAN}Applying snapshot...${RESET}"
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Namada/resources/apply_snapshot.sh)
+    menu
+}
+
+function update_namada() {
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Namada/resources/namada_update.sh)
+    menu
+}
+
 function install_namada_app() {
     echo -e "${YELLOW}This option is only for those who want to execute the transactions without running the node.${RESET}"
-    wget https://github.com/anoma/namada/releases/download/v1.0.0/namada-v1.0.0-Linux-x86_64.tar.gz
-    tar -xvf namada-v1.0.0-Linux-x86_64.tar.gz
-    cd namada-v1.0.0-Linux-x86_64
+    wget https://github.com/anoma/namada/releases/download/v1.1.5/namada-v1.1.5-Linux-x86_64.tar.gz
+    tar -xvf namada-v1.1.5-Linux-x86_64.tar.gz
+    cd namada-v1.1.5-Linux-x86_64
     mv namad* /usr/local/bin/
     export NAMADA_CHAIN_ID="housefire-alpaca.cc0d3e0c033be"
     export NAMADA_NETWORK_CONFIGS_SERVER="https://github.com/vknowable/namada-campfire/releases/download/housefire-alpaca"
     export BASE_DIR="$HOME/.local/share/namada"
     echo 'export NAMADA_CHAIN_ID="housefire-alpaca.cc0d3e0c033be"' >> $HOME/.bash_profile
     echo 'export BASE_DIR="$HOME/.local/share/namada"' >> $HOME/.bash_profile
-    echo 'export NAMADA_NETWORK_CONFIGS_SERVER="https://github.com/anoma/namada-genesis/releases/download/Testnet-genesis/"' >> $HOME/.bash_profile
+    echo 'export NAMADA_NETWORK_CONFIGS_SERVER="https://github.com/vknowable/namada-campfire/releases/download/housefire-alpaca"' >> $HOME/.bash_profile
     namadac utils join-network --chain-id $NAMADA_CHAIN_ID
     menu
 }
@@ -316,7 +336,7 @@ function restore_wallet() {
     namadaw find --alias $WALLET_NAME-shielded-addr
     echo -e "${GREEN}Wallet restoration completed successfully, including shielded wallet restoration.${RESET}"
     echo -e "\n${YELLOW}Press Enter to go back to Valley of Namada main menu${RESET}"
-    read -p
+    read -r
     menu
 }
 
@@ -1114,7 +1134,7 @@ function claim_rewards() {
                 3)
                     # Commission rewards flow
                     REWARDS=$(namadac rewards --validator $VALIDATOR_ADDRESS)
-                    CLAIM_CMD="namadac claim-rewards --validator $VALIDATOR_ADDRESS signing-keys $WALLET_NAME"
+                    CLAIM_CMD="namadac claim-rewards --validator $VALIDATOR_ADDRESS --signing-keys $WALLET_NAME"
                     ;;
             esac
 
@@ -1572,9 +1592,110 @@ function vote_proposal() {
     menu
 }
 
-function apply_snapshot() {
+function deploy_namada_indexer() {
+    echo -e "${CYAN}Deploying Namada Indexer...${RESET}"
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Namada/resources/namada_indexer_install.sh)
+    menu
+}
+
+function apply_snapshot_namada_indexer() {
     echo -e "${CYAN}Applying snapshot...${RESET}"
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Namada/resources/apply_snapshot.sh)
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Namada/resources/apply_snapshot_namada_indexer.sh)
+    menu
+}
+
+function show_namada_indexer_logs() {
+    echo "Displaying Namada Indexer Logs:"
+    docker logs --tail 50 -f namada-indexer-transactions-1
+    menu
+}
+
+function stop_namada_indexer() {
+    echo "Stopping Namada Indexer:"
+    docker stop $(docker container ls --all | grep 'namada-indexer' | awk '{print $1}')
+    menu
+}
+
+function restart_namada_indexer() {
+    echo "Restarting Namada Indexer:"
+    docker stop $(docker container ls --all | grep 'namada-indexer' | awk '{print $1}')
+    sleep 3
+    docker start $(docker container ls --all | grep 'namada-indexer' | awk '{print $1}')
+    menu
+}
+
+function backup_namada_indexer() {
+    echo "Backuping Namada Indexer:"
+    cd $HOME/namada-indexer
+    docker compose exec postgres pg_dump -F c --dbname="namada-indexer" --file="/tmp/indexer_snapshot.sql" -p 5433
+    docker compose cp postgres:/tmp/indexer_snapshot.sql "$HOME/namada-indexer/indexer_snapshot.sql"
+    menu
+}
+
+function delete_namada_indexer() {
+    echo "Deleting Namada Indexer:"
+    cd $HOME/namada-indexer
+    docker stop $(docker container ls --all | grep 'namada-indexer' | awk '{print $1}')
+    docker container rm --force $(docker container ls --all | grep 'namada-indexer' | awk '{print $1}')
+    docker image rm --force $(docker image ls --all | grep -E '^namada/.*-indexer.*$' | awk '{print $3}')
+    docker image rm --force $(docker image ls --all | grep '<none>' | awk '{print $3}')
+    docker volume prune -fa
+    cd $HOME
+    rm -rf $HOME/namada-indexer
+    menu
+}
+
+function deploy_namada_masp_indexer() {
+    echo -e "${CYAN}Deploying Namada MASP Indexer...${RESET}"
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Namada/resources/namada_masp_indexer_install.sh)
+    menu
+}
+
+function apply_snapshot_namada_masp_indexer() {
+    echo -e "${CYAN}Applying snapshot...${RESET}"
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Namada/resources/apply_snapshot_namada_masp_indexer.sh)
+    menu
+}
+
+function show_namada_masp_indexer_logs() {
+    echo "Displaying Namada MASP Indexer Logs:"
+    docker logs --tail 50 -f namada-masp-indexer-crawler-1
+    menu
+}
+
+function stop_namada_masp_indexer() {
+    echo "Stopping Namada MASP Indexer:"
+    docker stop $(docker container ls --all | grep 'namada-masp-' | awk '{print $1}')
+    menu
+}
+
+function restart_namada_masp_indexer() {
+    echo "Restart Namada MASP Indexer:"
+    docker stop $(docker container ls --all | grep 'namada-masp-' | awk '{print $1}')
+    sleep 3
+    docker start $(docker container ls --all | grep 'namada-masp-' | awk '{print $1}')
+    menu
+}
+
+function backup_namada_masp_indexer() {
+    echo "Backuping Namada MASP Indexer:"
+    cd $HOME/namada-masp-indexer
+    docker compose exec postgres pg_dump -F c --dbname="masp_indexer_local" --file="/tmp/masp_indexer_snapshot.sql"
+    docker compose cp postgres:/tmp/masp_indexer_snapshot.sql "$HOME/namada-masp-indexer/masp_indexer_snapshot.sql"
+    menu
+}
+
+function delete_namada_masp_indexer() {
+    echo "Deleting Namada MASP Indexer:"
+    cd $HOME/namada-masp-indexer
+    docker compose -f docker-compose.yml down --volumes
+    docker stop $(docker container ls --all | grep 'namada-masp-' | awk '{print $1}')
+    docker container rm --force $(docker container ls --all | grep 'namada-masp-' | awk '{print $1}')
+    docker image rm --force $(docker image ls --all | grep 'namada-masp-' | awk '{print $3}')
+    docker image rm --force $(docker image ls --all | grep '<none>' | awk '{print $3}')
+    docker volume prune -fa
+    cd $HOME
+    rm -rf $HOME/namada-masp-indexer
     menu
 }
 
@@ -1591,7 +1712,7 @@ function show_guidelines() {
     echo -e "${YELLOW}This tool is designed to help you manage your Namada Validator Node. Below are the guidelines on how to use it effectively:${RESET}"
 
     echo -e "${GREEN}1. Navigating the Menu${RESET}"
-    echo "   - The menu is divided into several sections: Node Interactions, Validator/Key Interactions, Node Management, Install Namada App, Show Grand Valley's Endpoints, and Guidelines."
+    echo "   - The menu is divided into several sections: Node Interactions, Validator/Key Interactions, Namada Indexer, Namada MASP Indexer, Node Management, Install Namada App, Monitoring Tools, and Guidelines."
     echo "   - To select an option, you can either:"
     echo "     a. Enter the corresponding number followed by the letter (e.g., 1a for Deploy/re-Deploy Validator Node)."
     echo "     b. Enter the number, press Enter, and then enter the letter (e.g., 1 then a)."
@@ -1603,13 +1724,14 @@ function show_guidelines() {
     echo "   - For y/n prompts, enter 'y' for yes and 'n' for no."
     echo "   - For 'own/gv' prompts:"
     echo "       * 'own': Use your own node's RPC. Make sure your node is fully synced and running."
-    echo "       * 'gv': Use Grand Valley's RPC for quick and reliable transactions without needing your own node. u can also leave empty input to simply use Grand Valley's RPC"
+    echo "       * 'gv': Use Grand Valley's RPC for quick and reliable transactions without needing your own node. You can also leave empty input to use Grand Valley's RPC"
+
     echo -e "${GREEN}3. Running Commands${RESET}"
     echo "   - After selecting an option, the script will execute the corresponding commands."
     echo "   - Ensure you have the necessary permissions and dependencies installed for the commands to run successfully."
 
     echo -e "${GREEN}4. Exiting the Script${RESET}"
-    echo "   - To exit the script, select option 7 from the main menu."
+    echo "   - To exit the script, select option 10 from the main menu."
     echo "   - Remember to run 'source ~/.bash_profile' after exiting to apply any changes made to environment variables."
 
     echo -e "${GREEN}5. Additional Tips${RESET}"
@@ -1618,65 +1740,88 @@ function show_guidelines() {
 
     echo -e "${GREEN}6. Option Descriptions and Guides${RESET}"
     echo -e "${GREEN}Node Interactions:${RESET}"
-    echo "   a. Deploy/re-Deploy Validator Node: Deploys and re-deploys the validator node."
-    echo "   b. Show Validator Node Status: Displays the status of the validator node."
-    echo "   c. Show Validator Node Logs: Displays the logs for the validator node."
-    echo "   d. Apply Snapshot: Applies a snapshot to the node."
-    echo "   e. Add Seeds: Adds a list of seed nodes to your configuration."
-    echo "   f. Add Peers: Adds peers to the validator node for better network connectivity."
+    echo "   a. Deploy/re-Deploy Validator Node: Deploys and re-deploys the validator node"
+    echo "   b. Update Namada Binary Version: Updates Namada node software to latest version"
+    echo "   c. Show Validator Node Status: Displays the status of the validator node"
+    echo "   d. Show Validator Node Logs: Displays the logs for the validator node"
+    echo "   e. Apply Snapshot: Applies a snapshot to the node"
+    echo "   f. Add Seeds: Adds a list of seed nodes to your configuration"
+    echo "   g. Add Peers: Adds peers to the validator node for better network connectivity"
 
     echo -e "${GREEN}Validator/Key Interactions:${RESET}"
-    echo "   a. Create Wallet: Creates a new wallet (Transparent Key, Shielded Key, Shielded Payment Address)."
-    echo "   b. Restore Wallet: Restores a wallet from its seed phrase (Transparent Key, Shielded Key, Shielded Payment Address)."
-    echo "   c. Show Wallet: Displays the details of a wallet (Transparent Key, Shielded Key, Shielded Payment Address)."
-    echo "   d. Query Balance: Queries the balance of a wallet."
-    echo "   e. Create Validator: Creates a new validator for staking NAM tokens."
-    echo "   f. Transfer (Transparent): Transfers tokens transparently."
-    echo "   g. Delegate NAM: Delegates NAM tokens to a validator."
-    echo "   h. Undelegate NAM: Undelegates NAM tokens from a validator."
-    echo "   i. Redelegate NAM: Redelegates NAM tokens to another validator."
-    echo "   j. Withdraw Unbonded NAM: Withdraws unbonded NAM tokens."
-    echo "   k. Claim Rewards: Claims staking rewards."
-    echo "   l. Vote Proposal: Votes on a governance proposal."
-    echo "   m. Create Another Shielded Payment Address: Creates a new shielded payment address."
-    echo "   n. Transfer (Shielding): Transfers tokens with shielding."
-    echo "   o. Transfer (Shielded to Shielded): Transfers tokens between shielded wallets."
-    echo "   p. Transfer (Unshielding): Unshields tokens from a shielded wallet."
-    echo "   q. Delete Wallet: Deletes a wallet (keys or addresses)."
+    echo "   a. Create Wallet: Creates a new wallet (Transparent Key, Shielded Key, Shielded Payment Address)"
+    echo "   b. Restore Wallet: Restores a wallet from its seed phrase"
+    echo "   c. Show Wallet: Displays the details of a wallet"
+    echo "   d. Query Balance: Queries the balance of a wallet"
+    echo "   e. Create Validator: Creates a new validator for staking NAM tokens"
+    echo "   f. Transfer (Transparent): Transfers tokens transparently"
+    echo "   g. Delegate NAM: Delegates NAM tokens to a validator"
+    echo "   h. Undelegate NAM: Undelegates NAM tokens from a validator"
+    echo "   i. Redelegate NAM: Redelegates NAM tokens to another validator"
+    echo "   j. Withdraw Unbonded NAM: Withdraws unbonded NAM tokens"
+    echo "   k. Claim Rewards: Claims staking rewards"
+    echo "   l. Vote Proposal: Votes on a governance proposal"
+    echo "   m. Create Another Shielded Payment Address: Creates a new shielded payment address"
+    echo "   n. Transfer (Shielding): Transfers tokens with shielding"
+    echo "   o. Transfer (Shielded to Shielded): Transfers tokens between shielded wallets"
+    echo "   p. Transfer (Unshielding): Unshields tokens from a shielded wallet"
+    echo "   q. Delete Wallet: Deletes a wallet (keys or addresses)"
+
+    echo -e "${GREEN}Namada Indexer Interactions:${RESET}"
+    echo "   a. Deploy Namada Indexer: Sets up transaction history service"
+    echo "   b. Apply Namada Indexer Snapshot: Initializes with indexed data snapshot"
+    echo "   c. Show Namada Indexer Logs: Displays indexer operation logs"
+
+    echo -e "${GREEN}Namada MASP Indexer Interactions:${RESET}"
+    echo "   a. Deploy Namada MASP Indexer: Sets up shielded assets tracking service"
+    echo "   b. Apply Namada MASP Indexer Snapshot: Initializes with shielded data snapshot"
+    echo "   c. Show Namada MASP Indexer Logs: Displays MASP indexer operation logs"
 
     echo -e "${GREEN}Node Management:${RESET}"
-    echo "   a. Restart Validator Node: Restarts the validator node."
-    echo "   b. Stop Validator Node: Stops the validator node."
-    echo "   c. Backup Validator Key: Backs up the validator key to your $HOME directory."
-    echo "   d. Delete Validator Node: Deletes the validator node. Ensure you backup your seed phrase and priv_validator_key.json before proceeding."
+    echo "   a. Restart Validator Node: Restarts the validator node"
+    echo "   b. Restart Namada Indexer: Restarts the transaction indexer"
+    echo "   c. Restart Namada MASP Indexer: Restarts the shielded assets tracker"
+    echo "   d. Stop Validator Node: Stops the validator node"
+    echo "   e. Stop Namada Indexer: Stops the transaction indexer"
+    echo "   f. Stop Namada MASP Indexer: Stops the shielded assets tracker"
+    echo "   g. Backup Validator Key: Backs up validator key to $HOME directory"
+    echo "   h. Backup Namada Indexer DB: Backs up indexer database to $HOME/namada-indexer"
+    echo "   i. Backup Namada MASP Indexer DB: Backs up MASP indexer database to $HOME/namada-masp-indexer"
+    echo "   j. Delete Validator Node: Deletes validator node (BACKUP FIRST!)"
+    echo "   k. Delete Namada Indexer: Removes transaction indexer"
+    echo "   l. Delete Namada MASP Indexer: Removes shielded assets tracker"
 
     echo -e "${GREEN}Install Namada App:${RESET}"
-    echo "   - Use this option to install the Namada App, which allows you to execute transactions without running a node."
+    echo "   - Install Namada App (v1.1.5) to execute transactions without running a node"
+
+    echo -e "${GREEN}Monitoring Tools:${RESET}"
+    echo "   - Cubic Slashing Rate (CSR) Monitoring Tool: Track validator slashing risks"
 
     echo -e "${GREEN}Show Grand Valley's Endpoints:${RESET}"
-    echo "   - Displays Grand Valley's public endpoints."
+    echo "   - Displays Grand Valley's public endpoints"
 
     echo -e "${GREEN}Show Guidelines:${RESET}"
-    echo "   - Displays these guidelines."
+    echo "   - Displays these guidelines"
 
     echo -e "\n${YELLOW}Press Enter to go back to Valley of Namada main menu${RESET}"
     read -r
     menu
 }
 
-
 # Menu function
 function menu() {
+    realtime_block_height=$(curl -s https://lightnode-rpc-namada.grandvalleys.com/status | jq -r '.result.sync_info.latest_block_height')
     echo -e "Show your support for Grand Valley by staking with us!: ${CYAN}tnam1qyplu8gruqmmvwp7x7kd92m6x4xpyce265fa05r6${RESET}"
-    echo -e "${ORANGE}Valley of Namada${RESET}"
+    echo -e "${ORANGE}Valley of Namada Testnet${RESET}"
     echo "Main Menu:"
     echo -e "${GREEN}1. Node Interactions:${RESET}"
     echo "   a. Deploy/re-Deploy Validator Node"
-    echo "   b. Show Validator Node Status"
-    echo "   c. Show Validator Node Logs"
-    echo "   d. Apply Snapshot (not available)"
-    echo "   e. Add Seeds (not available)"
-    echo "   f. Add Peers (not available)"
+    echo "   b. Update Namada Binary Version"
+    echo "   c. Show Validator Node Status"
+    echo "   d. Show Validator Node Logs"
+    echo "   e. Apply Snapshot"
+    echo "   f. Add Seeds"
+    echo "   g. Add Peers"
     echo -e "${GREEN}2. Validator/Key Interactions:${RESET}"
     echo "   a. Create Wallet (Transparent Key, Shielded Key, Shielded Payment Address)"
     echo "   b. Restore Wallet (Transparent Key, Shielded Key, Shielded Payment Address)"
@@ -1695,29 +1840,46 @@ function menu() {
     echo "   o. Transfer (Shielded to Shielded)"
     echo "   p. Transfer (Unshielding)"
     echo "   q. Delete Wallet (Keys or Addresses)"  # New option added
-    echo -e "${GREEN}3. Node Management:${RESET}"
+    echo -e "${GREEN}3. Namada Indexer Interactions:${RESET}"
+    echo "   a. Deploy Namada Indexer"
+    echo "   b. Apply Namada Indexer Snapshot"
+    echo "   c. Show Namada Indexer Logs"
+    echo -e "${GREEN}4. Namada MASP Indexer Interactions:${RESET}"
+    echo "   a. Deploy Namada MASP Indexer"
+    echo "   b. Apply Namada MASP Indexer Snapshot"
+    echo "   c. Show Namada MASP Indexer Logs"
+    echo -e "${GREEN}5. Node Management:${RESET}"
     echo "   a. Restart Validator Node"
-    echo "   b. Stop Validator Node"
-    echo "   c. Backup Validator Key (store it to $HOME directory)"
-    echo "   d. Delete Validator Node (BACKUP YOUR SEEDS PHRASE AND priv_validator_key.json BEFORE YOU DO THIS)"
-    echo -e "${GREEN}4. Install the Namada App (v1.0.0) only to execute transactions without running a node${RESET}"
-    echo -e "${YELLOW}5. Open Cubic Slashing Rate (CSR) Monitoring Tool (not available)${RESET}"
-    echo -e "${GREEN}6. Show Grand Valley's Endpoints${RESET}"
-    echo -e "${YELLOW}7. Show Guidelines${RESET}"
-    echo -e "${RED}8. Exit${RESET}"
+    echo "   b. Restart Namada Indexer"
+    echo "   c. Restart Namada MASP Indexer"
+    echo "   d. Stop Validator Node"
+    echo "   e. Stop Namada Indexer"
+    echo "   f. Stop Namada MASP Indexer"
+    echo "   g. Backup Validator Key (store it to $HOME directory)"
+    echo "   h. Backup Namada Indexer database (store it to $HOME/namada-indexer directory)"
+    echo "   i. Backup Namada MASP Indexer database (store it to $HOME/namada-masp-indexer directory)"
+    echo "   j. Delete Validator Node (BACKUP YOUR SEEDS PHRASE AND priv_validator_key.json BEFORE YOU DO THIS)"
+    echo "   k. Delete Namada Indexer"
+    echo "   l. Delete Namada MASP Indexer"
+    echo -e "${GREEN}6. Install the Namada App (v1.1.5) only to execute transactions without running a node${RESET}"
+    echo -e "${YELLOW}7. Open Cubic Slashing Rate (CSR) Monitoring Tool${RESET}"
+    echo -e "${GREEN}8. Show Grand Valley's Endpoints${RESET}"
+    echo -e "${YELLOW}9. Show Guidelines${RESET}"
+    echo -e "${RED}10. Exit${RESET}"
 
+    echo -e "Latest Block Height: ${GREEN}$realtime_block_height${RESET}"
     echo -e "\n${YELLOW}Please run the following command to apply the changes after exiting the script:${RESET}"
     echo -e "${GREEN}source ~/.bash_profile${RESET}"
     echo -e "${YELLOW}This ensures the environment variables are set in your current bash session.${RESET}"
-    echo -e "${GREEN}Let's Buidl Namada Together, Let's Shiedl Together. - Grand Valley${RESET}"
+    echo -e "${GREEN}Let's Buidl Namada Together${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
-    if [[ $OPTION =~ ^[1-7][a-z]$ ]]; then
+    if [[ $OPTION =~ ^[1-8][a-z]$ ]]; then
         MAIN_OPTION=${OPTION:0:1}
         SUB_OPTION=${OPTION:1:1}
     else
         MAIN_OPTION=$OPTION
-        if [[ $MAIN_OPTION =~ ^[1-3]$ ]]; then
+        if [[ $MAIN_OPTION =~ ^[1-4]$ ]]; then
             read -p "Choose a sub-option: " SUB_OPTION
         fi
     fi
@@ -1726,11 +1888,12 @@ function menu() {
         1)
             case $SUB_OPTION in
                 a) deploy_validator_node ;;
-                b) show_validator_node_status ;;
-                c) show_validator_node_logs ;;
-                d) apply_snapshot ;;
-                e) add_seeds ;;
-                f) add_peers ;;
+                b) update_namada ;;
+                c) show_validator_node_status ;;
+                d) show_validator_node_logs ;;
+                e) apply_snapshot ;;
+                f) add_seeds ;;
+                g) add_peers ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
@@ -1758,18 +1921,42 @@ function menu() {
             ;;
         3)
             case $SUB_OPTION in
-                a) restart_validator_node ;;
-                b) stop_validator_node ;;
-                c) backup_validator_key ;;
-                d) delete_validator_node ;;
+                a) deploy_namada_indexer ;;
+                b) apply_snapshot_namada_indexer ;;
+                c) show_namada_indexer_logs ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
-        4) install_namada_app ;;
-        5) cubic_slashing ;;
-        6) show_endpoints ;;
-        7) show_guidelines ;;
-        8) exit 0 ;;
+        4)
+            case $SUB_OPTION in
+                a) deploy_namada_masp_indexer ;;
+                b) apply_snapshot_namada_masp_indexer ;;
+                c) show_namada_masp_indexer_logs ;;
+                *) echo "Invalid sub-option. Please try again." ;;
+            esac
+            ;;
+        5)
+            case $SUB_OPTION in
+                a) restart_validator_node ;;
+                b) restart_namada_indexer ;;
+                c) restart_namada_masp_indexer ;;
+                d) stop_validator_node ;;
+                e) stop_namada_indexer ;;
+                f) stop_namada_masp_indexer ;;
+                g) backup_validator_key ;;
+                h) backup_namada_indexer ;;
+                i) backup_namada_masp_indexer ;;
+                j) delete_validator_node ;;
+                k) delete_namada_indexer ;;
+                l) delete_namada_masp_indexer ;;
+                *) echo "Invalid sub-option. Please try again." ;;
+            esac
+            ;;
+        6) install_namada_app ;;
+        7) cubic_slashing ;;
+        8) show_endpoints ;;
+        9) show_guidelines ;;
+        10) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac
 }
