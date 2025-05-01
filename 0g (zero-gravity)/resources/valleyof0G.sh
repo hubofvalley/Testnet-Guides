@@ -9,6 +9,10 @@ YELLOW='\033[0;33m'
 ORANGE='\033[38;5;214m'
 RESET='\033[0m'
 
+# Service file variables
+OG_CONSENSUS_CLIENT_SERVICE="0gchaind.service"
+OG_GETH_SERVICE="0g-geth.service"
+
 LOGO="
  __      __     _  _                        __    ___    _____ 
  \ \    / /    | || |                      / _|  / _ \  / ____|
@@ -38,9 +42,10 @@ ${YELLOW}| Category  | Requirements                   |
 | Storage   | 1+ TB NVMe SSD                 |
 | Bandwidth | 100 MBps for Download / Upload |${RESET}
 
-validator node current binaries version: ${CYAN}v0.2.5${RESET} will automatically update to the latest version
-service file name: ${CYAN}0gchaind.service${RESET}
-current chain : ${CYAN}zgtendermint_16600-2${RESET}
+validator node current binaries version: ${CYAN}v0.2.0-alpha.4-538-g9214e10c0${RESET}
+consensus client service file name: ${CYAN}0gchaind.service${RESET}
+0g-geth service file name: ${CYAN}0g-geth.service${RESET}
+current chain : ${CYAN}beacon-kurtosis-80087 (Galileo Testnet)${RESET}
 
 ------------------------------------------------------------------
 
@@ -133,96 +138,100 @@ echo -e "$INTRO"
 echo -e "$ENDPOINTS"
 echo -e "${YELLOW}\nPress Enter to continue${RESET}"
 read -r
-detect_service_file
+# detect_service_file (disabled as requested)
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
-echo "export OG_CHAIN_ID="zgtendermint_16600-2"" >> $HOME/.bash_profile
-echo "export SERVICE_FILE_NAME=\"$SERVICE_FILE_NAME\"" >> ~/.bash_profile
-echo "export DAEMON_NAME=0gchaind" >> ~/.bash_profile
-echo "export DAEMON_HOME=$(find $HOME -type d -name ".0gchain" -print -quit)" >> ~/.bash_profile
-echo "export DAEMON_DATA_BACKUP_DIR=$(find "$HOME/.0gchain/cosmovisor" -type d -name "backup" -print -quit)" >> ~/.bash_profile
+echo 'export PATH=$PATH:$HOME/galileo/bin' >> $HOME/.bash_profile
+# echo "export OG_CHAIN_ID="beacon-kurtosis-80087"" >> $HOME/.bash_profile
+# echo "export SERVICE_FILE_NAME=\"$SERVICE_FILE_NAME\"" >> ~/.bash_profile
+# echo "export DAEMON_NAME=0gchaind" >> ~/.bash_profile
+# echo "export DAEMON_HOME=$(find $HOME -type d -name ".0gchain" -print -quit)" >> ~/.bash_profile
+# echo "export DAEMON_DATA_BACKUP_DIR=$(find "$HOME/.0gchain/cosmovisor" -type d -name "backup" -print -quit)" >> ~/.bash_profile
 source $HOME/.bash_profile
 
 # Validator Node Functions
 function deploy_validator_node() {
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_validator_node_install.sh)
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_validator_node_galileo_install.sh)
     menu
 }
 
-function manage_validator_node() {
-    echo "Choose an option:"
-    echo "1. Migrate to Cosmovisor only"
-    echo "2. Update Validator Node Version (includes Cosmovisor migration and deployment)"
-    echo "3. Back"
-    read -p "Enter your choice (1/2/3): " choice
-
-    case $choice in
-        1)
-            migrate_to_cosmovisor
-            ;;
-        2)
-            bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_validator_node_update.sh)
-            menu
-            ;;
-        3)
-            menu
-            ;;
-        *)
-            echo "Invalid choice. Please select a valid option."
-            ;;
-    esac
-}
+# function manage_validator_node() {
+#     echo "Choose an option:"
+#     echo "1. Migrate to Cosmovisor only"
+#     echo "2. Update Validator Node Version (includes Cosmovisor migration and deployment)"
+#     echo "3. Back"
+#     read -p "Enter your choice (1/2/3): " choice
+#
+#     case $choice in
+#         1)
+#             migrate_to_cosmovisor
+#             ;;
+#         2)
+#             bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_validator_node_update.sh)
+#             menu
+#             ;;
+#         3)
+#             menu
+#             ;;
+#         *)
+#             echo "Invalid choice. Please select a valid option."
+#             ;;
+#     esac
+# }
 
 # Function to migrate to Cosmovisor
 
-function migrate_to_cosmovisor() {
-    echo "The service file for your current validator node will be updated to match Grand Valley's current configuration."
-    echo "Press Enter to continue..."
-    read -r
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/cosmovisor_migration.sh)
-    menu
-}
+# function migrate_to_cosmovisor() {
+#     echo "The service file for your current validator node will be updated to match Grand Valley's current configuration."
+#     echo "Press Enter to continue..."
+#     read -r
+#     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/cosmovisor_migration.sh)
+#     menu
+# }
 
-function apply_snapshot() {
-    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/apply_snapshot.sh)
-    menu
-}
+# function apply_snapshot() {
+#     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/apply_snapshot.sh)
+#     menu
+# }
 
 function install_0gchain_app() {
     cd $HOME
-    mkdir -p 0gchain-v0.5.3
-    wget -O 0gchain-v0.5.3/0gchaind https://github.com/0glabs/0g-chain/releases/download/v0.5.3/0gchaind-linux-v0.5.3
-    cp 0gchain-v0.5.3/0gchaind $HOME/go/bin/0gchaind
-    sudo chown -R $USER:$USER $HOME/go/bin/0gchaind
-    sudo chmod +x $HOME/go/bin/0gchaind
+    mkdir -p 0gchain-v0.2.0-alpha.4-538-g9214e10c0
+    wget -O 0gchain-v0.2.0-alpha.4-538-g9214e10c0/0gchaind https://github.com/0glabs/0gchain-ng/releases/download/v1.0.1/galileo-v1.0.1.tar.gz
+    tar -xzvf galileo-v1.0.1.tar.gz -C $HOME
+    cd galileo
+    cp -r 0g-home/* $HOME/galileo/0g-home/
+    sudo chmod 777 ./bin/geth $HOME/galileo/bin/0gchaind
+    sudo chown -R ./bin/geth $HOME/galileo/bin/0gchaind
+    sudo chmod +x ./bin/geth $HOME/galileo/bin/0gchaind
     echo "0gchain app installed successfully."
     menu
 }
 
-function create_validator() {
-    read -p "Enter wallet name: " WALLET
-    read -p "Enter validator name (moniker): " MONIKER
-    read -p "Enter your identity: " IDENTITY
-    read -p "Enter your website URL: " WEBSITE
-    read -p "Enter your email: " EMAIL
-
-    0gchaind tx staking create-validator \
-    --amount=1000000ua0gi \
-    --pubkey=$(0gchaind tendermint show-validator) \
-    --moniker=$MONIKER \
-    --chain-id=$OG_CHAIN_ID \
-    --commission-rate=0.10 \
-    --commission-max-rate=0.20 \
-    --commission-max-change-rate=0.01 \
-    --min-self-delegation=1 \
-    --from=$WALLET \
-    --identity=$IDENTITY \
-    --website=$WEBSITE \
-    --security-contact=$EMAIL \
-    --details="lets buidl 0g together" \
-    --gas auto --gas-adjustment 1.5 \
-    -y
-    menu
-}
+# function create_validator() {
+#     read -p "Enter wallet name: " WALLET
+#     read -p "Enter validator name (moniker): " MONIKER
+#     read -p "Enter your identity: " IDENTITY
+#     read -p "Enter your website URL: " WEBSITE
+#     read -p "Enter your email: " EMAIL
+#
+#     0gchaind tx staking create-validator \
+#     --amount=1000000ua0gi \
+#     --pubkey=$(0gchaind tendermint show-validator) \
+#     --moniker=$MONIKER \
+#     --chain-id=$OG_CHAIN_ID \
+#     --commission-rate=0.10 \
+#     --commission-max-rate=0.20 \
+#     --commission-max-change-rate=0.01 \
+#     --min-self-delegation=1 \
+#     --from=$WALLET \
+#     --identity=$IDENTITY \
+#     --website=$WEBSITE \
+#     --security-contact=$EMAIL \
+#     --details="lets buidl 0g together" \
+#     --gas auto --gas-adjustment 1.5 \
+#     -y
+#     menu
+# }
 
 function query_balance() {
     echo -e "\n${YELLOW}Available wallets:${RESET}"
@@ -250,172 +259,172 @@ function query_balance() {
     menu
 }
 
-function send_transaction() {
-    echo -e "\n${YELLOW}Available wallets:${RESET}"
-    0gchaind keys list
+# function send_transaction() {
+#     echo -e "\n${YELLOW}Available wallets:${RESET}"
+#     0gchaind keys list
+#
+#     read -p "Enter sender wallet name: " SENDER_WALLET
+#     read -p "Enter recipient wallet address: " RECIPIENT_ADDRESS
+#     read -p "Enter amount to send (in AOGI, e.g. 10 = 10 AOGI): " AMOUNT_AOGI
+#
+#     AMOUNT_UAOGI=$(awk "BEGIN { printf \"%.0f\", $AMOUNT_AOGI * 1000000 }")
+#
+#     0gchaind tx bank send "$SENDER_WALLET" "$RECIPIENT_ADDRESS" "${AMOUNT_UAOGI}ua0gi" --chain-id "$OG_CHAIN_ID" --gas auto --gas-adjustment 1.5 -y
+#
+#     menu
+# }
 
-    read -p "Enter sender wallet name: " SENDER_WALLET
-    read -p "Enter recipient wallet address: " RECIPIENT_ADDRESS
-    read -p "Enter amount to send (in AOGI, e.g. 10 = 10 AOGI): " AMOUNT_AOGI
+# function stake_tokens() {
+#     echo -e "\n${YELLOW}Available wallets:${RESET}"
+#     0gchaind keys list
+#
+#     DEFAULT_WALLET=$WALLET
+#
+#     read -p "Enter wallet name (leave empty to use current default wallet --> $DEFAULT_WALLET): " WALLET_NAME
+#     if [ -z "$WALLET_NAME" ]; then
+#         WALLET_NAME=$DEFAULT_WALLET
+#     fi
+#
+#     echo "Choose an option:"
+#     echo "1. Delegate to Grand Valley"
+#     echo "2. Self-delegate"
+#     echo "3. Delegate to another validator"
+#     read -p "Enter your choice (1, 2, or 3): " CHOICE
+#
+#     # Prompt for RPC choice
+#     read -p "Use your own RPC or Grand Valley's? (own/gv, leave empty for gv): " RPC_CHOICE
+#     if [ -z "$RPC_CHOICE" ]; then
+#         RPC_CHOICE="gv"
+#     fi
+#
+#     case $CHOICE in
+#         1)
+#             read -p "Enter amount to stake (in AOGI, e.g. 10 = 10 AOGI): " AMOUNT_AOGI
+#             VAL="0gvaloper1gela3jtnmen0dmj2q5p0pne5y45ftshzs053x3"
+#             ;;
+#         2)
+#             read -p "Enter amount to stake (in AOGI, e.g. 10 = 10 AOGI): " AMOUNT_AOGI
+#             VAL=$(0gchaind keys show "$WALLET_NAME" --bech val -a)
+#             ;;
+#         3)
+#             read -p "Enter validator address: " VAL
+#             read -p "Enter amount to stake (in AOGI, e.g. 10 = 10 AOGI): " AMOUNT_AOGI
+#             ;;
+#         *)
+#             echo "Invalid choice. Please enter 1, 2, or 3."
+#             menu
+#             return
+#             ;;
+#     esac
+#
+#     AMOUNT_UAOGI=$(awk "BEGIN { printf \"%.0f\", $AMOUNT_AOGI * 1000000 }")
+#
+#     if [ "$RPC_CHOICE" == "gv" ]; then
+#         NODE="--node https://lightnode-rpc-0g.grandvalleys.com:443"
+#     else
+#         NODE=""
+#     fi
+#
+#     0gchaind tx staking delegate "$VAL" "${AMOUNT_UAOGI}ua0gi" --from "$WALLET_NAME" --chain-id "$OG_CHAIN_ID" --gas auto --gas-adjustment 1.5 $NODE -y
+#
+#     menu
+# }
 
-    AMOUNT_UAOGI=$(awk "BEGIN { printf \"%.0f\", $AMOUNT_AOGI * 1000000 }")
+# function unstake_tokens() {
+#     echo -e "\n${YELLOW}Available wallets:${RESET}"
+#     0gchaind keys list
+#
+#     DEFAULT_WALLET=$WALLET
+#
+#     read -p "Enter wallet name (leave empty to use current default wallet --> $DEFAULT_WALLET): " WALLET_NAME
+#     if [ -z "$WALLET_NAME" ]; then
+#         WALLET_NAME=$DEFAULT_WALLET
+#     fi
+#
+#     read -p "Enter validator address: " VALIDATOR_ADDRESS
+#     read -p "Enter amount to unstake (in AOGI, e.g. 10 = 10 AOGI): " AMOUNT_AOGI
+#
+#     # Prompt for RPC choice
+#     read -p "Use your own RPC or Grand Valley's? (own/gv, leave empty for gv): " RPC_CHOICE
+#     if [ -z "$RPC_CHOICE" ]; then
+#         RPC_CHOICE="gv"
+#     fi
+#
+#     AMOUNT_UAOGI=$(awk "BEGIN { printf \"%.0f\", $AMOUNT_AOGI * 1000000 }")
+#
+#     if [ "$RPC_CHOICE" == "gv" ]; then
+#         NODE="--node https://lightnode-rpc-0g.grandvalleys.com:443"
+#     else
+#         NODE=""
+#     fi
+#
+#     0gchaind tx staking unbond "$VALIDATOR_ADDRESS" "${AMOUNT_UAOGI}ua0gi" --from "$WALLET_NAME" --chain-id "$OG_CHAIN_ID" --gas auto --gas-adjustment 1.5 $NODE -y
+#
+#     menu
+# }
 
-    0gchaind tx bank send "$SENDER_WALLET" "$RECIPIENT_ADDRESS" "${AMOUNT_UAOGI}ua0gi" --chain-id "$OG_CHAIN_ID" --gas auto --gas-adjustment 1.5 -y
+# function unjail_validator() {
+#     echo -e "\n${YELLOW}Available wallets:${RESET}"
+#     0gchaind keys list
+#
+#     DEFAULT_WALLET=$WALLET
+#
+#     read -p "Enter wallet name to unjail (leave empty to use default --> $DEFAULT_WALLET): " WALLET_NAME
+#     if [ -z "$WALLET_NAME" ]; then
+#         WALLET_NAME=$DEFAULT_WALLET
+#     fi
+#
+#     # Prompt for RPC choice
+#     read -p "Use your own RPC or Grand Valley's? (own/gv, leave empty for gv): " RPC_CHOICE
+#     if [ -z "$RPC_CHOICE" ]; then
+#         RPC_CHOICE="gv"
+#     fi
+#
+#     if [ "$RPC_CHOICE" == "gv" ]; then
+#         NODE="--node https://lightnode-rpc-0g.grandvalleys.com:443"
+#     else
+#         NODE=""
+#     fi
+#
+#     0gchaind tx slashing unjail --from "$WALLET_NAME" --chain-id "$OG_CHAIN_ID" --gas-adjustment 1.6 --gas auto --gas-prices 0.003ua0gi $NODE -y
+#
+#     menu
+# }
 
-    menu
-}
+# function export_evm_private_key() {
+#     read -p "Enter wallet name: " WALLET_NAME
+#     0gchaind keys unsafe-export-eth-key $WALLET_NAME
+#     echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
+#     read -r
+#     menu
+# }
 
-function stake_tokens() {
-    echo -e "\n${YELLOW}Available wallets:${RESET}"
-    0gchaind keys list
+# function restore_wallet() {
+#     read -p "Enter wallet name: " WALLET_NAME
+#     0gchaind keys add $WALLET_NAME --recover --eth
+#     menu
+# }
 
-    DEFAULT_WALLET=$WALLET
-
-    read -p "Enter wallet name (leave empty to use current default wallet --> $DEFAULT_WALLET): " WALLET_NAME
-    if [ -z "$WALLET_NAME" ]; then
-        WALLET_NAME=$DEFAULT_WALLET
-    fi
-
-    echo "Choose an option:"
-    echo "1. Delegate to Grand Valley"
-    echo "2. Self-delegate"
-    echo "3. Delegate to another validator"
-    read -p "Enter your choice (1, 2, or 3): " CHOICE
-
-    # Prompt for RPC choice
-    read -p "Use your own RPC or Grand Valley's? (own/gv, leave empty for gv): " RPC_CHOICE
-    if [ -z "$RPC_CHOICE" ]; then
-        RPC_CHOICE="gv"
-    fi
-
-    case $CHOICE in
-        1)
-            read -p "Enter amount to stake (in AOGI, e.g. 10 = 10 AOGI): " AMOUNT_AOGI
-            VAL="0gvaloper1gela3jtnmen0dmj2q5p0pne5y45ftshzs053x3"
-            ;;
-        2)
-            read -p "Enter amount to stake (in AOGI, e.g. 10 = 10 AOGI): " AMOUNT_AOGI
-            VAL=$(0gchaind keys show "$WALLET_NAME" --bech val -a)
-            ;;
-        3)
-            read -p "Enter validator address: " VAL
-            read -p "Enter amount to stake (in AOGI, e.g. 10 = 10 AOGI): " AMOUNT_AOGI
-            ;;
-        *)
-            echo "Invalid choice. Please enter 1, 2, or 3."
-            menu
-            return
-            ;;
-    esac
-
-    AMOUNT_UAOGI=$(awk "BEGIN { printf \"%.0f\", $AMOUNT_AOGI * 1000000 }")
-
-    if [ "$RPC_CHOICE" == "gv" ]; then
-        NODE="--node https://lightnode-rpc-0g.grandvalleys.com:443"
-    else
-        NODE=""
-    fi
-
-    0gchaind tx staking delegate "$VAL" "${AMOUNT_UAOGI}ua0gi" --from "$WALLET_NAME" --chain-id "$OG_CHAIN_ID" --gas auto --gas-adjustment 1.5 $NODE -y
-
-    menu
-}
-
-function unstake_tokens() {
-    echo -e "\n${YELLOW}Available wallets:${RESET}"
-    0gchaind keys list
-
-    DEFAULT_WALLET=$WALLET
-
-    read -p "Enter wallet name (leave empty to use current default wallet --> $DEFAULT_WALLET): " WALLET_NAME
-    if [ -z "$WALLET_NAME" ]; then
-        WALLET_NAME=$DEFAULT_WALLET
-    fi
-
-    read -p "Enter validator address: " VALIDATOR_ADDRESS
-    read -p "Enter amount to unstake (in AOGI, e.g. 10 = 10 AOGI): " AMOUNT_AOGI
-
-    # Prompt for RPC choice
-    read -p "Use your own RPC or Grand Valley's? (own/gv, leave empty for gv): " RPC_CHOICE
-    if [ -z "$RPC_CHOICE" ]; then
-        RPC_CHOICE="gv"
-    fi
-
-    AMOUNT_UAOGI=$(awk "BEGIN { printf \"%.0f\", $AMOUNT_AOGI * 1000000 }")
-
-    if [ "$RPC_CHOICE" == "gv" ]; then
-        NODE="--node https://lightnode-rpc-0g.grandvalleys.com:443"
-    else
-        NODE=""
-    fi
-
-    0gchaind tx staking unbond "$VALIDATOR_ADDRESS" "${AMOUNT_UAOGI}ua0gi" --from "$WALLET_NAME" --chain-id "$OG_CHAIN_ID" --gas auto --gas-adjustment 1.5 $NODE -y
-
-    menu
-}
-
-function unjail_validator() {
-    echo -e "\n${YELLOW}Available wallets:${RESET}"
-    0gchaind keys list
-
-    DEFAULT_WALLET=$WALLET
-
-    read -p "Enter wallet name to unjail (leave empty to use default --> $DEFAULT_WALLET): " WALLET_NAME
-    if [ -z "$WALLET_NAME" ]; then
-        WALLET_NAME=$DEFAULT_WALLET
-    fi
-
-    # Prompt for RPC choice
-    read -p "Use your own RPC or Grand Valley's? (own/gv, leave empty for gv): " RPC_CHOICE
-    if [ -z "$RPC_CHOICE" ]; then
-        RPC_CHOICE="gv"
-    fi
-
-    if [ "$RPC_CHOICE" == "gv" ]; then
-        NODE="--node https://lightnode-rpc-0g.grandvalleys.com:443"
-    else
-        NODE=""
-    fi
-
-    0gchaind tx slashing unjail --from "$WALLET_NAME" --chain-id "$OG_CHAIN_ID" --gas-adjustment 1.6 --gas auto --gas-prices 0.003ua0gi $NODE -y
-
-    menu
-}
-
-function export_evm_private_key() {
-    read -p "Enter wallet name: " WALLET_NAME
-    0gchaind keys unsafe-export-eth-key $WALLET_NAME
-    echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
-    read -r
-    menu
-}
-
-function restore_wallet() {
-    read -p "Enter wallet name: " WALLET_NAME
-    0gchaind keys add $WALLET_NAME --recover --eth
-    menu
-}
-
-function create_wallet() {
-    read -p "Enter wallet name: " WALLET_NAME
-    0gchaind keys add $WALLET_NAME --eth
-    menu
-}
+# function create_wallet() {
+#     read -p "Enter wallet name: " WALLET_NAME
+#     0gchaind keys add $WALLET_NAME --eth
+#     menu
+# }
 
 function delete_validator_node() {
-    sudo systemctl stop $SERVICE_FILE_NAME
-    sudo systemctl disable $SERVICE_FILE_NAME
-    sudo rm -rf /etc/systemd/system/$SERVICE_FILE_NAME
-    sudo rm -r 0g-chain
-    sudo rm $HOME/go/bin/0gchaind
-    sudo rm -rf $HOME/.0gchain
+    sudo systemctl stop $OG_CONSENSUS_CLIENT_SERVICE $OG_GETH_SERVICE
+    sudo systemctl disable $OG_CONSENSUS_CLIENT_SERVICE $OG_GETH_SERVICE
+    sudo rm -rf /etc/systemd/system/$OG_CONSENSUS_CLIENT_SERVICE $OG_GETH_SERVICE
+    sudo rm -r .0gchaind
+    sudo rm $HOME/galileo/bin/0gchaind
+    sudo rm $HOME/galileo/bin/geth
     sed -i "/OG_/d" $HOME/.bash_profile
     echo "Validator node deleted successfully."
     menu
 }
 
 function show_validator_logs() {
-    sudo journalctl -u $SERVICE_FILE_NAME -fn 100
+    sudo journalctl -u $OG_CONSENSUS_CLIENT_SERVICE $OG_GETH_SERVICE-fn 100
     menu
 }
 
@@ -438,21 +447,21 @@ function show_node_status() {
 }
 
 function stop_validator_node() {
-    sudo systemctl stop $SERVICE_FILE_NAME
+    sudo systemctl stop $OG_CONSENSUS_CLIENT_SERVICE $OG_GETH_SERVICE
     menu
 }
 
 function restart_validator_node() {
     sudo systemctl daemon-reload
-    sudo systemctl restart $SERVICE_FILE_NAME
+    sudo systemctl restart $OG_CONSENSUS_CLIENT_SERVICE $OG_GETH_SERVICE
     menu
 }
 
-function backup_validator_key() {
-    cp $HOME/.0gchain/config/priv_validator_key.json $HOME/priv_validator_key.json
-    echo -e "\n${YELLOW}Your priv_vaidator_key.json file has been copied to $HOME${RESET}"
-    menu
-}
+# function backup_validator_key() {
+#     cp $HOME/.0gchain/config/priv_validator_key.json $HOME/priv_validator_key.json
+#     echo -e "\n${YELLOW}Your priv_vaidator_key.json file has been copied to $HOME${RESET}"
+#     menu
+# }
 
 function add_peers() {
     echo "Select an option:"
@@ -840,34 +849,16 @@ function show_guidelines() {
 
 # Menu function
 function menu() {
-    if [[ -f "/etc/systemd/system/0gchaind.service" ]]; then
-    SERVICE_FILE_NAME="0gchaind.service"
-    elif [[ -f "/etc/systemd/system/0gd.service" ]]; then
-    SERVICE_FILE_NAME="0gd.service"
-    else
-    SERVICE_FILE_NAME="Not found"
-    echo -e "${RED}No valid service file found (0gchaind.service or 0gd.service). Continuing without setting a service file name.${RESET}"
-    fi
+    # detect_service_file logic disabled as requested
     realtime_block_height=$(curl -s -X POST "https://evmrpc-testnet.0g.ai" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
     echo -e "${ORANGE}Valley of 0G${RESET}"
     echo "Main Menu:"
     echo -e "${GREEN}1. Validator Node${RESET}"
-    echo "    a. Deploy/re-Deploy Validator Node (includes Cosmovisor deployment)"
-    echo "    b. Manage Validator Node (Migrate to Cosmovisor or Update Version)"
-    echo "    c. Apply Snapshot"
-    echo "    d. Add Peers"
-    echo "    e. Show Node Status"
-    echo "    f. Show Validator Logs"
-    echo "    g. Create Validator"
-    echo "    h. Create Wallet"
-    echo "    i. Restore Wallet"
-    echo "    j. Query Balance"
-    echo "    k. Send Transaction"
-    echo "    l. Stake Tokens"
-    echo "    m. Unstake Tokens"
-    echo "    n. Unjail Validator"
-    echo "    o. Export EVM Private Key"
-    echo "    p. Backup Validator Key (store it to \$HOME directory)"
+    echo "    a. Deploy/re-Deploy Validator Node"
+    echo "    b. Add Peers"
+    echo "    c. Show Node Status"
+    echo "    d. Show Validator Logs"
+    echo "    e. Query Balance"
     echo -e "${GREEN}2. Storage Node${RESET}"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
@@ -915,21 +906,10 @@ function menu() {
         1)
             case $SUB_OPTION in
                 a) deploy_validator_node ;;
-                b) manage_validator_node ;;
-                c) apply_snapshot ;;
-                d) add_peers ;;
-                e) show_node_status ;;
-                f) show_validator_logs ;;
-                g) create_validator ;;
-                h) create_wallet ;;
-                i) restore_wallet ;;
-                j) query_balance ;;
-                k) send_transaction ;;
-                l) stake_tokens ;;
-                m) unstake_tokens ;;
-                n) unjail_validator ;;
-                o) export_evm_private_key ;;
-                p) backup_validator_key ;;
+                b) add_peers ;;
+                c) show_node_status ;;
+                d) show_validator_logs ;;
+                e) query_balance ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
 
