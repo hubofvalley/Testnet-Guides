@@ -49,12 +49,12 @@ init_cosmovisor110() {
     sudo systemctl stop story story-geth
 
     # Download genesis story version
-    mkdir -p story-v1.1.0
-    wget -p $HOME/story-v1.1.0 https://github.com/piplabs/story/releases/download/v1.1.0/story-linux-amd64 -O $HOME/story-v1.1.0/story
+    mkdir -p story-v1.2.0
+    wget -p $HOME/story-v1.2.0 https://github.com/piplabs/story/releases/download/v1.2.0/story-linux-amd64 -O $HOME/story-v1.2.0/story
 
     # Initialize cosmovisor
     sudo rm -r $HOME/.story/story/cosmovisor
-    cosmovisor init $HOME/story-v1.1.0/story
+    cosmovisor init $HOME/story-v1.2.0/story
     cd $HOME/go/bin/
     sudo rm -r story
     ln -s $HOME/.story/story/cosmovisor/current/bin/story story
@@ -217,6 +217,7 @@ echo "Choose the version to update to:"
 #read -p "There are currently no new versions available."
 echo -e "a. ${YELLOW}v1.1.0${RESET} (${GREEN}Virgil${RESET} Upgrade height: 640,000)"
 echo -e "b. ${YELLOW}v1.1.1${RESET} (${GREEN}Additional update for validator CLI interaction${RESET} Upgrade height: 1,398,904)"
+echo -e "c. ${YELLOW}v1.2.0${RESET} (${GREEN}New features and improvements${RESET} Upgrade height: 3,861,111)"
 #echo "c. v1.3.0 (Upgrade height: 2,065,886)"
 #echo "d. Batch update: Upgrade to v1.1.0 at height 640,000, v1.1.1 at height 858,000, and v1.1.0 at height 2,065,886 (RECOMMENDED FOR THOSE AIMING TO ACHIEVE ARCHIVE NODE STATUS)."
 read -p "Enter the letter corresponding to the version: " choice
@@ -228,9 +229,9 @@ case $choice in
     b)
         update_version "v1.1.1" "https://github.com/piplabs/story/releases/download/v1.1.1" 1398904
         ;;
-    #c)
-        #update_version "v1.1.0" "https://github.com/piplabs/story/releases/download/v1.1.0" 2065886
-        #;;
+    c)
+        update_version "v1.2.0" "https://github.com/piplabs/story/releases/download/v1.2.0" 3861111
+        ;;
     #d)
         #batch_update_version
         #;;
@@ -239,3 +240,5 @@ case $choice in
         exit 1
         ;;
 esac
+
+echo "Let's Buidl Story Together"
