@@ -424,7 +424,7 @@ function delete_validator_node() {
 }
 
 function show_validator_logs() {
-    sudo journalctl -u $OG_CONSENSUS_CLIENT_SERVICE $OG_GETH_SERVICE-fn 100
+    sudo journalctl -u $OG_CONSENSUS_CLIENT_SERVICE $OG_GETH_SERVICE -fn 100
     menu
 }
 
