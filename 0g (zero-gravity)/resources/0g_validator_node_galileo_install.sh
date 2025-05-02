@@ -49,14 +49,14 @@ sudo chmod 777 ./bin/geth ./bin/0gchaind
 
 # Init
 ./bin/geth init --datadir $HOME/galileo/0g-home/geth-home ./genesis.json
-./bin/0gchaind init "$MONIKER" --home $HOME/galileo/tmp --node tcp://localhost:${OG_PORT}657
+./bin/0gchaind init "$MONIKER" --home $HOME/galileo/tmp
 
 # Patch configs in tmp and in final 0gchaind-home/config
 for CONFIG_DIR in "$HOME/galileo/tmp/config" "$HOME/galileo/0g-home/0gchaind-home/config"
 do
   sed -i.bak "
   s|tcp://0.0.0.0:26656|tcp://0.0.0.0:${OG_PORT}656|;
-  s|tcp://0.0.0.0:26657|tcp://0.0.0.0:${OG_PORT}657|;
+  s|tcp://127.0.0.1:26657|tcp://0.0.0.0:${OG_PORT}657|;
   s|tcp://127.0.0.1:26658|tcp://127.0.0.1:${OG_PORT}658|;
   s|0.0.0.0:6060|0.0.0.0:${OG_PORT}060|;
   s|0.0.0.0:26660|0.0.0.0:${OG_PORT}660|
@@ -69,6 +69,12 @@ do
   s|http://localhost:8551|http://localhost:${OG_PORT}551|;
   s|127.0.0.1:3500|0.0.0.0:${OG_PORT}500|
   " "${CONFIG_DIR}/app.toml"
+done
+
+# Patch client.toml port in both config directories
+for CONFIG_DIR in "$HOME/galileo/tmp/config" "$HOME/galileo/0g-home/0gchaind-home/config"
+do
+  sed -i.bak "s|^node = \".*\"|node = \"tcp://localhost:${OG_PORT}657\"|" "${CONFIG_DIR}/client.toml"
 done
 
 # Copy node files

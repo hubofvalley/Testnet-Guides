@@ -415,9 +415,8 @@ function delete_validator_node() {
     sudo systemctl stop $OG_CONSENSUS_CLIENT_SERVICE $OG_GETH_SERVICE
     sudo systemctl disable $OG_CONSENSUS_CLIENT_SERVICE $OG_GETH_SERVICE
     sudo rm -rf /etc/systemd/system/$OG_CONSENSUS_CLIENT_SERVICE $OG_GETH_SERVICE
-    sudo rm -r .0gchaind
-    sudo rm $HOME/galileo/bin/0gchaind
-    sudo rm $HOME/galileo/bin/geth
+    sudo rm -r $HOME/galileo
+    sudo rm -r $HOME/.0gchaind
     sed -i "/OG_/d" $HOME/.bash_profile
     echo "Validator node deleted successfully."
     menu
