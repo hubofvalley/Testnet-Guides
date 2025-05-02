@@ -75,6 +75,9 @@ done
 for CONFIG_DIR in "$HOME/galileo/tmp/config" "$HOME/galileo/0g-home/0gchaind-home/config"
 do
   sed -i.bak "s|^node = \".*\"|node = \"tcp://localhost:${OG_PORT}657\"|" "${CONFIG_DIR}/client.toml"
+
+  # Change the moniker in `config.toml` to `$MONIKER`.
+  sed -i.bak "s|^moniker = \".*\"|moniker = \"${MONIKER}\"|" "${CONFIG_DIR}/config.toml"
 done
 
 # Copy node files
