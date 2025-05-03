@@ -112,7 +112,7 @@ ${GREEN}Connect with Grand Valley:${RESET}
 - X: ${BLUE}https://x.com/bacvalley${RESET}
 - GitHub: ${BLUE}https://github.com/hubofvalley${RESET}
 - 0G Testnet Guide on GitHub by Grand Valley: ${BLUE}https://github.com/hubofvalley/Testnet-Guides/tree/main/0g%20(zero-gravity)${RESET}
-- Email: \${BLUE}letsbuidltogether@grandvalleys.com${RESET}
+- Email: ${BLUE}letsbuidltogether@grandvalleys.com${RESET}
 "
 
 # Function to detect the service file name
