@@ -97,22 +97,22 @@ ${GREEN}Contact${RESET}
 
 ENDPOINTS="${GREEN}
 Grand Valley 0G public endpoints:${RESET}
-- cosmos-rpc: \e]8;;https://lightnode-rpc-0g.grandvalleys.com\a${BLUE}https://lightnode-rpc-0g.grandvalleys.com\e]8;;\a${RESET}
+- cosmos-rpc: ${BLUE}https://lightnode-rpc-0g.grandvalleys.com${RESET}
 - evm-rpc: ${BLUE}https://lightnode-json-rpc-0g.grandvalleys.com${RESET}
 - cosmos rest-api: ${BLUE}https://lightnode-api-0g.grandvalleys.com${RESET}
-- peer: ${BLUE}65f62fc8e46ff89f7960bc30e2fc1c0e4a846340@peer-0g.grandvalleys.com:26656${RESET}
+- peer: ${BLUE}6583afc21ee32290102967132319b046bcb929dd@peer-0g.grandvalleys.com:28656${RESET}
 - Grand Valley Explorer: ${BLUE}https://explorer.grandvalleys.com${RESET}
 
 ${GREEN}Connect with Zero Gravity (0G):${RESET}
-- Official Website: \e]8;;https://0g.ai/\a${BLUE}https://0g.ai/\e]8;;\a${RESET}
-- X: \e]8;;https://x.com/0G_labs\a${BLUE}https://x.com/0G_labs\e]8;;\a${RESET}
-- Official Docs: \e]8;;https://docs.0g.ai/\a${BLUE}https://docs.0g.ai/\e]8;;\a${RESET}
+- Official Website: ${BLUE}https://0g.ai/${RESET}
+- X: ${BLUE}https://x.com/0G_labs${RESET}
+- Official Docs: ${BLUE}https://docs.0g.ai/${RESET}
 
 ${GREEN}Connect with Grand Valley:${RESET}
-- X: \e]8;;https://x.com/bacvalley\a${BLUE}https://x.com/bacvalley\e]8;;\a${RESET}
-- GitHub: \e]8;;https://github.com/hubofvalley\a${BLUE}https://github.com/hubofvalley\e]8;;\a${RESET}
+- X: ${BLUE}https://x.com/bacvalley${RESET}
+- GitHub: ${BLUE}https://github.com/hubofvalley${RESET}
 - 0G Testnet Guide on GitHub by Grand Valley: ${BLUE}https://github.com/hubofvalley/Testnet-Guides/tree/main/0g%20(zero-gravity)${RESET}
-- Email: \e]8;;mailto:letsbuidltogether@grandvalleys.com\a${BLUE}letsbuidltogether@grandvalleys.com\e]8;;\a${RESET}
+- Email: \${BLUE}letsbuidltogether@grandvalleys.com${RESET}
 "
 
 # Function to detect the service file name
