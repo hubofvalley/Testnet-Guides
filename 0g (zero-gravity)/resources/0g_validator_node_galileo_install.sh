@@ -23,7 +23,7 @@ SERVER_IP=$(hostname -I | awk '{print $1}')
 sudo systemctl stop 0gchaind 0g-geth
 sudo systemctl disable 0gchaind 0g-geth
 sudo rm -rf /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service
-rm -rf $HOME/galileo $HOME/.0gchaind $HOME/.bash_profile
+sudo rm -rf $HOME/galileo $HOME/.0gchaind $HOME/.bash_profile
 sudo rm /usr/local/bin/0gchaind
 
 # Install dependencies
