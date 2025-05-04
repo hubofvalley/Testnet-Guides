@@ -80,6 +80,14 @@ do
   sed -i.bak "s|^moniker = \".*\"|moniker = \"${MONIKER}\"|" "${CONFIG_DIR}/config.toml"
 done
 
+# Add peers to the config.toml
+for CONFIG_DIR in "$HOME/galileo/tmp/config" "$HOME/galileo/0g-home/0gchaind-home/config"
+do
+  peers=$(curl -sS https://lightnode-rpc-0g.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
+  echo $peers
+  sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"6583afc21ee32290102967132319b046bcb929dd@peer-0g.grandvalleys.com:28656,$peers\"|" ${CONFIG_DIR}/config.toml
+done
+
 # Copy node files
 cp $HOME/galileo/tmp/data/priv_validator_state.json $HOME/galileo/0g-home/0gchaind-home/data/
 cp $HOME/galileo/tmp/config/node_key.json $HOME/galileo/0g-home/0gchaind-home/config/
