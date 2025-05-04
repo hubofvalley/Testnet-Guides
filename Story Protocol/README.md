@@ -19,7 +19,7 @@
   - [Story Solving Target](#story-solving-target)
   - [Example Use Case](#example-use-case)
   - [Conclusion](#conclusion)
-  - [Grand Valley's Story Protocol Public Endpoints](#grand-valleys-story-protocol-public-endpoints)
+  - [Grand Valley's Story Protocol Testnet Public Endpoints](#grand-valleys-story-protocol-testnet-public-endpoints)
 - [Lets Buidl Story Together](#lets-buidl-story-together)
 
 ---
@@ -91,12 +91,13 @@ With Public Testnet, Story's docs and code become public. Check them out below:
 - [Story Explorer](https://testnet.storyscan.app/)
 - [Piplabs Github](https://github.com/piplabs)
 
-## Grand Valley's Story Protocol Public Endpoints
+## Grand Valley's Story Protocol Testnet Public Endpoints
 
 - **Cosmos RPC:** `https://lightnode-rpc-story.grandvalleys.com`
 - **JSON-RPC:** `https://lightnode-json-rpc-story.grandvalleys.com`
 - **Cosmos REST API:** `https://lightnode-api-story.grandvalleys.com`
 - **Cosmos WS:** `wss://lightnode-rpc-story.grandvalleys.com/websocket`
 - **EVM WS:** `wss://lightnode-wss-story.grandvalleys.com`
+- **Peer:** `7e311e22cff1a0d39c3758e342fa4c2ee1aea461@peer-story.grandvalleys.com:28656`
 
 # Lets Buidl Story Together
