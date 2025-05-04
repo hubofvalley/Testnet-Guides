@@ -234,27 +234,37 @@ function install_0gchain_app() {
 # }
 
 function query_balance() {
-    echo -e "\n${YELLOW}Available wallets:${RESET}"
-    0gchaind keys list
+    echo -e "${CYAN}Select an option:${RESET}"
+    echo "1. Query balance of EVM address"
+    echo "2. Back"
+    read -p "Enter your choice (1 or 2): " choice
 
-    echo -e "\nYou can input your own wallet address or any other address you'd like to query."
-    read -p "Enter wallet address: " WALLET_ADDRESS
+    case $choice in
+        1)
+            read -p "Enter the EVM address to query: " evm_address
+            ;;
+        2)
+            menu
+            return
+            ;;
+        *)
+            echo -e "${RED}Invalid choice. Please enter 1, 2, or 3.${RESET}"
+            query_balance
+            return
+            ;;
+    esac
 
-    # Prompt for RPC choice
-    read -p "Use your own RPC or Grand Valley's? (own/gv, leave empty for gv): " RPC_CHOICE
-    if [ -z "$RPC_CHOICE" ]; then
-        RPC_CHOICE="gv"
-    fi
+    echo -e "${CYAN}Fetching balance from testnet RPC for $evm_address...${RESET}"
+    curl -s --insecure -X POST https://lightnode-json-rpc-0g.grandvalleys.com \
+        -H "Content-Type: application/json" \
+        -d "{
+            \"jsonrpc\":\"2.0\",
+            \"method\":\"eth_getBalance\",
+            \"params\": [\"$evm_address\", \"latest\"],
+            \"id\":80087
+        }" | jq -r '.result' | awk '{printf "Balance of %s: %0.18f A0GI\n", "'"$evm_address"'", strtonum($1)/1e18}'
 
-    if [ "$RPC_CHOICE" == "gv" ]; then
-        NODE="--node https://lightnode-rpc-0g.grandvalleys.com:443"
-    else
-        NODE=""
-    fi
-
-    0gchaind query bank balances "$WALLET_ADDRESS" --chain-id "$OG_CHAIN_ID" $NODE
-
-    echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
+    echo -e "\n${YELLOW}Press Enter to go back to main menu...${RESET}"
     read -r
     menu
 }
