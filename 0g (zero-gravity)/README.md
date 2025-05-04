@@ -15,7 +15,7 @@ oO> _This guide is continuously updated._
   - [0G’s Architecture](#0gs-architecture)
   - [0G Solving Target](#0g-solving-target)
   - [Conclusion](#conclusion)
-  - [Grand Valley's 0G Public Endpoints](#grand-valleys-0g-public-endpoints)
+  - [Grand Valley's 0G Testnet Public Endpoints](#grand-valleys-0g-testnet-public-endpoints)
 - [Continue to Storage Node](#continue-to-storage-node)
 - [Let's Buidl 0G Together](#lets-buidl-0g-together)
 
@@ -73,12 +73,12 @@ With Public Testnet, 0G’s docs and code become public. Check them out below:
 - [0gchain Github](https://github.com/0glabs)
 - [0gchain Explorer](https://explorer.grandvalleys.com/0g-chain%20testnet)
 
-## Grand Valley's 0G Public Endpoints
+## Grand Valley's 0G Testnet Public Endpoints
 
 - **Cosmos RPC:** `https://lightnode-rpc-0g.grandvalleys.com`
 - **JSON-RPC:** `https://lightnode-json-rpc-0g.grandvalleys.com`
 - **Cosmos REST API:** `https://lightnode-api-0g.grandvalleys.com`
-- **Peer:** `65f62fc8e46ff89f7960bc30e2fc1c0e4a846340@peer-0g.grandvalleys.com:26656$`
+- **Peer:** `6583afc21ee32290102967132319b046bcb929dd@peer-0g.grandvalleys.com:28656`
 
 ---
 
