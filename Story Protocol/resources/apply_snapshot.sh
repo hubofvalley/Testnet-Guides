@@ -322,7 +322,7 @@ suggest_update() {
     echo -e "${YELLOW}Current consensus client version: $current_version${NC}"
 
     if [[ $snapshot_height -ge 0 ]]; then
-        required_version="v1.1.1-stable"
+        required_version="v1.2.0-stable"
     #elif [[ $snapshot_height -ge 322000 && $snapshot_height -le 857999 ]]; then
         #required_version="v0.12.1-stable"
     #elif [[ $snapshot_height -ge 858000 && $snapshot_height -le 2065885 ]]; then
