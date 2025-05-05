@@ -20,9 +20,9 @@ fi
 SERVER_IP=$(hostname -I | awk '{print $1}')
 
 # Cleanup
-sudo systemctl stop 0gchaind 0g-geth
-sudo systemctl disable 0gchaind 0g-geth
-sudo rm -rf /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service
+sudo systemctl stop 0gchaind 0g-geth 0ggeth
+sudo systemctl disable 0gchaind 0g-geth 0ggeth
+sudo rm -rf /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service /etc/systemd/system/0ggeth.service
 sudo rm -rf $HOME/galileo $HOME/.0gchaind $HOME/.bash_profile
 sudo rm /usr/local/bin/0gchaind
 
