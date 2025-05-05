@@ -471,7 +471,7 @@ function add_peers() {
             echo "Grand Valley's peers: $peers"
             read -p "Do you want to proceed? (yes/no): " confirm
             if [[ $confirm == "yes" ]]; then
-                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.story/story/config/config.toml
+                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"7e311e22cff1a0d39c3758e342fa4c2ee1aea461@peer-story.grandvalleys.com:28656,$peers\"|" $HOME/.story/story/config/config.toml
                 echo "Grand Valley's peers added."
             else
                 echo "Operation cancelled. Returning to menu."
