@@ -150,6 +150,53 @@ source $HOME/.bash_profile
 
 # Validator Node Functions
 function deploy_validator_node() {
+    clear
+    echo -e "${RED}▓▒░ IMPORTANT DISCLAIMER AND TERMS ░▒▓${RESET}"
+    echo -e "${YELLOW}1. SECURITY:${RESET}"
+    echo -e "- This script ${GREEN}DOES NOT${RESET} send any data outside your server"
+    echo "- All operations are performed locally"
+    echo "- You are encouraged to audit the script at:"
+    echo -e "  ${BLUE}https://github.com/hubofvalley/Testnet-Guides/blob/main/0g%20(zero-gravity)/resources/0g_validator_node_galileo_install.sh${RESET}"
+
+    echo -e "\n${YELLOW}2. SYSTEM IMPACT:${RESET}"
+    echo "- Will create systemd services:"
+    echo -e "  ${CYAN}0gchaind.service${RESET} (Consensus Client)"
+    echo -e "  ${CYAN}0g-geth.service${RESET} (geth/execution client)"
+    echo "- Ports will be customized based on your input (example if you enter 28):"
+    echo -e "  ${CYAN}28657${RESET} (RPC) - derived from default 26657"
+    echo -e "  ${CYAN}28656${RESET} (P2P) - derived from default 26656"
+    echo -e "  ${CYAN}28545${RESET} (EVM-RPC) - derived from default 8545"
+    echo -e "  ${CYAN}28546${RESET} (WebSocket) - derived from default 8546"
+    echo "- The script will automatically adjust these ports during setup"
+    echo -e "- Will create directories under ${CYAN}$HOME/galileo${RESET} and ${CYAN}$HOME/.0gchain${RESET}"
+
+    echo -e "\n${YELLOW}3. REQUIREMENTS:${RESET}"
+    echo "- CPU: 8+ cores, RAM: 64+ GB, Storage: 1TB+ NVMe SSD"
+    echo "- Ubuntu 20.04/22.04 recommended"
+    echo "- sudo/root access required"
+
+    echo -e "\n${YELLOW}4. VALIDATOR RESPONSIBILITIES:${RESET}"
+    echo "- As a validator, you'll need to:"
+    echo "  - Maintain good uptime (recommended 99%+)"
+    echo "  - Keep your node software updated"
+    echo "  - Regularly backup your keys and data"
+    echo "- The network has slashing mechanisms to:"
+    echo "  - Encourage validator reliability"
+    echo "  - Prevent malicious behavior"
+
+    echo -e "\n${GREEN}By continuing you agree to these terms.${RESET}"
+    read -p $'\n\e[33mDo you want to proceed with installation? (yes/no): \e[0m' confirm
+    
+    if [[ "${confirm,,}" != "yes" ]]; then
+        echo -e "${RED}Installation cancelled by user.${RESET}"
+        menu
+        return
+    fi
+
+    echo -e "\n${GREEN}Starting installation...${RESET}"
+    echo -e "${YELLOW}This may take 1-5 minutes. Please don't interrupt the process.${RESET}"
+    sleep 2
+
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_validator_node_galileo_install.sh)
     menu
 }
