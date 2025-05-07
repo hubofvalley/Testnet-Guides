@@ -133,6 +133,8 @@ function create_validator() {
         PRIVATE_KEY=$(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt)
     fi
 
+    echo "PRIVATE_KEY=$PRIVATE_KEY" > $HOME/.story/story/.env
+
     read -p "Enter the moniker for your validator: " MONIKER
 
     read -p "Enter the amount to be staked in IP (e.g., 1024 for 1024 IP, minimum requirement is 1024 IP): " STAKE_IP
@@ -201,7 +203,7 @@ function create_validator() {
     story validator create \
         --stake "$STAKE" \
         --moniker "$MONIKER" \
-        --private-key "$PRIVATE_KEY" \
+        --enc-key-file "$HOME/.story/story/.env" \
         --chain-id 1315 \
         --unlocked="$UNLOCKED_FLAG" \
         --commission-rate "$COMMISSION_RATE" \
