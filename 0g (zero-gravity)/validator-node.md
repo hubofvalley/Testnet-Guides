@@ -1,7 +1,7 @@
 ## Valley of 0G: Tools by Grand Valley
 
 ![image](https://github.com/user-attachments/assets/359b0d17-e451-42d7-8bc3-88c7fcf28355)
-![image](https://github.com/user-attachments/assets/3bbb47a8-3b2c-489c-a1b4-f026959543f8)
+![alt text](resources/vo0gnew.png)
 
 **Valley of 0G** by Grand Valley is an all-in-one solution for managing nodes within the 0G decentralized AI network. It provides easy tools to deploy, monitor, and maintain validator and storage nodes, making it simple to manage AI-focused infrastructure. Designed for scalability and performance, Valley of 0G helps efficiently manage data and resources, all within a community-driven environment with public support and endpoints.
 
@@ -36,6 +36,10 @@ Run the following command to install Valley of 0G:
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/valleyof0G.sh)
 ```
+
+### Validator/Full Node Automatic Installation Tutorial Video on X
+
+[![Watch the tutorial](resources/validator-node-thumbnail.jpg)](https://x.com/i/status/1920057677453107649)
 
 ---
 
