@@ -513,7 +513,7 @@ main_script() {
     sudo systemctl disable story-geth story
 
     # Back up your validator state
-    mv $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
+    cp $HOME/.story/story/data/priv_validator_state.json $HOME/.story/priv_validator_state.json.backup
 
     # Delete previous geth chaindata and story data folders
     sudo rm -rf $HOME/.story/geth/aeneid/geth/chaindata $HOME/.story/story/data
