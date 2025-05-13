@@ -42,7 +42,7 @@ ${YELLOW}| Category  | Requirements                   |
 | Storage   | 1+ TB NVMe SSD                 |
 | Bandwidth | 100 MBps for Download / Upload |${RESET}
 
-validator node current binaries version: ${CYAN}v0.2.0-alpha.4-538-g9214e10c0${RESET}
+validator node current binaries version: ${CYAN}v0.2.0-alpha.4-724-gc0270cbc2${RESET}
 consensus client service file name: ${CYAN}0gchaind.service${RESET}
 0g-geth service file name: ${CYAN}0g-geth.service${RESET}
 current chain : ${CYAN}0gchain-16601 (Galileo Testnet)${RESET}
@@ -250,8 +250,8 @@ function deploy_validator_node() {
 
 function install_0gchain_app() {
     cd $HOME
-    mkdir -p 0gchain-v0.2.0-alpha.4-538-g9214e10c0
-    wget -O 0gchain-v0.2.0-alpha.4-538-g9214e10c0/0gchaind https://github.com/0glabs/0gchain-ng/releases/download/v1.1.0/galileo-v1.1.0.tar.gz
+    mkdir -p 0gchain-v0.2.0-alpha.4-724-gc0270cbc2
+    wget -O 0gchain-v0.2.0-alpha.4-724-gc0270cbc2/0gchaind https://github.com/0glabs/0gchain-ng/releases/download/v1.1.0/galileo-v1.1.0.tar.gz
     tar -xzvf galileo-v1.1.0.tar.gz -C $HOME
     cd galileo
     cp -r 0g-home/* $HOME/galileo/0g-home/

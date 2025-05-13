@@ -41,7 +41,7 @@ go version
 
 # Download and extract
 cd $HOME
-wget https://github.com/0glabs/0gchain-ng/releases/download/v1.1.0/galileo-v1.1.0.tar.gz
+wget https://github.com/0glabs/0gchain-NG/releases/download/v1.1.0/galileo-v1.1.0.tar.gz
 tar -xzvf galileo-v1.1.0.tar.gz -C $HOME
 cd galileo
 cp -r 0g-home/* $HOME/galileo/0g-home/
