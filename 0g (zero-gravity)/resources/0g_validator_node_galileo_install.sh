@@ -126,7 +126,7 @@ ExecStart=/bin/bash -c 'cd ~/galileo && CHAIN_SPEC=devnet ./bin/0gchaind start \
     --pruning=nothing \
     --home $HOME/galileo/0g-home/0gchaind-home \
     --p2p.external_address $SERVER_IP:${OG_PORT}656 \
-    --p2p.seeds b30fb241f3c5aee0839c0ea55bd7ca18e5c855c1@8.218.94.246:26656'
+    --p2p.seeds 85a9b9a1b7fa0969704db2bc37f7c100855a75d9@8.218.94.246:26656'
 Restart=always
 RestartSec=3
 LimitNOFILE=4096
