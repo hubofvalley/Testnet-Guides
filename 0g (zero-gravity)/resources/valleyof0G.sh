@@ -901,7 +901,7 @@ function show_guidelines() {
 # Menu function
 function menu() {
     # detect_service_file logic disabled as requested
-    realtime_block_height=$(curl -s -X POST "https://lightnode-json-rpc-0g.grandvalleys.com" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
+    realtime_block_height=$(curl -s -X POST "https://evmrpc-testnet.0g.ai" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
     echo -e "${ORANGE}Valley of 0G${RESET}"
     echo "Main Menu:"
     echo -e "${GREEN}1. Validator Node${RESET}"
