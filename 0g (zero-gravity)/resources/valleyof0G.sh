@@ -45,7 +45,7 @@ ${YELLOW}| Category  | Requirements                   |
 validator node current binaries version: ${CYAN}v0.2.0-alpha.4-538-g9214e10c0${RESET}
 consensus client service file name: ${CYAN}0gchaind.service${RESET}
 0g-geth service file name: ${CYAN}0g-geth.service${RESET}
-current chain : ${CYAN}beacon-kurtosis-80087 (Galileo Testnet)${RESET}
+current chain : ${CYAN}0gchain-16601 (Galileo Testnet)${RESET}
 
 ------------------------------------------------------------------
 
@@ -141,7 +141,7 @@ read -r
 # detect_service_file (disabled as requested)
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
 echo 'export PATH=$PATH:$HOME/galileo/bin' >> $HOME/.bash_profile
-# echo "export OG_CHAIN_ID="beacon-kurtosis-80087"" >> $HOME/.bash_profile
+# echo "export OG_CHAIN_ID="0gchain-16601"" >> $HOME/.bash_profile
 # echo "export SERVICE_FILE_NAME=\"$SERVICE_FILE_NAME\"" >> ~/.bash_profile
 # echo "export DAEMON_NAME=0gchaind" >> ~/.bash_profile
 # echo "export DAEMON_HOME=$(find $HOME -type d -name ".0gchain" -print -quit)" >> ~/.bash_profile
@@ -251,8 +251,8 @@ function deploy_validator_node() {
 function install_0gchain_app() {
     cd $HOME
     mkdir -p 0gchain-v0.2.0-alpha.4-538-g9214e10c0
-    wget -O 0gchain-v0.2.0-alpha.4-538-g9214e10c0/0gchaind https://github.com/0glabs/0gchain-ng/releases/download/v1.0.1/galileo-v1.0.1.tar.gz
-    tar -xzvf galileo-v1.0.1.tar.gz -C $HOME
+    wget -O 0gchain-v0.2.0-alpha.4-538-g9214e10c0/0gchaind https://github.com/0glabs/0gchain-ng/releases/download/v1.1.0/galileo-v1.1.0.tar.gz
+    tar -xzvf galileo-v1.1.0.tar.gz -C $HOME
     cd galileo
     cp -r 0g-home/* $HOME/galileo/0g-home/
     sudo chmod 777 ./bin/geth $HOME/galileo/bin/0gchaind
@@ -316,7 +316,7 @@ function query_balance() {
             \"jsonrpc\":\"2.0\",
             \"method\":\"eth_getBalance\",
             \"params\": [\"$evm_address\", \"latest\"],
-            \"id\":80087
+            \"id\":16601
         }" | jq -r '.result' | awk '{printf "Balance of %s: %0.18f A0GI\n", "'"$evm_address"'", strtonum($1)/1e18}'
 
     echo -e "\n${YELLOW}Press Enter to go back to main menu...${RESET}"

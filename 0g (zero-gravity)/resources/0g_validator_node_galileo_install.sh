@@ -41,8 +41,8 @@ go version
 
 # Download and extract
 cd $HOME
-wget https://github.com/0glabs/0gchain-ng/releases/download/v1.0.1/galileo-v1.0.1.tar.gz
-tar -xzvf galileo-v1.0.1.tar.gz -C $HOME
+wget https://github.com/0glabs/0gchain-ng/releases/download/v1.1.0/galileo-v1.1.0.tar.gz
+tar -xzvf galileo-v1.1.0.tar.gz -C $HOME
 cd galileo
 cp -r 0g-home/* $HOME/galileo/0g-home/
 sudo chmod 777 ./bin/geth ./bin/0gchaind
@@ -143,7 +143,7 @@ After=network-online.target
 
 [Service]
 User=$USER
-ExecStart=/bin/bash -c 'cd ~/galileo && ./bin/geth --config geth-config.toml --datadir $HOME/galileo/0g-home/geth-home --networkid 80087'
+ExecStart=/bin/bash -c 'cd ~/galileo && ./bin/geth --config geth-config.toml --datadir $HOME/galileo/0g-home/geth-home --networkid 16601'
 Restart=always
 RestartSec=3
 LimitNOFILE=4096
