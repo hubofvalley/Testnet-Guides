@@ -100,7 +100,7 @@ Grand Valley 0G public endpoints:${RESET}
 - cosmos-rpc: ${BLUE}https://lightnode-rpc-0g.grandvalleys.com${RESET}
 - evm-rpc: ${BLUE}https://lightnode-json-rpc-0g.grandvalleys.com${RESET}
 - cosmos rest-api: ${BLUE}https://lightnode-api-0g.grandvalleys.com${RESET}
-- peer: ${BLUE}6583afc21ee32290102967132319b046bcb929dd@peer-0g.grandvalleys.com:28656${RESET}
+- peer: ${BLUE}a97c8615903e795135066842e5739e30d64e2342@peer-0g.grandvalleys.com:28656${RESET}
 - Grand Valley Explorer: ${BLUE}https://explorer.grandvalleys.com${RESET}
 
 ${GREEN}Connect with Zero Gravity (0G):${RESET}
@@ -553,7 +553,7 @@ function add_peers() {
             echo "Grand Valley's peers: $peers"
             read -p "Do you want to proceed? (yes/no): " confirm
             if [[ $confirm == "yes" ]]; then
-                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"6583afc21ee32290102967132319b046bcb929dd@peer-0g.grandvalleys.com:28656,$peers\"|" $HOME/galileo/0g-home/0gchaind-home/config/config.toml
+                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"a97c8615903e795135066842e5739e30d64e2342@peer-0g.grandvalleys.com:28656,$peers\"|" $HOME/galileo/0g-home/0gchaind-home/config/config.toml
                 echo "Grand Valley's peers added."
             else
                 echo "Operation cancelled. Returning to menu."

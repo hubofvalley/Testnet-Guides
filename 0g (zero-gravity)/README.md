@@ -78,7 +78,7 @@ With Public Testnet, 0G’s docs and code become public. Check them out below:
 - **Cosmos RPC:** `https://lightnode-rpc-0g.grandvalleys.com`
 - **JSON-RPC:** `https://lightnode-json-rpc-0g.grandvalleys.com`
 - **Cosmos REST API:** `https://lightnode-api-0g.grandvalleys.com`
-- **Peer:** `6583afc21ee32290102967132319b046bcb929dd@peer-0g.grandvalleys.com:28656`
+- **Peer:** `a97c8615903e795135066842e5739e30d64e2342@peer-0g.grandvalleys.com:28656`
 
 ---
 
