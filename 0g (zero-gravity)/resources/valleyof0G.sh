@@ -494,7 +494,7 @@ function show_validator_logs() {
 
 function show_node_status() {
     port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/galileo/0g-home/0gchaind-home/config/config.toml") && curl "http://127.0.0.1:$port/status" | jq
-    realtime_block_height=$(curl -s -X POST "https://lightnode-json-rpc-0g.grandvalleys.com" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
+    realtime_block_height=$(curl -s -X POST "https://evmrpc-testnet.0g.ai" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
     geth_block_height=$(geth --exec "eth.blockNumber" attach $HOME/galileo/0g-home/geth-home/geth.ipc)
     node_height=$(curl -s "http://127.0.0.1:$port/status" | jq -r '.result.sync_info.latest_block_height')
     echo "Consensus client block height: $node_height"
@@ -505,7 +505,7 @@ function show_node_status() {
 
     # Add explanation for negative values
     if (( block_difference < 0 )); then
-        echo -e "${GREEN}Note:${NC} A negative value is normal - this means Grand Valley's 0G Testnet RPC block height is currently behind your node's height"
+        echo -e "${GREEN}Note:${NC} A negative value is normal - this means 0G Official's  Testnet RPC block height is currently behind your node's height"
     fi
     echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
     read -r
