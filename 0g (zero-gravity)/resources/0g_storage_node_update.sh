@@ -114,9 +114,9 @@ s|^\s*#\s*listen_address_admin\s*=.*|listen_address_admin = \"127.0.0.1:5679\"|
 s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
 s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = 0|
 s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|
-s|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = \"0x56A565685C9992BF5ACafb940ff68922980DBBC5\"|
-s|^\s*#\?\s*mine_contract_address\s*=.*|mine_contract_address = \"0xB87E0e5657C25b4e132CB6c34134C0cB8A962AD6\"|
-s|^\s*#\?\s*reward_contract_address\s*=.*|reward_contract_address = \"0x233B2768332e4Bae542824c93cc5c8ad5d44517E\"|
+s|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = \"0x5f1D96895e442FC0168FA2F9fb1EBeF93Cb5035e\"|
+s|^\s*#\?\s*mine_contract_address\s*=.*|mine_contract_address = \"0xB0F6c3E2E7Ada3b9a95a1582bF6562e24A62D334\"|
+s|^\s*#\?\s*reward_contract_address\s*=.*|reward_contract_address = \"0xdf758Bd14306482DeCbeF186eC6f18e4e79aaaE6\"|
 " $HOME/0g-storage-node/run/config-testnet.toml
 
 # Restart the node
