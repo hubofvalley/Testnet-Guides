@@ -161,7 +161,7 @@ Wants=network-online.target
 
 [Service]
 User=$USER
-ExecStart=$HOME/go/bin/0g-geth --config $HOME/galileo/geth-config.toml --datadir $HOME/.0gchaind/0g-home/geth-home --networkid 16601 --port ${OG_PORT}303 --http.port ${OG_PORT}545 --ws.port ${OG_PORT}546 --authrpc.port ${OG_PORT}551
+ExecStart=$HOME/go/bin/0g-geth --config $HOME/galileo/geth-config.toml --datadir $HOME/.0gchaind/0g-home/geth-home --networkid 16601 --port ${OG_PORT}303 --http.port ${OG_PORT}545 --ws.port ${OG_PORT}546 --authrpc.port ${OG_PORT}551 --bootnodes enode://de7b86d8ac452b1413983049c20eafa2ea0851a3219c2cc12649b971c1677bd83fe24c5331e078471e52a94d95e8cde84cb9d866574fec957124e57ac6056699@8.218.88.60:30303
 Restart=always
 WorkingDirectory=$HOME/galileo
 RestartSec=3

@@ -108,8 +108,8 @@ source $HOME/.bash_profile
 
 # Function to update to a specific version
 function update_geth() {
-    echo -e "${YELLOW}This feature is not available yet.${RESET}"
-    #bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story-geth_update.sh)
+    #echo -e "${YELLOW}This feature is not available yet.${RESET}"
+    bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story-geth_update.sh)
     menu
 }
 

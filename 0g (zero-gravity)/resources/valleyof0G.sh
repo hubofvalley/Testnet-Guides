@@ -492,9 +492,9 @@ function show_validator_logs() {
 }
 
 function show_node_status() {
-    port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/galileo/0g-home/0gchaind-home/config/config.toml") && curl "http://127.0.0.1:$port/status" | jq
+    port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.0gchaind/0g-home/0gchaind-home/config/config.toml") && curl "http://127.0.0.1:$port/status" | jq
     realtime_block_height=$(curl -s -X POST "https://evmrpc-testnet.0g.ai" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
-    geth_block_height=$(geth --exec "eth.blockNumber" attach $HOME/galileo/0g-home/geth-home/geth.ipc)
+    geth_block_height=$(geth --exec "eth.blockNumber" attach $HOME/.0gchaind/0g-home/geth-home/geth.ipc)
     node_height=$(curl -s "http://127.0.0.1:$port/status" | jq -r '.result.sync_info.latest_block_height')
     echo "Consensus client block height: $node_height"
     echo "Execution client (0g-geth) block height: $geth_block_height"
@@ -538,7 +538,7 @@ function add_peers() {
         1)
             read -p "Enter peers (comma-separated): " peers
             echo "You have entered the following peers: $peers"
-            read -p "Do you want to proceed? (yes/no): " confirm
+            read -p "Do you want to proceed? (yes/no): " confirm   
             if [[ $confirm == "yes" ]]; then
                 sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/galileo/0g-home/0gchaind-home/config/config.toml
                 echo "Peers added manually."
