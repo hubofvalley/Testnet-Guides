@@ -140,7 +140,6 @@ echo -e "${YELLOW}\nPress Enter to continue${RESET}"
 read -r
 # detect_service_file (disabled as requested)
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
-echo 'export PATH=$PATH:$HOME/galileo/bin' >> $HOME/.bash_profile
 # echo "export OG_CHAIN_ID="0gchain-16601"" >> $HOME/.bash_profile
 # echo "export SERVICE_FILE_NAME=\"$SERVICE_FILE_NAME\"" >> ~/.bash_profile
 # echo "export DAEMON_NAME=0gchaind" >> ~/.bash_profile

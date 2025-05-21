@@ -41,18 +41,32 @@ go version
 
 # Download and extract
 cd $HOME
-wget https://github.com/0glabs/0gchain-NG/releases/download/v1.1.0/galileo-v1.1.0.tar.gz
-tar -xzvf galileo-v1.1.0.tar.gz -C $HOME
+wget https://github.com/0glabs/0gchain-NG/releases/download/v1.1.1/galileo-v1.1.1.tar.gz
+tar -xzvf galileo-v1.1.1.tar.gz -C $HOME
 cd galileo
 cp -r 0g-home/* $HOME/galileo/0g-home/
 sudo chmod 777 ./bin/geth ./bin/0gchaind
 
+# Put consensus client and execution client (geth) binaries into go directory
+cp $HOME/galileo/bin/geth $HOME/go/bin/0g-geth
+cp $HOME/galileo/bin/0gchaind $HOME/go/bin/0gchaind
+sudo chmod 777 $HOME/go/bin/0g-geth $HOME/go/bin/0gchaind
+
+# check consensus client and execution client (geth) version
+source $HOME/.bash_profile
+0gchaind version
+0g-geth version
+
+# create .0gchaind directory and put 0g-home directory inside it
+mkdir -p $HOME/.0gchaind
+cp -r $HOME/galileo/0g-home $HOME/.0gchaind
+
 # Init
-./bin/geth init --datadir $HOME/galileo/0g-home/geth-home ./genesis.json
-./bin/0gchaind init "$MONIKER" --home $HOME/galileo/tmp
+0g-geth init --datadir $HOME/galileo/0g-home/geth-home $HOME/galileo/genesis.json
+0gchaind init "$MONIKER" --home $HOME/.0gchaind/tmp
 
 # Patch configs in tmp and in final 0gchaind-home/config
-for CONFIG_DIR in "$HOME/galileo/tmp/config" "$HOME/galileo/0g-home/0gchaind-home/config"
+for CONFIG_DIR in "$HOME/.0gchaind/tmp/config" "$HOME/.0gchaind/0g-home/0gchaind-home/config"
 do
   sed -i.bak "
   s|tcp://0.0.0.0:26656|tcp://0.0.0.0:${OG_PORT}656|;
@@ -72,7 +86,7 @@ do
 done
 
 # Patch client.toml port in both config directories
-for CONFIG_DIR in "$HOME/galileo/tmp/config" "$HOME/galileo/0g-home/0gchaind-home/config"
+for CONFIG_DIR in "$HOME/.0gchaind/tmp/config" "$HOME/.0gchaind/0g-home/0gchaind-home/config"
 do
   sed -i.bak "s|^node = \".*\"|node = \"tcp://localhost:${OG_PORT}657\"|" "${CONFIG_DIR}/client.toml"
 
@@ -81,20 +95,20 @@ do
 done
 
 # Add peers to the config.toml
-for CONFIG_DIR in "$HOME/galileo/tmp/config" "$HOME/galileo/0g-home/0gchaind-home/config"
+for CONFIG_DIR in "$HOME/.0gchaind/tmp/config" "$HOME/.0gchaind/0g-home/0gchaind-home/config"
 do
   peers=$(curl -sS https://lightnode-rpc-0g.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
   echo $peers
-  sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"6583afc21ee32290102967132319b046bcb929dd@peer-0g.grandvalleys.com:28656,$peers\"|" ${CONFIG_DIR}/config.toml
+  sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"a97c8615903e795135066842e5739e30d64e2342@peer-0g.grandvalleys.com:28656,$peers\"|" ${CONFIG_DIR}/config.toml
 done
 
 # Copy node files
-cp $HOME/galileo/tmp/data/priv_validator_state.json $HOME/galileo/0g-home/0gchaind-home/data/
-cp $HOME/galileo/tmp/config/node_key.json $HOME/galileo/0g-home/0gchaind-home/config/
-cp $HOME/galileo/tmp/config/priv_validator_key.json $HOME/galileo/0g-home/0gchaind-home/config/
+cp $HOME/.0gchaind/tmp/data/priv_validator_state.json $HOME/.0gchaind/0g-home/0gchaind-home/data/
+cp $HOME/.0gchaind/tmp/config/node_key.json $HOME/.0gchaind/0g-home/0gchaind-home/config/
+cp $HOME/.0gchaind/tmp/config/priv_validator_key.json $HOME/.0gchaind/0g-home/0gchaind-home/config/
 
 # Export PATH
-echo 'export PATH=$PATH:$HOME/galileo/bin' >> $HOME/.bash_profile
+echo 'export PATH=$PATH:$HOME/go/bin' >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
 # Update geth-config.toml ports based on OG_PORT
@@ -114,22 +128,25 @@ After=network-online.target
 
 [Service]
 User=$USER
-ExecStart=/bin/bash -c 'cd ~/galileo && CHAIN_SPEC=devnet ./bin/0gchaind start \
+Environment=CHAIN_SPEC=devnet
+WorkingDirectory=$HOME/galileo
+ExecStart=$HOME/go/bin/0gchaind start \
+    --chain-spec devnet \
     --rpc.laddr tcp://0.0.0.0:${OG_PORT}657 \
-    --beacon-kit.kzg.trusted-setup-path=kzg-trusted-setup.json \
-    --beacon-kit.engine.jwt-secret-path=jwt-secret.hex \
-    --beacon-kit.kzg.implementation=crate-crypto/go-kzg-4844 \
-    --beacon-kit.block-store-service.enabled \
-    --beacon-kit.node-api.enabled \
-    --beacon-kit.node-api.logging \
-    --beacon-kit.node-api.address 0.0.0.0:${OG_PORT}500 \
+    --kzg.trusted-setup-path=$HOME/galileo/kzg-trusted-setup.json \
+    --engine.jwt-secret-path=$HOME/galileo/jwt-secret.hex \
+    --kzg.implementation=crate-crypto/go-kzg-4844 \
+    --block-store-service.enabled \
+    --node-api.enabled \
+    --node-api.logging \
+    --node-api.address 0.0.0.0:${OG_PORT}500 \
     --pruning=nothing \
-    --home $HOME/galileo/0g-home/0gchaind-home \
+    --home $HOME/.0gchaind/0g-home/0gchaind-home \
     --p2p.external_address $SERVER_IP:${OG_PORT}656 \
-    --p2p.seeds 85a9b9a1b7fa0969704db2bc37f7c100855a75d9@8.218.94.246:26656'
+    --p2p.seeds 85a9b9a1b7fa0969704db2bc37f7c100855a75d9@8.218.88.60:26656
 Restart=always
 RestartSec=3
-LimitNOFILE=4096
+LimitNOFILE=65535
 
 [Install]
 WantedBy=multi-user.target
@@ -140,13 +157,15 @@ sudo tee /etc/systemd/system/0g-geth.service > /dev/null <<EOF
 [Unit]
 Description=0g Geth Node Service
 After=network-online.target
+Wants=network-online.target
 
 [Service]
 User=$USER
-ExecStart=/bin/bash -c 'cd ~/galileo && ./bin/geth --config geth-config.toml --datadir $HOME/galileo/0g-home/geth-home --networkid 16601'
+ExecStart=$HOME/go/bin/0g-geth --config $HOME/galileo/geth-config.toml --datadir $HOME/.0gchaind/0g-home/geth-home --networkid 16601 --port ${OG_PORT}303 --http.port ${OG_PORT}545 --ws.port ${OG_PORT}546 --authrpc.port ${OG_PORT}551
 Restart=always
+WorkingDirectory=$HOME/galileo
 RestartSec=3
-LimitNOFILE=4096
+LimitNOFILE=65535
 
 [Install]
 WantedBy=multi-user.target
