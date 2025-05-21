@@ -57,7 +57,7 @@ update_version() {
     fi
 
     sudo systemctl daemon-reload
-    sudo systemctl restart story story-geth
+    sudo systemctl restart story-geth && sleep 5 && sudo systemctl restart story
 }
 
 # Menu for selecting the version
