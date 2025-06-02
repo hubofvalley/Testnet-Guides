@@ -205,7 +205,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable story-geth story
 sudo systemctl restart story-geth story
 
-# 14. Confirmation message for installation completion
+# 15. Confirmation message for installation completion
 if systemctl is-active --quiet story && systemctl is-active --quiet story-geth; then
     echo "Node installation and services started successfully!"
 else
