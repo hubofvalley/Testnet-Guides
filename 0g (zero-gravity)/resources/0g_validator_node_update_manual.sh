@@ -44,7 +44,7 @@ BASE_URL="https://github.com/0glabs/0gchain-NG/releases/download"
 echo "Select version to update:"
 echo "a) v1.1.1"
 # Uncomment and add more versions as needed
-# echo "b) v1.2.0"
+echo "b) v1.2.1"
 # echo "c) v1.3.0"
 
 read -p "Enter the letter corresponding to the version: " choice
@@ -54,9 +54,9 @@ case $choice in
         update_version "v1.1.1" "$BASE_URL/v1.1.1"
         ;;
     # Uncomment and add more versions as needed
-    # b)
-    #     update_version "v1.2.0" "$BASE_URL/v1.2.0"
-    #     ;;
+    b)
+        update_version "v1.2.1" "$BASE_URL/v1.2.1"
+        ;;
     *)
         echo "Invalid choice. Exiting."
         exit 1
