@@ -3,6 +3,7 @@
 set -e
 
 # ==== CONFIG ====
+echo -e "\n--- 0G Validator Setup ---"
 
 LOGO="
  __                                   
@@ -13,8 +14,6 @@ LOGO="
 
 echo "$LOGO"
 
-echo -e "\n--- 0G Validator Setup ---"
-
 read -p "Enter your MONIKER name: " MONIKER
 read -p "Enter your preferred PORT prefix (default 26): " OG_PORT
 OG_PORT=${OG_PORT:-26}
@@ -24,6 +23,19 @@ echo "export MONIKER=\"$MONIKER\"" >> ~/.bash_profile
 echo "export OG_PORT=\"$OG_PORT\"" >> ~/.bash_profile
 echo 'export PATH=$PATH:$HOME/galileo/bin' >> ~/.bash_profile
 source ~/.bash_profile
+
+# CLEANUP EXISTING INSTALLATION
+echo -e "\n\U0001F9F9 Cleaning up any existing 0G validator installation..."
+
+sudo systemctl stop 0gchaind 2>/dev/null || true
+sudo systemctl stop 0g-geth 0ggeth 2>/dev/null || true
+sudo systemctl disable 0gchaind 2>/dev/null || true
+sudo systemctl disable 0g-geth 0ggeth 2>/dev/null || true
+sudo rm -f /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service /etc/systemd/system/0ggeth.service
+sudo rm -f /usr/local/bin/0gchaind /usr/local/bin/0g-geth /usr/local/bin/0ggeth
+rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v1.2.0 $HOME/galileo-v1.2.0.tar.gz
+
+echo "✅ Cleanup complete."
 
 # ==== DEPENDENCIES ====
 sudo apt update && sudo apt upgrade -y
@@ -121,7 +133,7 @@ WantedBy=multi-user.target
 EOF
 
 # geth.service
-sudo tee /etc/systemd/system/geth.service > /dev/null <<EOF
+sudo tee /etc/systemd/system/0g-geth.service > /dev/null <<EOF
 [Unit]
 Description=0g Geth Node Service
 After=network-online.target
@@ -149,10 +161,10 @@ EOF
 # ==== START SERVICES ====
 sudo systemctl daemon-reload
 sudo systemctl enable 0gchaind
-sudo systemctl enable geth
+sudo systemctl enable 0g-geth
 sudo systemctl start 0gchaind
-sudo systemctl start geth
+sudo systemctl start 0g-geth
 
 # ==== DONE ====
-echo -e "\n✅ Installation complete!"
-echo "🧪 Check logs: sudo journalctl -u 0gchaind -u geth -fn 100"
+echo -e "Installation complete!"
+echo "Check logs: sudo journalctl -u 0gchaind -u geth -fn 100"
