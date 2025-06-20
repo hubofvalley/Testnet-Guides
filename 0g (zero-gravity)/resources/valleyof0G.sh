@@ -42,7 +42,7 @@ ${YELLOW}| Category  | Requirements                   |
 | Storage   | 1+ TB NVMe SSD                 |
 | Bandwidth | 100 MBps for Download / Upload |${RESET}
 
-validator node current binaries version: ${CYAN}v0.2.0-alpha.4-724-gc0270cbc2${RESET}
+validator node current binaries version: ${CYAN}v1.2.0${RESET}
 consensus client service file name: ${CYAN}0gchaind.service${RESET}
 0g-geth service file name: ${CYAN}0g-geth.service${RESET}
 current chain : ${CYAN}0gchain-16601 (Galileo Testnet)${RESET}
@@ -238,15 +238,19 @@ function manage_validator_node() {
 
 function install_0gchain_app() {
     cd $HOME
-    mkdir -p 0gchain-v0.2.0-alpha.4-724-gc0270cbc2
-    wget -O 0gchain-v0.2.0-alpha.4-724-gc0270cbc2/0gchaind https://github.com/0glabs/0gchain-ng/releases/download/v1.1.0/galileo-v1.1.0.tar.gz
-    tar -xzvf galileo-v1.1.0.tar.gz -C $HOME
-    cd galileo
-    cp -r 0g-home/* $HOME/galileo/0g-home/
-    sudo chmod 777 ./bin/geth $HOME/galileo/bin/0gchaind
-    sudo chown -R ./bin/geth $HOME/galileo/bin/0gchaind
-    sudo chmod +x ./bin/geth $HOME/galileo/bin/0gchaind
-    echo "0gchain app installed successfully."
+    echo "Downloading 0gchaind v1.2.0..."
+    wget https://github.com/0glabs/0gchain-ng/releases/download/v1.2.0/galileo-v1.2.0.tar.gz -O galileo-v1.2.0.tar.gz
+    echo "Extracting galileo-v1.2.0.tar.gz..."
+    tar -xzvf galileo-v1.2.0.tar.gz -C $HOME
+    mkdir -p 0gchain-v1.2.0
+    # Find and copy the 0gchaind binary to the app directory
+    if [ -f "$HOME/galileo/bin/0gchaind" ]; then
+        cp "$HOME/galileo/bin/0gchaind" "$HOME/0gchain-v1.2.0/0gchaind"
+        chmod +x "$HOME/0gchain-v1.2.0/0gchaind"
+        echo "0gchaind v1.2.0 app installed successfully at $HOME/0gchain-v1.2.0/0gchaind"
+    else
+        echo "Error: 0gchaind binary not found in galileo-v1.2.0 package!"
+    fi
     menu
 }
 
@@ -838,13 +842,13 @@ function show_guidelines() {
 
     echo -e "${GREEN}5. Additional Tips${RESET}"
     echo "   - Always backup your wallets and important data before performing operations like deleting nodes."
-    echo "   - Regularly update your nodes to the latest version to ensure compatibility and security."
+    echo "   - Regularly update your nodes to the latest version (currently v1.2.0) to ensure compatibility and security."
 
     echo -e "${GREEN}6. Option Descriptions and Guides${RESET}"
     echo -e "${GREEN}Validator Node Options:${RESET}"
-    echo "   a. Deploy/re-Deploy Validator Node: Sets up a new validator node or redeploys an existing one."
+    echo "   a. Deploy/re-Deploy Validator Node: Sets up a new validator node or redeploys an existing one (v1.2.0)."
     echo "      - Guide: This will install all necessary components. Ensure your system meets requirements."
-    echo "   b. Manage Validator Node: Update validator node version or return to menu."
+    echo "   b. Manage Validator Node: Update validator node version (v1.2.0) or return to menu."
     echo "   c. Add Peers: Manually add peers or use Grand Valley's peers."
     echo "      - Guide: Improves node connectivity and network participation."
     echo "   d. Show Node Status: Displays your validator's current status and health."
