@@ -325,10 +325,10 @@ suggest_update() {
         required_version="v1.1.0-stable"
     elif [[ $snapshot_height -ge 1984904 && $snapshot_height -le 3861111 ]]; then
         required_version="v1.1.1-stable"
-    elif [[ $snapshot_height -ge 3861112 ]]; then
+    elif [[ $snapshot_height -ge 3861112 && $snapshot_height -le 5706999 ]]; then
         required_version="v1.2.0-stable"
-    #elif [[ $snapshot_height -ge 2065886 ]]; then
-        #required_version="v0.13.2-stable"
+    elif [[ $snapshot_height -ge 5707000 ]]; then
+        required_version="v1.3.0-stable"
     fi
 
     echo -e "${YELLOW}Required version for snapshot block height $snapshot_height: $required_version${NC}"
@@ -337,6 +337,8 @@ suggest_update() {
         echo -e "${YELLOW}If an update is required, choose option 'b' at the consensus client update prompt.${NC}"
     elif [[ $required_version == "v1.2.0-stable" ]]; then
         echo -e "${YELLOW}If an update is required, choose option 'c' at the consensus client update prompt.${NC}"
+    elif [[ $required_version == "v1.3.0-stable" ]]; then
+        echo -e "${YELLOW}If an update is required, choose option 'd' at the consensus client update prompt.${NC}"
     fi
 
     read -p "Do you want to update the consensus client version? (y/n): " update_choice
