@@ -881,7 +881,7 @@ function show_guidelines() {
     echo "   i. Delete Storage KV: Removes KV node."
 
     echo -e "${GREEN}Utilities:${RESET}"
-    echo "   5. Install 0gchain App: Installs CLI (v0.2.0) for transactions without running a node."
+    echo "   5. Install 0gchain App: Installs CLI (v1.2.0) for transactions without running a node."
     echo "   6. Show Endpoints: Displays Grand Valley's public endpoints."
     echo "   7. Show Guidelines: Displays this help information."
 
@@ -924,7 +924,7 @@ function menu() {
     echo "    g. Delete Validator Node (BACKUP YOUR SEEDS PHRASE/EVM-PRIVATE KEY AND priv_validator_key.json BEFORE YOU DO THIS)"
     echo "    h. Delete Storage Node"
     echo "    i. Delete Storage KV"
-    echo -e "${GREEN}5. Install the 0gchain App (v0.2.0) only to execute transactions without running a node${RESET}"
+    echo -e "${GREEN}5. Install the 0gchain App (v1.2.0) only to execute transactions without running a node${RESET}"
     echo -e "${GREEN}6. Show Grand Valley's Endpoints${RESET}"
     echo -e "${YELLOW}7. Show Guidelines${RESET}"
     echo -e "${RED}8. Exit${RESET}"
