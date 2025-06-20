@@ -208,39 +208,28 @@ function deploy_validator_node() {
     menu
 }
 
-# function manage_validator_node() {
-#     echo "Choose an option:"
-#     echo "1. Migrate to Cosmovisor only"
-#     echo "2. Update Validator Node Version (includes Cosmovisor migration and deployment)"
-#     echo "3. Back"
-#     read -p "Enter your choice (1/2/3): " choice
-#
-#     case $choice in
-#         1)
-#             migrate_to_cosmovisor
-#             ;;
-#         2)
-#             bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_validator_node_update.sh)
-#             menu
-#             ;;
-#         3)
-#             menu
-#             ;;
-#         *)
-#             echo "Invalid choice. Please select a valid option."
-#             ;;
-#     esac
-# }
+function manage_validator_node() {
+    echo "Choose an option:"
+    echo "1. Update Validator Node Version (includes Cosmovisor migration and deployment)"
+    echo "2. Back"
+    read -p "Enter your choice (1/2): " choice
+
+    case $choice in
+        1)
+            bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_validator_node_update.sh)
+            menu
+            ;;
+        2)
+            menu
+            ;;
+        *)
+            echo "Invalid choice. Please select a valid option."
+            ;;
+    esac
+}
 
 # Function to migrate to Cosmovisor
 
-# function migrate_to_cosmovisor() {
-#     echo "The service file for your current validator node will be updated to match Grand Valley's current configuration."
-#     echo "Press Enter to continue..."
-#     read -r
-#     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/cosmovisor_migration.sh)
-#     menu
-# }
 
 # function apply_snapshot() {
 #     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/apply_snapshot.sh)
@@ -855,11 +844,12 @@ function show_guidelines() {
     echo -e "${GREEN}Validator Node Options:${RESET}"
     echo "   a. Deploy/re-Deploy Validator Node: Sets up a new validator node or redeploys an existing one."
     echo "      - Guide: This will install all necessary components. Ensure your system meets requirements."
-    echo "   b. Add Peers: Manually add peers or use Grand Valley's peers."
+    echo "   b. Manage Validator Node: Update validator node version or return to menu."
+    echo "   c. Add Peers: Manually add peers or use Grand Valley's peers."
     echo "      - Guide: Improves node connectivity and network participation."
-    echo "   c. Show Node Status: Displays your validator's current status and health."
-    echo "   d. Show Validator Logs: Views the validator's operational logs."
-    echo "   e. Query Balance: Checks the balance of an EVM address."
+    echo "   d. Show Node Status: Displays your validator's current status and health."
+    echo "   e. Show Validator Logs: Views the validator's operational logs."
+    echo "   f. Query Balance: Checks the balance of an EVM address."
 
     echo -e "${GREEN}Storage Node Options:${RESET}"
     echo "   a. Deploy Storage Node: Sets up a new storage node."
@@ -905,10 +895,11 @@ function menu() {
     echo "Main Menu:"
     echo -e "${GREEN}1. Validator Node${RESET}"
     echo "    a. Deploy/re-Deploy Validator Node"
-    echo "    b. Add Peers"
-    echo "    c. Show Node Status"
-    echo "    d. Show Validator Logs"
-    echo "    e. Query Balance"
+    echo "    b. Manage Validator Node"
+    echo "    c. Add Peers"
+    echo "    d. Show Node Status"
+    echo "    e. Show Validator Logs"
+    echo "    f. Query Balance"
     echo -e "${GREEN}2. Storage Node${RESET}"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
@@ -956,10 +947,11 @@ function menu() {
         1)
             case $SUB_OPTION in
                 a) deploy_validator_node ;;
-                b) add_peers ;;
-                c) show_node_status ;;
-                d) show_validator_logs ;;
-                e) query_balance ;;
+                b) manage_validator_node ;;
+                c) add_peers ;;
+                d) show_node_status ;;
+                e) show_validator_logs ;;
+                f) query_balance ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
 
