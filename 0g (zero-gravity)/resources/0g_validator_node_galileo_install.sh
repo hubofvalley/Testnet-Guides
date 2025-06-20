@@ -1,5 +1,9 @@
 #!/bin/bash
 
+set -e
+
+# ==== CONFIG ====
+
 LOGO="
  __                                   
 /__ ._ _. ._   _|   \  / _. | |  _    
@@ -9,118 +13,87 @@ LOGO="
 
 echo "$LOGO"
 
-# Prompt for MONIKER and custom port
-read -p "Enter your moniker: " MONIKER
-read -p "Enter your preferred port number (default: 26): " OG_PORT
-if [ -z "$OG_PORT" ]; then
-    OG_PORT=26
-fi
+echo -e "\n--- 0G Validator Setup ---"
 
-# Get server IP
-SERVER_IP=$(hostname -I | awk '{print $1}')
+read -p "Enter your MONIKER name: " MONIKER
+read -p "Enter your preferred PORT prefix (default 26): " OG_PORT
+OG_PORT=${OG_PORT:-26}
 
-# Cleanup
-sudo systemctl stop 0gchaind 0g-geth 0ggeth
-sudo systemctl disable 0gchaind 0g-geth 0ggeth
-sudo rm -rf /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service /etc/systemd/system/0ggeth.service
-sudo rm -rf $HOME/galileo $HOME/.0gchaind $HOME/.bash_profile
-sudo rm /usr/local/bin/0gchaind
+# Save env vars
+echo "export MONIKER=\"$MONIKER\"" >> ~/.bash_profile
+echo "export OG_PORT=\"$OG_PORT\"" >> ~/.bash_profile
+echo 'export PATH=$PATH:$HOME/galileo/bin' >> ~/.bash_profile
+source ~/.bash_profile
 
-# Install dependencies
-sudo apt update -y && sudo apt upgrade -y
-sudo apt install -y curl git jq build-essential gcc unzip wget lz4 openssl libssl-dev pkg-config protobuf-compiler clang cmake llvm llvm-dev
+# ==== DEPENDENCIES ====
+sudo apt update && sudo apt upgrade -y
+sudo apt install curl git wget htop tmux build-essential jq make lz4 gcc unzip -y
 
-# Install Go
-cd $HOME && ver="1.22.5"
-wget "https://golang.org/dl/go$ver.linux-amd64.tar.gz"
-sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf "go$ver.linux-amd64.tar.gz"
+# ==== INSTALL GO ====
+cd $HOME && \
+ver="1.22.0" && \
+wget "https://golang.org/dl/go$ver.linux-amd64.tar.gz" && \
+sudo rm -rf /usr/local/go && \
+sudo tar -C /usr/local -xzf "go$ver.linux-amd64.tar.gz" && \
 rm "go$ver.linux-amd64.tar.gz"
-echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bash_profile
-source $HOME/.bash_profile
+export PATH=$PATH:/usr/local/go/bin
 go version
 
-# Download and extract
+# ==== DOWNLOAD GALILEO ====
 cd $HOME
+rm -rf galileo
 wget https://github.com/0glabs/0gchain-NG/releases/download/v1.2.0/galileo-v1.2.0.tar.gz
-tar -xzvf galileo-v1.2.0.tar.gz -C $HOME
-cd galileo
-cp -r 0g-home/* $HOME/galileo/0g-home/
-sudo chmod 777 ./bin/geth ./bin/0gchaind
+tar -xzvf galileo-v1.2.0.tar.gz
+mv galileo-v1.2.0 galileo
+rm galileo-v1.2.0.tar.gz
+sudo chmod +x $HOME/galileo/bin/geth
+sudo chmod +x $HOME/galileo/bin/0gchaind
 
-# Put consensus client and execution client (geth) binaries into go directory
-cp $HOME/galileo/bin/geth $HOME/go/bin/0g-geth
-cp $HOME/galileo/bin/0gchaind $HOME/go/bin/0gchaind
-sudo chmod 777 $HOME/go/bin/0g-geth $HOME/go/bin/0gchaind
+# ==== MOVE BINARIES ====
+sudo cp $HOME/galileo/bin/geth /usr/local/bin/0g-geth
+sudo cp $HOME/galileo/bin/0gchaind /usr/local/bin/0gchaind
 
-# check consensus client and execution client (geth) version
-source $HOME/.bash_profile
-0gchaind version
-0g-geth version
-
-# create .0gchaind directory and put 0g-home directory inside it
+# ==== INIT CHAIN ====
 mkdir -p $HOME/.0gchaind
-cp -r $HOME/galileo/0g-home $HOME/.0gchaind
+cp -r $HOME/galileo $HOME/.0gchaind/
+geth init --datadir $HOME/.0gchaind/galileo/0g-home/geth-home $HOME/.0gchaind/galileo/genesis.json
+0gchaind init $MONIKER --home $HOME/.0gchaind/tmp
 
-# Init
-0g-geth init --datadir $HOME/galileo/0g-home/geth-home $HOME/galileo/genesis.json
-0gchaind init "$MONIKER" --home $HOME/.0gchaind/tmp
+# ==== COPY KEYS ====
+cp $HOME/.0gchaind/tmp/data/priv_validator_state.json $HOME/.0gchaind/galileo/0g-home/0gchaind-home/data/
+cp $HOME/.0gchaind/tmp/config/node_key.json $HOME/.0gchaind/galileo/0g-home/0gchaind-home/config/
+cp $HOME/.0gchaind/tmp/config/priv_validator_key.json $HOME/.0gchaind/galileo/0g-home/0gchaind-home/config/
 
-# Patch configs in tmp and in final 0gchaind-home/config
-for CONFIG_DIR in "$HOME/.0gchaind/tmp/config" "$HOME/.0gchaind/0g-home/0gchaind-home/config"
-do
-  sed -i.bak "
-  s|tcp://0.0.0.0:26656|tcp://0.0.0.0:${OG_PORT}656|;
-  s|tcp://127.0.0.1:26657|tcp://0.0.0.0:${OG_PORT}657|;
-  s|tcp://127.0.0.1:26658|tcp://127.0.0.1:${OG_PORT}658|;
-  s|0.0.0.0:6060|0.0.0.0:${OG_PORT}060|;
-  s|0.0.0.0:26660|0.0.0.0:${OG_PORT}660|
-  " "${CONFIG_DIR}/config.toml"
+# ==== CONFIG PATCH ====
+CONFIG="$HOME/.0gchaind/galileo/0g-home/0gchaind-home/config"
+GCONFIG="$HOME/.0gchaind/galileo/geth-config.toml"
 
-  sed -i.bak "
-  s|127.0.0.1:1317|127.0.0.1:${OG_PORT}317|;
-  s|127.0.0.1:8545|127.0.0.1:${OG_PORT}545|;
-  s|127.0.0.1:8546|127.0.0.1:${OG_PORT}546|;
-  s|http://localhost:8551|http://localhost:${OG_PORT}551|;
-  s|127.0.0.1:3500|0.0.0.0:${OG_PORT}500|
-  " "${CONFIG_DIR}/app.toml"
-done
+# config.toml
+sed -i "s/^moniker *=.*/moniker = \"$MONIKER\"/" $CONFIG/config.toml
+sed -i "s|laddr = \"tcp://0.0.0.0:26656\"|laddr = \"tcp://0.0.0.0:${OG_PORT}656\"|" $CONFIG/config.toml
+sed -i "s|laddr = \"tcp://127.0.0.1:26657\"|laddr = \"tcp://127.0.0.1:${OG_PORT}657\"|" $CONFIG/config.toml
+sed -i "s|^proxy_app = .*|proxy_app = \"tcp://127.0.0.1:${OG_PORT}658\"|" $CONFIG/config.toml
+sed -i "s|^pprof_laddr = .*|pprof_laddr = \"0.0.0.0:${OG_PORT}060\"|" $CONFIG/config.toml
+sed -i "s|prometheus_listen_addr = \".*\"|prometheus_listen_addr = \"0.0.0.0:${OG_PORT}660\"|" $CONFIG/config.toml
+sed -i "s/^indexer *=.*/indexer = \"null\"/" $CONFIG/config.toml
 
-# Patch client.toml port in both config directories
-for CONFIG_DIR in "$HOME/.0gchaind/tmp/config" "$HOME/.0gchaind/0g-home/0gchaind-home/config"
-do
-  sed -i.bak "s|^node = \".*\"|node = \"tcp://localhost:${OG_PORT}657\"|" "${CONFIG_DIR}/client.toml"
+# app.toml
+sed -i "s|address = \".*:3500\"|address = \"127.0.0.1:${OG_PORT}500\"|" $CONFIG/app.toml
+sed -i "s|^rpc-dial-url *=.*|rpc-dial-url = \"http://localhost:${OG_PORT}551\"|" $CONFIG/app.toml
+sed -i "s/^pruning *=.*/pruning = \"custom\"/" $CONFIG/app.toml
+sed -i "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"100\"/" $CONFIG/app.toml
+sed -i "s/^pruning-interval *=.*/pruning-interval = \"19\"/" $CONFIG/app.toml
 
-  # Change the moniker in `config.toml` to `$MONIKER`.
-  sed -i.bak "s|^moniker = \".*\"|moniker = \"${MONIKER}\"|" "${CONFIG_DIR}/config.toml"
-done
+# geth-config.toml
+sed -i "s/HTTPPort = .*/HTTPPort = ${OG_PORT}545/" $GCONFIG
+sed -i "s/WSPort = .*/WSPort = ${OG_PORT}546/" $GCONFIG
+sed -i "s/AuthPort = .*/AuthPort = ${OG_PORT}551/" $GCONFIG
+sed -i "s/ListenAddr = .*/ListenAddr = \":${OG_PORT}303\"/" $GCONFIG
+sed -i "s/^# *Port = .*/# Port = ${OG_PORT}901/" $GCONFIG
+sed -i "s/^# *InfluxDBEndpoint = .*/# InfluxDBEndpoint = \"http:\/\/localhost:${OG_PORT}086\"/" $GCONFIG
 
-# Add peers to the config.toml
-for CONFIG_DIR in "$HOME/.0gchaind/tmp/config" "$HOME/.0gchaind/0g-home/0gchaind-home/config"
-do
-  peers=$(curl -sS https://lightnode-rpc-0g.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
-  echo $peers
-  sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"a97c8615903e795135066842e5739e30d64e2342@peer-0g.grandvalleys.com:28656,$peers\"|" ${CONFIG_DIR}/config.toml
-done
-
-# Copy node files
-cp $HOME/.0gchaind/tmp/data/priv_validator_state.json $HOME/.0gchaind/0g-home/0gchaind-home/data/
-cp $HOME/.0gchaind/tmp/config/node_key.json $HOME/.0gchaind/0g-home/0gchaind-home/config/
-cp $HOME/.0gchaind/tmp/config/priv_validator_key.json $HOME/.0gchaind/0g-home/0gchaind-home/config/
-
-# Export PATH
-echo 'export PATH=$PATH:$HOME/go/bin' >> $HOME/.bash_profile
-source $HOME/.bash_profile
-
-# Update geth-config.toml ports based on OG_PORT
-GETH_CONFIG="$HOME/galileo/geth-config.toml"
-sed -i.bak "
-s/^HTTPPort = .*/HTTPPort = ${OG_PORT}545/;
-s/^WSPort = .*/WSPort = ${OG_PORT}546/;
-s/^AuthPort = .*/AuthPort = ${OG_PORT}551/;
-s/^ListenAddr = \":30303\"/ListenAddr = \":${OG_PORT}303\"/
-" $GETH_CONFIG
-
-# Create 0gchaind systemd service
+# ==== SYSTEMD SERVICES ====
+# 0gchaind.service
 sudo tee /etc/systemd/system/0gchaind.service > /dev/null <<EOF
 [Unit]
 Description=0gchaind Node Service
@@ -129,21 +102,16 @@ After=network-online.target
 [Service]
 User=$USER
 Environment=CHAIN_SPEC=devnet
-WorkingDirectory=$HOME/galileo
-ExecStart=$HOME/go/bin/0gchaind start \
-    --chain-spec devnet \
-    --rpc.laddr tcp://0.0.0.0:${OG_PORT}657 \
-    --kzg.trusted-setup-path=$HOME/galileo/kzg-trusted-setup.json \
-    --engine.jwt-secret-path=$HOME/galileo/jwt-secret.hex \
-    --kzg.implementation=crate-crypto/go-kzg-4844 \
-    --block-store-service.enabled \
-    --node-api.enabled \
-    --node-api.logging \
-    --node-api.address 0.0.0.0:${OG_PORT}500 \
-    --pruning=nothing \
-    --home $HOME/.0gchaind/0g-home/0gchaind-home \
-    --p2p.external_address $SERVER_IP:${OG_PORT}656 \
-    --p2p.seeds 85a9b9a1b7fa0969704db2bc37f7c100855a75d9@8.218.88.60:26656
+WorkingDirectory=$HOME/.0gchaind/galileo
+ExecStart=/usr/local/bin/0gchaind start \
+  --chaincfg.chain-spec devnet \
+  --home $HOME/.0gchaind/galileo/0g-home/0gchaind-home \
+  --chaincfg.kzg.trusted-setup-path=$HOME/.0gchaind/galileo/kzg-trusted-setup.json \
+  --chaincfg.engine.jwt-secret-path=$HOME/.0gchaind/galileo/jwt-secret.hex \
+  --chaincfg.kzg.implementation=crate-crypto/go-kzg-4844 \
+  --chaincfg.engine.rpc-dial-url=http://localhost:${OG_PORT}551 \
+  --p2p.seeds 85a9b9a1b7fa0969704db2bc37f7c100855a75d9@8.218.88.60:26656 \
+  --p2p.external_address=$(curl -4 -s ifconfig.me):${OG_PORT}656
 Restart=always
 RestartSec=3
 LimitNOFILE=65535
@@ -152,18 +120,25 @@ LimitNOFILE=65535
 WantedBy=multi-user.target
 EOF
 
-# Create 0g-geth systemd service
-sudo tee /etc/systemd/system/0g-geth.service > /dev/null <<EOF
+# geth.service
+sudo tee /etc/systemd/system/geth.service > /dev/null <<EOF
 [Unit]
 Description=0g Geth Node Service
 After=network-online.target
-Wants=network-online.target
 
 [Service]
 User=$USER
-ExecStart=$HOME/go/bin/0g-geth --config $HOME/galileo/geth-config.toml --datadir $HOME/.0gchaind/0g-home/geth-home --networkid 16601 --port ${OG_PORT}303 --http.port ${OG_PORT}545 --ws.port ${OG_PORT}546 --authrpc.port ${OG_PORT}551 --bootnodes enode://de7b86d8ac452b1413983049c20eafa2ea0851a3219c2cc12649b971c1677bd83fe24c5331e078471e52a94d95e8cde84cb9d866574fec957124e57ac6056699@8.218.88.60:30303
+WorkingDirectory=$HOME/.0gchaind/galileo
+ExecStart=/usr/local/bin/0g-geth \
+  --config $HOME/.0gchaind/galileo/geth-config.toml \
+  --datadir $HOME/.0gchaind/galileo/0g-home/geth-home \
+  --http.port ${OG_PORT}545 \
+  --ws.port ${OG_PORT}546 \
+  --authrpc.port ${OG_PORT}551 \
+  --bootnodes enode://de7b86d8ac452b1413983049c20eafa2ea0851a3219c2cc12649b971c1677bd83fe24c5331e078471e52a94d95e8cde84cb9d866574fec957124e57ac6056699@8.218.88.60:30303 \
+  --port ${OG_PORT}303 \
+  --networkid 16601
 Restart=always
-WorkingDirectory=$HOME/galileo
 RestartSec=3
 LimitNOFILE=65535
 
@@ -171,12 +146,13 @@ LimitNOFILE=65535
 WantedBy=multi-user.target
 EOF
 
-# Start services
+# ==== START SERVICES ====
 sudo systemctl daemon-reload
-sudo systemctl enable 0g-geth.service
-sudo systemctl start 0g-geth.service
-sudo systemctl enable 0gchaind.service
-sudo systemctl start 0gchaind.service
+sudo systemctl enable 0gchaind
+sudo systemctl enable geth
+sudo systemctl start 0gchaind
+sudo systemctl start geth
 
-# Logs
-echo "Check logs with: sudo journalctl -u 0gchaind -u 0g-geth -fn 100"
+# ==== DONE ====
+echo -e "\n✅ Installation complete!"
+echo "🧪 Check logs: sudo journalctl -u 0gchaind -u geth -fn 100"

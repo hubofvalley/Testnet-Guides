@@ -175,8 +175,7 @@ function deploy_validator_node() {
     echo -e "  • ${CYAN}28546${RESET} (WebSocket) <-- 8546"
     
     echo -e "\n${GREEN}Directories:${RESET}"
-    echo -e "  • ${CYAN}$HOME/galileo${RESET}"
-    echo -e "  • ${CYAN}$HOME/.0gchain${RESET}"
+    echo -e "  • ${CYAN}$HOME/.0gchaind${RESET}"
 
     echo -e "\n${YELLOW}3. REQUIREMENTS:${RESET}"
     echo "- CPU: 8+ cores, RAM: 64+ GB, Storage: 1TB+ NVMe SSD"
@@ -244,8 +243,8 @@ function install_0gchain_app() {
     tar -xzvf galileo-v1.2.0.tar.gz -C $HOME
     mkdir -p 0gchain-v1.2.0
     # Find and copy the 0gchaind binary to the app directory
-    if [ -f "$HOME/galileo/bin/0gchaind" ]; then
-        cp "$HOME/galileo/bin/0gchaind" "$HOME/0gchain-v1.2.0/0gchaind"
+    if [ -f "$HOME/galileo-v1.2.0/bin/0gchaind" ]; then
+        cp "$HOME/galileo-v1.2.0/bin/0gchaind" "$HOME/0gchain-v1.2.0/0gchaind"
         chmod +x "$HOME/0gchain-v1.2.0/0gchaind"
         echo "0gchaind v1.2.0 app installed successfully at $HOME/0gchain-v1.2.0/0gchaind"
     else
@@ -472,7 +471,7 @@ function delete_validator_node() {
     sudo systemctl stop $OG_CONSENSUS_CLIENT_SERVICE $OG_GETH_SERVICE
     sudo systemctl disable $OG_CONSENSUS_CLIENT_SERVICE $OG_GETH_SERVICE
     sudo rm -rf /etc/systemd/system/$OG_CONSENSUS_CLIENT_SERVICE $OG_GETH_SERVICE
-    sudo rm -r $HOME/galileo
+    sudo rm -r $HOME/galileo-v1.2.0
     sudo rm -r $HOME/.0gchaind
     sed -i "/OG_/d" $HOME/.bash_profile
     echo "Validator node deleted successfully."
@@ -485,9 +484,9 @@ function show_validator_logs() {
 }
 
 function show_node_status() {
-    port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.0gchaind/0g-home/0gchaind-home/config/config.toml") && curl "http://127.0.0.1:$port/status" | jq
+    port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.0gchaind/galileo/0g-home/0gchaind-home/config/config.toml") && curl "http://127.0.0.1:$port/status" | jq
     realtime_block_height=$(curl -s -X POST "https://evmrpc-testnet.0g.ai" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
-    geth_block_height=$(geth --exec "eth.blockNumber" attach $HOME/.0gchaind/0g-home/geth-home/geth.ipc)
+    geth_block_height=$(geth --exec "eth.blockNumber" attach $HOME/.0gchaind/galileo/0g-home/geth-home/geth.ipc)
     node_height=$(curl -s "http://127.0.0.1:$port/status" | jq -r '.result.sync_info.latest_block_height')
     echo "Consensus client block height: $node_height"
     echo "Execution client (0g-geth) block height: $geth_block_height"
@@ -497,7 +496,7 @@ function show_node_status() {
 
     # Add explanation for negative values
     if (( block_difference < 0 )); then
-        echo -e "${GREEN}Note:${NC} A negative value is normal - this means 0G Official's  Testnet RPC block height is currently behind your node's height"
+        echo -e "${GREEN}Note:${NC} A negative value is normal - this means 0G Official's Testnet RPC block height is currently behind your node's height"
     fi
     echo -e "\n${YELLOW}Press Enter to go back to main menu${RESET}"
     read -r
@@ -533,7 +532,7 @@ function add_peers() {
             echo "You have entered the following peers: $peers"
             read -p "Do you want to proceed? (yes/no): " confirm   
             if [[ $confirm == "yes" ]]; then
-                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/galileo/0g-home/0gchaind-home/config/config.toml
+                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchaind/galileo/0g-home/0gchaind-home/config/config.toml
                 echo "Peers added manually."
             else
                 echo "Operation cancelled. Returning to menu."
@@ -545,7 +544,7 @@ function add_peers() {
             echo "Grand Valley's peers: $peers"
             read -p "Do you want to proceed? (yes/no): " confirm
             if [[ $confirm == "yes" ]]; then
-                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"a97c8615903e795135066842e5739e30d64e2342@peer-0g.grandvalleys.com:28656,$peers\"|" $HOME/galileo/0g-home/0gchaind-home/config/config.toml
+                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"a97c8615903e795135066842e5739e30d64e2342@peer-0g.grandvalleys.com:28656,$peers\"|" $HOME/.0gchaind/galileo/0g-home/0gchaind-home/config/config.toml
                 echo "Grand Valley's peers added."
             else
                 echo "Operation cancelled. Returning to menu."
@@ -958,7 +957,6 @@ function menu() {
                 f) query_balance ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
-
             ;;
         2)
             case $SUB_OPTION in
@@ -970,7 +968,7 @@ function menu() {
                 f) show_storage_status ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
-    ;;
+            ;;
         3)
             case $SUB_OPTION in
                 a) deploy_storage_kv ;;
