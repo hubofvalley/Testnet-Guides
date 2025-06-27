@@ -76,6 +76,10 @@ Grand Valley Story Protocol public endpoints:${RESET}
 - evm ws: ${BLUE}wss://lightnode-wss-story.grandvalleys.com${RESET}
 - peer: ${BLUE}7e311e22cff1a0d39c3758e342fa4c2ee1aea461@peer-story.grandvalleys.com:28656${RESET}
 
+${GREEN}Grand Valley Story Testnet validator profile links:${RESET}
+    - ${ORANGE}https://aeneid.staking.story.foundation/validators/0x1b5452a212db06F6D6879C292157396B6dCa44d7${RESET}
+    - ${ORANGE}https://aeneid.storyscan.app/validators/storyvaloper1rd299gsjmvr0d458ns5jz4eeddku53xhm5j2j4${RESET}
+
 ${GREEN}Connect with Story Protocol:${RESET}
 - Official Website: ${BLUE}https://www.story.foundation${RESET}
 - X: ${BLUE}https://x.com/StoryProtocol${RESET}
@@ -724,6 +728,7 @@ function menu() {
     echo -e "\n${YELLOW}Please run the following command to apply the changes after exiting the script:${RESET}"
     echo -e "${GREEN}source ~/.bash_profile${RESET}"
     echo -e "${YELLOW}This ensures the environment variables are set in your current bash session.${RESET}"
+    echo -e "Stake your Testnet IP with Grand Valley: ${ORANGE}https://aeneid.staking.story.foundation/validators/0x1b5452a212db06F6D6879C292157396B6dCa44d7f${RESET}"
     echo -e "${GREEN}Let's Buidl Story Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
