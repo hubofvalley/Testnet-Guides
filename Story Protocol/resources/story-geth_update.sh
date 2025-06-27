@@ -62,7 +62,7 @@ update_version() {
 
 # Menu for selecting the version
 echo "Choose the version to update to:"
-echo "a. v1.1.0"
+echo "a. v1.1.0 (Cosmas)"
 # Uncomment and add more versions as needed
 # echo "b. v0.11.0"
 
