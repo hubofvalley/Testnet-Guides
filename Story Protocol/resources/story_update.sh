@@ -158,6 +158,12 @@ update_version() {
     sudo chmod +x $HOME/go/bin/story && \
     sudo rm -f $HOME/.story/story/data/upgrade-info.json
 
+    # Copy the updated binary to the cosmovisor genesis directory
+    GENESIS_DIR="$HOME/.story/story/cosmovisor/genesis/bin"
+    cp "$HOME/story-$version/story" "$GENESIS_DIR/story"
+    sudo chown -R $USER:$USER "$GENESIS_DIR/story"
+    sudo chmod +x "$GENESIS_DIR/story"
+
     # Add the upgrade to cosmovisor
     if ! cosmovisor add-upgrade $version $HOME/story-$version/story --upgrade-height $upgrade_height --force; then
         echo "Failed to add upgrade to cosmovisor. Exiting."
