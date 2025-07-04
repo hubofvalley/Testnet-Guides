@@ -149,11 +149,11 @@ s|^\s*#\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|
 s|^\s*#\s*listen_address\s*=.*|listen_address = \"0.0.0.0:5678\"|
 s|^\s*#\s*listen_address_admin\s*=.*|listen_address_admin = \"127.0.0.1:5679\"|
 s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
-s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = 1|
+s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = 326165|
 s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|
-s|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = \"0x5f1D96895e442FC0168FA2F9fb1EBeF93Cb5035e\"|
-s|^\s*#\?\s*mine_contract_address\s*=.*|mine_contract_address = \"0xB0F6c3E2E7Ada3b9a95a1582bF6562e24A62D334\"|
-s|^\s*#\?\s*reward_contract_address\s*=.*|reward_contract_address = \"0xdf758Bd14306482DeCbeF186eC6f18e4e79aaaE6\"|
+s|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = \"0xbD75117F80b4E22698D0Cd7612d92BDb8eaff628\"|
+s|^\s*#\?\s*mine_contract_address\s*=.*|mine_contract_address = \"0x3A0d1d67497Ad770d6f72e7f4B8F0BAbaa2A649C\"|
+s|^\s*#\?\s*reward_contract_address\s*=.*|reward_contract_address = \"0xd3D4D91125D76112AE256327410Dd0414Ee08Cb4\"|
 " $HOME/0g-storage-node/run/config-testnet.toml
 
 # 9. Create service
