@@ -63,7 +63,7 @@ echo "Current JSON-RPC endpoint: $BLOCKCHAIN_RPC_ENDPOINT"
 
 # Set contract type to turbo by default
 CONTRACT_TYPE="turbo"
-LOG_CONTRACT_ADDRESS="0x56A565685C9992BF5ACafb940ff68922980DBBC5"
+LOG_CONTRACT_ADDRESS="0x5f1D96895e442FC0168FA2F9fb1EBeF93Cb5035e"
 
 # Standard contract logic (commented out for future use)
 #if [ "$CONTRACT_TYPE" == "standard" ]; then
