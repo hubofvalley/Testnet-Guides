@@ -26,7 +26,7 @@
 | Storage    | 1+ TB NVMe SSD               |
 | Bandwidth  | 100 MBps for Download/Upload |
 
-- Guide's current binaries version: `v0.2.5` (will automatically update to the latest version)
+- Guide's current binaries version: `v1.2.0` (will automatically update to the latest version)
 - Service file name: `0gchaind.service`
 
 ### Automatic Installation
@@ -50,18 +50,18 @@ bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main
 ### 1. Cleanup Previous Installations
 
 ```bash
-sudo systemctl stop 0gchaind 0g-geth
-sudo systemctl disable 0gchaind 0g-geth
-sudo rm -rf /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service
-sudo rm -rf $HOME/galileo $HOME/.0gchaind $HOME/.bash_profile
-sudo rm /usr/local/bin/0gchaind
+sudo systemctl stop 0gchaind 0g-geth 0ggeth
+sudo systemctl disable 0gchaind 0g-geth 0ggeth
+sudo rm -f /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service /etc/systemd/system/0ggeth.service
+sudo rm -f $HOME/go/bin/0gchaind $HOME/go/bin/0g-geth $HOME/go/bin/0ggeth
+rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v1.2.0 $HOME/galileo-v1.2.0.tar.gz
 ```
 
 ### 2. Install Dependencies
 
 ```bash
-sudo apt update -y && sudo apt upgrade -y
-sudo apt install -y curl git jq build-essential gcc unzip wget lz4 openssl libssl-dev pkg-config protobuf-compiler clang cmake llvm llvm-dev
+sudo apt update && sudo apt upgrade -y
+sudo apt install curl git wget htop tmux build-essential jq make lz4 gcc unzip -y
 ```
 
 ### 3. Install Go
@@ -71,8 +71,9 @@ cd $HOME && ver="1.22.5"
 wget "https://golang.org/dl/go$ver.linux-amd64.tar.gz"
 sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf "go$ver.linux-amd64.tar.gz"
 rm "go$ver.linux-amd64.tar.gz"
-echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bash_profile
-source $HOME/.bash_profile
+echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
+source ~/.bash_profile
+[ ! -d ~/go/bin ] && mkdir -p ~/go/bin
 go version
 ```
 
@@ -80,11 +81,12 @@ go version
 
 ```bash
 cd $HOME
-wget https://github.com/0glabs/0gchain-ng/releases/download/v1.1.0/galileo-v1.1.0.tar.gz
-tar -xzvf galileo-v1.1.0.tar.gz -C $HOME
-cd galileo
-cp -r 0g-home/* $HOME/galileo/0g-home/
-sudo chmod 777 ./bin/geth ./bin/0gchaind
+wget https://github.com/0glabs/0gchain-NG/releases/download/v1.2.0/galileo-v1.2.0.tar.gz
+tar -xzvf galileo-v1.2.0.tar.gz
+mv galileo-v1.2.0 galileo
+rm galileo-v1.2.0.tar.gz
+sudo chmod +x $HOME/galileo/bin/geth
+sudo chmod +x $HOME/galileo/bin/0gchaind
 ```
 
 ### 5. Initialize Node
@@ -96,77 +98,84 @@ read -p "Enter your preferred port number (default: 26): " OG_PORT
 if [ -z "$OG_PORT" ]; then
     OG_PORT=26
 fi
+read -p "Do you want to enable the indexer? (yes/no): " ENABLE_INDEXER
 
-./bin/geth init --datadir $HOME/galileo/0g-home/geth-home ./genesis.json
-./bin/0gchaind init "$MONIKER" --home $HOME/galileo/tmp
+# Save environment variables
+echo "export MONIKER=\"$MONIKER\"" >> ~/.bash_profile
+echo "export OG_PORT=\"$OG_PORT\"" >> ~/.bash_profile
+echo 'export PATH=$PATH:$HOME/galileo/bin' >> ~/.bash_profile
+source ~/.bash_profile
+
+# Initialize chain
+mkdir -p $HOME/.0gchaind/
+cp -r $HOME/galileo/* $HOME/.0gchaind/
+0g-geth init --datadir $HOME/.0gchaind/0g-home/geth-home $HOME/.0gchaind/genesis.json
+0gchaind init $MONIKER --home $HOME/.0gchaind/tmp
 ```
 
-### 6. Patch Configuration Files
+### 6. Move Binaries to $HOME/go/bin/
 
 ```bash
-for CONFIG_DIR in "$HOME/galileo/tmp/config" "$HOME/galileo/0g-home/0gchaind-home/config"
-do
-  sed -i.bak "
-  s|tcp://0.0.0.0:26656|tcp://0.0.0.0:${OG_PORT}656|;
-  s|tcp://127.0.0.1:26657|tcp://0.0.0.0:${OG_PORT}657|;
-  s|tcp://127.0.0.1:26658|tcp://127.0.0.1:${OG_PORT}658|;
-  s|0.0.0.0:6060|0.0.0.0:${OG_PORT}060|;
-  s|0.0.0.0:26660|0.0.0.0:${OG_PORT}660|
-  " "${CONFIG_DIR}/config.toml"
+cp $HOME/galileo/bin/geth $HOME/go/bin/0g-geth
+cp $HOME/galileo/bin/0gchaind $HOME/go/bin/0gchaind
+```
 
-  sed -i.bak "
-  s|127.0.0.1:1317|127.0.0.1:${OG_PORT}317|;
-  s|127.0.0.1:8545|127.0.0.1:${OG_PORT}545|;
-  s|127.0.0.1:8546|127.0.0.1:${OG_PORT}546|;
-  s|http://localhost:8551|http://localhost:${OG_PORT}551|;
-  s|127.0.0.1:3500|0.0.0.0:${OG_PORT}500|
-  " "${CONFIG_DIR}/app.toml"
-done
+### 7. Patch Configuration Files
 
-# Patch client.toml and moniker
-for CONFIG_DIR in "$HOME/galileo/tmp/config" "$HOME/galileo/0g-home/0gchaind-home/config"
-do
-  sed -i.bak "s|^node = \".*\"|node = \"tcp://localhost:${OG_PORT}657\"|" "${CONFIG_DIR}/client.toml"
-  sed -i.bak "s|^moniker = \".*\"|moniker = \"${MONIKER}\"|" "${CONFIG_DIR}/config.toml"
-done
+```bash
+CONFIG="$HOME/.0gchaind/0g-home/0gchaind-home/config"
+GCONFIG="$HOME/.0gchaind/geth-config.toml"
 
-# Add peers to the config.toml
-for CONFIG_DIR in "$HOME/galileo/tmp/config" "$HOME/galileo/0g-home/0gchaind-home/config"
-do
-  peers=$(curl -sS https://lightnode-rpc-0g.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
-  echo $peers
-  sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"a97c8615903e795135066842e5739e30d64e2342@peer-0g.grandvalleys.com:28656,$peers\"|" ${CONFIG_DIR}/config.toml
-done
+# config.toml
+sed -i "s/^moniker *=.*/moniker = \"$MONIKER\"/" $CONFIG/config.toml
+sed -i "s|laddr = \"tcp://0.0.0.0:26656\"|laddr = \"tcp://0.0.0.0:${OG_PORT}656\"|" $CONFIG/config.toml
+sed -i "s|laddr = \"tcp://127.0.0.1:26657\"|laddr = \"tcp://127.0.0.1:${OG_PORT}657\"|" $CONFIG/config.toml
+sed -i "s|^proxy_app = .*|proxy_app = \"tcp://127.0.0.1:${OG_PORT}658\"|" $CONFIG/config.toml
+sed -i "s|^pprof_laddr = .*|pprof_laddr = \"0.0.0.0:${OG_PORT}060\"|" $CONFIG/config.toml
+sed -i "s|prometheus_listen_addr = \".*\"|prometheus_listen_addr = \"0.0.0.0:${OG_PORT}660\"|" $CONFIG/config.toml
+
+# Configure indexer based on user input
+if [ "$ENABLE_INDEXER" = "yes" ]; then
+    sed -i -e 's/^indexer = "null"/indexer = "kv"/' $CONFIG/config.toml
+    echo "Indexer enabled."
+else
+    sed -i -e 's/^indexer = "kv"/indexer = "null"/' $CONFIG/config.toml
+    echo "Indexer disabled."
+fi
+
+# app.toml
+sed -i "s|address = \".*:3500\"|address = \"127.0.0.1:${OG_PORT}500\"|" $CONFIG/app.toml
+sed -i "s|^rpc-dial-url *=.*|rpc-dial-url = \"http://localhost:${OG_PORT}551\"|" $CONFIG/app.toml
+sed -i "s/^pruning *=.*/pruning = \"custom\"/" $CONFIG/app.toml
+sed -i "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"100\"/" $CONFIG/app.toml
+sed -i "s/^pruning-interval *=.*/pruning-interval = \"19\"/" $CONFIG/app.toml
+
+# geth-config.toml
+sed -i "s/HTTPPort = .*/HTTPPort = ${OG_PORT}545/" $GCONFIG
+sed -i "s/WSPort = .*/WSPort = ${OG_PORT}546/" $GCONFIG
+sed -i "s/AuthPort = .*/AuthPort = ${OG_PORT}551/" $GCONFIG
+sed -i "s/ListenAddr = .*/ListenAddr = \":${OG_PORT}303\"/" $GCONFIG
+sed -i "s/^# *Port = .*/# Port = ${OG_PORT}901/" $GCONFIG
+sed -i "s/^# *InfluxDBEndpoint = .*/# InfluxDBEndpoint = \"http:\/\/localhost:${OG_PORT}086\"/" $GCONFIG
 ```
 
 ### 7. Copy Node Keys
 
 ```bash
-cp $HOME/galileo/tmp/data/priv_validator_state.json $HOME/galileo/0g-home/0gchaind-home/data/
-cp $HOME/galileo/tmp/config/node_key.json $HOME/galileo/0g-home/0gchaind-home/config/
-cp $HOME/galileo/tmp/config/priv_validator_key.json $HOME/galileo/0g-home/0gchaind-home/config/
+cp $HOME/.0gchaind/tmp/data/priv_validator_state.json $HOME/.0gchaind/0g-home/0gchaind-home/data/
+cp $HOME/.0gchaind/tmp/config/node_key.json $HOME/.0gchaind/0g-home/0gchaind-home/config/
+cp $HOME/.0gchaind/tmp/config/priv_validator_key.json $HOME/.0gchaind/0g-home/0gchaind-home/config/
 ```
 
-### 8. Update PATH
+### 8. Copy Node Keys
 
 ```bash
-echo 'export PATH=$PATH:$HOME/galileo/bin' >> $HOME/.bash_profile
-source $HOME/.bash_profile
+cp $HOME/.0gchaind/tmp/data/priv_validator_state.json $HOME/.0gchaind/0g-home/0gchaind-home/data/
+cp $HOME/.0gchaind/tmp/config/node_key.json $HOME/.0gchaind/0g-home/0gchaind-home/config/
+cp $HOME/.0gchaind/tmp/config/priv_validator_key.json $HOME/.0gchaind/0g-home/0gchaind-home/config/
 ```
 
-### 9. Patch geth-config.toml
-
-```bash
-GETH_CONFIG="$HOME/galileo/geth-config.toml"
-sed -i.bak "
-s/^HTTPPort = .*/HTTPPort = ${OG_PORT}545/;
-s/^WSPort = .*/WSPort = ${OG_PORT}546/;
-s/^AuthPort = .*/AuthPort = ${OG_PORT}551/;
-s/^ListenAddr = \":30303\"/ListenAddr = \":${OG_PORT}303\"/
-" $GETH_CONFIG
-```
-
-### 10. Create systemd Service Files
+### 9. Create systemd Service Files
 
 #### 0gchaind Service
 
@@ -178,22 +187,20 @@ After=network-online.target
 
 [Service]
 User=$USER
-ExecStart=/bin/bash -c 'cd ~/galileo && CHAIN_SPEC=devnet ./bin/0gchaind start \
-    --rpc.laddr tcp://0.0.0.0:${OG_PORT}657 \
-    --beacon-kit.kzg.trusted-setup-path=kzg-trusted-setup.json \
-    --beacon-kit.engine.jwt-secret-path=jwt-secret.hex \
-    --beacon-kit.kzg.implementation=crate-crypto/go-kzg-4844 \
-    --beacon-kit.block-store-service.enabled \
-    --beacon-kit.node-api.enabled \
-    --beacon-kit.node-api.logging \
-    --beacon-kit.node-api.address 0.0.0.0:${OG_PORT}500 \
-    --pruning=nothing \
-    --home $HOME/galileo/0g-home/0gchaind-home \
-    --p2p.external_address $(hostname -I | awk '{print $1}'):${OG_PORT}656 \
-    --p2p.seeds b30fb241f3c5aee0839c0ea55bd7ca18e5c855c1@8.218.94.246:26656'
+Environment=CHAIN_SPEC=devnet
+WorkingDirectory=$HOME/.0gchaind
+ExecStart=$HOME/go/bin/0gchaind start \\
+  --chaincfg.chain-spec devnet \\
+  --home $HOME/.0gchaind/0g-home/0gchaind-home \\
+  --chaincfg.kzg.trusted-setup-path=$HOME/.0gchaind/kzg-trusted-setup.json \\
+  --chaincfg.engine.jwt-secret-path=$HOME/.0gchaind/jwt-secret.hex \\
+  --chaincfg.kzg.implementation=crate-crypto/go-kzg-4844 \\
+  --chaincfg.engine.rpc-dial-url=http://localhost:${OG_PORT}551 \\
+  --p2p.seeds 85a9b9a1b7fa0969704db2bc37f7c100855a75d9@8.218.88.60:26656 \\
+  --p2p.external_address=$(curl -4 -s ifconfig.me):${OG_PORT}656
 Restart=always
 RestartSec=3
-LimitNOFILE=4096
+LimitNOFILE=65535
 
 [Install]
 WantedBy=multi-user.target
@@ -210,30 +217,60 @@ After=network-online.target
 
 [Service]
 User=$USER
-ExecStart=/bin/bash -c 'cd ~/galileo && ./bin/geth --config geth-config.toml --datadir $HOME/galileo/0g-home/geth-home --networkid 16601'
+WorkingDirectory=$HOME/.0gchaind
+ExecStart=$HOME/go/bin/0g-geth \\
+  --config $HOME/.0gchaind/geth-config.toml \\
+  --datadir $HOME/.0gchaind/0g-home/geth-home \\
+  --http.port ${OG_PORT}545 \\
+  --ws.port ${OG_PORT}546 \\
+  --authrpc.port ${OG_PORT}551 \\
+  --bootnodes enode://de7b86d8ac452b1413983049c20eafa2ea0851a3219c2cc12649b971c1677bd83fe24c5331e078471e52a94d95e8cde84cb9d866574fec957124e57ac6056699@8.218.88.60:30303 \\
+  --port ${OG_PORT}303 \\
+  --networkid 16601
 Restart=always
 RestartSec=3
-LimitNOFILE=4096
+LimitNOFILE=65535
 
 [Install]
 WantedBy=multi-user.target
 EOF
 ```
 
-### 11. Start Services
+### 10. Start Services
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable 0g-geth.service
-sudo systemctl start 0g-geth.service
-sudo systemctl enable 0gchaind.service
-sudo systemctl start 0gchaind.service
+sudo systemctl enable 0gchaind
+sudo systemctl enable 0g-geth
+sudo systemctl start 0gchaind
+sudo systemctl start 0g-geth
 ```
 
-### 12. Check Logs
+### 11. Check Logs
 
 ```bash
 sudo journalctl -u 0gchaind -u 0g-geth -fn 100
+```
+
+### 12. Verify Installation
+
+```bash
+echo -e "\n✅ 0G Validator Node Installation Completed Successfully!"
+echo -e "\nNode Configuration Summary:"
+echo -e "Moniker: $MONIKER"
+echo -e "Port Prefix: $OG_PORT"
+echo -e "Indexer: $([ "$ENABLE_INDEXER" = "yes" ] && echo "Enabled" || echo "Disabled")"
+echo -e "Node ID: $($HOME/go/bin/0gchaind comet show-node-id --home $HOME/.0gchaind/0g-home/0gchaind-home/)"
+echo -e "\nPress Enter to continue..."
+read -r
+```
+
+```bash
+echo -e "\nNode Configuration Summary:"
+echo -e "Moniker: $MONIKER"
+echo -e "Port Prefix: $OG_PORT"
+echo -e "Indexer: $([ "$ENABLE_INDEXER" = "yes" ] && echo "Enabled" || echo "Disabled")"
+echo -e "Node ID: $($HOME/galileo/bin/0gchaind comet show-node-id --home $HOME/.0gchaind/0g-home/0gchaind-home/)"
 ```
 
 ---
@@ -241,12 +278,11 @@ sudo journalctl -u 0gchaind -u 0g-geth -fn 100
 ## Delete the Node
 
 ```bash
-sudo systemctl stop 0gchaind
-sudo systemctl disable 0gchaind
-sudo rm -rf /etc/systemd/system/0gchaind.service
-sudo rm -r 0g-chain
-sudo rm -rf $HOME/.0gchain
-sed -i "/OG_/d" $HOME/.bash_profile
+sudo systemctl stop 0gchaind 0g-geth
+sudo systemctl disable 0gchaind 0g-geth
+sudo rm -rf /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service
+sudo rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v1.2.0 $HOME/galileo-v1.2.0.tar.gz
+sed -i "/MONIKER\|OG_PORT/d" $HOME/.bash_profile
 ```
 
 ---

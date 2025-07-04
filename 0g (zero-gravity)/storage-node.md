@@ -169,7 +169,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 read -p "Enter json-rpc: " BLOCKCHAIN_RPC_ENDPOINT && echo "Current json-rpc: $BLOCKCHAIN_RPC_ENDPOINT"
 echo "export ENR_ADDRESS=${ENR_ADDRESS}" >> ~/.bash_profile
 echo 'export ZGS_LOG_DIR="$HOME/0g-storage-node/run/log"' >> ~/.bash_profile
-echo 'export ZGS_LOG_SYNC_BLOCK="0"' >> ~/.bash_profile
+echo 'export ZGS_LOG_SYNC_BLOCK="326165"' >> ~/.bash_profile
 echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
 source ~/.bash_profile
 
@@ -245,11 +245,11 @@ s|^\s*#\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|
 s|^\s*#\s*listen_address\s*=.*|listen_address = \"0.0.0.0:5678\"|
 s|^\s*#\s*listen_address_admin\s*=.*|listen_address_admin = \"127.0.0.1:5679\"|
 s|^\s*#\?\s*rpc_enabled\s*=.*|rpc_enabled = true|
-s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = 0|
+s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = 326165|
 s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|
-s|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = \"0x56A565685C9992BF5ACafb940ff68922980DBBC5\"|
-s|^\s*#\?\s*mine_contract_address\s*=.*|mine_contract_address = \"0xB87E0e5657C25b4e132CB6c34134C0cB8A962AD6\"|
-s|^\s*#\?\s*reward_contract_address\s*=.*|reward_contract_address = \"0x233B2768332e4Bae542824c93cc5c8ad5d44517E\"|
+s|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = \"0xbD75117F80b4E22698D0Cd7612d92BDb8eaff628\"|
+s|^\s*#\?\s*mine_contract_address\s*=.*|mine_contract_address = \"0x3A0d1d67497Ad770d6f72e7f4B8F0BAbaa2A649C\"|
+s|^\s*#\?\s*reward_contract_address\s*=.*|reward_contract_address = \"0xd3D4D91125D76112AE256327410Dd0414Ee08Cb4\"|
 " $HOME/0g-storage-node/run/config-testnet.toml
 ```
 
