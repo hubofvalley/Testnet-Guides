@@ -18,7 +18,7 @@ display_snapshot_details() {
 
     echo -e "${GREEN}Snapshot Height:${NC} $snapshot_height"
 
-    realtime_block_height=$(curl -s -X POST "https://lightnode-json-rpc-0g.grandvalleys.com" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
+    realtime_block_height=$(curl -s -X POST "https://evmrpc-testnet.0g.ai" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
     block_difference=$((realtime_block_height - snapshot_height))
     echo -e "${GREEN}Real-time Block Height:${NC} $realtime_block_height"
     echo -e "${GREEN}Block Difference:${NC} $block_difference"
