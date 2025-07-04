@@ -11,7 +11,6 @@ RESET='\033[0m'
 
 # Service file variables
 OG_CONSENSUS_CLIENT_SERVICE="0gchaind.service"
-OG_GETH_SERVICE="0g-geth.service"
 
 LOGO="
  __      __     _  _                        __    ___    _____ 
@@ -116,14 +115,14 @@ ${GREEN}Connect with Grand Valley:${RESET}
 "
 
 # Function to detect the service file name
-function detect_service_file() {
-  if [[ -f "/etc/systemd/system/0gchaind.service" ]]; then
-    SERVICE_FILE_NAME="0gchaind.service"
-  elif [[ -f "/etc/systemd/system/0gd.service" ]]; then
-    SERVICE_FILE_NAME="0gd.service"
+function detect_geth_service_file() {
+  if [[ -f "/etc/systemd/system/0g-geth.service" ]]; then
+    OG_GETH_SERVICE="0g-geth.service"
+  elif [[ -f "/etc/systemd/system/0ggeth.service" ]]; then
+    OG_GETH_SERVICE="0ggeth.service"
   else
-    SERVICE_FILE_NAME="Not found"
-    echo -e "${RED}No valid service file found (0gchaind.service or 0gd.service). Continuing without setting a service file name.${RESET}"
+    OG_GETH_SERVICE="Not found"
+    echo -e "${RED}No execution client service file found (0g-geth.service or 0ggeth.service). Continuing without setting service file name.${RESET}"
   fi
 }
 
@@ -138,7 +137,7 @@ echo -e "$INTRO"
 echo -e "$ENDPOINTS"
 echo -e "${YELLOW}\nPress Enter to continue${RESET}"
 read -r
-# detect_service_file (disabled as requested)
+detect_geth_service_file #(enabled as requested)
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile
 # echo "export OG_CHAIN_ID="0gchain-16601"" >> $HOME/.bash_profile
 # echo "export SERVICE_FILE_NAME=\"$SERVICE_FILE_NAME\"" >> ~/.bash_profile
@@ -230,26 +229,35 @@ function manage_validator_node() {
 # Function to migrate to Cosmovisor
 
 
-# function apply_snapshot() {
-#     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/apply_snapshot.sh)
-#     menu
-# }
+function apply_snapshot() {
+     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/apply_snapshot.sh)
+     menu
+}
 
 function install_0gchain_app() {
-    cd $HOME
-    echo "Downloading 0gchaind v1.2.0..."
-    wget https://github.com/0glabs/0gchain-ng/releases/download/v1.2.0/galileo-v1.2.0.tar.gz -O galileo-v1.2.0.tar.gz
-    echo "Extracting galileo-v1.2.0.tar.gz..."
-    tar -xzvf galileo-v1.2.0.tar.gz -C $HOME
-    mkdir -p 0gchain-v1.2.0
-    # Find and copy the 0gchaind binary to the app directory
-    if [ -f "$HOME/galileo-v1.2.0/bin/0gchaind" ]; then
-        cp "$HOME/galileo-v1.2.0/bin/0gchaind" "$HOME/0gchain-v1.2.0/0gchaind"
-        chmod +x "$HOME/0gchain-v1.2.0/0gchaind"
-        echo "0gchaind v1.2.0 app installed successfully at $HOME/0gchain-v1.2.0/0gchaind"
+    cd $HOME || return
+    echo "Downloading and installing 0gchaind v1.2.0..."
+    
+    # Download and extract package
+    wget -q https://github.com/0glabs/0gchain-ng/releases/download/v1.2.0/galileo-v1.2.0.tar.gz -O galileo-v1.2.0.tar.gz
+    tar -xzf galileo-v1.2.0.tar.gz -C $HOME
+    
+    # Ensure target directories exist
+    mkdir -p $HOME/go/bin
+    
+    # Install binary
+    if [ -f "$HOME/galileo/bin/0gchaind" ]; then
+        # Copy to standard location
+        cp "$HOME/galileo/bin/0gchaind" "$HOME/go/bin/0gchaind"
+        sudo chmod +x "$HOME/go/bin/0gchaind"
+        echo "0gchaind v1.2.0 installed successfully to:"
+        echo "- $HOME/go/bin/0gchaind"
     else
-        echo "Error: 0gchaind binary not found in galileo-v1.2.0 package!"
+        echo "Error: 0gchaind binary not found in extracted package!"
     fi
+    
+    # Cleanup
+    rm -f galileo-v1.2.0.tar.gz
     menu
 }
 
@@ -471,22 +479,36 @@ function delete_validator_node() {
     sudo systemctl stop $OG_CONSENSUS_CLIENT_SERVICE $OG_GETH_SERVICE
     sudo systemctl disable $OG_CONSENSUS_CLIENT_SERVICE $OG_GETH_SERVICE
     sudo rm -rf /etc/systemd/system/$OG_CONSENSUS_CLIENT_SERVICE $OG_GETH_SERVICE
-    sudo rm -r $HOME/galileo-v1.2.0
+    sudo rm -r $HOME/galileo
     sudo rm -r $HOME/.0gchaind
+    sudo rm -r $HOME/galileo-v1.2.0
     sed -i "/OG_/d" $HOME/.bash_profile
     echo "Validator node deleted successfully."
     menu
 }
 
 function show_validator_logs() {
-    sudo journalctl -u $OG_CONSENSUS_CLIENT_SERVICE -u $OG_GETH_SERVICE -fn 100
+    echo "Displaying Consensus Client and Execution Client (Geth) Logs:"
+    sudo journalctl -u $OG_CONSENSUS_CLIENT_SERVICE -u $OG_GETH_SERVICE -fn 100 --no-pager
+    menu
+}
+
+function show_consensus_client_logs() {
+    echo "Displaying Consensus Client Logs:"
+    sudo journalctl -u $OG_CONSENSUS_CLIENT_SERVICE -fn 100
+    menu
+}
+
+function show_geth_logs() {
+    echo "Displaying Execution Client (Geth) Logs:"
+    sudo journalctl -u $OG_GETH_SERVICE -fn 100
     menu
 }
 
 function show_node_status() {
-    port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.0gchaind/galileo/0g-home/0gchaind-home/config/config.toml") && curl "http://127.0.0.1:$port/status" | jq
+    port=$(grep -oP 'laddr = "tcp://(0.0.0.0|127.0.0.1):\K[0-9]+57' "$HOME/.0gchaind/0g-home/0gchaind-home/config/config.toml") && curl "http://127.0.0.1:$port/status" | jq
     realtime_block_height=$(curl -s -X POST "https://evmrpc-testnet.0g.ai" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
-    geth_block_height=$(geth --exec "eth.blockNumber" attach $HOME/.0gchaind/galileo/0g-home/geth-home/geth.ipc)
+    geth_block_height=$(0g-geth --exec "eth.blockNumber" attach $HOME/.0gchaind/0g-home/geth-home/geth.ipc)
     node_height=$(curl -s "http://127.0.0.1:$port/status" | jq -r '.result.sync_info.latest_block_height')
     echo "Consensus client block height: $node_height"
     echo "Execution client (0g-geth) block height: $geth_block_height"
@@ -532,7 +554,7 @@ function add_peers() {
             echo "You have entered the following peers: $peers"
             read -p "Do you want to proceed? (yes/no): " confirm   
             if [[ $confirm == "yes" ]]; then
-                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchaind/galileo/0g-home/0gchaind-home/config/config.toml
+                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.0gchaind/0g-home/0gchaind-home/config/config.toml
                 echo "Peers added manually."
             else
                 echo "Operation cancelled. Returning to menu."
@@ -544,7 +566,7 @@ function add_peers() {
             echo "Grand Valley's peers: $peers"
             read -p "Do you want to proceed? (yes/no): " confirm
             if [[ $confirm == "yes" ]]; then
-                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"a97c8615903e795135066842e5739e30d64e2342@peer-0g.grandvalleys.com:28656,$peers\"|" $HOME/.0gchaind/galileo/0g-home/0gchaind-home/config/config.toml
+                sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"a97c8615903e795135066842e5739e30d64e2342@peer-0g.grandvalleys.com:28656,$peers\"|" $HOME/.0gchaind/0g-home/0gchaind-home/config/config.toml
                 echo "Grand Valley's peers added."
             else
                 echo "Operation cancelled. Returning to menu."
@@ -892,17 +914,20 @@ function show_guidelines() {
 
 # Menu function
 function menu() {
-    # detect_service_file logic disabled as requested
+    detect_geth_service_file
     realtime_block_height=$(curl -s -X POST "https://evmrpc-testnet.0g.ai" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' | jq -r '.result' | xargs printf "%d\n")
-    echo -e "${ORANGE}Valley of 0G${RESET}"
+    echo -e "${ORANGE}Valley of 0G Testnet${RESET}"
     echo "Main Menu:"
     echo -e "${GREEN}1. Validator Node${RESET}"
     echo "    a. Deploy/re-Deploy Validator Node"
     echo "    b. Manage Validator Node"
-    echo "    c. Add Peers"
-    echo "    d. Show Node Status"
-    echo "    e. Show Validator Logs"
-    echo "    f. Query Balance"
+    echo "    c. Apply Validator Node Snapshot"
+    echo "    d. Add Peers"
+    echo "    e. Show Node Status"
+    echo "    f. Show Validator Node Logs (Consensus + Geth)"
+    echo "    g. Show Consensus Client Logs"
+    echo "    h. Show Geth Logs"
+    echo "    i. Query Balance"
     echo -e "${GREEN}2. Storage Node${RESET}"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
@@ -936,7 +961,7 @@ function menu() {
     echo -e "${GREEN}Let's Buidl 0G Together - Grand Valley${RESET}"
     read -p "Choose an option (e.g., 1a or 1 then a): " OPTION
 
-    if [[ $OPTION =~ ^[1-7][a-z]$ ]]; then
+    if [[ $OPTION =~ ^[1-8][a-i]$ ]]; then
         MAIN_OPTION=${OPTION:0:1}
         SUB_OPTION=${OPTION:1:1}
     else
@@ -951,10 +976,13 @@ function menu() {
             case $SUB_OPTION in
                 a) deploy_validator_node ;;
                 b) manage_validator_node ;;
-                c) add_peers ;;
-                d) show_node_status ;;
-                e) show_validator_logs ;;
-                f) query_balance ;;
+                c) apply_snapshot ;;
+                d) add_peers ;;
+                e) show_node_status ;;
+                f) show_validator_logs ;;
+                g) show_consensus_client_logs ;;
+                h) show_geth_logs ;;
+                i) query_balance ;;
                 *) echo "Invalid sub-option. Please try again." ;;
             esac
             ;;
