@@ -931,7 +931,7 @@ function menu() {
     echo -e "${GREEN}2. Storage Node${RESET}"
     echo "    a. Deploy Storage Node"
     echo "    b. Update Storage Node"
-    echo "    c. Apply Storage Node Snapshot"
+    echo "    c. Apply Storage Node Snapshot (Updated every 03.00 UTC)"
     echo "    d. Change Storage Node"
     echo "    e. Show Storage Node Logs"
     echo "    f. Show Storage Node Status"
