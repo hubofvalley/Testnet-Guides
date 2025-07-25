@@ -76,17 +76,18 @@ CONTRACT_TYPE="turbo"
 sudo systemctl stop zgs
 
 # Update the node
-#cd $HOME/0g-storage-node
-#git stash
-#git fetch --all --tags
-#git checkout e41726de7825b9e8e6eeb7802f40308d880089b2
-#git submodule update --init
-cd $HOME
-git clone -b v1.1.0 https://github.com/0glabs/0g-storage-node.git
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
+git checkout e41726de7825b9e8e6eeb7802f40308d880089b2
 git submodule update --init
+
+#cd $HOME
+#git clone -b v1.1.0 https://github.com/0glabs/0g-storage-node.git
+#cd $HOME/0g-storage-node
+#git stash
+#git fetch --all --tags
+#git submodule update --init
 
 # Build the latest binary
 cargo build --release
