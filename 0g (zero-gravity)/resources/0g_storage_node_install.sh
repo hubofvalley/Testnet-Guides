@@ -108,7 +108,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # 4. Set vars
 echo 'export ZGS_LOG_SYNC_BLOCK="0"' >> ~/.bash_profile
-echo "export ZGS_NODE_VERSION="v1.0.0"" >> ~/.bash_profile
+echo "export ZGS_NODE_VERSION="v1.1.0"" >> ~/.bash_profile
 echo "export BLOCKCHAIN_RPC_ENDPOINT=\"$BLOCKCHAIN_RPC_ENDPOINT\"" >> ~/.bash_profile
 echo 'export LOG_CONTRACT_ADDRESS="'"0xbD75117F80b4E22698D0Cd7612d92BDb8eaff628"'"' >> ~/.bash_profile
 source ~/.bash_profile
@@ -120,7 +120,7 @@ curl -s -X POST $BLOCKCHAIN_RPC_ENDPOINT -H "Content-Type: application/json" -d 
 
 # 5. Download binary
 cd $HOME
-git clone -b v1.0.0 https://github.com/0glabs/0g-storage-node.git
+git clone -b v1.1.0 https://github.com/0glabs/0g-storage-node.git
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags

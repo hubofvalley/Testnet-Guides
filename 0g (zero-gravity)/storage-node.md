@@ -38,7 +38,7 @@
 | Storage    | 500GB / 1TB NVMe SSD          |
 | Bandwidth  | 100 MBps for Download/Upload  |
 
-- Guide's current binary version: `v1.0.0`
+- Guide's current binary version: `v1.1.0`
 
 ---
 
@@ -195,7 +195,7 @@ curl -s -X POST $BLOCKCHAIN_RPC_ENDPOINT -H "Content-Type: application/json" -d 
 
 ```bash
 cd $HOME
-git clone -b v1.0.0 https://github.com/0glabs/0g-storage-node.git
+git clone -b v1.1.0 https://github.com/0glabs/0g-storage-node.git
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
