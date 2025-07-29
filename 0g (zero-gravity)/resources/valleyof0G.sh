@@ -1027,5 +1027,7 @@ function menu() {
     esac
 }
 
-# Call the menu function to start the script
+# Start menu
 menu
+
+echo "Let's Buidl 0G Together"
