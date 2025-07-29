@@ -1029,5 +1029,3 @@ function menu() {
 
 # Start menu
 menu
-
-echo "Let's Buidl 0G Together"

@@ -843,5 +843,3 @@ function menu() {
 
 # Start menu
 menu
-
-echo "Let's Buidl Story Together"
