@@ -119,7 +119,59 @@ function update_geth() {
 
 # Validator Node Functions
 function deploy_validator_node() {
-    echo -e "${CYAN}Deploying Validator Node...${RESET}"
+    clear
+    echo -e "${RED}▓▒░ IMPORTANT DISCLAIMER AND TERMS ░▒▓${RESET}"
+    echo -e "${YELLOW}1. SECURITY:${RESET}"
+    echo -e "- This script ${GREEN}DOES NOT${RESET} send any data outside your server"
+    echo "- All operations are performed locally"
+    echo "- You are encouraged to audit the script at:"
+    echo -e "  ${BLUE}https://github.com/hubofvalley/Testnet-Guides/blob/main/Story%20Protocol/resources/story_validator_node_install_aeneid.sh${RESET}"
+
+    echo -e "\n${YELLOW}2. SYSTEM IMPACT:${RESET}"
+    echo -e "${GREEN}New Services:${RESET}"
+    echo -e "  • ${CYAN}story.service${RESET} (Consensus Client)"
+    echo -e "  • ${CYAN}story-geth.service${RESET} (Execution Client)"
+    
+    echo -e "\n${RED}Existing Services to be Replaced:${RESET}"
+    echo -e "  • ${CYAN}story${RESET}"
+    echo -e "  • ${CYAN}story-geth${RESET}"
+    
+    echo -e "\n${GREEN}Port Configuration:${RESET}"
+    echo -e "Ports will be adjusted based on your input (example if you enter 38):"
+    echo -e "  • ${CYAN}38657${RESET} (RPC) <-- 26657"
+    echo -e "  • ${CYAN}38656${RESET} (P2P) <-- 26656"
+    echo -e "  • ${CYAN}38545${RESET} (EVM-RPC) <-- 8545"
+    echo -e "  • ${CYAN}38546${RESET} (WebSocket) <-- 8546"
+    
+    echo -e "\n${GREEN}Directories:${RESET}"
+    echo -e "  • ${CYAN}$HOME/.story${RESET}"
+
+    echo -e "\n${YELLOW}3. REQUIREMENTS:${RESET}"
+    echo "- CPU: 8+ cores, RAM: 64+ GB, Storage: 1TB+ NVMe SSD"
+    echo "- Ubuntu 22.04/24.04 recommended"
+
+    echo -e "\n${YELLOW}4. VALIDATOR RESPONSIBILITIES:${RESET}"
+    echo "- As a validator, you'll need to:"
+    echo "  - Maintain good uptime (recommended 99%+)"
+    echo "  - Keep your node software updated"
+    echo "  - Regularly backup your keys and data"
+    echo "- The network has slashing mechanisms to:"
+    echo "  - Encourage validator reliability"
+    echo "  - Prevent malicious behavior"
+
+    echo -e "\n${GREEN}By continuing you agree to these terms.${RESET}"
+    read -p $'\n\e[33mDo you want to proceed with installation? (yes/no): \e[0m' confirm
+
+    if [[ \"${confirm,,}\" != \"yes\" ]]; then
+        echo -e \"${RED}Installation cancelled by user.${RESET}\"
+        menu
+        return
+    fi
+
+    echo -e "\n${GREEN}Starting installation...${RESET}"
+    echo -e "${YELLOW}This may take 1-5 minutes. Please don't interrupt the process.${RESET}"
+    sleep 2
+
     bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/story_validator_node_install_aeneid.sh)
     menu
 }

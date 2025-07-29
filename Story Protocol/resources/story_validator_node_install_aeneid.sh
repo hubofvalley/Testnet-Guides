@@ -1,5 +1,10 @@
 #!/bin/bash
 
+set -e
+
+# ==== CONFIG ====
+echo -e "\n--- Story Testnet Validator Node Setup ---"
+
 LOGO="
  __                                   
 /__ ._ _. ._   _|   \  / _. | |  _    
