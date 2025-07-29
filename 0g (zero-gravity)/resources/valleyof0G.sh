@@ -214,7 +214,7 @@ function manage_validator_node() {
 
     case $choice in
         1)
-            bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_validator_node_update.sh)
+            bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/0g_validator_node_update_manual.sh)
             menu
             ;;
         2)
