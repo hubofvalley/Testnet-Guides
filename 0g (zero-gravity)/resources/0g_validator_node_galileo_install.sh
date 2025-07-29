@@ -3,7 +3,7 @@
 set -e
 
 # ==== CONFIG ====
-echo -e "\n--- 0G Validator Node Setup ---"
+echo -e "\n--- 0G Testnet Validator Node Setup ---"
 
 LOGO="
  __                                   
