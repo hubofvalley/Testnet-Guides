@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 # ==== CONFIG ====
 echo -e "\n--- 0G Testnet Validator Node Setup ---"
 
