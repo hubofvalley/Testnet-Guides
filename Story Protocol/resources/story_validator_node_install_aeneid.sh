@@ -24,9 +24,9 @@ read -p "Do you want to enable the indexer? (yes/no): " ENABLE_INDEXER
 
 # Stop and remove existing Story node
 sudo systemctl daemon-reload
-sudo systemctl stop story story-geth
-sudo systemctl disable story
-sudo systemctl disable story-geth
+sudo systemctl stop story story-geth  2>/dev/null || true
+sudo systemctl disable story  2>/dev/null || true
+sudo systemctl disable story-geth  2>/dev/null || true
 sudo rm -rf /etc/systemd/system/story.service
 sudo rm -rf /etc/systemd/system/story-geth.service
 sudo rm -r $HOME/go/bin/story
