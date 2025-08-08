@@ -34,8 +34,6 @@ function update_version {
     sudo systemctl start 0gchaind.service
 
     echo "Update to $VERSION completed!"
-    echo "Check service status:"
-    echo "sudo journalctl -u 0gchaind -u 0g-geth -fn 100"
 }
 
 BASE_URL="https://github.com/0glabs/0gchain-NG/releases/download"
