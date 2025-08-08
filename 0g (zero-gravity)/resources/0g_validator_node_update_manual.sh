@@ -25,8 +25,8 @@ function update_version {
 
     mv galileo-${VERSION}/0g-geth $HOME/go/bin/0g-geth
     mv galileo-${VERSION}/0gchaind $HOME/go/bin/0gchaind
-    chmod +x $HOME/go/bin/0g-geth
-    chmod +x $HOME/go/bin/0gchaind
+    sudo chmod +x $HOME/go/bin/0g-geth
+    sudo chmod +x $HOME/go/bin/0gchaind
 
     # Restart services
     sudo systemctl daemon-reload
@@ -55,7 +55,43 @@ case $choice in
         ;;
     # Uncomment and add more versions as needed
     b)
-        update_version "v1.2.1" "$BASE_URL/v1.2.1"
+        # Custom update process for v1.2.1 (Notion ZIP)
+        VERSION="v1.2.1"
+        ZIP_URL="https://turbo-zgs-node-snapshot-0g.grandvalleys.com/galileo-v1.2.1.zip"
+        BACKUP_DIR="$HOME/backups"
+
+        echo "Updating to version $VERSION (special ZIP process)..."
+
+        # Stop services
+        sudo systemctl stop 0g-geth.service
+        sudo systemctl stop 0gchaind.service
+
+        # Backup old binaries
+        TIMESTAMP=$(date +%Y%m%d%H%M%S)
+        mkdir -p $BACKUP_DIR
+        cp $HOME/go/bin/0g-geth $BACKUP_DIR/0g-geth.$TIMESTAMP
+        cp $HOME/go/bin/0gchaind $BACKUP_DIR/0gchaind.$TIMESTAMP
+
+        # Download and install new version
+        cd $HOME
+        wget -O galileo-v1.2.1.zip "$ZIP_URL" || { echo "Download failed"; exit 1; }
+        unzip -o galileo-v1.2.1.zip || { echo "Extraction failed"; exit 1; }
+
+        # Move new binaries (assume they are in galileo-v1.2.1/)
+        cp -f galileo-v1.2.1/bin/geth $HOME/go/bin/0g-geth
+        cp -f galileo-v1.2.1/bin/0gchaind $HOME/go/bin/0gchaind
+        sudo chmod +x $HOME/go/bin/0g-geth
+        sudo chmod +x $HOME/go/bin/0gchaind
+
+        # rollback
+        0gchaind rollback --home $HOME/.0gchaind/0g-home/0gchaind-home/
+
+        # Restart services
+        sudo systemctl daemon-reload
+        sudo systemctl start 0g-geth.service
+        sudo systemctl start 0gchaind.service
+
+        echo "Update to $VERSION completed!"
         ;;
     *)
         echo "Invalid choice. Exiting."

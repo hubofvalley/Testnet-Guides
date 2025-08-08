@@ -1,7 +1,7 @@
 ## Valley of Story (Testnet): Tools by Grand Valley
 
 ![Valley of Story Image 1](https://github.com/user-attachments/assets/5110da6d-4ec2-492d-86ea-887b34b279b4)
-![image](https://github.com/user-attachments/assets/ba8cc713-307f-4440-b146-a6a79856a4c5)
+![vos_menu](resources/vos_menu.png)
 
 **Valley of Story** by Grand Valley is an all-in-one infrastructure solution providing powerful tools for efficient node management and validator interactions within the Story Protocol network. Designed for node runners in the Story Protocol ecosystem, Valley of Story offers an accessible, streamlined interface to manage nodes, maintain network participation, and perform validator functions effectively.
 

@@ -23,6 +23,7 @@ read -p "Do you want to enable the indexer? (yes/no): " ENABLE_INDEXER
 # Save env vars
 echo "export MONIKER=\"$MONIKER\"" >> ~/.bash_profile
 echo "export OG_PORT=\"$OG_PORT\"" >> ~/.bash_profile
+#echo 'export PATH=$PATH:$HOME/galileo/bin' >> ~/.bash_profile
 echo 'export PATH=$PATH:$HOME/galileo/bin' >> ~/.bash_profile
 source ~/.bash_profile
 
@@ -35,7 +36,8 @@ sudo systemctl disable 0gchaind 2>/dev/null || true
 sudo systemctl disable 0g-geth 0ggeth 2>/dev/null || true
 sudo rm -f /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service /etc/systemd/system/0ggeth.service
 sudo rm -f $HOME/go/bin/0gchaind $HOME/go/bin/0g-geth $HOME/go/bin/0ggeth
-rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v1.2.0 $HOME/galileo-v1.2.0.tar.gz
+#rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v1.2.0 $HOME/galileo-v1.2.0.tar.gz
+rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v1.2.1 $HOME/galileo-v1.2.1.zip
 
 echo "✅ Cleanup complete."
 
@@ -55,22 +57,41 @@ source $HOME/.bash_profile
 go version
 
 # ==== DOWNLOAD GALILEO ====
+#cd $HOME
+#rm -rf galileo
+#wget https://github.com/0glabs/0gchain-NG/releases/download/v1.2.0/galileo-v1.2.0.tar.gz
+#tar -xzvf galileo-v1.2.0.tar.gz
+#mv galileo-v1.2.0 galileo
+#rm galileo-v1.2.0.tar.gz
+#sudo chmod +x $HOME/galileo/bin/geth
+#sudo chmod +x $HOME/galileo/bin/0gchaind
+
+# ==== DOWNLOAD GALILEO v1.2.1 ====
 cd $HOME
 rm -rf galileo
-wget https://github.com/0glabs/0gchain-NG/releases/download/v1.2.0/galileo-v1.2.0.tar.gz
-tar -xzvf galileo-v1.2.0.tar.gz
-mv galileo-v1.2.0 galileo
-rm galileo-v1.2.0.tar.gz
-sudo chmod +x $HOME/galileo/bin/geth
-sudo chmod +x $HOME/galileo/bin/0gchaind
+wget https://turbo-zgs-node-snapshot-0g.grandvalleys.com/galileo-v1.2.1.zip
+unzip -o galileo-v1.2.1.zip || { echo "Extraction failed"; exit 1; }
+rm galileo-v1.2.1.zip
+sudo chmod +x $HOME/galileo-v1.2.1/bin/geth
+sudo chmod +x $HOME/galileo-v1.2.1/bin/0gchaind
 
 # ==== MOVE BINARIES ====
-cp $HOME/galileo/bin/geth $HOME/go/bin/0g-geth
-cp $HOME/galileo/bin/0gchaind $HOME/go/bin/0gchaind
+#cp $HOME/galileo/bin/geth $HOME/go/bin/0g-geth
+#cp $HOME/galileo/bin/0gchaind $HOME/go/bin/0gchaind
+
+# ==== MOVE BINARIES GALILEO v1.2.1 ====
+cp $HOME/galileo-v1.2.1/bin/geth $HOME/go/bin/0g-geth
+cp $HOME/galileo-v1.2.1/bin/0gchaind $HOME/go/bin/0gchaind
 
 # ==== INIT CHAIN ====
+#mkdir -p $HOME/.0gchaind/
+#cp -r $HOME/galileo/* $HOME/.0gchaind/
+#0g-geth init --datadir $HOME/.0gchaind/0g-home/geth-home $HOME/.0gchaind/genesis.json
+#0gchaind init $MONIKER --home $HOME/.0gchaind/tmp
+
+# ==== INIT CHAIN GALILEO v1.2.1 ====
 mkdir -p $HOME/.0gchaind/
-cp -r $HOME/galileo/* $HOME/.0gchaind/
+cp -r $HOME/galileo-v1.2.1/* $HOME/.0gchaind/
 0g-geth init --datadir $HOME/.0gchaind/0g-home/geth-home $HOME/.0gchaind/genesis.json
 0gchaind init $MONIKER --home $HOME/.0gchaind/tmp
 
