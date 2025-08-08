@@ -64,3 +64,4 @@ case $choice in
 esac
 
 echo "Let's Buidl 0G Together!"
+
