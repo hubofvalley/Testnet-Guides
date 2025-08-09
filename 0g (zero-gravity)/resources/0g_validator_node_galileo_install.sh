@@ -69,7 +69,7 @@ go version
 # ==== DOWNLOAD GALILEO v1.2.1 ====
 cd $HOME
 rm -rf galileo
-wget https://turbo-zgs-node-snapshot-0g.grandvalleys.com/galileo-v1.2.1.zip
+wget https://0gchain-archive.grandvalleys.com/galileo-v1.2.1.zip
 unzip -o galileo-v1.2.1.zip || { echo "Extraction failed"; exit 1; }
 rm galileo-v1.2.1.zip
 sudo chmod +x $HOME/galileo-v1.2.1/bin/geth

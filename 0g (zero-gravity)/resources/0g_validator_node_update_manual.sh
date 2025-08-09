@@ -55,7 +55,7 @@ case $choice in
     b)
         # Custom update process for v1.2.1 (Notion ZIP)
         VERSION="v1.2.1"
-        ZIP_URL="https://turbo-zgs-node-snapshot-0g.grandvalleys.com/galileo-v1.2.1.zip"
+        ZIP_URL="https://0gchain-archive.grandvalleys.com/galileo-v1.2.1.zip"
         BACKUP_DIR="$HOME/backups"
 
         echo "Updating to version $VERSION (special ZIP process)..."
