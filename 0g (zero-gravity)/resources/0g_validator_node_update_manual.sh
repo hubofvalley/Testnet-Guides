@@ -43,6 +43,7 @@ echo "Select version to update:"
 echo "a) v1.1.1"
 # Uncomment and add more versions as needed
 echo "b) v1.2.1"
+echo "c) v2.0.2"
 # echo "c) v1.3.0"
 
 read -p "Enter the letter corresponding to the version: " choice
@@ -90,6 +91,9 @@ case $choice in
         sudo systemctl start 0gchaind.service
 
         echo "Update to $VERSION completed!"
+        ;;
+    c)
+        update_version "v2.0.2" "$BASE_URL/v2.0.2"
         ;;
     *)
         echo "Invalid choice. Exiting."

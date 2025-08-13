@@ -36,8 +36,8 @@ sudo systemctl disable 0gchaind 2>/dev/null || true
 sudo systemctl disable 0g-geth 0ggeth 2>/dev/null || true
 sudo rm -f /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service /etc/systemd/system/0ggeth.service
 sudo rm -f $HOME/go/bin/0gchaind $HOME/go/bin/0g-geth $HOME/go/bin/0ggeth
-#rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v1.2.0 $HOME/galileo-v1.2.0.tar.gz
-rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v1.2.1 $HOME/galileo-v1.2.1.zip
+rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v2.0.2 $HOME/galileo-v2.0.2.tar.gz
+#rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v1.2.1 $HOME/galileo-v1.2.1.zip
 
 echo "✅ Cleanup complete."
 
@@ -57,43 +57,43 @@ source $HOME/.bash_profile
 go version
 
 # ==== DOWNLOAD GALILEO ====
-#cd $HOME
-#rm -rf galileo
-#wget https://github.com/0glabs/0gchain-NG/releases/download/v1.2.0/galileo-v1.2.0.tar.gz
-#tar -xzvf galileo-v1.2.0.tar.gz
-#mv galileo-v1.2.0 galileo
-#rm galileo-v1.2.0.tar.gz
-#sudo chmod +x $HOME/galileo/bin/geth
-#sudo chmod +x $HOME/galileo/bin/0gchaind
-
-# ==== DOWNLOAD GALILEO v1.2.1 ====
 cd $HOME
 rm -rf galileo
-wget https://0gchain-archive.grandvalleys.com/galileo-v1.2.1.zip
-unzip -o galileo-v1.2.1.zip || { echo "Extraction failed"; exit 1; }
-rm galileo-v1.2.1.zip
-sudo chmod +x $HOME/galileo-v1.2.1/bin/geth
-sudo chmod +x $HOME/galileo-v1.2.1/bin/0gchaind
+wget https://github.com/0glabs/0gchain-NG/releases/download/v2.0.2/galileo-v2.0.2.tar.gz
+tar -xzvf galileo-v2.0.2.tar.gz
+mv galileo-v2.0.2 galileo
+rm galileo-v2.0.2.tar.gz
+sudo chmod +x $HOME/galileo/bin/geth
+sudo chmod +x $HOME/galileo/bin/0gchaind
+
+# ==== DOWNLOAD GALILEO v1.2.1 ====
+#cd $HOME
+#rm -rf galileo
+#wget https://0gchain-archive.grandvalleys.com/galileo-v1.2.1.zip
+#unzip -o galileo-v1.2.1.zip || { echo "Extraction failed"; exit 1; }
+#rm galileo-v1.2.1.zip
+#sudo chmod +x $HOME/galileo-v1.2.1/bin/geth
+#sudo chmod +x $HOME/galileo-v1.2.1/bin/0gchaind
 
 # ==== MOVE BINARIES ====
-#cp $HOME/galileo/bin/geth $HOME/go/bin/0g-geth
-#cp $HOME/galileo/bin/0gchaind $HOME/go/bin/0gchaind
+cp $HOME/galileo/bin/geth $HOME/go/bin/0g-geth
+cp $HOME/galileo/bin/0gchaind $HOME/go/bin/0gchaind
 
 # ==== MOVE BINARIES GALILEO v1.2.1 ====
-cp $HOME/galileo-v1.2.1/bin/geth $HOME/go/bin/0g-geth
-cp $HOME/galileo-v1.2.1/bin/0gchaind $HOME/go/bin/0gchaind
+#cp $HOME/galileo-v1.2.1/bin/geth $HOME/go/bin/0g-geth
+#cp $HOME/galileo-v1.2.1/bin/0gchaind $HOME/go/bin/0gchaind
 
 # ==== INIT CHAIN ====
-#mkdir -p $HOME/.0gchaind/
-#cp -r $HOME/galileo/* $HOME/.0gchaind/
-#0g-geth init --datadir $HOME/.0gchaind/0g-home/geth-home $HOME/.0gchaind/genesis.json
-#0gchaind init $MONIKER --home $HOME/.0gchaind/tmp
-
-# ==== INIT CHAIN GALILEO v1.2.1 ====
 mkdir -p $HOME/.0gchaind/
-cp -r $HOME/galileo-v1.2.1/* $HOME/.0gchaind/
+cp -r $HOME/galileo/* $HOME/.0gchaind/
 0g-geth init --datadir $HOME/.0gchaind/0g-home/geth-home $HOME/.0gchaind/genesis.json
 0gchaind init $MONIKER --home $HOME/.0gchaind/tmp
+
+# ==== INIT CHAIN GALILEO v1.2.1 ====
+#mkdir -p $HOME/.0gchaind/
+#cp -r $HOME/galileo-v1.2.1/* $HOME/.0gchaind/
+#0g-geth init --datadir $HOME/.0gchaind/0g-home/geth-home $HOME/.0gchaind/genesis.json
+#0gchaind init $MONIKER --home $HOME/.0gchaind/tmp
 
 # ==== COPY KEYS ====
 cp $HOME/.0gchaind/tmp/data/priv_validator_state.json $HOME/.0gchaind/0g-home/0gchaind-home/data/
@@ -149,6 +149,9 @@ Environment=CHAIN_SPEC=devnet
 WorkingDirectory=$HOME/.0gchaind
 ExecStart=$HOME/go/bin/0gchaind start \
   --chaincfg.chain-spec devnet \
+  --chaincfg.restaking.enabled \
+  --chaincfg.restaking.symbiotic-rpc-dial-url ${ETH_RPC_URL} \
+  --chaincfg.restaking.symbiotic-get-logs-block-range ${BLOCK_NUM} \
   --home $HOME/.0gchaind/0g-home/0gchaind-home \
   --chaincfg.kzg.trusted-setup-path=$HOME/.0gchaind/kzg-trusted-setup.json \
   --chaincfg.engine.jwt-secret-path=$HOME/.0gchaind/jwt-secret.hex \

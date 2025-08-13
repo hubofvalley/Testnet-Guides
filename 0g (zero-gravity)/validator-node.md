@@ -26,7 +26,7 @@
 | Storage    | 1+ TB NVMe SSD               |
 | Bandwidth  | 100 MBps for Download/Upload |
 
-- Guide's current binaries version: `v1.2.0` (will automatically update to the latest version)
+- Guide's current binaries version: `v2.0.2` (will automatically update to the latest version)
 - Service file name: `0gchaind.service`
 
 ### Automatic Installation
@@ -54,7 +54,7 @@ sudo systemctl stop 0gchaind 0g-geth 0ggeth
 sudo systemctl disable 0gchaind 0g-geth 0ggeth
 sudo rm -f /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service /etc/systemd/system/0ggeth.service
 sudo rm -f $HOME/go/bin/0gchaind $HOME/go/bin/0g-geth $HOME/go/bin/0ggeth
-rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v1.2.0 $HOME/galileo-v1.2.0.tar.gz
+rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v2.0.2 $HOME/galileo-v2.0.2.tar.gz
 ```
 
 ### 2. Install Dependencies
@@ -81,10 +81,10 @@ go version
 
 ```bash
 cd $HOME
-wget https://github.com/0glabs/0gchain-NG/releases/download/v1.2.0/galileo-v1.2.0.tar.gz
-tar -xzvf galileo-v1.2.0.tar.gz
-mv galileo-v1.2.0 galileo
-rm galileo-v1.2.0.tar.gz
+wget https://github.com/0glabs/0gchain-NG/releases/download/v2.0.2/galileo-v2.0.2.tar.gz
+tar -xzvf galileo-v2.0.2.tar.gz
+mv galileo-v2.0.2 galileo
+rm galileo-v2.0.2.tar.gz
 sudo chmod +x $HOME/galileo/bin/geth
 sudo chmod +x $HOME/galileo/bin/0gchaind
 ```
@@ -191,6 +191,9 @@ Environment=CHAIN_SPEC=devnet
 WorkingDirectory=$HOME/.0gchaind
 ExecStart=$HOME/go/bin/0gchaind start \\
   --chaincfg.chain-spec devnet \\
+  --chaincfg.restaking.enabled \\
+  --chaincfg.restaking.symbiotic-rpc-dial-url ${ETH_RPC_URL} \\
+  --chaincfg.restaking.symbiotic-get-logs-block-range ${BLOCK_NUM} \\
   --home $HOME/.0gchaind/0g-home/0gchaind-home \\
   --chaincfg.kzg.trusted-setup-path=$HOME/.0gchaind/kzg-trusted-setup.json \\
   --chaincfg.engine.jwt-secret-path=$HOME/.0gchaind/jwt-secret.hex \\
@@ -281,7 +284,7 @@ echo -e "Node ID: $($HOME/galileo/bin/0gchaind comet show-node-id --home $HOME/.
 sudo systemctl stop 0gchaind 0g-geth
 sudo systemctl disable 0gchaind 0g-geth
 sudo rm -rf /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service
-sudo rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v1.2.0 $HOME/galileo-v1.2.0.tar.gz
+sudo rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v2.0.2 $HOME/galileo-v2.0.2.tar.gz
 sed -i "/MONIKER\|OG_PORT/d" $HOME/.bash_profile
 ```
 
