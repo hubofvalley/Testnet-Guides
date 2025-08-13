@@ -23,8 +23,8 @@ function update_version {
     tar -xzf galileo-${VERSION}.tar.gz || { echo "Extraction failed"; exit 1; }
     rm galileo-${VERSION}.tar.gz
 
-    mv galileo-${VERSION}/0g-geth $HOME/go/bin/0g-geth
-    mv galileo-${VERSION}/0gchaind $HOME/go/bin/0gchaind
+    cp galileo-${VERSION}/bin/geth $HOME/go/bin/0g-geth
+    cp galileo-${VERSION}/bin/0gchaind $HOME/go/bin/0gchaind
     sudo chmod +x $HOME/go/bin/0g-geth
     sudo chmod +x $HOME/go/bin/0gchaind
 
