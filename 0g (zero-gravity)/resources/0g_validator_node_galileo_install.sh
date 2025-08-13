@@ -23,8 +23,8 @@ read -p "Do you want to enable the indexer? (yes/no): " ENABLE_INDEXER
 # Save env vars
 echo "export MONIKER=\"$MONIKER\"" >> ~/.bash_profile
 echo "export OG_PORT=\"$OG_PORT\"" >> ~/.bash_profile
-#echo 'export PATH=$PATH:$HOME/galileo/bin' >> ~/.bash_profile
-echo 'export PATH=$PATH:$HOME/galileo/bin' >> ~/.bash_profile
+#echo 'export PATH=$PATH:$HOME/galileo-v2.0.2/bin' >> ~/.bash_profile
+echo 'export PATH=$PATH:$HOME/galileo-v2.0.2/bin' >> ~/.bash_profile
 source ~/.bash_profile
 
 # CLEANUP EXISTING INSTALLATION
@@ -63,8 +63,8 @@ wget https://github.com/0glabs/0gchain-NG/releases/download/v2.0.2/galileo-v2.0.
 tar -xzvf galileo-v2.0.2.tar.gz
 mv galileo-v2.0.2 galileo
 rm galileo-v2.0.2.tar.gz
-sudo chmod +x $HOME/galileo/bin/geth
-sudo chmod +x $HOME/galileo/bin/0gchaind
+sudo chmod +x $HOME/galileo-v2.0.2/bin/geth
+sudo chmod +x $HOME/galileo-v2.0.2/bin/0gchaind
 
 # ==== DOWNLOAD GALILEO v1.2.1 ====
 #cd $HOME
@@ -76,8 +76,8 @@ sudo chmod +x $HOME/galileo/bin/0gchaind
 #sudo chmod +x $HOME/galileo-v1.2.1/bin/0gchaind
 
 # ==== MOVE BINARIES ====
-cp $HOME/galileo/bin/geth $HOME/go/bin/0g-geth
-cp $HOME/galileo/bin/0gchaind $HOME/go/bin/0gchaind
+cp $HOME/galileo-v2.0.2/bin/geth $HOME/go/bin/0g-geth
+cp $HOME/galileo-v2.0.2/bin/0gchaind $HOME/go/bin/0gchaind
 
 # ==== MOVE BINARIES GALILEO v1.2.1 ====
 #cp $HOME/galileo-v1.2.1/bin/geth $HOME/go/bin/0g-geth
@@ -85,7 +85,7 @@ cp $HOME/galileo/bin/0gchaind $HOME/go/bin/0gchaind
 
 # ==== INIT CHAIN ====
 mkdir -p $HOME/.0gchaind/
-cp -r $HOME/galileo/* $HOME/.0gchaind/
+cp -r $HOME/galileo-v2.0.2/* $HOME/.0gchaind/
 0g-geth init --datadir $HOME/.0gchaind/0g-home/geth-home $HOME/.0gchaind/genesis.json
 0gchaind init $MONIKER --home $HOME/.0gchaind/tmp
 
