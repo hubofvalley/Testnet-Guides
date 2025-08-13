@@ -40,20 +40,15 @@ BASE_URL="https://github.com/0glabs/0gchain-NG/releases/download"
 
 # Display menu
 echo "Select version to update:"
-echo "a) v1.1.1"
 # Uncomment and add more versions as needed
-echo "b) v1.2.1"
-echo "c) v2.0.2"
+echo "a) v1.2.1"
+echo "b) v2.0.2"
 # echo "c) v1.3.0"
 
 read -p "Enter the letter corresponding to the version: " choice
 
 case $choice in
     a)
-        update_version "v1.1.1" "$BASE_URL/v1.1.1"
-        ;;
-    # Uncomment and add more versions as needed
-    b)
         # Custom update process for v1.2.1 (Notion ZIP)
         VERSION="v1.2.1"
         ZIP_URL="https://0gchain-archive.grandvalleys.com/galileo-v1.2.1.zip"
