@@ -87,7 +87,7 @@ case $choice in
 
         echo "Update to $VERSION completed!"
         ;;
-    c)
+    b)
         update_version "v2.0.2" "$BASE_URL/v2.0.2"
         ;;
     *)
