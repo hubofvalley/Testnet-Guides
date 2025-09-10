@@ -464,6 +464,7 @@ main_script() {
             echo -e "${RED}Invalid choice. Exiting.${NC}"
             exit 1
             ;;
+    esac
         # 1)
         #     provider_name="Mandragora"
         #     echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
