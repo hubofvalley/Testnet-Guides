@@ -8,6 +8,14 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Snapshot URLs
+
+# Grand Valley Snapshot URLs (dynamic, use API for filenames)
+GRANDVALLEY_PRUNED_API_URL="https://pruned-snapshot-testnet-story.grandvalleys.com/pruned_snapshot_state.json"
+GRANDVALLEY_PRUNED_BASE_URL="https://pruned-snapshot-testnet-story.grandvalleys.com"
+# Archive snapshot URLs (not available yet, but reserved for future)
+GRANDVALLEY_ARCHIVE_API_URL="https://pruned-snapshot-testnet-story.grandvalleys.com/archive_snapshot_state.json"
+GRANDVALLEY_ARCHIVE_BASE_URL="https://pruned-snapshot-testnet-story.grandvalleys.com"
+
 # MAND_PRUNED_GETH_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/geth_snapshot.lz4"
 # MAND_PRUNED_STORY_SNAPSHOT_URL="https://snapshots2.mandragora.io/story/story_snapshot.lz4"
 # MAND_ARCHIVE_GETH_SNAPSHOT_URL="https://snapshots.mandragora.io/geth_snapshot.lz4"
@@ -48,8 +56,9 @@ show_menu() {
     # echo "3. CroutonDigital"
     # echo "4. Josephtran (J•Node)"
     # echo "5. OriginStake"
-    echo "1. DTEAM"
-    echo "2. Exit"
+    echo "1. Grand Valley"
+    echo "2. DTEAM"
+    echo "3. Exit"
 }
 
 # Function to check if a URL is available
@@ -70,7 +79,14 @@ display_snapshot_details() {
     local snapshot_info=$(curl -s $api_url)
     local snapshot_height
 
-    if [[ $api_url == *"dteam"* ]]; then
+    if [[ $api_url == *"grandvalley"* || $api_url == *"grandvalleys.com"* ]]; then
+        snapshot_height=$(echo "$snapshot_info" | jq -r '.snapshot_height')
+        sha256_story=$(echo "$snapshot_info" | jq -r '.sha256_story')
+        sha256_geth=$(echo "$snapshot_info" | jq -r '.sha256_geth')
+        echo -e "${YELLOW}SHA256 (story):${NC} $sha256_story"
+        echo -e "${YELLOW}SHA256 (story-geth):${NC} $sha256_geth"
+        echo -e "${GREEN}Snapshot Height:${NC} $snapshot_height"
+    elif [[ $api_url == *"dteam"* ]]; then
         # DTEAM: ambil latest.height dari API
         snapshot_height=$(echo "$snapshot_info" | jq -r '.latest.height')
     # elif [[ $api_url == *"mandragora"* ]]; then
@@ -106,6 +122,60 @@ choose_DTEAM_snapshot() {
 
     # Tampilkan detail snapshot DTEAM
     display_snapshot_details $DTEAM_PRUNED_API_URL
+
+    prompt_back_or_continue
+}
+
+# Function to choose snapshot type for Grand Valley
+choose_grandvalley_snapshot() {
+    echo -e "${GREEN}Choose the type of snapshot for Grand Valley:${NC}"
+    echo "1. Pruned"
+    echo "2. Archive"
+    read -p "Enter your choice: " snapshot_type_choice
+
+    case "$snapshot_type_choice" in
+        1)
+            # Set variables for downstream steps (download/use)
+            local snapshot_info story_file geth_file
+            if ! snapshot_info="$(curl -fsS "$GRANDVALLEY_PRUNED_API_URL")"; then
+                echo -e "${RED}Failed to fetch snapshot info.${NC}"
+                return 1
+            fi
+
+            story_file=$(jq -r '.story_snapshot_file_name // empty' <<<"$snapshot_info")
+            geth_file=$(jq -r '.story_geth_snapshot_file_name // empty' <<<"$snapshot_info")
+            GETH_SNAPSHOT_URL="${GRANDVALLEY_PRUNED_BASE_URL}/${geth_file}"
+            STORY_SNAPSHOT_URL="${GRANDVALLEY_PRUNED_BASE_URL}/${story_file}"
+            echo -e "${GREEN}Checking availability and details of Pruned snapshot:${NC}"
+            echo -n "GETH Snapshot: "
+            check_url $GETH_SNAPSHOT_URL
+            echo -n "STORY Snapshot: "
+            check_url $STORY_SNAPSHOT_URL
+
+            prompt_back_or_continue
+
+            # All detail printing lives in this function now:
+            display_snapshot_details "$GRANDVALLEY_PRUNED_API_URL" || return 1
+
+            SNAPSHOT_API_URL="$GRANDVALLEY_PRUNED_API_URL"
+            STORY_SNAPSHOT_FILE="$story_file"
+            GETH_SNAPSHOT_FILE="$geth_file"
+
+            export GV_SHA256_STORY
+            export GV_SHA256_GETH
+            GV_SHA256_STORY=$(jq -r '.sha256_story // empty' <<<"$snapshot_info")
+            GV_SHA256_GETH=$(jq -r '.sha256_geth // empty' <<<"$snapshot_info")
+            ;;
+        2)
+            echo -e "${YELLOW}Archive snapshot is not available yet. Option reserved for future use.${NC}"
+            prompt_back_or_continue
+            return
+            ;;
+        *)
+            echo -e "${RED}Invalid choice. Exiting.${NC}"
+            exit 1
+            ;;
+    esac
 
     prompt_back_or_continue
 }
@@ -352,6 +422,48 @@ main_script() {
     provider_name=""
 
     case $provider_choice in
+        1)
+            provider_name="Grand Valley"
+            echo -e "${GREEN}Grand Valley snapshot selected.${NC}"
+            echo -e "HEYLO MY STORYFAM... LETS SYNC FASTOOOOOOR!."
+
+            choose_grandvalley_snapshot
+
+            # Suggest update based on snapshot block height
+            snapshot_height=$(curl -s $SNAPSHOT_API_URL | jq -r '.snapshot_height')
+            suggest_update $snapshot_height
+
+            # Ask the user if they want to delete the downloaded snapshot files
+            read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
+            ;;
+        2)
+            provider_name="DTEAM"
+            echo -e "${GREEN}DTEAM snapshot selected.${NC}"
+            echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
+            echo -n "Checking DTEAM Geth snapshot: "
+            check_url $DTEAM_PRUNED_GETH_SNAPSHOT_URL
+            echo -n "Checking DTEAM Consensus snapshot: "
+            check_url $DTEAM_PRUNED_STORY_SNAPSHOT_URL
+
+            prompt_back_or_continue
+
+            # Pilih snapshot DTEAM (set variabel, tampilkan detail, prompt back/continue)
+            choose_DTEAM_snapshot
+
+            # Suggest update based on snapshot block height
+            snapshot_height=$(curl -s $DTEAM_PRUNED_API_URL | jq -r '.latest.height')
+            suggest_update $snapshot_height
+
+            read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
+            ;;
+        3)
+            echo -e "${GREEN}Exiting.${NC}"
+            exit 0
+            ;;
+        *)
+            echo -e "${RED}Invalid choice. Exiting.${NC}"
+            exit 1
+            ;;
         # 1)
         #     provider_name="Mandragora"
         #     echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
@@ -374,26 +486,6 @@ main_script() {
         #     # Ask the user if they want to delete the downloaded snapshot files
         #     read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
         #     ;;
-        1)
-            provider_name="DTEAM"
-            echo -e "${GREEN}DTEAM snapshot selected.${NC}"
-            echo -e "Grand Valley extends its gratitude to ${YELLOW}$provider_name${NC} for providing snapshot support."
-            echo -n "Checking DTEAM Geth snapshot: "
-            check_url $DTEAM_PRUNED_GETH_SNAPSHOT_URL
-            echo -n "Checking DTEAM Consensus snapshot: "
-            check_url $DTEAM_PRUNED_STORY_SNAPSHOT_URL
-
-            prompt_back_or_continue
-
-            # Pilih snapshot DTEAM (set variabel, tampilkan detail, prompt back/continue)
-            choose_DTEAM_snapshot
-
-            # Suggest update based on snapshot block height
-            snapshot_height=$(curl -s $DTEAM_PRUNED_API_URL | jq -r '.latest.height')
-            suggest_update $snapshot_height
-
-            read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
-            ;;
         # 2)
         #     provider_name="ITRocket"
         #     echo -e "${GREEN}ITRocket snapshot selected.${NC}"
@@ -487,15 +579,6 @@ main_script() {
             # Ask the user if they want to delete the downloaded snapshot files
         #    read -p "When the snapshot has been applied (decompressed), do you want to delete the uncompressed files? (y/n): " delete_choice
         #    ;;
-        2)
-            echo -e "${GREEN}Exiting.${NC}"
-            exit 0
-            ;;
-        *)
-            echo -e "${RED}Invalid choice. Exiting.${NC}"
-            exit 1
-            ;;
-    esac
 
     # Prompt the user for the download location
     read -p "Enter the directory where you want to download the snapshots (default is $HOME): " download_location
@@ -521,7 +604,13 @@ main_script() {
     sudo rm -rf $HOME/.story/geth/aeneid/geth/chaindata $HOME/.story/story/data
 
     # Download and decompress snapshots based on the provider
-    if [[ $provider_choice -eq 1 || $provider_choice -eq 2 || $provider_choice -eq 4 ]]; then
+    if [[ $provider_choice -eq 1 ]]; then
+        # Grand Valley: stream directly to destination
+        echo -e "${GREEN}Downloading and decompressing Story snapshot...${NC}"
+        curl -o - -L "$STORY_SNAPSHOT_URL" | lz4 -c -d | tar -x -C "$HOME/.story/story"
+        echo -e "${GREEN}Downloading and decompressing Story-geth snapshot...${NC}"
+        curl -o - -L "$GETH_SNAPSHOT_URL" | lz4 -c -d | tar -x -C "$HOME/.story/geth/aeneid/geth/"
+    elif [[ $provider_choice -eq 2 || $provider_choice -eq 4 ]]; then
         wget -O $GETH_SNAPSHOT_FILE $GETH_SNAPSHOT_URL
         wget -O $STORY_SNAPSHOT_FILE $STORY_SNAPSHOT_URL
         decompress_snapshots
