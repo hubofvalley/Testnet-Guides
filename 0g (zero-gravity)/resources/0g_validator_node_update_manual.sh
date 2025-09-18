@@ -128,7 +128,6 @@ BASE_URL="https://github.com/0glabs/0gchain-NG/releases/download"
 echo "Select version to update:"
 echo "a) v1.2.1"
 echo "b) v2.0.4"
-echo "c) v2.0.4"
 
 read -p "Enter the letter corresponding to the version: " choice
 
