@@ -50,7 +50,7 @@ function setup_environment {
             echo "export ETH_RPC_URL=\"$ETH_RPC_URL\""
             echo "export BLOCK_NUM=\"$BLOCK_NUM\""
         fi
-        echo 'export PATH=$PATH:$HOME/galileo-v2.0.2/bin'
+        echo 'export PATH=$PATH:$HOME/galileo-v2.0.4/bin'
     } >> ~/.bash_profile
     source ~/.bash_profile
 }
@@ -127,7 +127,8 @@ BASE_URL="https://github.com/0glabs/0gchain-NG/releases/download"
 # Display menu
 echo "Select version to update:"
 echo "a) v1.2.1"
-echo "b) v2.0.2"
+echo "b) v2.0.4"
+echo "c) v2.0.4"
 
 read -p "Enter the letter corresponding to the version: " choice
 
@@ -200,7 +201,7 @@ case $choice in
         setup_environment "$NODE_TYPE" "$ETH_RPC_URL" "$BLOCK_NUM"
         create_service_file "$NODE_TYPE" "$ETH_RPC_URL" "$BLOCK_NUM" "$OG_PORT"
         
-        update_version "v2.0.2" "$BASE_URL/v2.0.2"
+        update_version "v2.0.4" "$BASE_URL/v2.0.4"
         ;;
     *)
         echo "Invalid choice. Exiting."
