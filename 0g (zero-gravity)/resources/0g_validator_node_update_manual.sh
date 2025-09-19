@@ -194,8 +194,10 @@ case $choice in
             done
         fi
 
-        read -p "Enter port number (default: 26656): " OG_PORT
-        OG_PORT=${OG_PORT:-26656}
+        read -p "Enter your preferred port number: (leave empty to use default: 26) " OG_PORT
+        if [ -z "$OG_PORT" ]; then
+            OG_PORT=26
+        fi
 
         setup_environment "$NODE_TYPE" "$ETH_RPC_URL" "$BLOCK_NUM"
         create_service_file "$NODE_TYPE" "$ETH_RPC_URL" "$BLOCK_NUM" "$OG_PORT"
