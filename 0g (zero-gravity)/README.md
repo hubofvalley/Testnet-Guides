@@ -70,7 +70,7 @@ With Public Testnet, 0G’s docs and code become public. Check them out below:
 - [0gchain X](https://x.com/0G_labs)
 - [0gchain Discord](https://discord.com/invite/0glabs)
 - [0gchain Docs](https://docs.0g.ai/0g-doc)
-- [0gchain Github](https://github.com/0glabs)
+- [0gchain Github](https://github.com/0gfoundation)
 - [0gchain Explorer](https://explorer.grandvalleys.com/0g-chain%20testnet)
 
 ## Grand Valley's 0G Testnet Public Endpoints

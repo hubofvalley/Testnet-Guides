@@ -90,7 +90,7 @@ go version
 # ==== DOWNLOAD GALILEO v2.0.4 ====
 cd $HOME
 rm -rf galileo
-wget -q https://github.com/0glabs/0gchain-NG/releases/download/v2.0.4/galileo-v2.0.4.tar.gz
+wget -q https://github.com/0gfoundation/0gchain-NG/releases/download/v2.0.4/galileo-v2.0.4.tar.gz
 tar -xzvf galileo-v2.0.4.tar.gz
 mv galileo-v2.0.4 galileo
 rm galileo-v2.0.4.tar.gz

@@ -52,7 +52,7 @@ source ~/.bash_profile && go version
 ### 3. Download Binary
 
 ```bash
-git clone https://github.com/0glabs/0g-storage-client.git
+git clone https://github.com/0gfoundation/0g-storage-client.git
 ```
 
 ### 4. Build the Binary

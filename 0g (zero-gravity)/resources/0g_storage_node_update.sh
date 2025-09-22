@@ -83,7 +83,7 @@ git checkout e41726de7825b9e8e6eeb7802f40308d880089b2
 git submodule update --init
 
 #cd $HOME
-#git clone -b v1.1.0 https://github.com/0glabs/0g-storage-node.git
+#git clone -b v1.1.0 https://github.com/0gfoundation/0g-storage-node.git
 #cd $HOME/0g-storage-node
 #git stash
 #git fetch --all --tags
