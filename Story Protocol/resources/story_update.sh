@@ -219,6 +219,8 @@ batch_update_version() {
 }
 
 # Menu for selecting the version
+rpc_response=$(curl -s -X POST "https://aeneid.storyrpc.io" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}')
+realtime_block_height=$(echo "$rpc_response" | jq -r '.result' | xargs printf "%d")
 echo "Choose the version to update to:"
 #read -p "There are currently no new versions available."
 echo -e "a. ${YELLOW}v1.1.0${RESET} (${GREEN}Virgil${RESET} Upgrade height: 640,000)"
@@ -243,17 +245,7 @@ case $choice in
         update_version "v1.3.0" "https://github.com/piplabs/story/releases/download/v1.3.0" 5707000
         ;;
     e)
-        # Get current block height for dynamic upgrade height
-        echo "Querying current block height from Story RPC for v1.3.3 upgrade..."
-        rpc_response=$(curl -s -X POST "https://mainnet.storyrpc.io" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}')
-        realtime_block_height=$(echo "$rpc_response" | jq -r '.result' | xargs printf "%d")
-        if [ -z "$realtime_block_height" ]; then
-            echo "Error: Failed to query block height (Response: $rpc_response)"
-            echo "Upgrade cannot proceed without current block height"
-            exit 1
-        fi
-        upgrade_height_v133=$((realtime_block_height + 100))
-        update_version "v1.3.3" "https://github.com/piplabs/story/releases/download/v1.3.3" $upgrade_height_v133
+        update_version "v1.3.3" "https://github.com/piplabs/story/releases/download/v1.3.3" $((realtime_block_height + 100))
         ;;
     #f)
         #batch_update_version
