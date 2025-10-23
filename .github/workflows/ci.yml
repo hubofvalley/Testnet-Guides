@@ -1,0 +1,44 @@
+name: KiteAI CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r KiteAI/requirements.txt
+
+      - name: Lint
+        run: |
+          pip install flake8
+          flake8 KiteAI/api || true
+
+      - name: Run tests
+        run: |
+          pytest KiteAI/tests
+
+      - name: Build Docker image
+        run: |
+          docker build -t kiteai:ci-latest KiteAI
+
+      # Uncomment and configure for registry push
+      # - name: Login to registry
+      #   run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ghcr.io -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      # - name: Push Docker image
+      #   run: docker push ghcr.io/your-org/kiteai:ci-latest

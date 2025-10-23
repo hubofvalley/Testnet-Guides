@@ -122,7 +122,7 @@ EOF
     fi
 }
 
-BASE_URL="https://github.com/0glabs/0gchain-NG/releases/download"
+BASE_URL="https://github.com/0gfoundation/0gchain-NG/releases/download"
 
 # Display menu
 echo "Select version to update:"

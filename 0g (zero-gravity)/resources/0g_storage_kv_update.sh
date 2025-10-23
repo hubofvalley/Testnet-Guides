@@ -81,7 +81,7 @@ sudo rm -r $HOME/0g-storage-kv/run/db
 
 ### 2. Update node
 cd $HOME
-git clone -b v1.4.0 https://github.com/0glabs/0g-storage-kv.git
+git clone -b v1.4.0 https://github.com/0gfoundation/0g-storage-kv.git
 cd $HOME/0g-storage-kv
 git stash
 git fetch --all --tags

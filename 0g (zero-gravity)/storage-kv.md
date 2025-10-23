@@ -145,7 +145,7 @@ echo -e "\n\033[3mLet's Buidl 0G Together - Grand Valley\033[0m\n"
 
 ```bash
 cd $HOME
-git clone -b v1.4.0 https://github.com/0glabs/0g-storage-kv.git
+git clone -b v1.4.0 https://github.com/0gfoundation/0g-storage-kv.git
 cd 0g-storage-kv
 git stash
 git fetch --all --tags

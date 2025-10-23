@@ -1,0 +1,17 @@
+# Git ignore for KiteAI
+.env
+.env.local
+node_modules/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+dist/
+build/
+.DS_Store
+.vscode/
+.idea/
+*.log
+docker-compose.override.yml
+*.sqlite3

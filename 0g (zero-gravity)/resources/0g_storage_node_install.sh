@@ -120,7 +120,7 @@ curl -s -X POST $BLOCKCHAIN_RPC_ENDPOINT -H "Content-Type: application/json" -d 
 
 # 5. Download binary
 cd $HOME
-git clone -b v1.1.0 https://github.com/0glabs/0g-storage-node.git
+git clone -b v1.1.0 https://github.com/0gfoundation/0g-storage-node.git
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags

@@ -219,13 +219,16 @@ batch_update_version() {
 }
 
 # Menu for selecting the version
+rpc_response=$(curl -s -X POST "https://aeneid.storyrpc.io" -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}')
+realtime_block_height=$(echo "$rpc_response" | jq -r '.result' | xargs printf "%d")
 echo "Choose the version to update to:"
 #read -p "There are currently no new versions available."
 echo -e "a. ${YELLOW}v1.1.0${RESET} (${GREEN}Virgil${RESET} Upgrade height: 640,000)"
 echo -e "b. ${YELLOW}v1.1.1${RESET} (${GREEN}Additional update for validator CLI interaction${RESET} Upgrade height: 1,398,904)"
 echo -e "c. ${YELLOW}v1.2.0${RESET} (${GREEN}Ovid${RESET} Upgrade height: 3,861,111)"
 echo -e "d. ${YELLOW}v1.3.0${RESET} (${GREEN}Polybius${RESET} Upgrade height: 5,707,000)"
-#echo "e. Batch update: Upgrade to v1.1.0 at height 640,000, v1.1.1 at height 858,000, v1.2.0 at height 3,861,111 and v1.3.0 at height 5,707,000 (RECOMMENDED FOR THOSE AIMING TO ACHIEVE ARCHIVE NODE STATUS)."
+echo -e "e. ${YELLOW}v1.3.3${RESET} (${GREEN}Latest upgrade, dynamic height (current block + 100)${RESET})"
+#echo "f. Batch update: Upgrade to v1.1.0 at height 640,000, v1.1.1 at height 858,000, v1.2.0 at height 3,861,111 and v1.3.0 at height 5,707,000 (RECOMMENDED FOR THOSE AIMING TO ACHIEVE ARCHIVE NODE STATUS)."
 read -p "Enter the letter corresponding to the version: " choice
 
 case $choice in
@@ -241,7 +244,10 @@ case $choice in
     d)
         update_version "v1.3.0" "https://github.com/piplabs/story/releases/download/v1.3.0" 5707000
         ;;
-    #e)
+    e)
+        update_version "v1.3.3" "https://github.com/piplabs/story/releases/download/v1.3.3" $((realtime_block_height + 100))
+        ;;
+    #f)
         #batch_update_version
         #;;
     *)

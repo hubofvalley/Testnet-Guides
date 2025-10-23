@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  api:
+    build: .
+    env_file:
+      - .env
+    command: gunicorn -b 0.0.0.0:8000 api.app:create_app() --workers 1
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app:rw
+    restart: unless-stopped
+
+  dashboard:
+    image: nginx:stable
+    ports:
+      - "8080:80"
+    volumes:
+      - ./dashboard:/usr/share/nginx/html:ro
+    restart: unless-stopped
+
+volumes:
+  data:
+    driver: local
