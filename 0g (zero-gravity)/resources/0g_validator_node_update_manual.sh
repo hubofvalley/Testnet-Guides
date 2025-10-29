@@ -128,6 +128,7 @@ BASE_URL="https://github.com/0gfoundation/0gchain-NG/releases/download"
 echo "Select version to update:"
 echo "a) v1.2.1"
 echo "b) v2.0.4"
+echo "c) v3.0.2"
 
 read -p "Enter the letter corresponding to the version: " choice
 
@@ -203,6 +204,41 @@ case $choice in
         create_service_file "$NODE_TYPE" "$ETH_RPC_URL" "$BLOCK_NUM" "$OG_PORT"
         
         update_version "v2.0.4" "$BASE_URL/v2.0.4"
+        ;;
+    c)
+        while true; do
+            read -p "Deploy type? (validator/rpc): " NODE_TYPE
+            NODE_TYPE=$(echo "$NODE_TYPE" | tr '[:upper:]' '[:lower:]')
+            if [[ "$NODE_TYPE" == "validator" || "$NODE_TYPE" == "rpc" ]]; then
+                break
+            else
+                echo "Please type exactly 'validator' or 'rpc'."
+            fi
+        done
+
+        # Extra prompts for VALIDATOR
+        if [ "$NODE_TYPE" = "validator" ]; then
+            read -p "Enter Holesky ETH RPC endpoint (ETH_RPC_URL): " ETH_RPC_URL
+            while [ -z "$ETH_RPC_URL" ]; do
+                echo "ETH_RPC_URL cannot be empty for validator mode."
+                read -p "Enter Holesky ETH RPC endpoint (ETH_RPC_URL): " ETH_RPC_URL
+            done
+            read -p "Enter block range to fetch logs (BLOCK_NUM), e.g. 2000: " BLOCK_NUM
+            while ! [[ "$BLOCK_NUM" =~ ^[0-9]+$ ]]; do
+                echo "BLOCK_NUM must be a positive integer."
+                read -p "Enter block range to fetch logs (BLOCK_NUM), e.g. 2000: " BLOCK_NUM
+            done
+        fi
+
+        read -p "Enter your preferred port number: (leave empty to use default: 26) " OG_PORT
+        if [ -z "$OG_PORT" ]; then
+            OG_PORT=26
+        fi
+
+        setup_environment "$NODE_TYPE" "$ETH_RPC_URL" "$BLOCK_NUM"
+        create_service_file "$NODE_TYPE" "$ETH_RPC_URL" "$BLOCK_NUM" "$OG_PORT"
+        
+        update_version "v3.0.2" "$BASE_URL/v3.0.2"
         ;;
     *)
         echo "Invalid choice. Exiting."

@@ -69,7 +69,7 @@ sudo systemctl disable 0gchaind 2>/dev/null || true
 sudo systemctl disable 0g-geth 0ggeth 2>/dev/null || true
 sudo rm -f /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service /etc/systemd/system/0ggeth.service
 sudo rm -f $HOME/go/bin/0gchaind $HOME/go/bin/0g-geth $HOME/go/bin/0ggeth
-rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v2.0.4 $HOME/galileo-v2.0.4.tar.gz
+rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v3.0.2 $HOME/galileo-v3.0.2.tar.gz
 
 echo "? Cleanup complete."
 
@@ -87,13 +87,13 @@ source ~/.bash_profile
 [ ! -d ~/go/bin ] && mkdir -p ~/go/bin
 go version
 
-# ==== DOWNLOAD GALILEO v2.0.4 ====
+# ==== DOWNLOAD GALILEO v3.0.2 ====
 cd $HOME
 rm -rf galileo
-wget -q https://github.com/0gfoundation/0gchain-NG/releases/download/v2.0.4/galileo-v2.0.4.tar.gz
-tar -xzvf galileo-v2.0.4.tar.gz
-mv galileo-v2.0.4 galileo
-rm galileo-v2.0.4.tar.gz
+wget -q https://github.com/0gfoundation/0gchain-NG/releases/download/v3.0.2/galileo-v3.0.2.tar.gz
+tar -xzvf galileo-v3.0.2.tar.gz
+mv galileo-v3.0.2 galileo
+rm galileo-v3.0.2.tar.gz
 sudo chmod +x $HOME/galileo/bin/geth
 sudo chmod +x $HOME/galileo/bin/0gchaind
 

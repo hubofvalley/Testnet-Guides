@@ -26,7 +26,7 @@
 | Storage    | 1+ TB NVMe SSD               |
 | Bandwidth  | 100 MBps for Download/Upload |
 
-- Guide's current binaries version: `v2.0.4` (will automatically update to the latest version)
+- Guide's current binaries version: `v3.0.2` (will automatically update to the latest version)
 - Service file name: `0gchaind.service`
 
 ### Automatic Installation
@@ -54,7 +54,7 @@ sudo systemctl stop 0gchaind 0g-geth 0ggeth
 sudo systemctl disable 0gchaind 0g-geth 0ggeth
 sudo rm -f /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service /etc/systemd/system/0ggeth.service
 sudo rm -f $HOME/go/bin/0gchaind $HOME/go/bin/0g-geth $HOME/go/bin/0ggeth
-rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v2.0.4 $HOME/galileo-v2.0.4.tar.gz
+rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v3.0.2 $HOME/galileo-v3.0.2.tar.gz
 ```
 
 ### 2. Install Dependencies
@@ -81,12 +81,12 @@ go version
 
 ```bash
 cd $HOME
-wget https://github.com/0gfoundation/0gchain-NG/releases/download/v2.0.4/galileo-v2.0.4.tar.gz
-tar -xzvf galileo-v2.0.4.tar.gz
-mv galileo-v2.0.4 galileo
-rm galileo-v2.0.4.tar.gz
-sudo chmod +x $HOME/galileo-v2.0.4/bin/geth
-sudo chmod +x $HOME/galileo-v2.0.4/bin/0gchaind
+wget https://github.com/0gfoundation/0gchain-NG/releases/download/v3.0.2/galileo-v3.0.2.tar.gz
+tar -xzvf galileo-v3.0.2.tar.gz
+mv galileo-v3.0.2 galileo
+rm galileo-v3.0.2.tar.gz
+sudo chmod +x $HOME/galileo-v3.0.2/bin/geth
+sudo chmod +x $HOME/galileo-v3.0.2/bin/0gchaind
 ```
 
 ### 5. Initialize Node
@@ -103,12 +103,12 @@ read -p "Do you want to enable the indexer? (yes/no): " ENABLE_INDEXER
 # Save environment variables
 echo "export MONIKER=\"$MONIKER\"" >> ~/.bash_profile
 echo "export OG_PORT=\"$OG_PORT\"" >> ~/.bash_profile
-echo 'export PATH=$PATH:$HOME/galileo-v2.0.4/bin' >> ~/.bash_profile
+echo 'export PATH=$PATH:$HOME/galileo-v3.0.2/bin' >> ~/.bash_profile
 source ~/.bash_profile
 
 # Initialize chain
 mkdir -p $HOME/.0gchaind/
-cp -r $HOME/galileo-v2.0.4/* $HOME/.0gchaind/
+cp -r $HOME/galileo-v3.0.2/* $HOME/.0gchaind/
 0g-geth init --datadir $HOME/.0gchaind/0g-home/geth-home $HOME/.0gchaind/genesis.json
 0gchaind init $MONIKER --home $HOME/.0gchaind/tmp
 ```
@@ -116,8 +116,8 @@ cp -r $HOME/galileo-v2.0.4/* $HOME/.0gchaind/
 ### 6. Move Binaries to $HOME/go/bin/
 
 ```bash
-cp $HOME/galileo-v2.0.4/bin/geth $HOME/go/bin/0g-geth
-cp $HOME/galileo-v2.0.4/bin/0gchaind $HOME/go/bin/0gchaind
+cp $HOME/galileo-v3.0.2/bin/geth $HOME/go/bin/0g-geth
+cp $HOME/galileo-v3.0.2/bin/0gchaind $HOME/go/bin/0gchaind
 ```
 
 ### 7. Patch Configuration Files
@@ -273,7 +273,7 @@ echo -e "\nNode Configuration Summary:"
 echo -e "Moniker: $MONIKER"
 echo -e "Port Prefix: $OG_PORT"
 echo -e "Indexer: $([ "$ENABLE_INDEXER" = "yes" ] && echo "Enabled" || echo "Disabled")"
-echo -e "Node ID: $($HOME/galileo-v2.0.4/bin/0gchaind comet show-node-id --home $HOME/.0gchaind/0g-home/0gchaind-home/)"
+echo -e "Node ID: $($HOME/galileo-v3.0.2/bin/0gchaind comet show-node-id --home $HOME/.0gchaind/0g-home/0gchaind-home/)"
 ```
 
 ---
@@ -284,7 +284,7 @@ echo -e "Node ID: $($HOME/galileo-v2.0.4/bin/0gchaind comet show-node-id --home 
 sudo systemctl stop 0gchaind 0g-geth
 sudo systemctl disable 0gchaind 0g-geth
 sudo rm -rf /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service
-sudo rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v2.0.4 $HOME/galileo-v2.0.4.tar.gz
+sudo rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v3.0.2 $HOME/galileo-v3.0.2.tar.gz
 sed -i "/MONIKER\|OG_PORT/d" $HOME/.bash_profile
 ```
 
