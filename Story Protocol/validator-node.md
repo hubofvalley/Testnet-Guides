@@ -33,7 +33,7 @@
 
 - Service file names: `story.service`, `story-geth.service`
 - Current chain: `aeneid`
-- Current story node version: `v1.1.0 - v1.1.1`
+- Current story node version: `v1.1.0 - v1.2.0  - v1.3.0 - v1.3.3 - v1.4.0`
 - Current story-geth node version: `v1.0.2`
 
 ### Automatic Installation
@@ -383,8 +383,8 @@ sudo systemctl restart story-geth
 
 ```bash
 # Prompt user for input
-read -p "Enter the consensus client version (e.g., v1.1.1): " CONSENSUS_VERSION
-read -p "Enter the upgrade block height (e.g., 322000): " UPGRADE_HEIGHT
+read -p "Enter the consensus client version (e.g., v1.4.0): " CONSENSUS_VERSION
+read -p "Enter the upgrade block height (e.g., 10032301): " UPGRADE_HEIGHT
 read -p "Enter the installation directory (e.g., $HOME/story-$CONSENSUS_VERSION): " STORY_INSTALL_DIR
 
 # Define variables

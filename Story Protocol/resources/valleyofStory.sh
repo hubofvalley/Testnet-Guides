@@ -41,7 +41,7 @@ ${YELLOW}| Category  | Requirements     |
 - consensus client service file name: ${CYAN}story.service${RESET}
 - geth service file name: ${CYAN}story-geth.service${RESET}
 - current chain: ${CYAN}aeneid${RESET}
-- current story node version: ${CYAN}v1.1.0 - v1.2.0  - v1.3.0 - v1.3.3${RESET}
+- current story node version: ${CYAN}v1.1.0 - v1.2.0  - v1.3.0 - v1.3.3 - v1.4.0${RESET}
 - current story-geth node version: ${CYAN}v1.1.0${RESET}
 "
 
@@ -631,9 +631,9 @@ function show_geth_logs() {
 
 function install_story_app() {
     echo -e "${YELLOW}This option is only for those who want to execute the transactions without running the node.${RESET}"
-    mkdir -p story-v1.3.3
-    wget -O story-v1.3.3/story https://github.com/piplabs/story/releases/download/v1.3.3/story-linux-amd64
-    cp story-v1.3.3/story $HOME/go/bin/story
+    mkdir -p story-v1.4.0
+    wget -O story-v1.4.0/story https://github.com/piplabs/story/releases/download/v1.4.0/story-linux-amd64
+    cp story-v1.4.0/story $HOME/go/bin/story
     sudo chown -R $USER:$USER $HOME/go/bin/story
     sudo chmod +x $HOME/go/bin/story
     story init --network $STORY_CHAIN_ID --moniker gv-story
