@@ -228,7 +228,7 @@ echo -e "b. ${YELLOW}v1.1.1${RESET} (${GREEN}Additional update for validator CLI
 echo -e "c. ${YELLOW}v1.2.0${RESET} (${GREEN}Ovid${RESET} Upgrade height: 3,861,111)"
 echo -e "d. ${YELLOW}v1.3.0${RESET} (${GREEN}Polybius${RESET} Upgrade height: 5,707,000)"
 echo -e "e. ${YELLOW}v1.3.3${RESET} (${RESET}Upgrade height: 10,032,301)"
-echo -e "f. ${YELLOW}v1.4.0${RESET} (${GREEN}Terance${RESET} Upgrade height: 10,886,680)"
+echo -e "f. ${YELLOW}v1.4.0${RESET} (${GREEN}Terence${RESET} Upgrade height: 10,886,680)"
 #echo "f. Batch update: Upgrade to v1.1.0 at height 640,000, v1.1.1 at height 858,000, v1.2.0 at height 3,861,111 and v1.3.0 at height 5,707,000 (RECOMMENDED FOR THOSE AIMING TO ACHIEVE ARCHIVE NODE STATUS)."
 read -p "Enter the letter corresponding to the version: " choice
 
