@@ -56,6 +56,12 @@ if [ -z "$input3" ]; then
     exit 1
 fi
 
+# Prompt for the proxy_app port that will be used by the consensus client service
+read -p "Enter your preferred port number: (leave empty to use default: 26)" STORY_PORT
+if [ -z "$STORY_PROXY_APP_PORT" ]; then
+    STORY_PROXY_APP_PORT=26
+fi
+
 # Export environment variables
 echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
 echo "export DAEMON_HOME=$input2" >> $HOME/.bash_profile
@@ -72,7 +78,7 @@ After=network.target
 User=${USER}
 Type=simple
 WorkingDirectory=${HOME}/.story/story
-ExecStart=${input1} run run
+ExecStart=${input1} run run --address tcp://127.0.0.1:${STORY_PROXY_APP_PORT}658
 StandardOutput=journal
 StandardError=journal
 Restart=on-failure

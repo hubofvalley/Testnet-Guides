@@ -92,9 +92,9 @@ else
 fi
 
 # Consensus client binary
-mkdir -p story-v1.1.0
-wget -O $HOME/story-v1.1.0/story https://github.com/piplabs/story/releases/download/v1.1.0/story-linux-amd64
-cp story-v1.1.0/story $HOME/go/bin/story
+mkdir -p story-v1.4.0
+wget -O $HOME/story-v1.4.0/story https://github.com/piplabs/story/releases/download/v1.4.0/story-linux-amd64
+cp story-v1.4.0/story $HOME/go/bin/story
 sudo chown -R $USER:$USER $HOME/go/bin/story
 sudo chmod +x $HOME/go/bin/story
 
@@ -167,7 +167,7 @@ After=network.target
 User=${USER}
 Type=simple
 WorkingDirectory=${HOME}/.story/story
-ExecStart=${input1} run run
+ExecStart=${input1} run run --address tcp://127.0.0.1:${STORY_PORT}658
 StandardOutput=journal
 StandardError=journal
 Restart=on-failure
@@ -193,7 +193,7 @@ After=network-online.target
 
 [Service]
 User=$USER
-ExecStart=$(which geth) --aeneid --syncmode full --http --http.api eth,net,web3,engine --http.vhosts '*' --http.addr 127.0.0.1 --http.port ${STORY_PORT}545 --ws --ws.api eth,web3,net,txpool --ws.addr 127.0.0.1 --ws.port ${STORY_PORT}546 --authrpc.port ${STORY_PORT}551
+ExecStart=$(which geth) --aeneid --syncmode full --http --http.api eth,net,web3,engine --http.vhosts '*' --http.addr 127.0.0.1 --http.port ${STORY_PORT}545 --ws --ws.api eth,web3,net,txpool --ws.addr 127.0.0.1 --ws.port ${STORY_PORT}546 --authrpc.port ${STORY_PORT}551 --port ${STORY_PORT}303 --discovery.port ${STORY_PORT}303
 StandardOutput=journal
 StandardError=journal
 Restart=on-failure
