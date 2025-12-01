@@ -1,1 +1,1 @@
-bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Valley-of-0G-Mainnet/main/resources/valleyof0G.sh)
+bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Valley-of-Story-Testnet/main/resources/valleyofStory.sh)
