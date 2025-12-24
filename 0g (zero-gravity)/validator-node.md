@@ -1,4 +1,48 @@
-## Valley of 0G: Tools by Grand Valley
+# 0G Testnet Installation Guide
+
+# Table of Contents
+- [0G Testnet Installation Guide](#0g-testnet-installation-guide)
+- [Table of Contents](#table-of-contents)
+  - [System Requirements](#system-requirements)
+  - [Automatic Installation](#automatic-installation)
+    - [Valley of 0G: Tools by Grand Valley](#valley-of-0g-tools-by-grand-valley)
+    - [Key Features of Valley of 0G](#key-features-of-valley-of-0g)
+      - [Run the following command to install Valley of 0G:](#run-the-following-command-to-install-valley-of-0g)
+  - [Manual Installation](#manual-installation)
+    - [1. Prepare Environment Variables](#1-prepare-environment-variables)
+    - [2. Cleanup Previous Installations](#2-cleanup-previous-installations)
+    - [3. Install Dependencies](#3-install-dependencies)
+    - [4. Install Go](#4-install-go)
+    - [5. Download and Extract Galileo Binary](#5-download-and-extract-galileo-binary)
+    - [6. Initialize Chain](#6-initialize-chain)
+    - [7. Move Binaries to $HOME/go/bin/](#7-move-binaries-to-homegobin)
+    - [8. Patch Configuration Files](#8-patch-configuration-files)
+    - [9. Copy Node Keys](#9-copy-node-keys)
+    - [10. Generate JWT Authentication Token](#10-generate-jwt-authentication-token)
+    - [11. Create systemd Service Files](#11-create-systemd-service-files)
+      - [0gchaind Service](#0gchaind-service)
+      - [0g-geth Service](#0g-geth-service)
+    - [12. Start Services](#12-start-services)
+    - [13. Check Logs](#13-check-logs)
+    - [14. Verify Installation](#14-verify-installation)
+  - [Delete the Node](#delete-the-node)
+
+
+## System Requirements
+
+| Category   | Requirements                  |
+| ---------- | ---------------------------- |
+| CPU        | 8 cores                      |
+| RAM        | 64+ GB                       |
+| Storage    | 1+ TB NVMe SSD               |
+| Bandwidth  | 100 MBps for Download/Upload |
+
+- Guide's current binaries version: `v3.0.3` (will automatically update to the latest version)
+- Service file name: `0gchaind.service`
+
+## Automatic Installation
+
+### Valley of 0G: Tools by Grand Valley
 
 ![image](https://github.com/user-attachments/assets/359b0d17-e451-42d7-8bc3-88c7fcf28355)
 ![alt text](resources/vo0gnew.png)
@@ -15,56 +59,84 @@
 
 ---
 
-## Installation
-
-#### System Requirements
-
-| Category   | Requirements                  |
-| ---------- | ---------------------------- |
-| CPU        | 8 cores                      |
-| RAM        | 64+ GB                       |
-| Storage    | 1+ TB NVMe SSD               |
-| Bandwidth  | 100 MBps for Download/Upload |
-
-- Guide's current binaries version: `v3.0.2` (will automatically update to the latest version)
-- Service file name: `0gchaind.service`
-
-### Automatic Installation
-
-Run the following command to install Valley of 0G:
+#### Run the following command to install Valley of 0G:
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20\(zero-gravity\)/resources/valleyof0G.sh)
+bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/0g%20(zero-gravity)/resources/valleyof0G.sh)
 ```
 
-### Validator/Full Node Automatic Installation Tutorial Video on X
-
-[![Watch the tutorial](resources/validator-node-thumbnail.jpg)](https://x.com/i/status/1920057677453107649)
+This loader script (stored in this repo) fetches and runs the primary installer hosted in the dedicated Valley-of-0G-Testnet repository: https://github.com/hubofvalley/Valley-of-0G-Testnet.
 
 ---
 
-## Manual Installation (Galileo Validator Node)
+## Manual Installation
 
 > **Warning:** This process will remove any previous 0gchaind/0g-geth installation and data on your server.
 
-### 1. Cleanup Previous Installations
+### 1. Prepare Environment Variables
+
+```bash
+# ===== CHOOSE NODE TYPE =====
+while true; do
+  read -p "Deploy type? (validator/rpc): " NODE_TYPE
+  NODE_TYPE=$(echo "$NODE_TYPE" | tr '[:upper:]' '[:lower:]')
+  if [[ "$NODE_TYPE" == "validator" || "$NODE_TYPE" == "rpc" ]]; then
+    break
+  else
+    echo "Please type exactly 'validator' or 'rpc'."
+  fi
+done
+
+# Input your moniker, ports, and validator-specific settings
+read -p "Enter your moniker: " MONIKER
+read -p "Enter your preferred port number (default: 26): " OG_PORT
+if [ -z "$OG_PORT" ]; then
+    OG_PORT=26
+fi
+read -p "Do you want to enable the indexer? (yes/no): " ENABLE_INDEXER
+
+# Extra prompts for VALIDATOR
+if [ "$NODE_TYPE" = "validator" ]; then
+  read -p "Enter Testnet ETH RPC endpoint (ETH_RPC_URL): " ETH_RPC_URL
+  while [ -z "$ETH_RPC_URL" ]; do
+    echo "ETH_RPC_URL cannot be empty for validator mode."
+    read -p "Enter Testnet ETH RPC endpoint (ETH_RPC_URL): " ETH_RPC_URL
+  done
+  read -p "Enter block range to fetch logs (BLOCK_NUM), e.g. 2000: " BLOCK_NUM
+  while ! [[ "$BLOCK_NUM" =~ ^[0-9]+$ ]]; do
+    echo "BLOCK_NUM must be a positive integer."
+    read -p "Enter block range to fetch logs (BLOCK_NUM), e.g. 2000: " BLOCK_NUM
+  done
+fi
+
+# Save environment variables
+echo "export NODE_TYPE=\"$NODE_TYPE\"" >> ~/.bash_profile
+echo "export MONIKER=\"$MONIKER\"" >> ~/.bash_profile
+echo "export OG_PORT=\"$OG_PORT\"" >> ~/.bash_profile
+echo "export ETH_RPC_URL=\"$ETH_RPC_URL\"" >> ~/.bash_profile
+echo "export BLOCK_NUM=\"$BLOCK_NUM\"" >> ~/.bash_profile
+echo 'export PATH=$PATH:$HOME/galileo/bin' >> ~/.bash_profile
+source ~/.bash_profile
+```
+
+### 2. Cleanup Previous Installations
 
 ```bash
 sudo systemctl stop 0gchaind 0g-geth 0ggeth
 sudo systemctl disable 0gchaind 0g-geth 0ggeth
 sudo rm -f /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service /etc/systemd/system/0ggeth.service
 sudo rm -f $HOME/go/bin/0gchaind $HOME/go/bin/0g-geth $HOME/go/bin/0ggeth
-rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v3.0.2 $HOME/galileo-v3.0.2.tar.gz
+rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v3.0.3 $HOME/galileo-v3.0.3.tar.gz
 ```
 
-### 2. Install Dependencies
+### 3. Install Dependencies
 
 ```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install curl git wget htop tmux build-essential jq make lz4 gcc unzip -y
 ```
 
-### 3. Install Go
+### 4. Install Go
 
 ```bash
 cd $HOME && ver="1.22.5"
@@ -77,50 +149,35 @@ source ~/.bash_profile
 go version
 ```
 
-### 4. Download and Extract Galileo Binary
+### 5. Download and Extract Galileo Binary
 
 ```bash
 cd $HOME
-wget https://github.com/0gfoundation/0gchain-NG/releases/download/v3.0.2/galileo-v3.0.2.tar.gz
-tar -xzvf galileo-v3.0.2.tar.gz
-mv galileo-v3.0.2 galileo
-rm galileo-v3.0.2.tar.gz
-sudo chmod +x $HOME/galileo-v3.0.2/bin/geth
-sudo chmod +x $HOME/galileo-v3.0.2/bin/0gchaind
+wget https://github.com/0gfoundation/0gchain-NG/releases/download/v3.0.3/galileo-v3.0.3.tar.gz
+tar -xzvf galileo-v3.0.3.tar.gz
+cp -r galileo-v3.0.3/${NODE_TYPE} galileo
+rm galileo-v3.0.3.tar.gz
+sudo chmod +x $HOME/galileo/bin/geth
+sudo chmod +x $HOME/galileo/bin/0gchaind
 ```
 
-### 5. Initialize Node
+### 6. Initialize Chain
 
 ```bash
-# Input your moniker and preferred port (default: 26)
-read -p "Enter your moniker: " MONIKER
-read -p "Enter your preferred port number (default: 26): " OG_PORT
-if [ -z "$OG_PORT" ]; then
-    OG_PORT=26
-fi
-read -p "Do you want to enable the indexer? (yes/no): " ENABLE_INDEXER
-
-# Save environment variables
-echo "export MONIKER=\"$MONIKER\"" >> ~/.bash_profile
-echo "export OG_PORT=\"$OG_PORT\"" >> ~/.bash_profile
-echo 'export PATH=$PATH:$HOME/galileo-v3.0.2/bin' >> ~/.bash_profile
-source ~/.bash_profile
-
-# Initialize chain
 mkdir -p $HOME/.0gchaind/
-cp -r $HOME/galileo-v3.0.2/* $HOME/.0gchaind/
-0g-geth init --datadir $HOME/.0gchaind/0g-home/geth-home $HOME/.0gchaind/genesis.json
-0gchaind init $MONIKER --home $HOME/.0gchaind/tmp
+cp -r $HOME/galileo/* $HOME/.0gchaind/
+0g-geth init --datadir $HOME/.0gchaind/0g-home/geth-home $HOME/.0gchaind/geth-genesis.json
+0gchaind init "$MONIKER" --home $HOME/.0gchaind/tmp --chaincfg.chain-spec testnet
 ```
 
-### 6. Move Binaries to $HOME/go/bin/
+### 7. Move Binaries to $HOME/go/bin/
 
 ```bash
-cp $HOME/galileo-v3.0.2/bin/geth $HOME/go/bin/0g-geth
-cp $HOME/galileo-v3.0.2/bin/0gchaind $HOME/go/bin/0gchaind
+cp $HOME/galileo/bin/geth $HOME/go/bin/0g-geth
+cp $HOME/galileo/bin/0gchaind $HOME/go/bin/0gchaind
 ```
 
-### 7. Patch Configuration Files
+### 8. Patch Configuration Files
 
 ```bash
 CONFIG="$HOME/.0gchaind/0g-home/0gchaind-home/config"
@@ -155,11 +212,12 @@ sed -i "s/HTTPPort = .*/HTTPPort = ${OG_PORT}545/" $GCONFIG
 sed -i "s/WSPort = .*/WSPort = ${OG_PORT}546/" $GCONFIG
 sed -i "s/AuthPort = .*/AuthPort = ${OG_PORT}551/" $GCONFIG
 sed -i "s/ListenAddr = .*/ListenAddr = \":${OG_PORT}303\"/" $GCONFIG
+sed -i "s/DiscAddr = .*/DiscAddr = \":${OG_PORT}303\"/" $GCONFIG
 sed -i "s/^# *Port = .*/# Port = ${OG_PORT}901/" $GCONFIG
 sed -i "s/^# *InfluxDBEndpoint = .*/# InfluxDBEndpoint = \"http:\/\/localhost:${OG_PORT}086\"/" $GCONFIG
 ```
 
-### 7. Copy Node Keys
+### 9. Copy Node Keys
 
 ```bash
 cp $HOME/.0gchaind/tmp/data/priv_validator_state.json $HOME/.0gchaind/0g-home/0gchaind-home/data/
@@ -167,39 +225,37 @@ cp $HOME/.0gchaind/tmp/config/node_key.json $HOME/.0gchaind/0g-home/0gchaind-hom
 cp $HOME/.0gchaind/tmp/config/priv_validator_key.json $HOME/.0gchaind/0g-home/0gchaind-home/config/
 ```
 
-### 8. Copy Node Keys
+### 10. Generate JWT Authentication Token
 
 ```bash
-cp $HOME/.0gchaind/tmp/data/priv_validator_state.json $HOME/.0gchaind/0g-home/0gchaind-home/data/
-cp $HOME/.0gchaind/tmp/config/node_key.json $HOME/.0gchaind/0g-home/0gchaind-home/config/
-cp $HOME/.0gchaind/tmp/config/priv_validator_key.json $HOME/.0gchaind/0g-home/0gchaind-home/config/
+0gchaind jwt generate --home $HOME/.0gchaind/0g-home/0gchaind-home --chaincfg.chain-spec testnet
+cp -f $HOME/.0gchaind/0g-home/0gchaind-home/config/jwt.hex $HOME/.0gchaind/jwt.hex
 ```
 
-### 9. Create systemd Service Files
+### 11. Create systemd Service Files
 
 #### 0gchaind Service
 
 ```bash
 sudo tee /etc/systemd/system/0gchaind.service > /dev/null <<EOF
 [Unit]
-Description=0gchaind Node Service
+Description=0gchaind Node Service (Validator)
 After=network-online.target
 
 [Service]
 User=$USER
-Environment=CHAIN_SPEC=devnet
+Environment=CHAIN_SPEC=testnet
 WorkingDirectory=$HOME/.0gchaind
 ExecStart=$HOME/go/bin/0gchaind start \\
-  --chaincfg.chain-spec devnet \\
+  --chaincfg.chain-spec testnet \\
   --chaincfg.restaking.enabled \\
-  --chaincfg.restaking.symbiotic-rpc-dial-url https://api.zan.top/eth-holesky \\
-  --chaincfg.restaking.symbiotic-get-logs-block-range 4331278 \\
+  --chaincfg.restaking.symbiotic-rpc-dial-url ${ETH_RPC_URL} \\
+  --chaincfg.restaking.symbiotic-get-logs-block-range ${BLOCK_NUM} \\
   --home $HOME/.0gchaind/0g-home/0gchaind-home \\
   --chaincfg.kzg.trusted-setup-path=$HOME/.0gchaind/kzg-trusted-setup.json \\
-  --chaincfg.engine.jwt-secret-path=$HOME/.0gchaind/jwt-secret.hex \\
+  --chaincfg.engine.jwt-secret-path=$HOME/.0gchaind/jwt.hex \\
   --chaincfg.kzg.implementation=crate-crypto/go-kzg-4844 \\
   --chaincfg.engine.rpc-dial-url=http://localhost:${OG_PORT}551 \\
-  --p2p.seeds 85a9b9a1b7fa0969704db2bc37f7c100855a75d9@8.218.88.60:26656 \\
   --p2p.external_address=$(curl -4 -s ifconfig.me):${OG_PORT}656
 Restart=always
 RestartSec=3
@@ -227,9 +283,8 @@ ExecStart=$HOME/go/bin/0g-geth \\
   --http.port ${OG_PORT}545 \\
   --ws.port ${OG_PORT}546 \\
   --authrpc.port ${OG_PORT}551 \\
-  --bootnodes enode://de7b86d8ac452b1413983049c20eafa2ea0851a3219c2cc12649b971c1677bd83fe24c5331e078471e52a94d95e8cde84cb9d866574fec957124e57ac6056699@8.218.88.60:30303 \\
   --port ${OG_PORT}303 \\
-  --networkid 16601
+  --networkid 16661
 Restart=always
 RestartSec=3
 LimitNOFILE=65535
@@ -239,7 +294,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### 10. Start Services
+### 12. Start Services
 
 ```bash
 sudo systemctl daemon-reload
@@ -249,13 +304,13 @@ sudo systemctl start 0gchaind
 sudo systemctl start 0g-geth
 ```
 
-### 11. Check Logs
+### 13. Check Logs
 
 ```bash
 sudo journalctl -u 0gchaind -u 0g-geth -fn 100
 ```
 
-### 12. Verify Installation
+### 14. Verify Installation
 
 ```bash
 echo -e "\n✅ 0G Validator Node Installation Completed Successfully!"
@@ -273,7 +328,7 @@ echo -e "\nNode Configuration Summary:"
 echo -e "Moniker: $MONIKER"
 echo -e "Port Prefix: $OG_PORT"
 echo -e "Indexer: $([ "$ENABLE_INDEXER" = "yes" ] && echo "Enabled" || echo "Disabled")"
-echo -e "Node ID: $($HOME/galileo-v3.0.2/bin/0gchaind comet show-node-id --home $HOME/.0gchaind/0g-home/0gchaind-home/)"
+echo -e "Node ID: $($HOME/galileo/bin/0gchaind comet show-node-id --home $HOME/.0gchaind/0g-home/0gchaind-home/)"
 ```
 
 ---
@@ -284,10 +339,7 @@ echo -e "Node ID: $($HOME/galileo-v3.0.2/bin/0gchaind comet show-node-id --home 
 sudo systemctl stop 0gchaind 0g-geth
 sudo systemctl disable 0gchaind 0g-geth
 sudo rm -rf /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service
-sudo rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v3.0.2 $HOME/galileo-v3.0.2.tar.gz
+sudo rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v3.0.3 $HOME/galileo-v3.0.3.tar.gz
 sed -i "/MONIKER\|OG_PORT/d" $HOME/.bash_profile
+sed -i "/ETH_RPC_URL\|BLOCK_NUM/d" $HOME/.bash_profile
 ```
-
----
-
-# Lets Buidl 0G Together

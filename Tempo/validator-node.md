@@ -1,11 +1,52 @@
-## Valley of Tempo (Testnet): Tools by Grand Valley
+# Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Installation](#installation)
+  - [System Requirements](#system-requirements)
+  - [Automatic Installation](#automatic-installation)
+    - [Valley of Tempo (Testnet): Tools by Grand Valley](#valley-of-tempo-testnet-tools-by-grand-valley)
+      - [Key Features of Valley of Tempo](#key-features-of-valley-of-tempo)
+  - [Manual Installation](#manual-installation)
+    - [1. Install Dependencies](#1-install-dependencies)
+    - [2. Set Vars (Moniker, Ports, Wallet)](#2-set-vars-moniker-ports-wallet)
+    - [3. Open Firewall Ports](#3-open-firewall-ports)
+    - [4. Install the Tempo Binary](#4-install-the-tempo-binary)
+    - [5. Prepare the Data Directory](#5-prepare-the-data-directory)
+    - [6. Download Snapshot (Genesis + State)](#6-download-snapshot-genesis--state)
+    - [7. Create the Systemd Service](#7-create-the-systemd-service)
+    - [8. Start the Node](#8-start-the-node)
+  - [Operations Cheat Sheet](#operations-cheat-sheet)
+  - [Delete the Node](#delete-the-node)
+  - [Upgrade Tempo Manually](#upgrade-tempo-manually)
+
+# Installation
+
+## System Requirements
+
+| Category   | Requirements     |
+| ---------- | ---------------- |
+| CPU        | 8+ cores         |
+| RAM        | 32+ GB           |
+| Storage    | 500+ GB NVMe SSD |
+| Bandwidth  | 1Gbit/s         |
+
+- Service file name: `tempo.service`
+- Current chain: `Tempo Testnet (Andantino)`
+- Chain ID: `42429`
+- Current tempo binary version: `0.7.5`
+- Commit SHA: d1c2d656fb657e3c6f46a8bc3889bdb595d45576
+- Build Timestamp: 2025-12-15T16:14:58.647380962Z
+- Build Features: asm_keccak,default,jemalloc,otlp
+- Build Profile: maxperf
+
+## Automatic Installation
+
+### Valley of Tempo (Testnet): Tools by Grand Valley
 
 ![Valley of Tempo Image 1](https://github.com/user-attachments/assets/5110da6d-4ec2-492d-86ea-887b34b279b4)
-![vos_menu](resources/vos_menu.png)
 
 **Valley of Tempo** by Grand Valley is an all-in-one toolkit for running and operating Tempo nodes. Tempo is a payments-first blockchain incubated by Stripe and Paradigm, built on the Reth (Rust Ethereum) stack to deliver 100,000+ TPS and sub-second finality. This guide keeps the Valley tone while mapping every step to Tempo's high-throughput infra.
 
-### Key Features of Valley of Tempo
+#### Key Features of Valley of Tempo
 
 - **Deploy and Manage Tempo Nodes:** Spin up new nodes or remove existing ones. **Important!** Always back up keys before wiping data.
 - **Node Control:** Start, stop, or restart services with a single action.
@@ -17,39 +58,15 @@
 - **Snapshot Sync:** Use the latest snapshot to accelerate initial sync.
 - **Tempo CLI Installation:** Install the Tempo app for command-line transactions without running a full node.
 
-## Installation
-
-#### System Requirements
-
-| Category   | Requirements     |
-| ---------- | ---------------- |
-| CPU        | 8+ cores         |
-| RAM        | 32+ GB           |
-| Storage    | 500+ GB NVMe SSD |
-| Bandwidth  | 1Gbit/s         |
-
-- Service file name: `tempo.service`
-- Current chain: `Tempo Testnet (Andantino)`
-- Current tempo binary version: `0.7.5`
-- Commit SHA: d1c2d656fb657e3c6f46a8bc3889bdb595d45576
-- Build Timestamp: 2025-12-15T16:14:58.647380962Z
-- Build Features: asm_keccak,default,jemalloc,otlp
-- Build Profile: maxperf
-
-### Automatic Installation
-
 Run the following command to install Valley of Tempo:
 
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Tempo/resources/valleyofTempo.sh)
 ```
 
-- Install the Tempo app for command-line transactions and network interactions without running a full node.
-
 ---
 
-
-### Manual Installation
+## Manual Installation
 
 ### 1. Install Dependencies
 

@@ -3,22 +3,24 @@
 > _This guide is continuously updated._
 
 <p align="center">
-  <img src="https://tempo.xyz/og-image.png" width="600" height="300">
+  <img src="resources/brand-kit/image.png" width="600" height="600">
 </p>
 
 ## Table of Contents
 
+- [Tempo Testnet Guide](#tempo-testnet-guide)
+  - [Table of Contents](#table-of-contents)
 - [Tempo](#tempo)
   - [What Is Tempo?](#what-is-tempo)
-  - [Tempo & Stablecoins](#tempo--stablecoins)
+  - [Tempo \& Stablecoins](#tempo--stablecoins)
   - [EVM Compatibility](#evm-compatibility)
   - [Tempo Testnet Connection Details](#tempo-testnet-connection-details)
   - [TIP-20 Token Standard](#tip-20-token-standard)
   - [Fees on Tempo](#fees-on-tempo)
   - [Example Use Case](#example-use-case)
   - [Conclusion](#conclusion)
-- [Grand Valley & Tempo](#grand-valley--tempo)
-- [Lets Buidl Tempo Together](#lets-buidl-tempo-together)
+  - [Grand Valley \& Tempo](#grand-valley--tempo)
+  - [Lets Buidl Tempo Together](#lets-buidl-tempo-together)
 
 ---
 
