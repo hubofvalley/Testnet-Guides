@@ -21,12 +21,12 @@
 
 #### System Requirements
 
-| Category   | Minimum (RPC) | Recommended (RPC) | Recommended (Validator) |
-| ---------- | ------------- | ----------------- | ----------------------- |
-| CPU        | 8 cores       | 16+ cores         | 16+ cores               |
-| RAM        | 16 GB         | 32 GB             | 32 GB                   |
-| Storage    | 250 GB SSD    | 500 GB NVMe       | 1 TB NVMe               |
-| Bandwidth  | 500 Mbps      | 1 Gbps            | 1 Gbps                  |
+| Category   | Requirements     |
+| ---------- | ---------------- |
+| CPU        | 8+ cores         |
+| RAM        | 32+ GB           |
+| Storage    | 500+ GB NVMe SSD |
+| Bandwidth  | 1Gbit/s         |
 
 - Service file name: `tempo.service`
 - Current chain: `Tempo Testnet (Andantino)`
