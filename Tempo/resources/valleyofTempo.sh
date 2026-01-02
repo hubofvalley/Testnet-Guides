@@ -1,0 +1,1 @@
+bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Valley-of-Tempo-Testnet/main/resources/valleyofTempo.sh)
