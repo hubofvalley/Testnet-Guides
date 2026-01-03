@@ -10,7 +10,7 @@
     - [1. Install Dependencies](#1-install-dependencies)
     - [2. Set Vars (Moniker, Ports, Wallet)](#2-set-vars-moniker-ports-wallet)
     - [3. Open Firewall Ports](#3-open-firewall-ports)
-    - [4. Install the Tempo Binary](#4-install-the-tempo-binary)
+    - [4. Install Tempo and Foundry Binary](#4-install-tempo-and-foundry-binary)
     - [5. Prepare the Data Directory](#5-prepare-the-data-directory)
     - [6. Download Snapshot (Genesis + State)](#6-download-snapshot-genesis--state)
     - [7. Create the Systemd Service](#7-create-the-systemd-service)
@@ -33,11 +33,11 @@
 - Service file name: `tempo.service`
 - Current chain: `Tempo Testnet (Andantino)`
 - Chain ID: `42429`
-- Current tempo binary version: `0.7.5`
-- Commit SHA: d1c2d656fb657e3c6f46a8bc3889bdb595d45576
-- Build Timestamp: 2025-12-15T16:14:58.647380962Z
-- Build Features: asm_keccak,default,jemalloc,otlp
-- Build Profile: maxperf
+- Current tempo binary version: `0.8.0`
+- Commit SHA: `6318f1a6258d0487c761955e4178ea3897008334`
+- Build Timestamp: `2025-12-22T14:41:02.631694792Z`
+- Build Features: `asm_keccak,default,jemalloc,otlp`
+- Build Profile: `maxperf`
 
 ## Automatic Installation
 
@@ -108,7 +108,7 @@ sudo ufw allow ${TEMPO_PORT}545/tcp comment "Tempo HTTP RPC"
 sudo ufw enable
 ```
 
-### 4. Install the Tempo Binary
+### 4. Install Tempo and Foundry Binary
 
 ```bash
 curl -L https://tempo.xyz/install | bash
@@ -119,8 +119,23 @@ if [ -f ~/.bashrc ]; then
   sed -i.bak '/tempo\|Tempo\|\.tempo/d' ~/.bashrc
 fi
 
+# Install Foundry (store env in .bash_profile just like Tempo)
+curl -L https://foundry.paradigm.xyz | bash
+
+if [ -f ~/.bashrc ]; then
+  grep -E "foundry|Foundry|\\.foundry" ~/.bashrc >> ~/.bash_profile || true
+  sed -i.bak '/foundry\|Foundry\|\.foundry/d' ~/.bashrc
+fi
+
+if ! grep -q ".foundry/bin" ~/.bash_profile; then
+  echo 'export PATH="$HOME/.foundry/bin:$PATH"' >> ~/.bash_profile
+fi
+
+source ~/.bash_profile
+~/.foundry/bin/foundryup
 source ~/.bash_profile
 tempo --version
+cast --version
 ```
 
 ### 5. Prepare the Data Directory
@@ -163,14 +178,12 @@ ExecStart=$HOME/.tempo/bin/tempo node \
   --http.port ${TEMPO_PORT}545 \
   --http.api eth,net,web3,txpool,trace \
   --metrics ${TEMPO_PORT}900 \
-  -full \
-  --prune.block-interval 5000 \
+  --full \
+  --prune.block-interval 2500 \
   --prune.sender-recovery.full \
-  --prune.transaction-lookup.full \
-  --prune.receipts.full \
-  --prune.account-history.distance 10064 \
-  --prune.storage-history.distance 10064 \
-  --prune.bodies.distance 10064
+  --prune.receipts.distance 200000 \
+  --prune.account-history.distance 200000 \
+  --prune.storage-history.distance 200000
 Restart=always
 RestartSec=10
 StandardOutput=journal
@@ -188,7 +201,7 @@ EOF
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl enable tempo
-sudo systemctl start tempo
+sudo systemctl restart tempo
 ```
 
 Tail logs to confirm healthy sync:
