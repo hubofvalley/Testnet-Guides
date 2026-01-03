@@ -5,6 +5,8 @@
   - [Automatic Installation](#automatic-installation)
     - [Valley of Tempo (Testnet): Tools by Grand Valley](#valley-of-tempo-testnet-tools-by-grand-valley)
       - [Key Features of Valley of Tempo](#key-features-of-valley-of-tempo)
+      - [GitHub Repository: Valley of Tempo Testnet](#github-repository-valley-of-tempo-testnet)
+      - [How To Run Valley of Tempo:](#how-to-run-valley-of-tempo)
   - [Manual Installation](#manual-installation)
     - [1. Install Dependencies](#1-install-dependencies)
     - [2. Set Vars (Moniker, Ports, Wallet)](#2-set-vars-moniker-ports-wallet)
@@ -58,7 +60,10 @@
 - **Snapshot Sync:** Use the latest snapshot to accelerate initial sync.
 - **Tempo CLI Installation:** Install the Tempo app for command-line transactions without running a full node.
 
-Run the following command to install Valley of Tempo:
+#### GitHub Repository: Valley of Tempo Testnet
+[Valley of Tempo Testnet](https://github.com/hubofvalley/Valley-of-Tempo-Testnet)
+
+#### How To Run Valley of Tempo:
 
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Tempo/resources/valleyofTempo.sh)
