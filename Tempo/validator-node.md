@@ -5,8 +5,7 @@
   - [Automatic Installation](#automatic-installation)
     - [Valley of Tempo (Testnet): Tools by Grand Valley](#valley-of-tempo-testnet-tools-by-grand-valley)
       - [Key Features of Valley of Tempo](#key-features-of-valley-of-tempo)
-      - [GitHub Repository: Valley of Tempo Testnet](#github-repository-valley-of-tempo-testnet)
-      - [How To Run Valley of Tempo:](#how-to-run-valley-of-tempo)
+      - [Run the following command to install Valley of Tempo:](#run-the-following-command-to-install-valley-of-tempo)
   - [Manual Installation](#manual-installation)
     - [1. Install Dependencies](#1-install-dependencies)
     - [2. Set Vars (Moniker, Ports, Wallet)](#2-set-vars-moniker-ports-wallet)
@@ -44,7 +43,7 @@
 
 ### Valley of Tempo (Testnet): Tools by Grand Valley
 
-![Valley of Tempo Image 1](https://github.com/user-attachments/assets/5110da6d-4ec2-492d-86ea-887b34b279b4)
+![Valley of Tempo Image 1](resources/VoT.png)
 
 **Valley of Tempo** by Grand Valley is an all-in-one toolkit for running and operating Tempo nodes. Tempo is a payments-first blockchain incubated by Stripe and Paradigm, built on the Reth (Rust Ethereum) stack to deliver 100,000+ TPS and sub-second finality. This guide keeps the Valley tone while mapping every step to Tempo's high-throughput infra.
 
@@ -60,16 +59,13 @@
 - **Snapshot Sync:** Use the latest snapshot to accelerate initial sync.
 - **Tempo CLI Installation:** Install the Tempo app for command-line transactions without running a full node.
 
-#### GitHub Repository: Valley of Tempo Testnet
-[Valley of Tempo Testnet](https://github.com/hubofvalley/Valley-of-Tempo-Testnet)
-
-#### How To Run Valley of Tempo:
+#### Run the following command to install Valley of Tempo:
 
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Tempo/resources/valleyofTempo.sh)
 ```
 
----
+This loader script (stored in this repo) fetches and runs the primary installer hosted in the dedicated Valley-of-Tempo-Testnet repository: https://github.com/hubofvalley/Valley-of-Tempo-Testnet.
 
 ## Manual Installation
 
