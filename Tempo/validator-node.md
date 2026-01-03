@@ -162,7 +162,15 @@ ExecStart=$HOME/.tempo/bin/tempo node \
   --http.addr 0.0.0.0 \
   --http.port ${TEMPO_PORT}545 \
   --http.api eth,net,web3,txpool,trace \
-  --metrics ${TEMPO_PORT}900
+  --metrics ${TEMPO_PORT}900 \
+  -full \
+  --prune.block-interval 5000 \
+  --prune.sender-recovery.full \
+  --prune.transaction-lookup.full \
+  --prune.receipts.full \
+  --prune.account-history.distance 10064 \
+  --prune.storage-history.distance 10064 \
+  --prune.bodies.distance 10064
 Restart=always
 RestartSec=10
 StandardOutput=journal
