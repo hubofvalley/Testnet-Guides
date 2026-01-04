@@ -19,6 +19,7 @@
   - [Fees on Tempo](#fees-on-tempo)
   - [Example Use Case](#example-use-case)
   - [Conclusion](#conclusion)
+  - [Grand Valley's Tempo Testnet Public Endpoints](#grand-valleys-tempo-testnet-public-endpoints)
   - [Grand Valley \& Tempo](#grand-valley--tempo)
   - [Lets Buidl Tempo Together](#lets-buidl-tempo-together)
 
@@ -111,13 +112,19 @@ Tempo provides a clean and focused foundation for building payment and stablecoi
 
 For official references and deeper technical details, visit:
 
-- https://tempo.xyz/
-- https://tempo.xyz/blog/testnet
-- https://docs.tempo.xyz/
-- https://docs.tempo.xyz/quickstart/integrate-tempo
-- https://docs.tempo.xyz/quickstart/connection-details
-- https://docs.tempo.xyz/protocol
-- https://docs.tempo.xyz/sdk
+- [Tempo Website](https://tempo.xyz/)
+- [Tempo Blog](https://tempo.xyz/blog/testnet)
+- [Tempo Documentation](https://docs.tempo.xyz/)
+- [Tempo Quickstart Guide](https://docs.tempo.xyz/quickstart/integrate-tempo)
+- [Tempo Connection Details](https://docs.tempo.xyz/quickstart/connection-details)
+- [Tempo Protocol Overview](https://docs.tempo.xyz/protocol)
+- [Tempo SDK](https://docs.tempo.xyz/sdk)
+
+## Grand Valley's Tempo Testnet Public Endpoints
+
+- **EVM RPC:** `https://lightnode-json-rpc-tempo.grandvalleys.com`
+- **EVM WS:** `wss://lightnode-wss-tempo.grandvalleys.com`
+- **Enode:** `enode://babf666d3194efe69aa3cb0777b03ea6d151f31d1b2fa9a2de7d7cba262df3b425e259744a914f87c895a57f26d7e07e7e455a7c8622207a976367c3ee9b66ba@enode-tempo.grandvalleys.com:27303`
 
 ## Grand Valley & Tempo
 
