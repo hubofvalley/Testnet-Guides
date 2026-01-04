@@ -15,6 +15,7 @@
   - [Tempo \& Stablecoins](#tempo--stablecoins)
   - [EVM Compatibility](#evm-compatibility)
   - [Tempo Testnet Connection Details](#tempo-testnet-connection-details)
+  - [Guided Node Interaction (YouTube Playlist)](#guided-node-interaction-youtube-playlist)
   - [TIP-20 Token Standard](#tip-20-token-standard)
   - [Fees on Tempo](#fees-on-tempo)
   - [Example Use Case](#example-use-case)
@@ -70,6 +71,10 @@ You can connect to Tempo Testnet using standard EVM-compatible tools.
 - **Block Explorer:** `https://explore.tempo.xyz`
 
 > **Note:** Tempo does not use a traditional native gas token. Some wallets may display placeholder balances due to wallet assumptions about native assets.
+
+## Guided Node Interaction (YouTube Playlist)
+
+- [YouTube Playlist: Interact with Tempo Testnet Node](https://www.youtube.com/watch?v=BW8ld9aeBN0&list=PLY9qHFEQlg74EWUwdP2pYyBJZ2BBxlg88) — step-by-step videos for connecting to RPC, sending transactions, checking logs, and troubleshooting.
 
 ## TIP-20 Token Standard
 
