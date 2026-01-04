@@ -185,9 +185,9 @@ ExecStart=$HOME/.tempo/bin/tempo node \
   --full \
   --prune.block-interval 2500 \
   --prune.sender-recovery.full \
-  --prune.receipts.distance 200000 \
-  --prune.account-history.distance 200000 \
-  --prune.storage-history.distance 200000
+  --prune.receipts.distance 10064 \
+  --prune.account-history.distance 10064 \
+  --prune.storage-history.distance 10064
 Restart=always
 RestartSec=10
 StandardOutput=journal
