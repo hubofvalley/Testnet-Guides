@@ -1,4 +1,4 @@
-# Tempo Testnet Guide
+﻿# Tempo Testnet Guide
 
 > _This guide is continuously updated._
 
