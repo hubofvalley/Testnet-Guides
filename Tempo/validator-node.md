@@ -148,6 +148,7 @@ mkdir -p $HOME/.tempo/data
 
 ```bash
 tempo download
+sudo rm -r $HOME/.local/share/reth
 ```
 
 This pulls the latest snapshot so you do not need to replay the chain from block 0.
