@@ -191,7 +191,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local
 ###### input your validator alias
 
 ```bash
-namadac utils join-network --chain-id $NAMADA_CHAIN_ID --genesis-validator <validator alias>
+namadac utils join-network --chain-id $NAMADA_CHAIN_ID --genesis-validator $ALIAS
 peers="tcp://05309c2cce2d163027a47c662066907e89cd6b99@74.50.93.254:26656,tcp://2bf5cdd25975c239e8feb68153d69c5eec004fdb@64.118.250.82:46656"
 echo $peers
 sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.local/share/namada/housefire-alpaca.cc0d3e0c033be/config.toml

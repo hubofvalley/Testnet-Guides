@@ -139,10 +139,10 @@ go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 Edit your moniker and your preferred port number:
 
 ```bash
-read -p "Enter your moniker: " MONIKER && echo "Current moniker: $MONIKER"
+read -p "Enter your moniker: " STORY_MONIKER && echo "Current moniker: $STORY_MONIKER"
 read -p "Enter your 2 digits custom port: (leave empty to use default: 26)" STORY_PORT && echo "Current port number: ${STORY_PORT:-26}"
 
-echo "export MONIKER=$MONIKER" >> $HOME/.bash_profile
+echo "export STORY_MONIKER=$STORY_MONIKER" >> $HOME/.bash_profile
 echo "export STORY_CHAIN_ID=aeneid" >> $HOME/.bash_profile
 echo "export STORY_PORT=$STORY_PORT" >> $HOME/.bash_profile
 source $HOME/.bash_profile
@@ -173,7 +173,7 @@ sudo chmod +x $HOME/go/bin/story
 ### 7. Init App
 
 ```bash
-story init --network $STORY_CHAIN_ID --moniker $MONIKER
+story init --network $STORY_CHAIN_ID --moniker $STORY_MONIKER
 ```
 
 ### 8. Set Custom Ports in config.toml

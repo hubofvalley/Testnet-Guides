@@ -88,7 +88,7 @@ while true; do
 done
 
 # Input your moniker, ports, and validator-specific settings
-read -p "Enter your moniker: " MONIKER
+read -p "Enter your moniker: " OG_MONIKER
 read -p "Enter your preferred port number (default: 26): " OG_PORT
 if [ -z "$OG_PORT" ]; then
     OG_PORT=26
@@ -111,7 +111,7 @@ fi
 
 # Save environment variables
 echo "export NODE_TYPE=\"$NODE_TYPE\"" >> ~/.bash_profile
-echo "export MONIKER=\"$MONIKER\"" >> ~/.bash_profile
+echo "export OG_MONIKER=\"$OG_MONIKER\"" >> ~/.bash_profile
 echo "export OG_PORT=\"$OG_PORT\"" >> ~/.bash_profile
 echo "export ETH_RPC_URL=\"$ETH_RPC_URL\"" >> ~/.bash_profile
 echo "export BLOCK_NUM=\"$BLOCK_NUM\"" >> ~/.bash_profile
@@ -167,7 +167,7 @@ sudo chmod +x $HOME/galileo/bin/0gchaind
 mkdir -p $HOME/.0gchaind/
 cp -r $HOME/galileo/* $HOME/.0gchaind/
 0g-geth init --datadir $HOME/.0gchaind/0g-home/geth-home $HOME/.0gchaind/geth-genesis.json
-0gchaind init "$MONIKER" --home $HOME/.0gchaind/tmp --chaincfg.chain-spec testnet
+0gchaind init "$OG_MONIKER" --home $HOME/.0gchaind/tmp --chaincfg.chain-spec testnet
 ```
 
 ### 7. Move Binaries to $HOME/go/bin/
@@ -184,7 +184,7 @@ CONFIG="$HOME/.0gchaind/0g-home/0gchaind-home/config"
 GCONFIG="$HOME/.0gchaind/geth-config.toml"
 
 # config.toml
-sed -i "s/^moniker *=.*/moniker = \"$MONIKER\"/" $CONFIG/config.toml
+sed -i "s/^moniker *=.*/moniker = \"$OG_MONIKER\"/" $CONFIG/config.toml
 sed -i "s|laddr = \"tcp://0.0.0.0:26656\"|laddr = \"tcp://0.0.0.0:${OG_PORT}656\"|" $CONFIG/config.toml
 sed -i "s|laddr = \"tcp://127.0.0.1:26657\"|laddr = \"tcp://127.0.0.1:${OG_PORT}657\"|" $CONFIG/config.toml
 sed -i "s|^proxy_app = .*|proxy_app = \"tcp://127.0.0.1:${OG_PORT}658\"|" $CONFIG/config.toml
@@ -315,7 +315,7 @@ sudo journalctl -u 0gchaind -u 0g-geth -fn 100
 ```bash
 echo -e "\n✅ 0G Validator Node Installation Completed Successfully!"
 echo -e "\nNode Configuration Summary:"
-echo -e "Moniker: $MONIKER"
+echo -e "Moniker: $OG_MONIKER"
 echo -e "Port Prefix: $OG_PORT"
 echo -e "Indexer: $([ "$ENABLE_INDEXER" = "yes" ] && echo "Enabled" || echo "Disabled")"
 echo -e "Node ID: $($HOME/go/bin/0gchaind comet show-node-id --home $HOME/.0gchaind/0g-home/0gchaind-home/)"
@@ -325,7 +325,7 @@ read -r
 
 ```bash
 echo -e "\nNode Configuration Summary:"
-echo -e "Moniker: $MONIKER"
+echo -e "Moniker: $OG_MONIKER"
 echo -e "Port Prefix: $OG_PORT"
 echo -e "Indexer: $([ "$ENABLE_INDEXER" = "yes" ] && echo "Enabled" || echo "Disabled")"
 echo -e "Node ID: $($HOME/galileo/bin/0gchaind comet show-node-id --home $HOME/.0gchaind/0g-home/0gchaind-home/)"
@@ -340,6 +340,6 @@ sudo systemctl stop 0gchaind 0g-geth
 sudo systemctl disable 0gchaind 0g-geth
 sudo rm -rf /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service
 sudo rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v3.0.3 $HOME/galileo-v3.0.3.tar.gz
-sed -i "/MONIKER\|OG_PORT/d" $HOME/.bash_profile
+sed -i "/OG_MONIKER\|OG_PORT/d" $HOME/.bash_profile
 sed -i "/ETH_RPC_URL\|BLOCK_NUM/d" $HOME/.bash_profile
 ```
