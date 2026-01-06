@@ -23,8 +23,6 @@
     - [11. Enable Indexer (Optional)](#11-enable-indexer-optional)
     - [12. Initialize Cosmovisor and Create Symlink](#12-initialize-cosmovisor-and-create-symlink)
     - [13. Define the Path of Cosmovisor](#13-define-the-path-of-cosmovisor)
-      - [Save the Results](#save-the-results)
-      - [Example Result](#example-result)
     - [14. Create Service Files](#14-create-service-files)
       - [Consensus Client Service File](#consensus-client-service-file)
       - [Geth Service File](#geth-service-file)
@@ -254,14 +252,6 @@ echo "Cosmovisor path: $input1"
 echo "Story home: $input2"
 echo "Backup directory: $input3"
 ```
-
-#### Save the Results
-
-_They'll be used in the next step._
-
-#### Example Result
-
-![image](https://github.com/user-attachments/assets/21ef09d9-2595-46b6-b014-e30d5ff09cc1)
 
 ### 14. Create Service Files
 
