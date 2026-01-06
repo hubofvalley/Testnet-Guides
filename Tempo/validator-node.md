@@ -73,7 +73,7 @@ This loader script (stored in this repo) fetches and runs the primary installer 
 
 ```bash
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y curl git jq lz4 build-essential
+sudo apt install -y curl git jq lz4 build-essential ufw
 ```
 
 ### 2. Set Vars (Moniker, Ports, Wallet)

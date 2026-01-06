@@ -9,22 +9,23 @@
     - [Key Features of Valley of 0G](#key-features-of-valley-of-0g)
       - [Run the following command to install Valley of 0G:](#run-the-following-command-to-install-valley-of-0g)
   - [Manual Installation](#manual-installation)
-    - [1. Prepare Environment Variables](#1-prepare-environment-variables)
-    - [2. Cleanup Previous Installations](#2-cleanup-previous-installations)
+    - [1. Cleanup Previous Installations](#1-cleanup-previous-installations)
+    - [2. Prepare Environment Variables](#2-prepare-environment-variables)
     - [3. Install Dependencies](#3-install-dependencies)
-    - [4. Install Go](#4-install-go)
-    - [5. Download and Extract Galileo Binary](#5-download-and-extract-galileo-binary)
-    - [6. Initialize Chain](#6-initialize-chain)
+    - [4. Open Firewall Ports](#4-open-firewall-ports)
+    - [5. Install Go](#5-install-go)
+    - [6. Download and Extract Galileo Binary](#6-download-and-extract-galileo-binary)
     - [7. Move Binaries to $HOME/go/bin/](#7-move-binaries-to-homegobin)
-    - [8. Patch Configuration Files](#8-patch-configuration-files)
-    - [9. Copy Node Keys](#9-copy-node-keys)
-    - [10. Generate JWT Authentication Token](#10-generate-jwt-authentication-token)
-    - [11. Create systemd Service Files](#11-create-systemd-service-files)
+    - [8. Initialize Chain](#8-initialize-chain)
+    - [9. Patch Configuration Files](#9-patch-configuration-files)
+    - [10. Copy Node Keys](#10-copy-node-keys)
+    - [11. Generate JWT Authentication Token](#11-generate-jwt-authentication-token)
+    - [12. Create systemd Service Files](#12-create-systemd-service-files)
       - [0gchaind Service](#0gchaind-service)
       - [0g-geth Service](#0g-geth-service)
-    - [12. Start Services](#12-start-services)
-    - [13. Check Logs](#13-check-logs)
-    - [14. Verify Installation](#14-verify-installation)
+    - [13. Start Services](#13-start-services)
+    - [14. Check Logs](#14-check-logs)
+    - [15. Verify Installation](#15-verify-installation)
   - [Delete the Node](#delete-the-node)
 
 
@@ -37,7 +38,7 @@
 | Storage    | 1+ TB NVMe SSD               |
 | Bandwidth  | 100 MBps for Download/Upload |
 
-- Guide's current binaries version: `v3.0.3` (will automatically update to the latest version)
+- Guide's current binaries version: `v3.0.4` (will automatically update to the latest version)
 - Service file name: `0gchaind.service`
 
 ## Automatic Installation
@@ -73,7 +74,17 @@ This loader script (stored in this repo) fetches and runs the primary installer 
 
 > **Warning:** This process will remove any previous 0gchaind/0g-geth installation and data on your server.
 
-### 1. Prepare Environment Variables
+### 1. Cleanup Previous Installations
+
+```bash
+sudo systemctl stop 0gchaind 0g-geth 0ggeth
+sudo systemctl disable 0gchaind 0g-geth 0ggeth
+sudo rm -f /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service /etc/systemd/system/0ggeth.service
+sudo rm -f $HOME/go/bin/0gchaind $HOME/go/bin/0g-geth $HOME/go/bin/0ggeth
+rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v3.0.4 $HOME/galileo-v3.0.4.tar.gz
+```
+
+### 2. Prepare Environment Variables
 
 ```bash
 # ===== CHOOSE NODE TYPE =====
@@ -119,24 +130,30 @@ echo 'export PATH=$PATH:$HOME/galileo/bin' >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
-### 2. Cleanup Previous Installations
-
-```bash
-sudo systemctl stop 0gchaind 0g-geth 0ggeth
-sudo systemctl disable 0gchaind 0g-geth 0ggeth
-sudo rm -f /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service /etc/systemd/system/0ggeth.service
-sudo rm -f $HOME/go/bin/0gchaind $HOME/go/bin/0g-geth $HOME/go/bin/0ggeth
-rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v3.0.3 $HOME/galileo-v3.0.3.tar.gz
-```
-
 ### 3. Install Dependencies
 
 ```bash
 sudo apt update && sudo apt upgrade -y
-sudo apt install curl git wget htop tmux build-essential jq make lz4 gcc unzip -y
+sudo apt install curl git wget htop tmux build-essential jq make lz4 gcc unzip ufw -y
 ```
 
-### 4. Install Go
+### 4. Open Firewall Ports
+
+0G uses specific ports for peering and RPC. Allow SSH first so you do not lock yourself out.
+
+- 22 (TCP): SSH
+- 30303 (TCP/UDP): 0g-geth P2P
+- 26656 (TCP): 0g CometBFT P2P
+
+```bash
+sudo ufw allow 22/tcp comment "SSH Access"
+sudo ufw allow ${TEMPO_PORT}303/tcp comment "0g-geth P2P"
+sudo ufw allow ${TEMPO_PORT}303/udp comment "0g-geth discovery"
+sudo ufw allow ${TEMPO_PORT}656/tcp comment "0g CometBFT P2P"
+sudo ufw enable
+```
+
+### 5. Install Go
 
 ```bash
 cd $HOME && ver="1.22.5"
@@ -149,25 +166,16 @@ source ~/.bash_profile
 go version
 ```
 
-### 5. Download and Extract Galileo Binary
+### 6. Download and Extract Galileo Binary
 
 ```bash
 cd $HOME
-wget https://github.com/0gfoundation/0gchain-NG/releases/download/v3.0.3/galileo-v3.0.3.tar.gz
-tar -xzvf galileo-v3.0.3.tar.gz
-cp -r galileo-v3.0.3/${NODE_TYPE} galileo
-rm galileo-v3.0.3.tar.gz
+wget https://github.com/0gfoundation/0gchain-NG/releases/download/v3.0.4/galileo-v3.0.4.tar.gz
+tar -xzvf galileo-v3.0.4.tar.gz
+cp -r galileo-v3.0.4/${NODE_TYPE} galileo
+rm galileo-v3.0.4.tar.gz
 sudo chmod +x $HOME/galileo/bin/geth
 sudo chmod +x $HOME/galileo/bin/0gchaind
-```
-
-### 6. Initialize Chain
-
-```bash
-mkdir -p $HOME/.0gchaind/
-cp -r $HOME/galileo/* $HOME/.0gchaind/
-0g-geth init --datadir $HOME/.0gchaind/0g-home/geth-home $HOME/.0gchaind/geth-genesis.json
-0gchaind init "$OG_MONIKER" --home $HOME/.0gchaind/tmp --chaincfg.chain-spec testnet
 ```
 
 ### 7. Move Binaries to $HOME/go/bin/
@@ -177,7 +185,16 @@ cp $HOME/galileo/bin/geth $HOME/go/bin/0g-geth
 cp $HOME/galileo/bin/0gchaind $HOME/go/bin/0gchaind
 ```
 
-### 8. Patch Configuration Files
+### 8. Initialize Chain
+
+```bash
+mkdir -p $HOME/.0gchaind/
+cp -r $HOME/galileo/* $HOME/.0gchaind/
+0g-geth init --datadir $HOME/.0gchaind/0g-home/geth-home $HOME/.0gchaind/geth-genesis.json
+0gchaind init "$OG_MONIKER" --home $HOME/.0gchaind/tmp --chaincfg.chain-spec testnet
+```
+
+### 9. Patch Configuration Files
 
 ```bash
 CONFIG="$HOME/.0gchaind/0g-home/0gchaind-home/config"
@@ -217,7 +234,7 @@ sed -i "s/^# *Port = .*/# Port = ${OG_PORT}901/" $GCONFIG
 sed -i "s/^# *InfluxDBEndpoint = .*/# InfluxDBEndpoint = \"http:\/\/localhost:${OG_PORT}086\"/" $GCONFIG
 ```
 
-### 9. Copy Node Keys
+### 10. Copy Node Keys
 
 ```bash
 cp $HOME/.0gchaind/tmp/data/priv_validator_state.json $HOME/.0gchaind/0g-home/0gchaind-home/data/
@@ -225,14 +242,14 @@ cp $HOME/.0gchaind/tmp/config/node_key.json $HOME/.0gchaind/0g-home/0gchaind-hom
 cp $HOME/.0gchaind/tmp/config/priv_validator_key.json $HOME/.0gchaind/0g-home/0gchaind-home/config/
 ```
 
-### 10. Generate JWT Authentication Token
+### 11. Generate JWT Authentication Token
 
 ```bash
 0gchaind jwt generate --home $HOME/.0gchaind/0g-home/0gchaind-home --chaincfg.chain-spec testnet
 cp -f $HOME/.0gchaind/0g-home/0gchaind-home/config/jwt.hex $HOME/.0gchaind/jwt.hex
 ```
 
-### 11. Create systemd Service Files
+### 12. Create systemd Service Files
 
 #### 0gchaind Service
 
@@ -284,7 +301,8 @@ ExecStart=$HOME/go/bin/0g-geth \\
   --ws.port ${OG_PORT}546 \\
   --authrpc.port ${OG_PORT}551 \\
   --port ${OG_PORT}303 \\
-  --networkid 16661
+  --discovery.port ${OG_PORT}303 \\
+  --networkid 16602
 Restart=always
 RestartSec=3
 LimitNOFILE=65535
@@ -294,7 +312,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### 12. Start Services
+### 13. Start Services
 
 ```bash
 sudo systemctl daemon-reload
@@ -304,13 +322,13 @@ sudo systemctl start 0gchaind
 sudo systemctl start 0g-geth
 ```
 
-### 13. Check Logs
+### 14. Check Logs
 
 ```bash
 sudo journalctl -u 0gchaind -u 0g-geth -fn 100
 ```
 
-### 14. Verify Installation
+### 15. Verify Installation
 
 ```bash
 echo -e "\n✅ 0G Validator Node Installation Completed Successfully!"
@@ -339,7 +357,7 @@ echo -e "Node ID: $($HOME/galileo/bin/0gchaind comet show-node-id --home $HOME/.
 sudo systemctl stop 0gchaind 0g-geth
 sudo systemctl disable 0gchaind 0g-geth
 sudo rm -rf /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service
-sudo rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v3.0.3 $HOME/galileo-v3.0.3.tar.gz
+sudo rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v3.0.4 $HOME/galileo-v3.0.4.tar.gz
 sed -i "/OG_MONIKER\|OG_PORT/d" $HOME/.bash_profile
 sed -i "/ETH_RPC_URL\|BLOCK_NUM/d" $HOME/.bash_profile
 ```
