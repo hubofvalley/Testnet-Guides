@@ -12,7 +12,7 @@
     - [1. Cleanup Previous Installations](#1-cleanup-previous-installations)
     - [2. Prepare Environment Variables](#2-prepare-environment-variables)
     - [3. Install Dependencies](#3-install-dependencies)
-    - [4. Open Firewall Ports](#4-open-firewall-ports)
+    - [4. Open Firewall Ports (Optional but recommended)](#4-open-firewall-ports-optional-but-recommended)
     - [5. Install Go](#5-install-go)
     - [6. Download and Extract Galileo Binary](#6-download-and-extract-galileo-binary)
     - [7. Move Binaries to $HOME/go/bin/](#7-move-binaries-to-homegobin)
@@ -137,7 +137,7 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install curl git wget htop tmux build-essential jq make lz4 gcc unzip ufw -y
 ```
 
-### 4. Open Firewall Ports
+### 4. Open Firewall Ports (Optional but recommended)
 
 0G uses specific ports for peering and RPC. Allow SSH first so you do not lock yourself out.
 
@@ -147,10 +147,11 @@ sudo apt install curl git wget htop tmux build-essential jq make lz4 gcc unzip u
 
 ```bash
 sudo ufw allow 22/tcp comment "SSH Access"
-sudo ufw allow ${TEMPO_PORT}303/tcp comment "0g-geth P2P"
-sudo ufw allow ${TEMPO_PORT}303/udp comment "0g-geth discovery"
-sudo ufw allow ${TEMPO_PORT}656/tcp comment "0g CometBFT P2P"
-sudo ufw enable
+sudo ufw allow ${OG_PORT}303/tcp comment "0g-geth P2P"
+sudo ufw allow ${OG_PORT}303/udp comment "0g-geth discovery"
+sudo ufw allow ${OG_PORT}656/tcp comment "0g CometBFT P2P"
+sudo ufw --force enable
+sudo ufw status verbose
 ```
 
 ### 5. Install Go

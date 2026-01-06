@@ -105,7 +105,8 @@ sudo ufw allow 22/tcp comment "SSH Access"
 sudo ufw allow ${TEMPO_PORT}303/tcp comment "Tempo P2P Peering"
 sudo ufw allow ${TEMPO_PORT}303/udp comment "Tempo P2P Discovery"
 sudo ufw allow ${TEMPO_PORT}545/tcp comment "Tempo HTTP RPC"
-sudo ufw enable
+sudo ufw --force enable
+sudo ufw status verbose
 ```
 
 ### 4. Install Tempo and Foundry Binary

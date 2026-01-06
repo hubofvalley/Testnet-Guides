@@ -12,28 +12,29 @@
   - [Manual Installation](#manual-installation)
     - [1. Cleanup Previous Installations](#1-cleanup-previous-installations)
     - [2. Install Dependencies for Building from Source](#2-install-dependencies-for-building-from-source)
-    - [3. Install Go](#3-install-go)
-    - [4. Install Cosmovisor](#4-install-cosmovisor)
-    - [5. Set Vars](#5-set-vars)
-    - [6. Download Geth and Consensus Client Binaries](#6-download-geth-and-consensus-client-binaries)
-    - [7. Init App](#7-init-app)
-    - [8. Set Custom Ports in config.toml](#8-set-custom-ports-in-configtoml)
-    - [9. Add Peers to config.toml](#9-add-peers-to-configtoml)
-    - [10. Enable Indexer (Optional)](#10-enable-indexer-optional)
-    - [11. Initialize Cosmovisor and Create Symlink](#11-initialize-cosmovisor-and-create-symlink)
-    - [12. Define the Path of Cosmovisor](#12-define-the-path-of-cosmovisor)
+    - [3. Prepare Environment Variables](#3-prepare-environment-variables)
+    - [4. Open Firewall Ports (Optional but recommended)](#4-open-firewall-ports-optional-but-recommended)
+    - [5. Install Go](#5-install-go)
+    - [6. Install Cosmovisor](#6-install-cosmovisor)
+    - [7. Download Geth and Consensus Client Binaries](#7-download-geth-and-consensus-client-binaries)
+    - [8. Init App](#8-init-app)
+    - [9. Set Custom Ports in config.toml](#9-set-custom-ports-in-configtoml)
+    - [10. Add Peers to config.toml](#10-add-peers-to-configtoml)
+    - [11. Enable Indexer (Optional)](#11-enable-indexer-optional)
+    - [12. Initialize Cosmovisor and Create Symlink](#12-initialize-cosmovisor-and-create-symlink)
+    - [13. Define the Path of Cosmovisor](#13-define-the-path-of-cosmovisor)
       - [Save the Results](#save-the-results)
       - [Example Result](#example-result)
-    - [13. Create Service Files](#13-create-service-files)
+    - [14. Create Service Files](#14-create-service-files)
       - [Consensus Client Service File](#consensus-client-service-file)
       - [Geth Service File](#geth-service-file)
-    - [14. Start the Node](#14-start-the-node)
+    - [15. Start the Node](#15-start-the-node)
       - [Start Geth \& Consensus Client](#start-geth--consensus-client)
       - [Example: Node Running Properly](#example-node-running-properly)
         - [story-geth Logs](#story-geth-logs)
         - [story Logs](#story-logs)
-    - [15. Check Node Synchronization](#15-check-node-synchronization)
-    - [16. Check the Node Version](#16-check-the-node-version)
+    - [16. Check Node Synchronization](#16-check-node-synchronization)
+    - [17. Check the Node Version](#17-check-the-node-version)
   - [Validator and Key Commands](#validator-and-key-commands)
     - [1. Export EVM Public Key and Private Key](#1-export-evm-public-key-and-private-key)
     - [2. Claim Faucet](#2-claim-faucet)
@@ -59,7 +60,7 @@
 - Service file names: `story.service`, `story-geth.service`
 - Current chain: `aeneid`
 - Current story node version: `v1.4.2`
-- Current story-geth node version: `v1.0.2`
+- Current story-geth node version: `v1.2.0`
 
 ## Automatic Installation
 
@@ -114,27 +115,10 @@ rm -rf $HOME/.story $HOME/story $HOME/story-v1.4.2
 ```bash
 sudo apt update -y && sudo apt upgrade -y && \
 sudo apt install -y curl git jq build-essential gcc unzip wget lz4 openssl \
-libssl-dev pkg-config protobuf-compiler clang cmake llvm llvm-dev
+libssl-dev pkg-config protobuf-compiler clang cmake llvm llvm-dev ufw
 ```
 
-### 3. Install Go
-
-```bash
-cd $HOME && ver="1.22.0" && \
-wget "https://golang.org/dl/go$ver.linux-amd64.tar.gz" && \
-sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf "go$ver.linux-amd64.tar.gz" && \
-rm "go$ver.linux-amd64.tar.gz" && \
-echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile && \
-source ~/.bash_profile && go version
-```
-
-### 4. Install Cosmovisor
-
-```bash
-go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
-```
-
-### 5. Set Vars
+### 3. Prepare Environment Variables
 
 Edit your moniker and your preferred port number:
 
@@ -148,16 +132,50 @@ echo "export STORY_PORT=$STORY_PORT" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 ```
 
-### 6. Download Geth and Consensus Client Binaries
+### 4. Open Firewall Ports (Optional but recommended)
+
+Story uses specific ports for peering and RPC. Allow SSH first so you do not lock yourself out.
+
+- 22 (TCP): SSH
+- 30303 (TCP/UDP): Story-geth P2P
+- 26656 (TCP): Story CometBFT P2P
+
+```bash
+sudo ufw allow 22/tcp comment "SSH Access"
+sudo ufw allow ${STORY_PORT}303/tcp comment "Story-geth P2P"
+sudo ufw allow ${STORY_PORT}303/udp comment "Story-geth discovery"
+sudo ufw allow ${STORY_PORT}656/tcp comment "Story CometBFT P2P"
+sudo ufw --force enable
+sudo ufw status verbose
+```
+
+### 5. Install Go
+
+```bash
+cd $HOME && ver="1.22.0" && \
+wget "https://golang.org/dl/go$ver.linux-amd64.tar.gz" && \
+sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf "go$ver.linux-amd64.tar.gz" && \
+rm "go$ver.linux-amd64.tar.gz" && \
+echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> ~/.bash_profile && \
+source ~/.bash_profile && go version
+```
+
+### 6. Install Cosmovisor
+
+```bash
+go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
+```
+
+### 7. Download Geth and Consensus Client Binaries
 
 ```bash
 cd $HOME
 
 # geth binary
-mkdir -p story-geth-v1.0.2
-wget -O story-geth-v1.0.2/geth-linux-amd64 https://github.com/piplabs/story-geth/releases/download/v1.0.2/geth-linux-amd64
+mkdir -p story-geth-v1.2.0
+wget -O story-geth-v1.2.0/geth-linux-amd64 https://github.com/piplabs/story-geth/releases/download/v1.2.0/geth-linux-amd64
 geth_file_name=geth-linux-amd64
-cp story-geth-v1.0.2/$geth_file_name $HOME/go/bin/geth
+cp story-geth-v1.2.0/$geth_file_name $HOME/go/bin/geth
 sudo chown -R $USER:$USER $HOME/go/bin/geth
 sudo chmod +x $HOME/go/bin/geth
 
@@ -170,13 +188,13 @@ sudo chown -R $USER:$USER $HOME/go/bin/story
 sudo chmod +x $HOME/go/bin/story
 ```
 
-### 7. Init App
+### 8. Init App
 
 ```bash
 story init --network $STORY_CHAIN_ID --moniker $STORY_MONIKER
 ```
 
-### 8. Set Custom Ports in config.toml
+### 9. Set Custom Ports in config.toml
 
 ```bash
 sed -i.bak -e "s%laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${STORY_PORT}656\"%;
@@ -188,7 +206,7 @@ sed -i.bak -e "s%engine-endpoint = \"http://localhost:8551\"%engine-endpoint = \
 s%api-address = \"127.0.0.1:1317\"%api-address = \"127.0.0.1:${STORY_PORT}317\"%" $HOME/.story/story/config/story.toml
 ```
 
-### 9. Add Peers to config.toml
+### 10. Add Peers to config.toml
 
 ```bash
 peers=$(curl -sS https://lightnode-rpc-story.grandvalleys.com/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
@@ -196,7 +214,7 @@ sed -i -e "s|^persistent_peers *=.*|persistent_peers = \"$peers\"|" $HOME/.story
 echo $peers
 ```
 
-### 10. Enable Indexer (Optional)
+### 11. Enable Indexer (Optional)
 
 _If you want to run an archive node, follow this step:_
 
@@ -204,7 +222,7 @@ _If you want to run an archive node, follow this step:_
 sed -i -e 's/^indexer = "null"/indexer = "kv"/' $HOME/.story/story/config/config.toml
 ```
 
-### 11. Initialize Cosmovisor and Create Symlink
+### 12. Initialize Cosmovisor and Create Symlink
 
 ```bash
 echo "export DAEMON_NAME=story" >> $HOME/.bash_profile
@@ -222,7 +240,7 @@ mkdir -p $HOME/.story/story/cosmovisor/backup
 cd $HOME
 ```
 
-### 12. Define the Path of Cosmovisor
+### 13. Define the Path of Cosmovisor
 
 ```bash
 input1=$(which cosmovisor)
@@ -245,7 +263,7 @@ _They'll be used in the next step._
 
 ![image](https://github.com/user-attachments/assets/21ef09d9-2595-46b6-b014-e30d5ff09cc1)
 
-### 13. Create Service Files
+### 14. Create Service Files
 
 #### Consensus Client Service File
 
@@ -299,7 +317,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### 14. Start the Node
+### 15. Start the Node
 
 #### Start Geth & Consensus Client
 
@@ -320,7 +338,7 @@ sudo journalctl -u story-geth -u story -fn 100
 
 ![story logs](resources/image-1.png)
 
-### 15. Check Node Synchronization
+### 16. Check Node Synchronization
 
 ```bash
 curl http://127.0.0.1:${STORY_PORT}657/status | jq
@@ -332,7 +350,7 @@ If you use default port (26):
 curl http://127.0.0.1:26657/status | jq
 ```
 
-### 16. Check the Node Version
+### 17. Check the Node Version
 
 ```bash
 cosmovisor run version
@@ -408,7 +426,7 @@ sed -i "/STORY_/d" $HOME/.bash_profile
 
 ```bash
 ###Prompt user for input
-read -p "Enter the story-geth version (e.g., v1.0.2): " GETH_VERSION
+read -p "Enter the story-geth version (e.g., v1.2.0): " GETH_VERSION
 read -p "Enter the installation directory (e.g., $HOME/story-geth-$GETH_VERSION): " GETH_INSTALL_DIR
 
 ###Define variables
