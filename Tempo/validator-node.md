@@ -190,7 +190,7 @@ ExecStart=$HOME/.tempo/bin/tempo node \
   --prune.receipts.distance 10064 \
   --prune.account-history.distance 10064 \
   --prune.storage-history.distance 10064
-Restart=always
+Restart=on-failure
 RestartSec=10
 StandardOutput=journal
 StandardError=journal
