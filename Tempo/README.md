@@ -64,7 +64,7 @@ You can connect to Tempo Testnet using standard EVM-compatible tools.
 **Network Details (from official Tempo documentation):**
 
 - **Network Name:** Tempo Testnet (Andantino)
-- **Chain ID:** `42429`
+- **Chain ID:** `42431`
 - **Currency Symbol:** `USD`
 - **HTTP RPC:** `https://rpc.testnet.tempo.xyz`
 - **WebSocket RPC:** `wss://rpc.testnet.tempo.xyz`
@@ -129,7 +129,7 @@ For official references and deeper technical details, visit:
 
 - **EVM RPC:** `https://lightnode-json-rpc-tempo.grandvalleys.com`
 - **EVM WS:** `wss://lightnode-wss-tempo.grandvalleys.com`
-- **Enode:** `enode://babf666d3194efe69aa3cb0777b03ea6d151f31d1b2fa9a2de7d7cba262df3b425e259744a914f87c895a57f26d7e07e7e455a7c8622207a976367c3ee9b66ba@enode-tempo.grandvalleys.com:27303`
+- **Enode:** `enode://74d4820ebbab1b05349fb836d8de59558222ccb1ae12e1b270eb69f758829cd1e6c82735a4adc6960e5069b0893c929a157c407d8f3f9ea277892a7d15d2e64f@enode-tempo.grandvalleys.com:27303`
 
 ## Grand Valley & Tempo
 

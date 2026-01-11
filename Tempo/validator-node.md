@@ -31,13 +31,9 @@
 | Bandwidth  | 1Gbit/s         |
 
 - Service file name: `tempo.service`
-- Current chain: `Tempo Testnet (Andantino)`
-- Chain ID: `42429`
-- Current tempo binary version: `0.8.0`
-- Commit SHA: `6318f1a6258d0487c761955e4178ea3897008334`
-- Build Timestamp: `2025-12-22T14:41:02.631694792Z`
-- Build Features: `asm_keccak,default,jemalloc,otlp`
-- Build Profile: `maxperf`
+- Current chain: `Tempo Testnet (Moderato)`
+- Chain ID: `42431`
+- Current tempo binary version: `v1.0.0-rc.1`
 
 ## Automatic Installation
 
@@ -83,7 +79,7 @@ read -p "Enter your moniker: " MONIKER && echo "Current moniker: $MONIKER"
 read -p "Enter your 2 digits custom port (leave empty to use default: 30): " TEMPO_PORT && echo "Current port number: ${TEMPO_PORT:-30}"
 
 echo "export MONIKER=$MONIKER" >> $HOME/.bash_profile
-echo "export TEMPO_CHAIN_ID=andantino" >> $HOME/.bash_profile
+echo "export TEMPO_CHAIN_ID=moderato" >> $HOME/.bash_profile
 echo "export TEMPO_PORT=${TEMPO_PORT:-30}" >> $HOME/.bash_profile
 echo "export TEMPO_HOME=$HOME/.tempo" >> $HOME/.bash_profile
 echo "export PATH=$HOME/.tempo/bin:\$PATH" >> $HOME/.bash_profile
@@ -171,7 +167,7 @@ Environment=RUST_LOG=info
 WorkingDirectory=$HOME/.tempo
 ExecStart=$HOME/.tempo/bin/tempo node \
   --datadir $HOME/.tempo/data \
-  --follow \
+  --follow wss://rpc.moderato.tempo.xyz \
   --port ${TEMPO_PORT}303 \
   --discovery.addr 0.0.0.0 \
   --discovery.port ${TEMPO_PORT}303 \
