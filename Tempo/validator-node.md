@@ -98,9 +98,9 @@ Tempo uses specific ports for peering and RPC. Allow SSH first so you do not loc
 
 ```bash
 sudo ufw allow 22/tcp comment "SSH Access"
-sudo ufw allow ${TEMPO_PORT}303/tcp comment "Tempo P2P Peering"
-sudo ufw allow ${TEMPO_PORT}303/udp comment "Tempo P2P Discovery"
-sudo ufw allow ${TEMPO_PORT}545/tcp comment "Tempo HTTP RPC"
+sudo ufw allow ${TEMPO_PORT}303/tcp comment "Tempo Testnet P2P Peering"
+sudo ufw allow ${TEMPO_PORT}303/udp comment "Tempo Testnet P2P Discovery"
+sudo ufw allow ${TEMPO_PORT}545/tcp comment "Tempo Testnet HTTP RPC"
 sudo ufw --force enable
 sudo ufw status verbose
 ```

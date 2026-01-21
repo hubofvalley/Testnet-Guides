@@ -90,6 +90,11 @@
 bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Story%20Protocol/resources/valleyofStory.sh)
 ```
 
+> **Note on Custom Service Names:**
+> On first run, the script will ask for your **Consensus Service Name** and **Geth Service Name**.
+> - If this is your first/only node, just press **Enter** to use the defaults (`story` and `story-geth`).
+> - If you are running **multiple nodes** on the same server (e.g., Mainnet + Testnet, or different validator types), enter unique names like `story-testnet` and `story-geth-testnet` to avoid service conflicts.
+
 This loader script (stored in this repo) fetches and runs the primary installer hosted in the dedicated Valley-of-Story-Testnet repository: https://github.com/hubofvalley/Valley-of-Story-Testnet.
 
 ---
@@ -140,9 +145,9 @@ Story uses specific ports for peering and RPC. Allow SSH first so you do not loc
 
 ```bash
 sudo ufw allow 22/tcp comment "SSH Access"
-sudo ufw allow ${STORY_PORT}303/tcp comment "Story-geth P2P"
-sudo ufw allow ${STORY_PORT}303/udp comment "Story-geth discovery"
-sudo ufw allow ${STORY_PORT}656/tcp comment "Story CometBFT P2P"
+sudo ufw allow ${STORY_PORT}303/tcp comment "Story-geth Testnet P2P"
+sudo ufw allow ${STORY_PORT}303/udp comment "Story-geth Testnet discovery"
+sudo ufw allow ${STORY_PORT}656/tcp comment "Story Testnet CometBFT P2P"
 sudo ufw --force enable
 sudo ufw status verbose
 ```
