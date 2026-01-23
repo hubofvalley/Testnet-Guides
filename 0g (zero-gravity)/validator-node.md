@@ -39,7 +39,7 @@
 | Bandwidth  | 100 MBps for Download/Upload |
 
 - Guide's current binaries version: `v3.0.4` (will automatically update to the latest version)
-- Service file name: `0gchaind.service`
+- Service file name: `0gchaind.service` (default) or customizable via script prompts
 
 ## Automatic Installation
 
@@ -77,9 +77,14 @@ This loader script (stored in this repo) fetches and runs the primary installer 
 ### 1. Cleanup Previous Installations
 
 ```bash
-sudo systemctl stop 0gchaind 0g-geth 0ggeth
-sudo systemctl disable 0gchaind 0g-geth 0ggeth
-sudo rm -f /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service /etc/systemd/system/0ggeth.service
+# Set your variables if they are not already set (check your bash_profile)
+# Default values provided in case variables are empty
+SERVICE_NAME=${OG_SERVICE_NAME:-0gchaind}
+GETH_SERVICE_NAME=${OG_GETH_SERVICE_NAME:-0g-geth}
+
+sudo systemctl stop $SERVICE_NAME $GETH_SERVICE_NAME 0ggeth
+sudo systemctl disable $SERVICE_NAME $GETH_SERVICE_NAME 0ggeth
+sudo rm -f /etc/systemd/system/$SERVICE_NAME.service /etc/systemd/system/$GETH_SERVICE_NAME.service /etc/systemd/system/0ggeth.service
 sudo rm -f $HOME/go/bin/0gchaind $HOME/go/bin/0g-geth $HOME/go/bin/0ggeth
 rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v3.0.4 $HOME/galileo-v3.0.4.tar.gz
 ```
@@ -126,6 +131,8 @@ echo "export OG_MONIKER=\"$OG_MONIKER\"" >> ~/.bash_profile
 echo "export OG_PORT=\"$OG_PORT\"" >> ~/.bash_profile
 echo "export ETH_RPC_URL=\"$ETH_RPC_URL\"" >> ~/.bash_profile
 echo "export BLOCK_NUM=\"$BLOCK_NUM\"" >> ~/.bash_profile
+echo "export OG_SERVICE_NAME=\"0gchaind\"" >> ~/.bash_profile
+echo "export OG_GETH_SERVICE_NAME=\"0g-geth\"" >> ~/.bash_profile
 echo 'export PATH=$PATH:$HOME/galileo/bin' >> ~/.bash_profile
 source ~/.bash_profile
 ```
@@ -255,9 +262,9 @@ cp -f $HOME/.0gchaind/0g-home/0gchaind-home/config/jwt.hex $HOME/.0gchaind/jwt.h
 #### 0gchaind Service
 
 ```bash
-sudo tee /etc/systemd/system/0gchaind.service > /dev/null <<EOF
+sudo tee /etc/systemd/system/$OG_SERVICE_NAME.service > /dev/null <<EOF
 [Unit]
-Description=0gchaind Node Service (Validator)
+Description=$OG_SERVICE_NAME Node Service (Validator)
 After=network-online.target
 
 [Service]
@@ -287,9 +294,9 @@ EOF
 #### 0g-geth Service
 
 ```bash
-sudo tee /etc/systemd/system/0g-geth.service > /dev/null <<EOF
+sudo tee /etc/systemd/system/$OG_GETH_SERVICE_NAME.service > /dev/null <<EOF
 [Unit]
-Description=0g Geth Node Service
+Description=$OG_GETH_SERVICE_NAME Node Service
 After=network-online.target
 
 [Service]
@@ -317,16 +324,16 @@ EOF
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable 0gchaind
-sudo systemctl enable 0g-geth
-sudo systemctl start 0gchaind
-sudo systemctl start 0g-geth
+sudo systemctl enable $OG_SERVICE_NAME
+sudo systemctl enable $OG_GETH_SERVICE_NAME
+sudo systemctl start $OG_SERVICE_NAME
+sudo systemctl start $OG_GETH_SERVICE_NAME
 ```
 
 ### 14. Check Logs
 
 ```bash
-sudo journalctl -u 0gchaind -u 0g-geth -fn 100
+sudo journalctl -u $OG_SERVICE_NAME -u $OG_GETH_SERVICE_NAME -fn 100
 ```
 
 ### 15. Verify Installation
@@ -355,9 +362,9 @@ echo -e "Node ID: $($HOME/galileo/bin/0gchaind comet show-node-id --home $HOME/.
 ## Delete the Node
 
 ```bash
-sudo systemctl stop 0gchaind 0g-geth
-sudo systemctl disable 0gchaind 0g-geth
-sudo rm -rf /etc/systemd/system/0gchaind.service /etc/systemd/system/0g-geth.service
+sudo systemctl stop $OG_SERVICE_NAME $OG_GETH_SERVICE_NAME
+sudo systemctl disable $OG_SERVICE_NAME $OG_GETH_SERVICE_NAME
+sudo rm -rf /etc/systemd/system/$OG_SERVICE_NAME.service /etc/systemd/system/$OG_GETH_SERVICE_NAME.service
 sudo rm -rf $HOME/.0gchaind $HOME/galileo $HOME/galileo-v3.0.4 $HOME/galileo-v3.0.4.tar.gz
 sed -i "/OG_MONIKER\|OG_PORT/d" $HOME/.bash_profile
 sed -i "/ETH_RPC_URL\|BLOCK_NUM/d" $HOME/.bash_profile
