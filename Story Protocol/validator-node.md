@@ -130,7 +130,8 @@ read -p "Enter your moniker: " STORY_MONIKER && echo "Current moniker: $STORY_MO
 read -p "Enter your 2 digits custom port: (leave empty to use default: 26)" STORY_PORT && echo "Current port number: ${STORY_PORT:-26}"
 
 echo "export STORY_MONIKER=$STORY_MONIKER" >> $HOME/.bash_profile
-echo "export STORY_CHAIN_ID=aeneid" >> $HOME/.bash_profile
+echo "export STORY_CHAIN_ID=1315" >> $HOME/.bash_profile
+echo "export STORY_NETWORK_NAME=aeneid" >> $HOME/.bash_profile
 echo "export STORY_PORT=$STORY_PORT" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 ```
@@ -194,7 +195,7 @@ sudo chmod +x $HOME/go/bin/story
 ### 8. Init App
 
 ```bash
-story init --network $STORY_CHAIN_ID --moniker $STORY_MONIKER
+story init --network $STORY_NETWORK_NAME --moniker $STORY_MONIKER --encrypt-priv-key
 ```
 
 ### 9. Set Custom Ports in config.toml
@@ -358,7 +359,8 @@ cosmovisor run version
 ### 1. Export EVM Public Key and Private Key
 
 ```bash
-story validator export --export-evm-key && cat $HOME/.story/story/config/private_key.txt
+# Export to temp file, view, then delete (security best practice)
+TEMP_KEY=$(mktemp) && story validator export --evm-key-path "$TEMP_KEY" --export-evm-key && grep -oP '(?<=PRIVATE_KEY=).*' "$TEMP_KEY" && rm -f "$TEMP_KEY"
 ```
 
 Make sure your node block height has been synced with the latest block height, or check that the `catching_up` value is `false`.
@@ -369,8 +371,25 @@ https://faucet.story.foundation/
 
 ### 3. Create Validator
 
+> **Security Note**: The Story CLI now supports encrypted private keys. When you run `story init --encrypt-priv-key`, your key is encrypted with a password. All subsequent commands will prompt for this password.
+
+If you haven't encrypted your key yet:
 ```bash
-story validator create --stake 1000000000000000000 --private-key <your private key>
+# Extract private key from existing file (or enter manually if not found)
+PRIVATE_KEY=$(grep -oP '(?<=PRIVATE_KEY=).*' $HOME/.story/story/config/private_key.txt 2>/dev/null)
+if [ -z "$PRIVATE_KEY" ]; then
+    read -p "Enter your private key: " PRIVATE_KEY
+fi
+
+# Create .env, encrypt it, then delete the plaintext
+echo "PRIVATE_KEY=$PRIVATE_KEY" > $HOME/.env
+story key encrypt --enc-key-file "$HOME/.story/story/config/priv_validator_key.enc" --chain-id $STORY_CHAIN_ID
+rm -f $HOME/.env
+```
+
+Then create your validator:
+```bash
+story validator create --stake 1024000000000000000000 --enc-key-file "$HOME/.story/story/config/priv_validator_key.enc" --chain-id $STORY_CHAIN_ID
 ```
 
 ### 4. Backup Your Validator <img src="https://img.shields.io/badge/IMPORTANT-red" alt="Important" width="100">
@@ -390,7 +409,7 @@ Copy all contents of the ![priv_validator_key.json](https://img.shields.io/badge
 #### Self Delegate
 
 ```bash
-story validator stake --private-key <your private key> --stake 1024000000000000000000 --validator-pubkey <your validator public key>
+story validator stake --enc-key-file "$HOME/.story/story/config/priv_validator_key.enc" --stake 1024000000000000000000 --validator-pubkey <your validator public key> --chain-id $STORY_CHAIN_ID
 ```
 
 #### Delegate to Grand Valley
@@ -398,7 +417,7 @@ story validator stake --private-key <your private key> --stake 10240000000000000
 [<img src="https://github.com/hubofvalley/Testnet-Guides/assets/100946299/e8704cc4-2319-4a21-9138-0264e75e3a82" alt="GRAND VALLEY" width="50" height="50">](https://aeneid.staking.story.foundation/validators/0x1b5452a212db06f6d6879c292157396b6dca44d7)
 
 ```bash
-story validator stake --private-key <your private key> --stake 1024000000000000000000 --validator-pubkey 036a75cfa84cf485e5b4a6844fa9f2ff03f410f7c8c0148f4e4c9e535df9caba22/wP0EPfIwBSPTkyeU135yroi
+story validator stake --enc-key-file "$HOME/.story/story/config/priv_validator_key.enc" --stake 1024000000000000000000 --validator-pubkey 036a75cfa84cf485e5b4a6844fa9f2ff03f410f7c8c0148f4e4c9e535df9caba22 --chain-id $STORY_CHAIN_ID
 ```
 
 ---
