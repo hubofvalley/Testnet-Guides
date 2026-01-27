@@ -57,7 +57,7 @@
 
 - Service file names: `story.service`, `story-geth.service`
 - Current chain: `aeneid`
-- Current story node version: `v1.5.1`
+- Current story node version: `v1.5.2`
 - Current story-geth node version: `v1.2.0`
 
 ## Automatic Installation
@@ -110,7 +110,7 @@ sudo systemctl stop story story-geth
 sudo systemctl disable story story-geth
 sudo rm -f /etc/systemd/system/story.service /etc/systemd/system/story-geth.service
 sudo rm -f $HOME/go/bin/story $HOME/go/bin/story-geth
-rm -rf $HOME/.story $HOME/story $HOME/story-v1.5.1
+rm -rf $HOME/.story $HOME/story $HOME/story-v1.5.2
 ```
 
 ### 2. Install Dependencies for Building from Source
@@ -184,10 +184,10 @@ sudo chown -R $USER:$USER $HOME/go/bin/geth
 sudo chmod +x $HOME/go/bin/geth
 
 # consensus client binary
-mkdir -p story-v1.5.1
-wget -O story-v1.5.1/story-linux-amd64 https://github.com/piplabs/story/releases/download/v1.5.1/story-linux-amd64
+mkdir -p story-v1.5.2
+wget -O story-v1.5.2/story-linux-amd64 https://github.com/piplabs/story/releases/download/v1.5.2/story-linux-amd64
 story_file_name=story-linux-amd64
-cp story-v1.5.1/$story_file_name $HOME/go/bin/story
+cp story-v1.5.2/$story_file_name $HOME/go/bin/story
 sudo chown -R $USER:$USER $HOME/go/bin/story
 sudo chmod +x $HOME/go/bin/story
 ```
@@ -469,7 +469,7 @@ sudo systemctl restart story-geth
 
 ```bash
 ###Prompt user for input
-read -p "Enter the consensus client version (e.g., v1.5.1): " CONSENSUS_VERSION
+read -p "Enter the consensus client version (e.g., v1.5.2): " CONSENSUS_VERSION
 read -p "Enter the upgrade block height (e.g., 10032301): " UPGRADE_HEIGHT
 read -p "Enter the installation directory (e.g., $HOME/story-$CONSENSUS_VERSION): " STORY_INSTALL_DIR
 
