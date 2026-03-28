@@ -58,7 +58,7 @@
 - Service file names: `story.service`, `story-geth.service`
 - Current chain: `aeneid`
 - Current story node version: `v1.5.2`
-- Current story-geth node version: `v1.2.0`
+- Current story-geth node version: `v1.2.1`
 
 ## Automatic Installation
 
@@ -176,10 +176,10 @@ go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 cd $HOME
 
 # geth binary
-mkdir -p story-geth-v1.2.0
-wget -O story-geth-v1.2.0/geth-linux-amd64 https://github.com/piplabs/story-geth/releases/download/v1.2.0/geth-linux-amd64
+mkdir -p story-geth-v1.2.1
+wget -O story-geth-v1.2.1/geth-linux-amd64 https://github.com/piplabs/story-geth/releases/download/v1.2.1/geth-linux-amd64
 geth_file_name=geth-linux-amd64
-cp story-geth-v1.2.0/$geth_file_name $HOME/go/bin/geth
+cp story-geth-v1.2.1/$geth_file_name $HOME/go/bin/geth
 sudo chown -R $USER:$USER $HOME/go/bin/geth
 sudo chmod +x $HOME/go/bin/geth
 
@@ -440,7 +440,7 @@ sed -i "/STORY_/d" $HOME/.bash_profile
 
 ```bash
 ###Prompt user for input
-read -p "Enter the story-geth version (e.g., v1.2.0): " GETH_VERSION
+read -p "Enter the story-geth version (e.g., v1.2.1): " GETH_VERSION
 read -p "Enter the installation directory (e.g., $HOME/story-geth-$GETH_VERSION): " GETH_INSTALL_DIR
 
 ###Define variables
