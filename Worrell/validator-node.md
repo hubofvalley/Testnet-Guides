@@ -4,13 +4,13 @@
 
 Use the Grand Valley menu as the primary entrypoint:
 
-The canonical Valley repository is private. Authenticate with GitHub CLI, then run the public Guides loader:
+Run the reviewed public launcher directly:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Worrell/resources/valleyofWorrel.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/hubofvalley/Valley-of-Worrel-Testnet/main/resources/valleyofWorrel.sh)
 ```
 
-The loader clones the reviewed `main` branch and executes the canonical script in [Valley-of-Worrel-Testnet](https://github.com/hubofvalley/Valley-of-Worrel-Testnet). The menu starts with the Valley privacy notice, requirements, official endpoints, and a confirmation gate before installation.
+The launcher executes the canonical script in [Valley-of-Worrel-Testnet](https://github.com/hubofvalley/Valley-of-Worrel-Testnet). The menu starts with the Valley privacy notice, requirements, official endpoints, and a confirmation gate before installation.
 
 ## Manual installation
 
