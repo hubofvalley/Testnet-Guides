@@ -1,53 +1,38 @@
-# Testnet-Guides
+# Testnet Guides
 
-This repo section has guides and scripts for the testnet nodes I run. If you want to try out testnet setups, feel free to use anything here.
+This repository is the original Grand Valley testnet guide collection. Current network documentation and automation are maintained in one Valley toolkit per network; this collection keeps legacy material and provides the directory of current toolkits.
 
----
+## Current Grand Valley testnet toolkit coverage
+
+Grand Valley currently maintains public tooling and documentation for these testnet targets:
+
+| Network | Current target | Coverage | Canonical toolkit | Guide |
+|---|---|---|---|---|
+| 0G (ZeroGravity) | Galileo (`0G-testnet-galileo`, EVM `16602`) | Validator, storage node, and Storage KV tooling | [Valley-of-0G-Testnet](https://github.com/hubofvalley/Valley-of-0G-Testnet) | [0G guide](https://github.com/hubofvalley/Valley-of-0G-Testnet/tree/main/docs) |
+| Story Protocol | Aeneid (`1315`) | Consensus/EVM validator tooling | [Valley-of-Story-Testnet](https://github.com/hubofvalley/Valley-of-Story-Testnet) | [Story guide](https://github.com/hubofvalley/Valley-of-Story-Testnet/tree/main/docs) |
+| Tempo | Moderato (`42431`) | EVM node tooling | [Valley-of-Tempo-Testnet](https://github.com/hubofvalley/Valley-of-Tempo-Testnet) | [Tempo guide](https://github.com/hubofvalley/Valley-of-Tempo-Testnet/tree/main/docs) |
+| Limonata | `limonata_10777-1` (EVM `10777`) | Validator and node tooling | [Valley-of-Limonata-Testnet](https://github.com/hubofvalley/Valley-of-Limonata-Testnet) | [Limonata guide](https://github.com/hubofvalley/Valley-of-Limonata-Testnet/tree/main/docs) |
+| Gno.land | Pearl (`pearl-1`) | Full-node and validator-candidate workflow | [Valley-of-Gnoland-Testnet](https://github.com/hubofvalley/Valley-of-Gnoland-Testnet) | [Gno.land guide](https://github.com/hubofvalley/Valley-of-Gnoland-Testnet/tree/main/docs) |
+| Worrell | `worrell-testnet-1` | Full-node and validator tooling | [Valley-of-Worrel-Testnet](https://github.com/hubofvalley/Valley-of-Worrel-Testnet) | [Worrell guide](https://github.com/hubofvalley/Valley-of-Worrel-Testnet/tree/main/docs) |
+
+This is an inventory of maintained Grand Valley toolkit and documentation coverage. It does **not** by itself claim that Grand Valley currently occupies the active validator set on every listed network. In particular, Gno.land registration is a validator-candidate workflow and is not automatic active-set admission.
+
+## How to use the current toolkits
+
+Use the canonical toolkit repository for the network you need. Each toolkit contains its reviewed launcher, manual guide, version information, safety notes, and network-specific features.
+
+All launcher scripts should be reviewed before execution and run as the normal OS user that owns the node. Do not expose validator keys, mnemonics, private RPC services, or internal infrastructure details.
+
+## Legacy material
+
+The folders in this repository include earlier or historical guides for Anoma, Fogo, Gensyn, Initia, KiteAI, Monad, NEAR StakeWars III, Nexus, Optimum, Sacas Network, Seismic, Stride, and Vana. They remain for reference and should not be treated as the current maintained-toolkit inventory.
+
+`SUMMARY.md` indexes the in-repository guide collection; the maintained-toolkit inventory above is the authoritative current list.
 
 ## Grand Valley
 
-I'm Grand Valley, and I run validator nodes on several testnets to help test new features and support the ecosystem. Here’s what I’m working on:
+- GitHub: [@hubofvalley](https://github.com/hubofvalley)
+- X: [@bacvalley](https://x.com/bacvalley)
+- Email: letsbuidltogether@grandvalleys.com
 
-### 0g (zero-gravity) Testnet
-- Running a validator on the 0g testnet (decentralized AI/data availability).
-- Public endpoints I provide:
-  - cosmos rpc: `https://lightnode-rpc-0g.grandvalleys.com`
-  - json-rpc: `https://lightnode-json-rpc-0g.grandvalleys.com`
-  - cosmos rest-api: `https://lightnode-api-0g.grandvalleys.com`
-  - peer: `65f62fc8e46ff89f7960bc30e2fc1c0e4a846340@peer-0g.grandvalleys.com:26656`
-- If you want to delegate or test, you can find my validator in the testnet explorer or reach out for details.
-- I keep the node monitored and updated, aiming for high uptime and quick support.
-
-### Story Protocol Testnet
-- Running a validator on Story Protocol testnet (protocol for creative works and IP on-chain).
-- Public endpoints I provide:
-  - cosmos rpc: `https://lightnode-rpc-story.grandvalleys.com`
-  - json-rpc: `https://lightnode-json-rpc-story.grandvalleys.com`
-  - cosmos rest-api: `https://lightnode-api-story.grandvalleys.com`
-  - cosmos ws: `wss://lightnode-rpc-story.grandvalleys.com/websocket`
-  - evm ws: `wss://lightnode-wss-story.grandvalleys.com`
-- You can delegate to my validator or use the endpoints for your own node/app.
-- I keep things stable and try to help the community where I can.
-
-### Worrell Testnet
-- Worrell is a Cosmos SDK proof-of-stake testnet with chain ID `worrell-testnet-1`.
-- The canonical Grand Valley toolkit is [Valley-of-Worrel-Testnet](https://github.com/hubofvalley/Valley-of-Worrel-Testnet).
-- Use the [Worrell validator guide](Worrell/validator-node.md) for the upstream runbook, verified genesis, peers, and safe node operations.
-
----
-
-## How I Work
-
-- I monitor all my nodes 24/7 and try to fix issues fast.
-- If you have questions, want to delegate, or need help with setup, just ask.
-- Everything here is based on my real configs and experience.
-
----
-
-## Guides
-
-Check the folders for step-by-step instructions. Scripts and endpoints are the same ones I use for my own testnet nodes.
-
----
-
-`Let's Buidl Together`
+**Let's Buidl Together - Grand Valley**
