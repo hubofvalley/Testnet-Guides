@@ -15,8 +15,10 @@ Worrell is a Cosmos SDK proof-of-stake network. This entrypoint keeps the manual
 
 Valley of Worrel is the Grand Valley interactive installer and operations menu for the Worrell Testnet node.
 
+The canonical Valley repository is private. Authenticate with GitHub CLI and run the public Guides loader:
+
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/hubofvalley/Valley-of-Worrel-Testnet/main/resources/valleyofWorrel.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/hubofvalley/Testnet-Guides/main/Worrell/resources/valleyofWorrel.sh)
 ```
 
 The canonical repository contains the installer, updater, status checks, peer configuration, key/validator helpers, service management, backup flow, and manual guides:
