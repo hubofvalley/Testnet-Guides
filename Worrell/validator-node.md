@@ -10,7 +10,7 @@ Run the reviewed public launcher directly:
 bash <(curl -fsSL https://raw.githubusercontent.com/hubofvalley/Valley-of-Worrel-Testnet/main/resources/valleyofWorrel.sh)
 ```
 
-The launcher executes the canonical script in [Valley-of-Worrel-Testnet](https://github.com/hubofvalley/Valley-of-Worrel-Testnet). The menu starts with the Valley privacy notice, requirements, official endpoints, and a confirmation gate before installation.
+The launcher executes the canonical script in [Valley-of-Worrel-Testnet](https://github.com/hubofvalley/Valley-of-Worrel-Testnet). The menu starts with the Valley privacy notice, requirements, official endpoints, and a confirmation gate before installation. Installation then asks for pruned/archive storage and direct `worrelld`/Cosmovisor runtime; pruned is the default with keep-recent `100` and interval `20`.
 
 ## Manual installation
 
@@ -47,14 +47,32 @@ echo 'a81c507b12ba0678c3172394ff4bb03e1c3db60050cc5568c127a24ec19378fd  '"$HOME/
 worrelld genesis validate-genesis --home "$HOME/.worrell"
 ```
 
+Choose the application-state retention policy before starting the service. For a normal validator, use pruned mode:
+
+```toml
+pruning = "custom"
+pruning-keep-recent = "100"
+pruning-interval = "20"
+```
+
+For an archive node, retain all application-state history:
+
+```toml
+pruning = "nothing"
+pruning-keep-recent = "0"
+pruning-interval = "0"
+```
+
+Changing from pruned to archive later cannot recreate states already deleted. This choice is independent of direct `worrelld` versus Cosmovisor runtime.
+
 Set `persistent_peers` in `config.toml` and `minimum-gas-prices = "0.025uworrell"` in `app.toml`, then run:
 
 ```bash
-worrelld start --home "$HOME/.worrell" --chain-id worrell-testnet-1
+worrelld start --home "$HOME/.worrell"
 worrelld status --home "$HOME/.worrell" 2>&1 | jq '.sync_info'
 ```
 
-Wait for `catching_up: false` before creating a validator.
+Wait for `catching_up: false` before creating a validator. The Valley status screen reads this boolean directly from the local RPC, so a synced node is shown as `false`, not `UNKNOWN`.
 
 ### Create a validator
 
@@ -87,3 +105,22 @@ Never run two instances with the same `priv_validator_key.json`; double-signing 
 ## Canonical guide
 
 The complete menu reference, checksum handling, port-prefix behaviour, backup flow, and known limitations are maintained in the [Valley-of-Worrel-Testnet repository](https://github.com/hubofvalley/Valley-of-Worrel-Testnet).
+
+
+## Apply a snapshot
+
+Use the Valley menu: `1. Node Interactions` -> `h. Apply Snapshot`.
+
+The flow keeps the standard Valley UX:
+
+1. Choose `ITRocket` or `Sychonix`.
+2. Choose `Pruned`.
+3. Review provider, height, size, update metadata, and archive URL.
+4. Press Enter to continue, then type `APPLY-WORRELL-SNAPSHOT` for the destructive confirmation.
+
+Current provider sources:
+
+- ITRocket: rotating archive resolved from `https://server-3.itrocket.net/testnet/worrell/.current_state.json`.
+- Sychonix: `https://snapshot.sychonix.com/testnet/worrell/worrell-snapshot.tar.lz4`.
+
+The helper downloads and validates the LZ4 archive before downtime, accepts only a top-level `data/` tree, rejects links/special files and unsafe paths, preserves `config/` and the current `data/priv_validator_state.json`, and restarts the existing service only if it was active before the snapshot. Archive snapshots are not offered until a provider publishes a verified archive source. Snapshot application does not change pruning configuration or direct/Cosmovisor runtime.

@@ -21,7 +21,7 @@ Run the reviewed public launcher directly:
 bash <(curl -fsSL https://raw.githubusercontent.com/hubofvalley/Valley-of-Worrel-Testnet/main/resources/valleyofWorrel.sh)
 ```
 
-The canonical repository contains the installer, updater, status checks, peer configuration, key/validator helpers, service management, backup flow, and manual guides:
+The canonical repository contains the installer, updater, status checks, peer configuration, key/validator helpers, service management, backup flow, pruning selection, optional Cosmovisor runtime, guarded snapshot application, and manual guides:
 
 - [Valley-of-Worrel-Testnet](https://github.com/hubofvalley/Valley-of-Worrel-Testnet)
 - [Usage guide](https://github.com/hubofvalley/Valley-of-Worrel-Testnet/blob/main/docs/usage.md)
