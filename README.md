@@ -29,6 +29,11 @@ I'm Grand Valley, and I run validator nodes on several testnets to help test new
 - You can delegate to my validator or use the endpoints for your own node/app.
 - I keep things stable and try to help the community where I can.
 
+### Worrell Testnet
+- Worrell is a Cosmos SDK proof-of-stake testnet with chain ID `worrell-testnet-1`.
+- The canonical Grand Valley toolkit is [Valley-of-Worrel-Testnet](https://github.com/hubofvalley/Valley-of-Worrel-Testnet).
+- Use the [Worrell validator guide](Worrell/validator-node.md) for the upstream runbook, verified genesis, peers, and safe node operations.
+
 ---
 
 ## How I Work

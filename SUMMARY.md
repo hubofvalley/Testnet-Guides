@@ -30,3 +30,6 @@
   * [Setup](Vana/setup.md)
   * [DLP Smart Contracts](Vana/DLP-smart-contracts.md)
   * [DLP Validator Node](Vana/DLP-validator-node.md)
+
+* [Worrell](Worrell/README.md)
+  * [Validator Node Guide](Worrell/validator-node.md)
