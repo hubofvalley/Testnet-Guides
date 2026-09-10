@@ -79,10 +79,12 @@ Wait for `catching_up: false` before creating a validator. The Valley status scr
 Create or recover a key, check its balance, and inspect the consensus public key:
 
 ```bash
-worrelld keys add <key-name> --home "$HOME/.worrell"
+worrelld keys add <key-name> --home "$HOME/.worrell" --output text
 worrelld keys show <key-name> -a --home "$HOME/.worrell"
 worrelld tendermint show-validator --home "$HOME/.worrell"
 ```
+
+The text-mode key-creation command prints a new mnemonic only once. Write it down and store it offline before continuing; recovery accepts an existing mnemonic and does not print it back. Neither the command nor the Valley launcher saves or uploads it. Avoid terminal recording or transcript tools while creating keys.
 
 The upstream example uses 20,000,000 WORRELL self-delegation (`20000000000000uworrell`), 5% commission, 25% max commission, 1% max daily change, and `1000000` uworrell minimum self-delegation. Review `validator.json` before signing:
 
