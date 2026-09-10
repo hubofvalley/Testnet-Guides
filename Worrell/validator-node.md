@@ -12,6 +12,8 @@ bash <(curl -fsSL https://raw.githubusercontent.com/hubofvalley/Valley-of-Worrel
 
 The launcher executes the canonical script in [Valley-of-Worrel-Testnet](https://github.com/hubofvalley/Valley-of-Worrel-Testnet). The menu starts with the Valley privacy notice, requirements, official endpoints, and a confirmation gate before installation. Installation then asks for pruned/archive storage and direct `worrelld`/Cosmovisor runtime; pruned is the default with keep-recent `100` and interval `20`.
 
+The installer persists `$HOME/go/bin` in `~/.bash_profile`, so `worrelld` is available in new login shells. Run `source ~/.bash_profile` to load the path in the current shell.
+
 ## Manual installation
 
 ### Requirements
