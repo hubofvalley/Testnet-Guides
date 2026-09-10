@@ -12,7 +12,7 @@ bash <(curl -fsSL https://raw.githubusercontent.com/hubofvalley/Valley-of-Worrel
 
 The launcher executes the canonical script in [Valley-of-Worrel-Testnet](https://github.com/hubofvalley/Valley-of-Worrel-Testnet). The menu starts with the Valley privacy notice, requirements, official endpoints, and a confirmation gate before installation. Installation then asks for pruned/archive storage and direct `worrelld`/Cosmovisor runtime; pruned is the default with keep-recent `100` and interval `20`.
 
-The installer persists `$HOME/go/bin` in `~/.bash_profile`, so `worrelld` is available in new login shells. Run `source ~/.bash_profile` to load the path in the current shell.
+For a normal node user, the installer persists `$HOME/go/bin` in `~/.bash_profile`, so `worrelld` is available in new login shells. It also writes controlled runtime settings to `$WORRELL_HOME/.worrell.env`. In root-only mode it uses `/usr/local/bin` and `/var/lib/worrell` without modifying `/root/.bash_profile`. Run `source ~/.bash_profile` only after normal-user installation.
 
 ## Manual installation
 
@@ -88,13 +88,33 @@ worrelld tendermint show-validator --home "$HOME/.worrell"
 
 The text-mode key-creation command prints a new mnemonic only once. Write it down and store it offline before continuing; recovery accepts an existing mnemonic and does not print it back. Neither the command nor the Valley launcher saves or uploads it. Avoid terminal recording or transcript tools while creating keys.
 
-The upstream example uses 20,000,000 WORRELL self-delegation (`20000000000000uworrell`), 5% commission, 25% max commission, 1% max daily change, and `1000000` uworrell minimum self-delegation. Review `validator.json` before signing:
+The Valley default uses 20 WORRELL self-delegation (`20000000uworrell`), 5% commission, 25% max commission, 1% max daily change, and `1000000` uworrell minimum self-delegation. Review `validator.json` before signing:
 
 ```bash
 worrelld tx staking create-validator validator.json \
   --from <key-name> --chain-id worrell-testnet-1 --home "$HOME/.worrell" \
   --gas auto --gas-adjustment 1.5 --gas-prices 0.025uworrell --yes
 ```
+
+### Delegate to a validator
+
+Use Valley menu `2f` after the local node reports `catching_up: false`.
+The guarded flow resolves the local key, validates the target
+`worrellvaloper1...` address, queries the account balance and validator record
+through the local RPC, and asks for an explicit `yes` confirmation. It uses
+Cosmos SDK `tx staking delegate`; Worrell has no separate `stake` command.
+
+Amounts must be positive integers with exactly one `uworrell` suffix:
+
+```bash
+worrelld tx staking delegate <worrellvaloper1...> 1000000uworrell \
+  --from <key-name> --chain-id worrell-testnet-1 --home "$HOME/.worrell" \
+  --node tcp://127.0.0.1:26657 \
+  --gas auto --gas-adjustment 1.5 --gas-prices 0.025uworrell --yes
+```
+
+Review the balance, validator record, target address, and exact amount before
+signing. Do not paste a mnemonic or private key into a command or chat.
 
 ### Operations
 
