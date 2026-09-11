@@ -9,6 +9,12 @@ Worrell is a Cosmos SDK proof-of-stake network. This entrypoint keeps the manual
 - Denom: `uworrell` (6 decimals)
 - Node home: `~/.worrell`
 - Minimum gas price: `0.025uworrell`
+- Live default port prefix: `17` (`17656` P2P, `17657` RPC)
+- Live RPC moniker: `grandvalley-lightnode`
+- Public RPC: `https://lightnode-rpc-worrell.grandvalleys.com`
+- Public WebSocket: `wss://lightnode-rpc-worrell.grandvalleys.com/websocket`
+- Direct peer: `e812f08760b18ed774369e899763735f80179f76@peer-worrell.grandvalleys.com:17656`
+- Cosmovisor default: `UNSAFE_SKIP_BACKUP=true` (override explicitly when rollback protection is required)
 - Recommended testnet host: 2 vCPU, 4 GB RAM, 100 GB SSD, public P2P access
 
 ## Valley of Worrell
