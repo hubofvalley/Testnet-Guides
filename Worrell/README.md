@@ -11,9 +11,9 @@ Worrell is a Cosmos SDK proof-of-stake network. This entrypoint keeps the manual
 - Minimum gas price: `0.025uworrell`
 - Recommended testnet host: 2 vCPU, 4 GB RAM, 100 GB SSD, public P2P access
 
-## Valley of Worrel
+## Valley of Worrell
 
-Valley of Worrel is the Grand Valley interactive installer and operations menu for the Worrell Testnet node.
+Valley of Worrell is the Grand Valley interactive installer and operations menu for the Worrell Testnet node.
 
 Run the reviewed public launcher directly:
 
@@ -40,4 +40,4 @@ Use testnet-only keys. Verify the genesis SHA256, keep `priv_validator_key.json`
 
 For the manual workflow and operational checklist, see [validator-node.md](validator-node.md).
 
-`Let's Buidl Worrel Together - Grand Valley`
+`Let's Buidl Worrell Together - Grand Valley`
