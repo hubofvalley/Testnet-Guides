@@ -9,6 +9,12 @@ Worrell is a Cosmos SDK proof-of-stake network. This entrypoint keeps the manual
 - Denom: `uworrell` (6 decimals)
 - Node home: `~/.worrell`
 - Minimum gas price: `0.025uworrell`
+- Live default port prefix: `17` (`17656` P2P, `17657` RPC)
+- Live RPC moniker: `grandvalley-lightnode`
+- Public RPC: `https://lightnode-rpc-worrell.grandvalleys.com`
+- Public WebSocket: `wss://lightnode-rpc-worrell.grandvalleys.com/websocket`
+- Direct peer: `e812f08760b18ed774369e899763735f80179f76@peer-worrell.grandvalleys.com:17656`
+- Cosmovisor default: `UNSAFE_SKIP_BACKUP=true` (override explicitly when rollback protection is required)
 - Recommended testnet host: 2 vCPU, 4 GB RAM, 100 GB SSD, public P2P access
 
 ## Valley of Worrell
@@ -21,11 +27,13 @@ Run the reviewed public launcher directly:
 bash <(curl -fsSL https://raw.githubusercontent.com/hubofvalley/Valley-of-Worrel-Testnet/main/resources/valleyofWorrel.sh)
 ```
 
-The canonical repository contains the installer, updater, status checks, peer configuration, key/validator helpers, guarded `tx staking delegate` delegation, service management, backup flow, pruning selection, optional Cosmovisor runtime, guarded snapshot application, and manual guides:
+The canonical repository contains the installer, updater, status checks, peer configuration, key/validator helpers, guarded `tx staking delegate` delegation, service management, backup flow, pruning selection, optional Cosmovisor runtime, Cosmovisor release staging, guarded snapshot application, and manual guides:
 
 - [Valley-of-Worrel-Testnet](https://github.com/hubofvalley/Valley-of-Worrel-Testnet)
 - [Usage guide](https://github.com/hubofvalley/Valley-of-Worrel-Testnet/blob/main/docs/usage.md)
 - [Manual node guide](https://github.com/hubofvalley/Valley-of-Worrel-Testnet/blob/main/docs/node-guide.md)
+
+The live `worrelld` binary remains v0.1.2. The canonical Valley menu also provides a predefined Cosmovisor staging option for official v0.1.3, aligned with governance plan v0.1.3 at block `1186000`, plus a custom verified-release path. These are staging paths, not evidence that v0.1.3 is live; current-version references remain v0.1.2.
 
 ## Official sources
 

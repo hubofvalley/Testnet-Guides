@@ -13,7 +13,7 @@ Grand Valley currently maintains public tooling and documentation for these test
 | Tempo | Moderato (`42431`) | EVM node tooling | [Valley-of-Tempo-Testnet](https://github.com/hubofvalley/Valley-of-Tempo-Testnet) | [Tempo guide](https://github.com/hubofvalley/Valley-of-Tempo-Testnet/tree/main/docs) |
 | Limonata | `limonata_10777-1` (EVM `10777`) | Validator and node tooling | [Valley-of-Limonata-Testnet](https://github.com/hubofvalley/Valley-of-Limonata-Testnet) | [Limonata guide](https://github.com/hubofvalley/Valley-of-Limonata-Testnet/tree/main/docs) |
 | Gno.land | Pearl (`pearl-1`) | Full-node and validator-candidate workflow | [Valley-of-Gnoland-Testnet](https://github.com/hubofvalley/Valley-of-Gnoland-Testnet) | [Gno.land guide](https://github.com/hubofvalley/Valley-of-Gnoland-Testnet/tree/main/docs) |
-| Worrell | `worrell-testnet-1` | Full-node and validator tooling | [Valley-of-Worrel-Testnet](https://github.com/hubofvalley/Valley-of-Worrel-Testnet) | [Worrell guide](https://github.com/hubofvalley/Valley-of-Worrel-Testnet/tree/main/docs) |
+| Worrell | `worrell-testnet-1` | Full-node and validator tooling | [Valley-of-Worrel-Testnet](https://github.com/hubofvalley/Valley-of-Worrel-Testnet) | [Worrell guide](https://github.com/hubofvalley/Testnet-Guides/tree/main/Worrell) |
 
 This is an inventory of maintained Grand Valley toolkit and documentation coverage. It does **not** by itself claim that Grand Valley currently occupies the active validator set on every listed network. In particular, Gno.land registration is a validator-candidate workflow and is not automatic active-set admission.
 
