@@ -149,9 +149,11 @@ The live Grand Valley profile uses prefix `17`. The installer can use another tw
 ```bash
 sudo systemctl status worrelld --no-pager
 sudo journalctl -u worrelld -fn 100 -o cat
+```
 
 For Cosmovisor-managed services, the current deployment uses `UNSAFE_SKIP_BACKUP=true` by default. Set it explicitly to `false` when rollback protection is required, especially on validator nodes.
 
+```bash
 worrelld query slashing signing-info "$(worrelld tendermint show-address --home "$HOME/.worrell")" --home "$HOME/.worrell"
 ```
 
