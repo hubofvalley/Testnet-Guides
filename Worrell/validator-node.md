@@ -14,6 +14,8 @@ The launcher executes the canonical script in [Valley-of-Worrel-Testnet](https:/
 
 For a normal node user, the installer persists `$HOME/go/bin` in `~/.bash_profile`, so `worrelld` is available in new login shells. It also writes controlled runtime settings to `$WORRELL_HOME/.worrell.env`. In root-only mode it uses `/usr/local/bin` and `/var/lib/worrell` without modifying `/root/.bash_profile`. Run `source ~/.bash_profile` only after normal-user installation.
 
+The live `worrelld` binary remains v0.1.2. The canonical menu additionally provides a predefined Cosmovisor staging option for official v0.1.3, aligned with governance plan v0.1.3 at block `1186000`, and a custom verified-release path. Staging does not mean v0.1.3 is live or that the planned height has been reached.
+
 ## Manual installation
 
 ### Requirements

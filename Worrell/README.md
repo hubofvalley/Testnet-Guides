@@ -27,11 +27,13 @@ Run the reviewed public launcher directly:
 bash <(curl -fsSL https://raw.githubusercontent.com/hubofvalley/Valley-of-Worrel-Testnet/main/resources/valleyofWorrel.sh)
 ```
 
-The canonical repository contains the installer, updater, status checks, peer configuration, key/validator helpers, guarded `tx staking delegate` delegation, service management, backup flow, pruning selection, optional Cosmovisor runtime, guarded snapshot application, and manual guides:
+The canonical repository contains the installer, updater, status checks, peer configuration, key/validator helpers, guarded `tx staking delegate` delegation, service management, backup flow, pruning selection, optional Cosmovisor runtime, Cosmovisor release staging, guarded snapshot application, and manual guides:
 
 - [Valley-of-Worrel-Testnet](https://github.com/hubofvalley/Valley-of-Worrel-Testnet)
 - [Usage guide](https://github.com/hubofvalley/Valley-of-Worrel-Testnet/blob/main/docs/usage.md)
 - [Manual node guide](https://github.com/hubofvalley/Valley-of-Worrel-Testnet/blob/main/docs/node-guide.md)
+
+The live `worrelld` binary remains v0.1.2. The canonical Valley menu also provides a predefined Cosmovisor staging option for official v0.1.3, aligned with governance plan v0.1.3 at block `1186000`, plus a custom verified-release path. These are staging paths, not evidence that v0.1.3 is live; current-version references remain v0.1.2.
 
 ## Official sources
 
