@@ -159,7 +159,7 @@ worrelld query slashing signing-info "$(worrelld tendermint show-address --home 
 
 Never run two instances with the same `priv_validator_key.json`; double-signing can cause a severe slash. Keep RPC, REST, gRPC, and Prometheus private unless deliberately protected.
 
-The Valley menu's `3d` backup creates a mode-600 archive containing `config/priv_validator_key.json`, `data/priv_validator_state.json`, optional `config/node_key.json`, and non-secret checksums. The destructive `3c` flow stops and verifies `worrelld`, validates the exact managed home, creates and verifies that archive, removes the service unit only after the safety checks pass, and refuses deletion on path, state, stop, backup, or systemd failures.
+The Valley menu's `3d` action creates a mode-600 point-in-time signer/state archive containing `config/priv_validator_key.json`, `data/priv_validator_state.json`, optional `config/node_key.json`, and non-secret checksums. It is not an authoritative recovery snapshot: never restore its `priv_validator_state.json` after the node signs again. Stop the node and capture fresh state for signer recovery or migration. The destructive `3c` flow stops and verifies `worrelld`, validates the exact managed home, creates and verifies that archive, removes the service unit only after the safety checks pass, and refuses deletion on path, state, stop, backup, or systemd failures.
 
 ## Canonical guide
 
