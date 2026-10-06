@@ -36,7 +36,7 @@ The canonical repository contains the installer, updater, status checks, peer co
 
 ## Safety
 
-Use testnet-only keys. Verify the genesis SHA256, keep `priv_validator_key.json` backed up, keep RPC/API/gRPC private unless protected, and never run two nodes with the same validator signing key. Delegation is an on-chain action: use the Valley `2f` preview, verify the local balance and target validator, and confirm only after checking the exact positive `uworrell` amount.
+Use testnet-only keys. Verify the genesis SHA256, use the Valley `3d` flow to keep a mode-600 point-in-time archive of `priv_validator_key.json`, `priv_validator_state.json`, optional `node_key.json`, and checksums. Never restore its `priv_validator_state.json` after the node signs again; stop the node and capture fresh state for signer recovery or migration. Keep RPC/API/gRPC private unless protected, and never run two nodes with the same validator signing key. Delegation is an on-chain action: use the Valley `2f` preview, verify the local balance and target validator, and confirm only after checking the exact positive `uworrell` amount.
 
 For the manual workflow and operational checklist, see [validator-node.md](validator-node.md).
 
