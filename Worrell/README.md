@@ -21,7 +21,7 @@ Run the reviewed public launcher directly:
 bash <(curl -fsSL https://raw.githubusercontent.com/hubofvalley/Valley-of-Worrel-Testnet/main/resources/valleyofWorrel.sh)
 ```
 
-The canonical repository contains the installer, updater, status checks, peer configuration, key/validator helpers, guarded `tx staking delegate` delegation, service management, backup flow, pruning selection, optional Cosmovisor runtime, guarded snapshot application, and manual guides:
+The canonical repository contains the installer, updater, status checks, peer configuration, key/validator helpers, guarded `tx staking delegate` delegation, service management, backup flow, pruning selection, optional Cosmovisor runtime, hand-off verification, guarded snapshot application, and manual guides:
 
 - [Valley-of-Worrel-Testnet](https://github.com/hubofvalley/Valley-of-Worrel-Testnet)
 - [Usage guide](https://github.com/hubofvalley/Valley-of-Worrel-Testnet/blob/main/docs/usage.md)
@@ -36,7 +36,7 @@ The canonical repository contains the installer, updater, status checks, peer co
 
 ## Safety
 
-Use testnet-only keys. Verify the genesis SHA256, use the Valley `3d` flow to keep a mode-600 point-in-time archive of `priv_validator_key.json`, `priv_validator_state.json`, optional `node_key.json`, and checksums. Never restore its `priv_validator_state.json` after the node signs again; stop the node and capture fresh state for signer recovery or migration. Keep RPC/API/gRPC private unless protected, and never run two nodes with the same validator signing key. Delegation is an on-chain action: use the Valley `2f` preview, verify the local balance and target validator, and confirm only after checking the exact positive `uworrell` amount.
+Use testnet-only keys. Verify the genesis SHA256, use the Valley `3d` flow to keep a mode-600 point-in-time archive of `priv_validator_key.json`, `priv_validator_state.json`, optional `node_key.json`, and checksums. Never restore its `priv_validator_state.json` after the node signs again; stop the node and capture fresh state for signer recovery or migration. Validator-capable installation and migration default to `UNSAFE_SKIP_BACKUP=false`; a lightnode/non-validator operator must explicitly opt in to `WORRELL_UNSAFE_SKIP_BACKUP=true`. Keep RPC/API/gRPC private unless protected, and never run two nodes with the same validator signing key. Delegation is an on-chain action: use the Valley `2f` preview, verify the local balance and target validator, and confirm only after checking the exact positive `uworrell` amount.
 
 For the manual workflow and operational checklist, see [validator-node.md](validator-node.md).
 

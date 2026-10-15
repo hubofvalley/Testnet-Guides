@@ -14,7 +14,7 @@ The launcher executes the canonical script in [Valley-of-Worrel-Testnet](https:/
 
 For a normal node user, the installer persists `$HOME/go/bin` in `~/.bash_profile`, so `worrelld` is available in new login shells. It also writes controlled runtime settings to `$WORRELL_HOME/.worrell.env`. In root-only mode it uses `/usr/local/bin` and `/var/lib/worrell` without modifying `/root/.bash_profile`. Run `source ~/.bash_profile` only after normal-user installation.
 
-The live `worrelld` binary remains v0.1.2. The canonical menu additionally provides a predefined Cosmovisor staging option for official v0.1.3, aligned with governance plan v0.1.3 at block `1186000`, and a custom verified-release path. Staging does not mean v0.1.3 is live or that the planned height has been reached.
+The live `worrelld` binary remains v0.1.2. The canonical menu additionally provides a predefined Cosmovisor staging option for official v0.1.3, aligned with governance plan v0.1.3 at block `1186000`, and a custom verified-release path. Staging does not mean v0.1.3 is live or that the planned height has been reached. After staging, use the hand-off verification option; after the planned height or recovery, verify that `data/upgrade-info.json` names the exact plan and that `current` resolves to `cosmovisor/upgrades/<name>` before treating the upgrade as active.
 
 ## Manual installation
 
@@ -151,7 +151,7 @@ sudo systemctl status worrelld --no-pager
 sudo journalctl -u worrelld -fn 100 -o cat
 ```
 
-For Cosmovisor-managed services, the current deployment uses `UNSAFE_SKIP_BACKUP=true` by default. Set it explicitly to `false` when rollback protection is required, especially on validator nodes.
+For validator-capable installation and migration, `UNSAFE_SKIP_BACKUP=false` is the default. A lightnode or other non-validator operator may explicitly opt in to `WORRELL_UNSAFE_SKIP_BACKUP=true`; existing explicit environment values are preserved. Do not delete `data/upgrade-info.json` during recovery.
 
 ```bash
 worrelld query slashing signing-info "$(worrelld tendermint show-address --home "$HOME/.worrell")" --home "$HOME/.worrell"
@@ -160,6 +160,10 @@ worrelld query slashing signing-info "$(worrelld tendermint show-address --home 
 Never run two instances with the same `priv_validator_key.json`; double-signing can cause a severe slash. Keep RPC, REST, gRPC, and Prometheus private unless deliberately protected.
 
 The Valley menu's `3d` action creates a mode-600 point-in-time signer/state archive containing `config/priv_validator_key.json`, `data/priv_validator_state.json`, optional `config/node_key.json`, and non-secret checksums. It is not an authoritative recovery snapshot: never restore its `priv_validator_state.json` after the node signs again. Stop the node and capture fresh state for signer recovery or migration. The destructive `3c` flow stops and verifies `worrelld`, validates the exact managed home, creates and verifies that archive, removes the service unit only after the safety checks pass, and refuses deletion on path, state, stop, backup, or systemd failures.
+
+## Cosmovisor hand-off verification
+
+Staging is preparation, not activation. In the Valley menu choose `1g` -> **Manage Cosmovisor** -> **Verify staged or completed handoff**. The staged check validates the exact plan name, executable upgrade binary, release version, and unchanged `current` target. The post-upgrade check validates the exact `data/upgrade-info.json` plan/height, `current -> cosmovisor/upgrades/<name>`, active binary version, service state, and restart count. It is read-only and fails closed. If `upgrade-info.json` exists while `current` still points to `genesis`, keep the file, inspect the service journal, and do not report the upgrade as recovered.
 
 ## Canonical guide
 
